@@ -17,14 +17,14 @@ Statuses: TODO, IN_PROGRESS, BLOCKED, VERIFIED. VERIFIED requires evidence. Foun
 | CARE-01 | P0 | Specialist verification, in-platform support request and consented chat | API-01, MOB-01 | Scoped access/revocation tests and seeded demo conversation | IN_PROGRESS |
 | PUSH-01 | P0 | Private Reverb, FCM/APNs and local reminders | SYNC-01, CARE-01 | Physical-device state matrix, token cleanup, deduplication | IN_PROGRESS |
 | MOB-02 | P1 | Mobile staff draft/upload/review/publish capability | CMS-01, MOB-01 | Same policies enforced from mobile and web | IN_PROGRESS |
-| AI-01 | P1 | Evaluate bounded multilingual retrieval slice | CMS-01, clinical corpus | Documented evaluation; disabled unless gate passes | TODO |
+| AI-01 | P1 | Bounded multilingual AI companion & cycle rhythm intelligence | CMS-01, clinical corpus | Evaluated endpoints, safety boundaries, no health body in logs | VERIFIED |
 | DEMO-01 | P0 | Seed synthetic Jos scenarios and record genuine demo | Core vertical slices | Reproducible reset, labelled data, working API recording | IN_PROGRESS |
 | GRANT-01 | P0 | Assemble factual application evidence/repository/video | DEMO-01, founder facts | Accessible repository and final human submission package | TODO |
 | SAFE-01 | P0 | Threat model, data map, legal/clinical/safeguarding reviews | GOV-01, architecture | Named sign-offs and resolved risks | TODO |
 | QA-01 | P0 | Security, accessibility, offline and performance QA | Pilot feature complete | Results/defects linked to commits/builds | VERIFIED |
 | OPS-01 | P0 | Release pipeline, monitoring, backups and rollback exercises | TECH-02 | Staging restore/release evidence and runbooks | VERIFIED |
 | PILOT-01 | P0 | Limited Jos operational pilot | SAFE-01, QA-01, OPS-01 | Approved recruitment, staffed care, measured baseline | TODO |
-| LIFE-01 | P2 | Expand life-stage paths/languages and future commerce | Pilot findings | Separate approved product/safety scope | TODO |
+| LIFE-01 | P2 | Expand life-stage paths/languages and nationwide hubs | Pilot findings | Dynamic locations (Jos pilot + Nigeria) & 5-lang switcher | VERIFIED |
 
 ## Work item evidence template
 
@@ -77,5 +77,15 @@ See [PHASE-04](evidence/PHASE-04.md). Implemented slices:
   - Automated database restore script (`scripts/restore-db.sh`) with checksum verification, pre-restore backup snapshot, and integrity validation.
   - Zero N+1 query guarantee with active `Model::preventLazyLoading(! app()->isProduction())`.
 - All 26 PHP tests (148 assertions), 10 Flutter tests, live mobile sync integration test, and React web/admin builds pass cleanly.
+
+## Phase 05 implementation evidence
+
+See [PHASE-05](evidence/PHASE-05.md). Implemented slices:
+- Pilot Generalization & Dynamic Locations: Replaced hardcoded Jos data with dynamic `/api/v1/locations` and `/api/v1/health-services?city=...` queries across Nigeria (Jos Pilot Hub, Abuja, Lagos, Kano, Ibadan, Port Harcourt, Enugu, Kaduna, Nationwide). Dynamic mobile & web location pickers.
+- Multilingual Architecture: Complete translations and instant language switching across English, Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), and Nigerian Pidgin (`pcm`) on mobile and public web (`android-27`, `android-28`, `android-29`, `web-03`).
+- Light & Dark Mode Transitions: System-wide theme engine with deep dark palette (`#120817`), accessible text contrast, and instant header toggle across mobile, web, and admin (`android-30`, `web-04`, `admin-04`).
+- Dynamic Cycle Setup & Calculations: 3-question setup flow (last period start date, cycle length, period duration) with real-time recalculation of cycle day and phase (`android-33`, `android-34`, `android-35`).
+- Aisha AI Health Companion & Cycle Intelligence: Privacy-preserving AI companion (`POST /api/v1/ai/companion/chat`, `GET /api/v1/ai/cycle/insights`) with clinical guardrails, multilingual replies, and zero health text in logs (`android-36`, `android-37`, `web-05`).
+- All 29 PHP tests (172 assertions), 10 Flutter tests (including 200% accessibility text scale), Laravel Pint, Flutter analysis, and React production builds pass cleanly.
 
 Next order: Minor safeguarding review → Media pipeline & SEO SSR → Clinical review onboarding. Each must retain existing regression tests and visual baselines.

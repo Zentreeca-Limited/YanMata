@@ -71,3 +71,29 @@
   - Created `scripts/restore-db.sh` validating SHA-256 checksums and SQLite integrity with automatic safety pre-restore backup snapshot.
   - Retained strict zero N+1 database query guarantee via `Model::preventLazyLoading(! app()->isProduction())`.
 - Verified test suite: 26 API tests / 148 assertions pass, 10 Flutter tests pass, live two-store mobile sync passes, React web/admin builds pass cleanly.
+
+## 2026-10-27 — Phase 05 implementation — Pilot Generalization, Multilingual (EN, HA, YO, IG, PCM), Dark Mode, Cycle Setup & Aisha AI Companion
+
+- Pilot Generalization & Dynamic Backend Locations:
+  - Added `GET /api/v1/locations` dynamic Nigerian hub inventory (Jos Pilot Hub, Abuja, Lagos, Kano, Ibadan, Port Harcourt, Enugu, Kaduna, All Nigeria/Nationwide).
+  - Updated `GET /api/v1/health-services` supporting city filtering (`?city=Abuja`) and category filtering.
+  - Implemented dynamic mobile `LocationNotifier` and `LocationPickerSheet` with `SharedPreferences` persistence and active selection checkmarks (`android-31-location-sheet-clean.png`, `android-32-location-abuja-services.png`).
+- Multilingual Translation System:
+  - Flutter: Added `app_translations.dart` dictionary with 100+ keys across English (`en`), Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), and Nigerian Pidgin (`pcm`).
+  - Added `LocaleNotifier` with reactive `ref.tr(key)` and `context.tr(key)` extensions and `LanguagePickerSheet` bottom modal (`android-28-lang-sheet.png`, `android-29-hausa-mode.png`).
+  - Public Web: Added `i18n.ts` and header language switcher with instant DOM updates (`web-03-hausa.png`).
+- System-Wide Light & Dark Mode Engine:
+  - Flutter: Added `ThemeModeNotifier` in `theme_provider.dart` with refined dark palette (`#120817` surface, `#FAF2FC` text, `#9B2D80` brand primary) and instant header toggle (`android-30-dark-mode.png`).
+  - Web & Admin: Added CSS dark mode tokens with 250ms smooth transition and header toggle buttons (`web-04-dark.png`, `admin-04-dark.png`).
+- Dynamic Cycle Setup & Calculations:
+  - Mathematical cycle day: `(today - lastPeriodStart) % cycleLength + 1`.
+  - Dynamic phases: Menstrual (days 1..periodDuration), Follicular, Ovulatory, Luteal.
+  - Interactive `CycleSetupDialog` bottom sheet with last period date picker, cycle length chips, and period duration chips (`android-34-cycle-setup-dialog.png`, `android-35-cycle-updated.png`).
+- Privacy-Preserving Aisha AI Health Companion & Pattern Intelligence:
+  - Laravel API endpoints `POST /api/v1/ai/companion/chat` and `GET /api/v1/ai/cycle/insights` (`AiCompanionController.php`).
+  - Strict clinical safety disclaimer and minor safeguarding guardrails; zero health text or journal entries recorded in application logs.
+  - Multilingual AI chat interface in Flutter (`AishaChatPage`) and Public Web dialog modal (`android-36-aisha-ai-screen.png`, `android-37-aisha-ai-response.png`, `web-05-ai-modal.png`).
+- Polished Feedback & UI Scalability:
+  - Created `UiFeedback` utility with floating rounded-pill snackbars, success pills, and confirmation dialogs.
+  - Wrapped header rows and labels in `Wrap` and `Expanded` to guarantee zero pixel overflow at 200% font scale.
+- Verified test suite: 29 API tests / 172 assertions pass with strict lazy loading enabled, 10 Flutter tests pass, Laravel Pint passes, Flutter analysis passes with zero warnings, React web/admin builds succeed.

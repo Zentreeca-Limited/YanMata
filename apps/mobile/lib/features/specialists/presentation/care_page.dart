@@ -40,7 +40,7 @@ class Care extends ConsumerWidget {
         ),
         const SizedBox(height: 12),
         const Text(
-          'Speak with verified healthcare professionals in Jos for non-emergency guidance. No facility search or hospital booking required.',
+          'Speak with verified healthcare professionals for non-emergency guidance. No facility search or hospital booking required.',
         ),
         const SizedBox(height: 22),
 
@@ -228,7 +228,7 @@ class Care extends ConsumerWidget {
         // Verified specialists directory
         const SizedBox(height: 32),
         Text(
-          'Verified specialists in Jos',
+          'Verified Specialists',
           style: Theme.of(context).textTheme.headlineSmall,
         ),
         const SizedBox(height: 10),
@@ -369,7 +369,7 @@ class Care extends ConsumerWidget {
 
         const SizedBox(height: 25),
         const Text(
-          'YanMata is not an emergency service. Response times are 24–48 hours by verified clinical volunteers in the Jos pilot.',
+          'YanMata is not an emergency service. Response times are 24–48 hours by verified clinical volunteers.',
           style: TextStyle(fontSize: 13),
         ),
       ],

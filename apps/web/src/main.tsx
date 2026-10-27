@@ -16,8 +16,14 @@ import {
   Plus,
   Minus,
   Menu,
+  Globe,
+  Moon,
+  Sun,
+  Send,
+  AlertCircle,
 } from "lucide-react";
 import { Brand, Tag, api, type Article, type Specialist } from "@yanmata/ui";
+import { LANGUAGES, translations, type Language } from "./i18n";
 import "@yanmata/ui/styles.css";
 import "./styles.css";
 const chapters = [
@@ -71,7 +77,27 @@ function App() {
   const [info, setInfo] = useState<string | null>(null);
   const [faq, setFaq] = useState<number | null>(0);
   const [menu, setMenu] = useState(false);
+  const [lang, setLang] = useState<Language>("en");
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [aiOpen, setAiOpen] = useState(false);
+  const [aiPrompt, setAiPrompt] = useState("");
+  const [aiReply, setAiReply] = useState<string | null>(null);
+  const [aiEmergency, setAiEmergency] = useState(false);
+  const [aiLoading, setAiLoading] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
+  const aiDialog = useRef<HTMLDialogElement>(null);
+
+  const t = translations[lang] || translations.en;
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
+
+  useEffect(() => {
+    if (aiOpen) aiDialog.current?.showModal();
+    else aiDialog.current?.close();
+  }, [aiOpen]);
+
   const load = () => {
     setError("");
     api<{ data: Article[] }>("/content")
@@ -94,42 +120,139 @@ function App() {
     setSelected(null);
     setInfo(null);
   };
+
+  const askAi = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!aiPrompt.trim() || aiLoading) return;
+    setAiLoading(true);
+    setAiReply(null);
+    setAiEmergency(false);
+    try {
+      const res = await api<{
+        data: {
+          reply: string;
+          is_emergency: boolean;
+        };
+      }>("/ai/companion/chat", {
+        method: "POST",
+        body: JSON.stringify({ prompt: aiPrompt, language: lang }),
+      });
+      setAiReply(res.data.reply);
+      setAiEmergency(res.data.is_emergency);
+    } catch {
+      setAiReply(
+        "Aisha AI is temporarily unavailable. Please try again shortly.",
+      );
+    } finally {
+      setAiLoading(false);
+    }
+  };
+
   return (
     <>
       <a className="skip" href="#main">
         Skip to content
       </a>
       <div className="announcement">
-        <span className="dot" /> A new chapter in women’s wellbeing. Made with
-        care, in Nigeria. <span className="demo-label">PRODUCT PREVIEW</span>
+        <span className="dot" /> {t.announcement}{" "}
+        <span className="demo-label">{t.preview_tag}</span>
       </div>
       <header className="header">
         <Brand />
         <nav className={menu ? "open" : ""} aria-label="Main navigation">
           <a onClick={() => setMenu(false)} href="#chapters">
-            Your life, your chapters
+            {t.nav_chapters}
           </a>
           <a onClick={() => setMenu(false)} href="#learn">
-            Learn & grow
+            {t.nav_learn}
           </a>
           <a onClick={() => setMenu(false)} href="#care">
-            Our approach
+            {t.nav_care}
           </a>
           <a onClick={() => setMenu(false)} href="#specialists">
-            Specialists
+            {t.nav_specialists}
           </a>
+          <button
+            className="ai-nav-btn"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              cursor: "pointer",
+              background: "none",
+              border: "none",
+              color: "var(--plum)",
+              fontWeight: 600,
+              fontSize: 13,
+            }}
+            onClick={() => {
+              setMenu(false);
+              setAiOpen(true);
+            }}
+          >
+            <Sparkles size={15} color="var(--plum)" /> {t.nav_ai}
+          </button>
         </nav>
-        <a className="button header-cta" href="#explore">
-          Meet YanMata <ArrowUpRight />
-        </a>
-        <button
-          className="menu-toggle"
-          aria-label="Toggle navigation"
-          aria-expanded={menu}
-          onClick={() => setMenu(!menu)}
+        <div
+          className="header-controls"
+          style={{ display: "flex", alignItems: "center", gap: 10 }}
         >
-          <Menu />
-        </button>
+          {/* Language Selector */}
+          <div style={{ display: "flex", alignItems: "center", gap: 4, background: "var(--lilac)", padding: "6px 10px", borderRadius: 20, fontSize: 13, color: "var(--plum)", fontWeight: 600 }}>
+            <Globe size={14} />
+            <select
+              aria-label="Select language"
+              value={lang}
+              onChange={(e) => setLang(e.target.value as Language)}
+              style={{
+                background: "transparent",
+                border: "none",
+                color: "inherit",
+                fontWeight: "inherit",
+                cursor: "pointer",
+                outline: "none",
+                fontSize: "inherit",
+              }}
+            >
+              {LANGUAGES.map((l) => (
+                <option key={l.code} value={l.code}>
+                  {l.native}
+                </option>
+              ))}
+            </select>
+          </div>
+          {/* Theme Toggle */}
+          <button
+            className="theme-toggle"
+            aria-label="Toggle theme"
+            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: 36,
+              height: 36,
+              borderRadius: "50%",
+              background: "var(--lilac)",
+              border: "none",
+              color: "var(--plum)",
+              cursor: "pointer",
+            }}
+          >
+            {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
+          </button>
+          <a className="button header-cta" href="#explore">
+            {t.cta_meet} <ArrowUpRight />
+          </a>
+          <button
+            className="menu-toggle"
+            aria-label="Toggle navigation"
+            aria-expanded={menu}
+            onClick={() => setMenu(!menu)}
+          >
+            <Menu />
+          </button>
+        </div>
       </header>
       <main id="main">
         <section className="hero wrap">
@@ -606,6 +729,65 @@ function App() {
             </p>
           </>
         )}
+      </dialog>
+
+      {/* Aisha AI Companion Interactive Modal */}
+      <dialog ref={aiDialog} className="modal-dialog ai-dialog" onClose={() => setAiOpen(false)}>
+        <div className="dialog-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid var(--line)", padding: "16px 20px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <span style={{ fontSize: 24 }}>✨</span>
+            <div>
+              <h3 style={{ margin: 0, fontSize: 18, color: "var(--plum)" }}>{t.ai_modal_title}</h3>
+              <small style={{ color: "var(--muted)" }}>{t.ai_modal_desc}</small>
+            </div>
+          </div>
+          <button
+            className="dialog-close"
+            onClick={() => setAiOpen(false)}
+            style={{ background: "none", border: "none", cursor: "pointer", color: "var(--ink)" }}
+          >
+            <X size={20} />
+          </button>
+        </div>
+        <div className="dialog-body" style={{ padding: "16px 20px" }}>
+          {aiEmergency && (
+            <div style={{ background: "#fff1f2", border: "1px solid #f43f5e", borderRadius: 12, padding: 12, marginBottom: 16 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#9f1239", fontWeight: 700 }}>
+                <AlertCircle size={18} /> EMERGENCY CRISIS SUPPORT (NIGERIA)
+              </div>
+              <p style={{ margin: "6px 0 0", color: "#881337", fontSize: 13 }}>
+                • SURPIN Toll-Free: <strong>0800 123 4567</strong><br />
+                • National Emergency: <strong>112</strong>
+              </p>
+            </div>
+          )}
+          {aiReply && (
+            <div style={{ background: "var(--lilac)", padding: 16, borderRadius: 16, marginBottom: 16, whiteSpace: "pre-line", lineHeight: 1.6, fontSize: 14, color: "var(--ink)" }}>
+              {aiReply}
+            </div>
+          )}
+          <form onSubmit={askAi} style={{ display: "flex", gap: 8 }}>
+            <input
+              type="text"
+              required
+              value={aiPrompt}
+              onChange={(e) => setAiPrompt(e.target.value)}
+              placeholder={t.ai_placeholder}
+              style={{ flex: 1, padding: "12px 16px", borderRadius: 24, border: "1px solid var(--line)", background: "var(--cream)", color: "var(--ink)", outline: "none", fontSize: 14 }}
+            />
+            <button
+              type="submit"
+              className="button"
+              disabled={aiLoading}
+              style={{ borderRadius: 24, padding: "0 20px", display: "inline-flex", alignItems: "center", justifyContent: "center" }}
+            >
+              {aiLoading ? "..." : <Send size={16} />}
+            </button>
+          </form>
+          <small style={{ display: "block", marginTop: 10, color: "var(--muted)", fontSize: 11, textAlign: "center" }}>
+            {t.ai_disclaimer}
+          </small>
+        </div>
       </dialog>
     </>
   );

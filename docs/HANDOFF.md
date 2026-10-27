@@ -8,19 +8,22 @@ Pilot location confirmed: Jos, Plateau State. User has access to doctors/nurses 
 
 ## Actual state
 
-Phase 01, Phase 02, Phase 03, and Phase 04 vertical slices are implemented across Laravel, React public/admin, and Flutter Android/iOS.
-All 11 screens from the Zentreeca designer handoff and wireframe (`YanMata Women’s Health App Wireframe.png` and `YanMata_Wireframe_and_Designer_Handoff.pdf`) are fully implemented and verified on the Android emulator runtime:
+Phase 01, Phase 02, Phase 03, Phase 04, and Phase 05 vertical slices are implemented across Laravel, React public/admin, and Flutter Android/iOS.
+All 11 screens from the Zentreeca designer handoff and wireframe are fully implemented and verified on the Android emulator runtime, along with Phase 05 enhancements:
 1. Welcome/Onboarding (`WelcomePage`)
-2. Home Dashboard with 5 feature shortcuts (`TodayPage`)
+2. Home Dashboard with 5 feature shortcuts, live cycle widget, Aisha AI card, multilingual header, location pill, and dark mode toggle (`TodayPage`)
 3. Risk Prediction Overview (`RiskOverviewPage`)
 4. Health Profile & Risk Factors Input (`HealthProfilePage`)
 5. Detailed Risk Insights Report (`RiskDetailsPage`)
 6. Early Detection & Screening Guide (`EarlyDetectionPage`)
-7. Cycle Tracker with circular Day 12 of 28 dial and follicular phase (`TrackPage`)
+7. Cycle Tracker with circular dial, dynamic phase, and 3-question cycle setup flow (`TrackPage`, `CycleSetupDialog`)
 8. Mental Health Support with mood emojis, coping modals, and 24/7 SURPIN/112 crisis helplines (`MentalHealthPage`)
-9. Health Services directory with verified Jos facilities and pricing (`ServicesPage`, `ServiceDetailSheet`)
-10. Shop Health Products with cart, Jos delivery, and checkout confirmation (`ShopPage`, `CartSheet`)
-11. My Profile & Records with life chapters and health records (`YouPage`)
+9. Health Services directory with dynamic city filtering (`ServicesPage`, `ServiceDetailSheet`, `LocationPickerSheet`)
+10. Shop Health Products with cart, dynamic delivery, and checkout confirmation (`ShopPage`, `CartSheet`)
+11. My Profile & Records with life chapters, health records, notification quiet hours, and language selector (`YouPage`)
+12. Aisha AI Health Companion with conversational symptom guidance, clinical guardrails, and cycle pattern intelligence (`AishaChatPage`, `AiCompanionController`)
+
+Multilingual system covers English, Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), and Nigerian Pidgin (`pcm`) on mobile and web. System-wide light/dark mode transitions verified on mobile, public web, and admin. Dynamic location engine spans Nigeria (Jos Pilot Hub, Abuja, Lagos, Kano, Ibadan, Port Harcourt, Enugu, Kaduna, Nationwide).
 
 Public web and admin studio are fully verified via automated browser testing:
 - Desktop (1440×900) and mobile (390×844) public views (`web-01-home.png`, `web-02-mobile.png`)
@@ -59,11 +62,11 @@ Minor-access protocol for the confirmed age-9-plus audience; named clinical/safe
 
 ## Verification
 
-See `docs/evidence/PHASE-01.md`, `docs/evidence/PHASE-02.md`, and `docs/evidence/PHASE-03.md` for commands, screenshots, defects, and limitations.
-Phase 03 checks:
-- API: 21 tests / 117 assertions pass with strict lazy loading prevention active.
+See `docs/evidence/PHASE-01.md`, `docs/evidence/PHASE-02.md`, `docs/evidence/PHASE-03.md`, `docs/evidence/PHASE-04.md`, and `docs/evidence/PHASE-05.md` for commands, screenshots, defects, and limitations.
+Phase 05 checks:
+- API: 29 tests / 172 assertions pass with strict lazy loading prevention active.
 - Laravel Pint: passed with zero style violations.
-- Mobile: 9 tests pass (persistence, golden baselines, 200% text scale, care specialists, tracking symptoms/flow, quiet hours calculations, discreet lock-screen copy, mobile staff studio) + live integration test passes.
+- Mobile: 10 tests pass (persistence, golden baselines, 200% text scale, care specialists, tracking symptoms/flow, quiet hours calculations, discreet lock-screen copy, mobile staff studio, layout stability) + live integration test passes.
 - TypeScript, React builds, and Prettier pass for web and admin.
-- Android debug APK (`build/app/outputs/flutter-apk/app-debug.apk`) and iOS simulator app (`build/ios/iphonesimulator/Runner.app`) built successfully.
-- Contracts: `packages/contracts/openapi.json` updated with `/devices`, `/notification-preferences`, `/events/poll` and validated with JSON parser.
+- Visual evidence: 15 screenshots captured across Android live emulator (`android-27` through `android-37`), Public Web (`web-03`, `web-04`, `web-05`), and Admin (`admin-04`).
+- Contracts: `packages/contracts/openapi.json` updated with `/locations`, `/health-services`, `/ai/companion/chat`, `/ai/cycle/insights` and validated.

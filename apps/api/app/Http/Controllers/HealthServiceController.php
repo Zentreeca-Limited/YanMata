@@ -19,6 +19,15 @@ class HealthServiceController extends Controller
             $query->where('provider_type', $request->type);
         }
 
+        if ($request->filled('city') && strtolower((string) $request->city) !== 'all') {
+            $city = $request->query('city');
+            $query->where(function ($sub) use ($city) {
+                $sub->where('city', 'like', "%{$city}%")
+                    ->orWhere('city', 'Nationwide')
+                    ->orWhere('city', 'Telehealth');
+            });
+        }
+
         if ($request->filled('query')) {
             $q = $request->query('query');
             $query->where(function ($sub) use ($q) {

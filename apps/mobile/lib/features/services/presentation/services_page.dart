@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yanmata/core/theme.dart';
 import 'package:yanmata/core/widgets.dart';
+import 'package:yanmata/features/services/application/location_provider.dart';
 import 'package:yanmata/features/services/application/services_provider.dart';
 import 'package:yanmata/features/services/domain/health_service.dart';
 import 'package:yanmata/features/services/presentation/service_detail_sheet.dart';
@@ -26,22 +27,32 @@ class _ServicesPageState extends ConsumerState<ServicesPage> {
   Widget build(BuildContext context) {
     final servicesAsync = ref.watch(healthServicesProvider);
     final activeFilter = ref.watch(servicesFilterProvider);
+    final location = ref.watch(selectedLocationProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final locationLabel = location.city == 'All Locations'
+        ? 'Nationwide & Global'
+        : (location.city == 'Jos'
+            ? 'Jos (Pilot Hub)'
+            : '${location.city}${location.state.isNotEmpty ? ', ${location.state}' : ''}');
 
     return PageFrame(
       children: [
-        const Eyebrow('Verified healthcare in Jos, Plateau State'),
+        Eyebrow('Verified healthcare · $locationLabel'),
         const SizedBox(height: 8),
         Text(
           'Find Health Services',
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: Palette.plum,
+                color: isDark ? Palette.darkText : Palette.plum,
               ),
         ),
         const SizedBox(height: 6),
-        const Text(
+        Text(
           'Accredited hospitals, community clinics, and specialists with verified credentials and clear pricing.',
-          style: TextStyle(fontSize: 13, color: Palette.slate),
+          style: TextStyle(
+            fontSize: 13,
+            color: isDark ? Palette.darkMuted : Palette.slate,
+          ),
         ),
         const SizedBox(height: 18),
 
@@ -138,7 +149,7 @@ class _ServicesPageState extends ConsumerState<ServicesPage> {
                   children: [
                     const Icon(Icons.search_off, size: 40, color: Palette.slate),
                     const SizedBox(height: 8),
-                    const Text('No matching services found in Jos.'),
+                    Text('No matching services found in ${location.city}.'),
                     const SizedBox(height: 8),
                     TextButton(
                       onPressed: () {

@@ -5,9 +5,12 @@ class PageFrame extends StatelessWidget {
   const PageFrame({super.key, required this.children});
   final List<Widget> children;
   @override
-  Widget build(BuildContext context) => ListView(
+  Widget build(BuildContext context) => SingleChildScrollView(
     padding: const EdgeInsets.fromLTRB(24, 22, 24, 30),
-    children: children,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: children,
+    ),
   );
 }
 

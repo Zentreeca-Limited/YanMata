@@ -3,13 +3,19 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yanmata/core/localization/language_picker_sheet.dart';
+import 'package:yanmata/core/localization/locale_provider.dart';
 import 'package:yanmata/core/notifications.dart';
 import 'package:yanmata/core/theme.dart';
+import 'package:yanmata/core/theme_provider.dart';
 import 'package:yanmata/core/widgets.dart';
+import 'package:yanmata/features/ai/presentation/ai_companion_page.dart';
 import 'package:yanmata/features/editorial/presentation/staff_portal_page.dart';
 import 'package:yanmata/features/journal/application/journal_controller.dart';
 import 'package:yanmata/features/journal/domain/journal_repository.dart';
 import 'package:yanmata/features/risk/presentation/risk_overview_page.dart';
+import 'package:yanmata/features/services/application/location_provider.dart';
+import 'package:yanmata/features/services/presentation/location_picker_sheet.dart';
 
 class You extends ConsumerStatefulWidget {
   const You({
@@ -126,6 +132,7 @@ class _YouState extends ConsumerState<You> {
     final controller = ref.read(journalProvider.notifier);
     final prefs = ref.watch(notificationPreferencesProvider).value ??
         const NotificationPreferences();
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return PageFrame(
       children: [
@@ -208,6 +215,170 @@ class _YouState extends ConsumerState<You> {
                 title: 'Saved Products',
                 subtitle: 'View products or check delivery orders',
                 onTap: widget.onNavigateProducts ?? () {},
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 20),
+
+        // Preferences & Region Card
+        SoftCard(
+          color: isDark ? Palette.darkCard : Colors.white,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const Icon(Icons.settings_suggest_outlined, color: Palette.plum, size: 24),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Preferences & Region',
+                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                            color: isDark ? Palette.darkText : Palette.ink,
+                          ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 6),
+              Text(
+                'Customize language, coverage hub, and dark mode for your experience.',
+                style: TextStyle(
+                  fontSize: 13,
+                  color: isDark ? Palette.darkMuted : Palette.muted,
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Language Selector Row
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: isDark ? Palette.darkSurface : Palette.lilac,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.translate, size: 20, color: Palette.plum),
+                ),
+                title: Text(
+                  ref.tr('language_setting'),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14.5,
+                    color: isDark ? Palette.darkText : Palette.ink,
+                  ),
+                ),
+                subtitle: Text(
+                  '${ref.watch(localeProvider).nativeName} (${ref.watch(localeProvider).englishName})',
+                  style: TextStyle(
+                    fontSize: 12.5,
+                    color: isDark ? Palette.darkMuted : Palette.muted,
+                  ),
+                ),
+                trailing: const Icon(Icons.chevron_right, size: 20),
+                onTap: () => LanguagePickerSheet.show(context),
+              ),
+              Divider(height: 1, color: isDark ? Palette.darkBorder : const Color(0xFFF0E6F2)),
+
+              // Location Selector Row
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: isDark ? Palette.darkSurface : Palette.lilac,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.location_on_outlined, size: 20, color: Palette.plum),
+                ),
+                title: Text(
+                  ref.tr('location_setting'),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14.5,
+                    color: isDark ? Palette.darkText : Palette.ink,
+                  ),
+                ),
+                subtitle: Text(
+                  ref.watch(selectedLocationProvider).label,
+                  style: TextStyle(
+                    fontSize: 12.5,
+                    color: isDark ? Palette.darkMuted : Palette.muted,
+                  ),
+                ),
+                trailing: const Icon(Icons.chevron_right, size: 20),
+                onTap: () => LocationPickerSheet.show(context),
+              ),
+              Divider(height: 1, color: isDark ? Palette.darkBorder : const Color(0xFFF0E6F2)),
+
+              // Theme Appearance Row
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: isDark ? Palette.darkSurface : Palette.lilac,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    isDark ? Icons.dark_mode : Icons.light_mode,
+                    size: 20,
+                    color: Palette.plum,
+                  ),
+                ),
+                title: Text(
+                  ref.tr('theme_setting'),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14.5,
+                    color: isDark ? Palette.darkText : Palette.ink,
+                  ),
+                ),
+                subtitle: Text(
+                  isDark ? 'Dark Mode active' : 'Light Mode active',
+                  style: TextStyle(
+                    fontSize: 12.5,
+                    color: isDark ? Palette.darkMuted : Palette.muted,
+                  ),
+                ),
+                trailing: Switch(
+                  value: isDark,
+                  activeThumbColor: Palette.plum,
+                  onChanged: (_) => ref.read(themeModeProvider.notifier).toggleTheme(isDark),
+                ),
+              ),
+              Divider(height: 1, color: isDark ? Palette.darkBorder : const Color(0xFFF0E6F2)),
+
+              // Aisha AI Companion Quick Access Row
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: isDark ? Palette.darkSurface : Palette.lilac,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.auto_awesome, size: 20, color: Palette.plum),
+                ),
+                title: Text(
+                  ref.tr('ai_companion_title'),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14.5,
+                    color: isDark ? Palette.darkText : Palette.ink,
+                  ),
+                ),
+                subtitle: const Text(
+                  '24/7 Educational chat companion',
+                  style: TextStyle(fontSize: 12.5, color: Palette.muted),
+                ),
+                trailing: const Icon(Icons.chevron_right, size: 20),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(builder: (_) => const AiCompanionPage()),
+                ),
               ),
             ],
           ),

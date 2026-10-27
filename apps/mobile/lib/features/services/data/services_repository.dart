@@ -108,6 +108,7 @@ class ServicesRepository {
     String? category,
     String? query,
     String? providerType,
+    String? city,
   }) async {
     try {
       final queryParams = <String>[];
@@ -124,18 +125,21 @@ class ServicesRepository {
       if (query != null && query.isNotEmpty) {
         queryParams.add('query=${Uri.encodeComponent(query)}');
       }
+      if (city != null && city.isNotEmpty && !city.toLowerCase().contains('all')) {
+        queryParams.add('city=${Uri.encodeComponent(city)}');
+      }
 
       final qs = queryParams.isEmpty ? '' : '?${queryParams.join('&')}';
       final res = await _api.request('/services$qs');
       final list = (res['data'] as List<dynamic>?) ?? [];
       if (list.isEmpty) {
-        return _filterLocal(fallbackServices, category, providerType, query);
+        return _filterLocal(fallbackServices, category, providerType, query, city);
       }
       return list
           .map((e) => HealthService.fromJson(e as Map<String, dynamic>))
           .toList();
     } catch (_) {
-      return _filterLocal(fallbackServices, category, providerType, query);
+      return _filterLocal(fallbackServices, category, providerType, query, city);
     }
   }
 
@@ -143,9 +147,17 @@ class ServicesRepository {
     List<HealthService> services,
     String? category,
     String? providerType,
-    String? query,
-  ) {
+    String? query, [
+    String? city,
+  ]) {
     return services.where((s) {
+      if (city != null &&
+          city.isNotEmpty &&
+          !city.toLowerCase().contains('all') &&
+          !s.city.toLowerCase().contains(city.toLowerCase()) &&
+          !s.city.toLowerCase().contains('nationwide')) {
+        return false;
+      }
       if (category != null &&
           category != 'All' &&
           !s.category.toLowerCase().contains(category.toLowerCase())) {

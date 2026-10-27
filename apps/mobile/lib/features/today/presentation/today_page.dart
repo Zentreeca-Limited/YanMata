@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yanmata/core/localization/language_picker_sheet.dart';
+import 'package:yanmata/core/localization/locale_provider.dart';
 import 'package:yanmata/core/theme.dart';
+import 'package:yanmata/core/theme_provider.dart';
 import 'package:yanmata/core/widgets.dart';
+import 'package:yanmata/features/ai/presentation/ai_companion_page.dart';
+import 'package:yanmata/features/journal/application/cycle_settings_provider.dart';
 import 'package:yanmata/features/journal/application/journal_controller.dart';
 import 'package:yanmata/features/mental_health/presentation/mental_health_page.dart';
 import 'package:yanmata/features/risk/presentation/early_detection_page.dart';
 import 'package:yanmata/features/risk/presentation/risk_overview_page.dart';
+import 'package:yanmata/features/services/application/location_provider.dart';
+import 'package:yanmata/features/services/presentation/location_picker_sheet.dart';
 
 class Today extends ConsumerWidget {
   const Today({
@@ -26,44 +33,112 @@ class Today extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final journal = ref.watch(journalProvider).value;
+    final cycle = ref.watch(cycleSettingsProvider);
+    final location = ref.watch(selectedLocationProvider);
+    final lang = ref.watch(localeProvider);
+    ref.watch(themeModeProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return PageFrame(
       children: [
-        // Brand & Status Bar
-        Row(
+        // Brand & Status Bar with Language, Location and Theme Controls
+        // Brand & Status Bar with Language, Location and Theme Controls (Adaptive wrap)
+        Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          runSpacing: 8,
           children: [
-            const Icon(Icons.spa_outlined, color: Palette.plum, size: 32),
-            const SizedBox(width: 8),
-            const Text(
-              'YanMata',
-              textScaler: TextScaler.noScaling,
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.w700,
-                color: Palette.plum,
-                letterSpacing: -1,
-              ),
-            ),
-            const Spacer(),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-              decoration: BoxDecoration(
-                color: Palette.lilac,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: const Text(
-                'PREVIEW',
-                textScaler: TextScaler.noScaling,
-                style: TextStyle(
-                  fontSize: 12,
-                  letterSpacing: 1,
-                  color: Palette.plum,
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.spa_outlined, color: Palette.plum, size: 28),
+                const SizedBox(width: 8),
+                Text(
+                  ref.tr('app_name'),
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                    color: isDark ? Palette.darkText : Palette.plum,
+                    letterSpacing: -1,
+                  ),
                 ),
-              ),
+              ],
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Location Badge
+                InkWell(
+                  onTap: () => LocationPickerSheet.show(context),
+                  borderRadius: BorderRadius.circular(16),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: isDark ? Palette.darkSurface : Palette.lilac,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.location_on, size: 14, color: Palette.plum),
+                        const SizedBox(width: 4),
+                        Text(
+                          location.city == 'All Locations' ? 'All' : location.city,
+                          style: TextStyle(
+                            fontSize: 11.5,
+                            fontWeight: FontWeight.w700,
+                            color: isDark ? Palette.darkText : Palette.plum,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 6),
+                // Language Badge
+                InkWell(
+                  onTap: () => LanguagePickerSheet.show(context),
+                  borderRadius: BorderRadius.circular(16),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: isDark ? Palette.darkSurface : Palette.blush,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.translate, size: 13, color: Palette.plum),
+                        const SizedBox(width: 4),
+                        Text(
+                          lang.code.toUpperCase(),
+                          style: TextStyle(
+                            fontSize: 11.5,
+                            fontWeight: FontWeight.w800,
+                            color: isDark ? Palette.darkText : Palette.plum,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 4),
+                // Theme Toggle
+                IconButton(
+                  iconSize: 20,
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                  icon: Icon(
+                    isDark ? Icons.light_mode : Icons.dark_mode_outlined,
+                    color: isDark ? Palette.darkAccent : Palette.plum,
+                  ),
+                  onPressed: () => ref.read(themeModeProvider.notifier).toggleTheme(isDark),
+                ),
+              ],
             ),
           ],
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 20),
 
         // Personalized Greeting Header (Wireframe Screen 2)
         Row(
@@ -71,19 +146,22 @@ class Today extends ConsumerWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
-                    'Good day, Aisha ☀️',
+                    '${ref.tr('greeting_prefix')} Aisha ☀️',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w800,
-                      color: Palette.plum,
+                      color: isDark ? Palette.darkText : Palette.plum,
                     ),
                   ),
-                  SizedBox(height: 3),
+                  const SizedBox(height: 3),
                   Text(
-                    'Your health matters. You’re not alone.',
-                    style: TextStyle(fontSize: 13, color: Palette.slate),
+                    ref.tr('greeting_subtitle'),
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: isDark ? Palette.darkMuted : Palette.slate,
+                    ),
                   ),
                 ],
               ),
@@ -94,32 +172,37 @@ class Today extends ConsumerWidget {
                 width: 44,
                 height: 44,
                 decoration: BoxDecoration(
-                  color: Palette.lilac,
+                  color: isDark ? Palette.darkSurface : Palette.lilac,
                   shape: BoxShape.circle,
-                  border: Border.all(color: Palette.plum, width: 1.5),
+                  border: Border.all(
+                    color: isDark ? Palette.darkBorder : Palette.plum,
+                    width: 1.5,
+                  ),
                 ),
-                child: const Icon(Icons.person, color: Palette.plum, size: 24),
+                child: Icon(
+                  Icons.person,
+                  color: isDark ? Palette.darkText : Palette.plum,
+                  size: 24,
+                ),
               ),
             ),
           ],
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 20),
 
-        const Eyebrow('A little care, every day'),
+        Eyebrow(ref.tr('care_quote_eyebrow')),
         const SizedBox(height: 8),
         Text(
-          'A moment,\njust for you.',
+          ref.tr('care_quote_title'),
           style: Theme.of(context).textTheme.headlineLarge,
         ),
         const SizedBox(height: 8),
-        const Text(
-          'Growing. Changing. Always you.\nThere’s room for every kind of day here.',
-        ),
+        Text(ref.tr('care_quote_body')),
         const SizedBox(height: 20),
 
-        // Next Cycle Summary Card
+        // Next Cycle Summary Card (Wireframe Screen 2 & 7)
         SoftCard(
-          color: Colors.white,
+          color: isDark ? Palette.darkCard : Colors.white,
           child: InkWell(
             onTap: onTrack,
             borderRadius: BorderRadius.circular(16),
@@ -144,22 +227,22 @@ class Today extends ConsumerWidget {
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         Text(
-                          'Next cycle in Day 12 of 28',
+                          '${ref.tr('cycle_card_prefix')} ${ref.tr('day_of_cycle', params: {'day': '${cycle.currentDayOfCycle}', 'total': '${cycle.cycleLength}'})}',
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
-                            color: Palette.ink,
+                            color: isDark ? Palette.darkText : Palette.ink,
                           ),
                         ),
-                        SizedBox(height: 2),
+                        const SizedBox(height: 2),
                         Text(
-                          'Follicular Phase · View cycle details →',
+                          '${cycle.currentPhase} · ${ref.tr('cycle_card_action')}',
                           style: TextStyle(
                             fontSize: 12,
-                            color: Palette.plum,
-                            fontWeight: FontWeight.w500,
+                            color: isDark ? Palette.darkAccent : Palette.plum,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],
@@ -172,11 +255,27 @@ class Today extends ConsumerWidget {
         ),
         const SizedBox(height: 16),
 
-        // Feature Shortcuts from Wireframe Screen 2
+        // AI Health Companion Shortcut Card
+        _FeatureCard(
+          icon: Icons.auto_awesome,
+          title: ref.tr('shortcut_ai'),
+          subtitle: ref.tr('shortcut_ai_sub'),
+          accentColor: Palette.plum,
+          badgeText: 'AI 24/7',
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+              builder: (_) => const AiCompanionPage(),
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
+
+        // Health Risk Prediction Shortcut Card
         _FeatureCard(
           icon: Icons.shield_outlined,
-          title: 'Your Health Risk Prediction',
-          subtitle: 'See your personalised risk summary and recommendations →',
+          title: ref.tr('shortcut_risk'),
+          subtitle: ref.tr('shortcut_risk_sub'),
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute<void>(
@@ -186,10 +285,11 @@ class Today extends ConsumerWidget {
         ),
         const SizedBox(height: 12),
 
+        // Mental Health Support Shortcut Card
         _FeatureCard(
           icon: Icons.psychology_outlined,
-          title: 'Mental Health Support',
-          subtitle: 'Talk to a professional or access supportive resources →',
+          title: ref.tr('shortcut_mental'),
+          subtitle: ref.tr('shortcut_mental_sub'),
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute<void>(
@@ -199,26 +299,29 @@ class Today extends ConsumerWidget {
         ),
         const SizedBox(height: 12),
 
+        // Find Health Services Shortcut Card
         _FeatureCard(
           icon: Icons.local_hospital_outlined,
-          title: 'Find Health Services',
-          subtitle: 'Verified hospitals, clinics & specialists in Jos →',
+          title: ref.tr('shortcut_services'),
+          subtitle: ref.tr('shortcut_services_sub'),
           onTap: onServices,
         ),
         const SizedBox(height: 12),
 
+        // Shop Health Products Shortcut Card
         _FeatureCard(
           icon: Icons.shopping_bag_outlined,
-          title: 'Shop Health Products',
-          subtitle: 'Verified pharmacies & wellness products in Jos →',
+          title: ref.tr('shortcut_products'),
+          subtitle: ref.tr('shortcut_products_sub'),
           onTap: onProducts,
         ),
         const SizedBox(height: 12),
 
+        // Early Detection & Screening Shortcut Card
         _FeatureCard(
           icon: Icons.biotech_outlined,
-          title: 'Early Detection & Screening',
-          subtitle: 'Detect early. Protect your future with regular checks →',
+          title: ref.tr('shortcut_early'),
+          subtitle: ref.tr('shortcut_early_sub'),
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute<void>(
@@ -230,66 +333,40 @@ class Today extends ConsumerWidget {
 
         // Daily Check-in CTA
         SoftCard(
-          color: Palette.blush,
+          color: isDark ? Palette.darkCard : Palette.blush,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Row(
+              Row(
                 children: [
-                  Icon(Icons.wb_sunny_outlined, color: Palette.plum),
-                  SizedBox(width: 8),
-                  Text(
-                    'DAILY REFLECTION',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1,
-                      color: Palette.plum,
+                  const Icon(Icons.wb_sunny_outlined, color: Palette.plum),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      ref.tr('mood_label'),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: isDark ? Palette.darkText : Palette.plum,
+                      ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
-              Text(
-                'How are you, really?',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
               const SizedBox(height: 6),
-              const Text(
-                'You don’t have to find the perfect words. Start with how you feel today.',
-                style: TextStyle(fontSize: 13),
+              Text(
+                journal != null && journal.entries.isNotEmpty
+                    ? 'Latest log: ${journal.entries.first.mood} · Stored securely on device.'
+                    : 'A private moment to reflect on your energy, mood and cycle symptoms.',
+                style: TextStyle(
+                  fontSize: 13,
+                  color: isDark ? Palette.darkMuted : Palette.ink,
+                ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 14),
               FilledButton(
                 onPressed: onTrack,
-                child: const Text('Check in with yourself'),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 20),
-
-        // Journal moments count
-        SoftCard(
-          color: Colors.white,
-          child: Row(
-            children: [
-              const Icon(Icons.favorite_outline, color: Palette.plum, size: 28),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Small moments matter.',
-                      style: TextStyle(fontWeight: FontWeight.bold, color: Palette.ink),
-                    ),
-                    Text(
-                      '${journal?.entries.length ?? 0} private moments recorded on this phone',
-                      style: const TextStyle(fontSize: 12, color: Palette.slate),
-                    ),
-                  ],
-                ),
+                child: Text(ref.tr('save_checkin')),
               ),
             ],
           ),
@@ -305,62 +382,99 @@ class _FeatureCard extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.onTap,
+    this.accentColor,
+    this.badgeText,
   });
 
   final IconData icon;
   final String title;
   final String subtitle;
   final VoidCallback onTap;
+  final Color? accentColor;
+  final String? badgeText;
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final baseColor = accentColor ?? Palette.plum;
+
     return Material(
-      color: Colors.white,
+      color: isDark ? Palette.darkCard : Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: const BorderSide(color: Color(0xFFE9E2E9)),
+        side: BorderSide(
+          color: isDark ? Palette.darkBorder : const Color(0xFFF0E6F2),
+        ),
       ),
       child: InkWell(
-        borderRadius: BorderRadius.circular(16),
         onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           child: Row(
             children: [
               Container(
                 width: 44,
                 height: 44,
                 decoration: BoxDecoration(
-                  color: Palette.lilac,
+                  color: isDark ? Palette.darkSurface : Palette.lilac,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Icon(icon, color: Palette.plum, size: 22),
+                child: Icon(icon, color: baseColor, size: 24),
               ),
               const SizedBox(width: 14),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Palette.ink,
-                      ),
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 6,
+                      runSpacing: 4,
+                      children: [
+                        Text(
+                          title,
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700,
+                            color: isDark ? Palette.darkText : Palette.ink,
+                          ),
+                        ),
+                        if (badgeText != null)
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: Palette.blush,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              badgeText!,
+                              style: const TextStyle(
+                                fontSize: 9.5,
+                                fontWeight: FontWeight.w800,
+                                color: Palette.plum,
+                              ),
+                            ),
+                          ),
+                      ],
                     ),
                     const SizedBox(height: 3),
                     Text(
                       subtitle,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
-                        color: Palette.slate,
+                        color: isDark ? Palette.darkMuted : Palette.muted,
+                        height: 1.3,
                       ),
                     ),
                   ],
                 ),
               ),
-              const Icon(Icons.chevron_right, size: 20, color: Palette.slate),
+              Icon(
+                Icons.chevron_right_rounded,
+                color: isDark ? Palette.darkMuted : Palette.slate,
+                size: 20,
+              ),
             ],
           ),
         ),

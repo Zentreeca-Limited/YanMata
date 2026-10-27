@@ -14,6 +14,9 @@ import {
   X,
   RefreshCw,
   MessageCircle,
+  Moon,
+  Sun,
+  Globe,
 } from "lucide-react";
 import {
   Brand,
@@ -50,6 +53,11 @@ function App() {
   const [editing, setEditing] = useState<Article | null | undefined>(undefined);
   const [form, setForm] = useState(blank);
   const [notice, setNotice] = useState("");
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
   async function load() {
     try {
       const result = await api<{ data: Article[] }>("/studio/content");
@@ -308,7 +316,30 @@ function App() {
             Workspace <span>/</span>{" "}
             {tab === "articles" ? "Learning library" : "Care inquiries"}
           </span>
-          <Tag>DEVELOPMENT PREVIEW</Tag>
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <span style={{ fontSize: 12, color: "var(--muted)", display: "flex", alignItems: "center", gap: 4 }}>
+              <Globe size={14} /> National Coverage: Jos · Abuja · Lagos · Kano · Telehealth
+            </span>
+            <button
+              aria-label="Toggle theme"
+              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: 32,
+                height: 32,
+                borderRadius: "50%",
+                background: "var(--lilac)",
+                border: "none",
+                color: "var(--plum)",
+                cursor: "pointer",
+              }}
+            >
+              {theme === "light" ? <Moon size={15} /> : <Sun size={15} />}
+            </button>
+            <Tag>DEVELOPMENT PREVIEW</Tag>
+          </div>
         </header>
         <main>
           {tab === "articles" ? (

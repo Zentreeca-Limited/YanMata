@@ -163,4 +163,50 @@ class HealthFeaturesTest extends TestCase
         $res->assertHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
         $res->assertHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
     }
+
+    public function test_can_get_dynamic_locations(): void
+    {
+        $res = $this->getJson('/api/v1/locations');
+        $res->assertOk()
+            ->assertJsonPath('default_pilot', 'jos')
+            ->assertJsonStructure(['data' => [['id', 'city', 'state', 'country', 'label', 'is_pilot_hub']]]);
+    }
+
+    public function test_ai_companion_chat_and_crisis_handling(): void
+    {
+        // 1. Normal educational chat
+        $res = $this->postJson('/api/v1/ai/companion/chat', [
+            'prompt' => 'How can I ease cramps?',
+            'language' => 'en',
+            'cycle_day' => 1,
+            'phase' => 'Menstrual Phase',
+        ]);
+        $res->assertOk()
+            ->assertJsonPath('data.is_emergency', false)
+            ->assertJsonStructure(['data' => ['reply', 'citations', 'follow_up_questions', 'suggested_actions']]);
+
+        // 2. Crisis trigger
+        $crisis = $this->postJson('/api/v1/ai/companion/chat', [
+            'prompt' => 'I feel like bleeding heavily and dying',
+            'language' => 'pcm',
+        ]);
+        $crisis->assertOk()
+            ->assertJsonPath('data.is_emergency', true)
+            ->assertJsonCount(2, 'data.helplines');
+    }
+
+    public function test_ai_cycle_insights(): void
+    {
+        $res = $this->postJson('/api/v1/ai/cycle/insights', [
+            'cycle_length' => 28,
+            'period_duration' => 5,
+            'current_day' => 12,
+            'language' => 'en',
+        ]);
+
+        $res->assertOk()
+            ->assertJsonPath('data.regularity', 'Healthy & Regular')
+            ->assertJsonPath('data.phase', 'Follicular Phase')
+            ->assertJsonPath('data.total_days', 28);
+    }
 }

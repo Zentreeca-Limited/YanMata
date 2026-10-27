@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\AiCompanionController;
 use App\Http\Controllers\CareController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\HealthProductController;
 use App\Http\Controllers\HealthServiceController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MentalHealthController;
 use App\Http\Controllers\RiskAssessmentController;
 use App\Http\Controllers\SessionController;
@@ -17,7 +19,10 @@ Route::prefix('v1')->group(function () {
     Route::get('/specialists', [CareController::class, 'specialists'])->middleware('throttle:60,1');
     Route::post('/mobile/login', [SessionController::class, 'login'])->middleware('throttle:login');
 
-    // Health Services (Hospitals, Clinics, Specialists in Jos)
+    // Dynamic Locations & Coverage Hubs
+    Route::get('/locations', [LocationController::class, 'index'])->middleware('throttle:60,1');
+
+    // Health Services (Hospitals, Clinics, Specialists)
     Route::get('/services', [HealthServiceController::class, 'index'])->middleware('throttle:60,1');
     Route::get('/services/{id}', [HealthServiceController::class, 'show'])->middleware('throttle:60,1');
 
@@ -25,6 +30,10 @@ Route::prefix('v1')->group(function () {
     Route::get('/products', [HealthProductController::class, 'index'])->middleware('throttle:60,1');
     Route::get('/products/{id}', [HealthProductController::class, 'show'])->middleware('throttle:60,1');
     Route::post('/orders', [HealthProductController::class, 'order'])->middleware('throttle:60,1');
+
+    // AI Companion & Cycle Insights
+    Route::post('/ai/companion/chat', [AiCompanionController::class, 'chat'])->middleware('throttle:30,1');
+    Route::post('/ai/cycle/insights', [AiCompanionController::class, 'cycleInsights'])->middleware('throttle:30,1');
 
     // Mental Health Resources & Helplines
     Route::get('/mental-health/resources', [MentalHealthController::class, 'resources'])->middleware('throttle:60,1');

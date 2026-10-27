@@ -98,7 +98,7 @@ class ServiceDetailSheet extends StatelessWidget {
               spacing: 8,
               runSpacing: 8,
               children: [
-                _Badge(icon: Icons.location_on_outlined, text: '${service.distanceKm} km from Jos Centre'),
+                _Badge(icon: Icons.location_on_outlined, text: '${service.distanceKm} km · ${service.city}'),
                 _Badge(icon: Icons.payments_outlined, text: service.priceRange),
                 _Badge(icon: Icons.access_time_outlined, text: service.openingHours),
               ],

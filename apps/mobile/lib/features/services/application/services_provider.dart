@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yanmata/features/services/application/location_provider.dart';
 import 'package:yanmata/features/services/data/services_repository.dart';
 import 'package:yanmata/features/services/domain/health_service.dart';
 
@@ -33,6 +34,7 @@ final healthServicesProvider =
   final repo = ref.watch(servicesRepositoryProvider);
   final filter = ref.watch(servicesFilterProvider);
   final query = ref.watch(servicesSearchQueryProvider);
+  final selectedLocation = ref.watch(selectedLocationProvider);
 
   String? providerType;
   if (filter != 'All') {
@@ -48,5 +50,6 @@ final healthServicesProvider =
   return repo.fetchServices(
     providerType: providerType,
     query: query.isEmpty ? null : query,
+    city: selectedLocation.city.toLowerCase().contains('all') ? null : selectedLocation.city,
   );
 });
