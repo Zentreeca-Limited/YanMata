@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yanmata/core/notifications.dart';
 import 'package:yanmata/core/theme.dart';
 import 'package:yanmata/core/widgets.dart';
+import 'package:yanmata/features/editorial/presentation/staff_portal_page.dart';
 import 'package:yanmata/features/journal/application/journal_controller.dart';
 import 'package:yanmata/features/journal/domain/journal_repository.dart';
 
@@ -110,6 +112,8 @@ class _YouState extends ConsumerState<You> {
   Widget build(BuildContext context) {
     final s = ref.watch(journalProvider).value ?? const JournalState();
     final controller = ref.read(journalProvider.notifier);
+    final prefs = ref.watch(notificationPreferencesProvider).value ??
+        const NotificationPreferences();
 
     return PageFrame(
       children: [
@@ -135,9 +139,11 @@ class _YouState extends ConsumerState<You> {
                 children: [
                   const Icon(Icons.auto_stories_outlined, color: Palette.plum, size: 24),
                   const SizedBox(width: 8),
-                  Text(
-                    'Your life chapter',
-                    style: Theme.of(context).textTheme.headlineSmall,
+                  Expanded(
+                    child: Text(
+                      'Your life chapter',
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
                   ),
                 ],
               ),
@@ -282,6 +288,162 @@ class _YouState extends ConsumerState<You> {
           const SizedBox(height: 15),
           Text(message!, style: const TextStyle(fontSize: 12)),
         ],
+
+        if (s.isStaff) ...[
+          const SizedBox(height: 20),
+          SoftCard(
+            color: const Color(0xFFF3E8FF),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.verified_user_outlined,
+                        color: Palette.plum, size: 24),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'Staff Editorial Studio',
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  'Signed in as ${s.userName ?? 'Staff'} (${s.userRole}). You can draft, review, and publish educational articles, or triage care inquiries.',
+                  style: const TextStyle(fontSize: 13),
+                ),
+                const SizedBox(height: 14),
+                FilledButton.icon(
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (_) => const StaffPortalPage(),
+                    ),
+                  ),
+                  icon: const Icon(Icons.edit_note),
+                  label: const Text('Open mobile editorial studio'),
+                ),
+              ],
+            ),
+          ),
+        ],
+
+        const SizedBox(height: 20),
+
+        // Reminders & Notifications Card
+        SoftCard(
+          color: Colors.white,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const Icon(Icons.notifications_active_outlined,
+                      color: Palette.plum, size: 24),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Reminders & quiet hours',
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 6),
+              const Text(
+                'Gentle, local check-in reminders with strict lock-screen privacy. No clinical labels appear outside the app.',
+                style: TextStyle(fontSize: 13),
+              ),
+              const SizedBox(height: 14),
+              // Discreet Lock-Screen Preview
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Palette.cream,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: const Color(0xFFE9E2E9)),
+                ),
+                child: const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.lock_outline, size: 14, color: Palette.slate),
+                        SizedBox(width: 6),
+                        Expanded(
+                          child: Text(
+                            'Discreet lock-screen notice',
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w600,
+                              color: Palette.slate,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          '20:00',
+                          style: TextStyle(fontSize: 11, color: Palette.slate),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 6),
+                    Text(
+                      'A quiet moment',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                        color: Palette.plum,
+                      ),
+                    ),
+                    SizedBox(height: 2),
+                    Text(
+                      'How has your day felt so far?',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 14),
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: const Text('Daily reflection reminder',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+                subtitle: Text('Scheduled for ${prefs.checkInReminderTime} daily',
+                    style: const TextStyle(fontSize: 12)),
+                value: prefs.checkInReminderEnabled,
+                onChanged: (val) => ref
+                    .read(notificationPreferencesProvider.notifier)
+                    .toggleCheckInReminder(val),
+              ),
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: const Text('Quiet hours',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+                subtitle: Text(
+                    '${prefs.quietHoursStart} – ${prefs.quietHoursEnd} (no alerts sent)',
+                    style: const TextStyle(fontSize: 12)),
+                value: prefs.quietHoursEnabled,
+                onChanged: (val) => ref
+                    .read(notificationPreferencesProvider.notifier)
+                    .toggleQuietHours(val),
+              ),
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: const Text('Care message notifications',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+                subtitle: const Text(
+                    'Opaque alert when your assigned specialist replies',
+                    style: TextStyle(fontSize: 12)),
+                value: prefs.careMessages,
+                onChanged: (val) => ref
+                    .read(notificationPreferencesProvider.notifier)
+                    .toggleCareMessages(val),
+              ),
+            ],
+          ),
+        ),
 
         const SizedBox(height: 20),
 

@@ -1762,6 +1762,168 @@
           }
         }
       }
+    },
+    "/devices": {
+      "post": {
+        "summary": "Register or rotate a device push notification token",
+        "security": [
+          { "bearerAuth": [] },
+          { "cookieAuth": [] }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["device_id", "platform"],
+                "properties": {
+                  "device_id": { "type": "string", "maxLength": 128 },
+                  "device_name": { "type": "string", "maxLength": 100 },
+                  "platform": { "type": "string", "enum": ["android", "ios", "web"] },
+                  "push_token": { "type": "string", "maxLength": 512, "nullable": true },
+                  "push_enabled": { "type": "boolean" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Device registered or updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": { "$ref": "#/components/schemas/Device" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/devices/{device_id}": {
+      "delete": {
+        "summary": "Unregister a device and delete its push token",
+        "security": [
+          { "bearerAuth": [] },
+          { "cookieAuth": [] }
+        ],
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Device uninstalled or logged out"
+          }
+        }
+      }
+    },
+    "/notification-preferences": {
+      "get": {
+        "summary": "Get member notification and quiet-hours preferences",
+        "security": [
+          { "bearerAuth": [] },
+          { "cookieAuth": [] }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current notification preferences",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": { "$ref": "#/components/schemas/NotificationPreferences" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update notification and quiet-hours preferences",
+        "security": [
+          { "bearerAuth": [] },
+          { "cookieAuth": [] }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "care_messages": { "type": "boolean" },
+                  "editorial_updates": { "type": "boolean" },
+                  "quiet_hours_enabled": { "type": "boolean" },
+                  "quiet_hours_start": { "type": "string", "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$" },
+                  "quiet_hours_end": { "type": "string", "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated notification preferences",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": { "$ref": "#/components/schemas/NotificationPreferences" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events/poll": {
+      "get": {
+        "summary": "Poll recent broadcast events for client reconciliation",
+        "security": [
+          { "bearerAuth": [] },
+          { "cookieAuth": [] }
+        ],
+        "parameters": [
+          {
+            "name": "since",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "format": "date-time" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of recent broadcast events",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/BroadcastEvent" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2148,6 +2310,58 @@
             "items": { "$ref": "#/components/schemas/CareMessage" }
           },
           "last_message_at": { "type": "string", "format": "date-time", "nullable": true }
+        }
+      },
+      "Device": {
+        "type": "object",
+        "required": ["id", "device_id", "platform", "push_enabled"],
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "device_id": { "type": "string" },
+          "device_name": { "type": "string" },
+          "platform": { "type": "string", "enum": ["android", "ios", "web"] },
+          "push_token": { "type": "string", "nullable": true },
+          "push_enabled": { "type": "boolean" },
+          "last_seen_at": { "type": "string", "format": "date-time", "nullable": true }
+        }
+      },
+      "NotificationPreferences": {
+        "type": "object",
+        "required": [
+          "care_messages",
+          "editorial_updates",
+          "quiet_hours_enabled",
+          "quiet_hours_start",
+          "quiet_hours_end"
+        ],
+        "properties": {
+          "care_messages": { "type": "boolean" },
+          "editorial_updates": { "type": "boolean" },
+          "quiet_hours_enabled": { "type": "boolean" },
+          "quiet_hours_start": { "type": "string" },
+          "quiet_hours_end": { "type": "string" }
+        }
+      },
+      "BroadcastEvent": {
+        "type": "object",
+        "required": ["id", "channel", "event", "payload", "created_at"],
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "channel": { "type": "string" },
+          "event": { "type": "string" },
+          "payload": {
+            "type": "object",
+            "description": "Privacy-preserving payload containing opaque event identifiers; zero clinical text",
+            "required": ["event_id", "type", "conversation_id", "timestamp"],
+            "properties": {
+              "event_id": { "type": "string", "format": "uuid" },
+              "type": { "type": "string" },
+              "conversation_id": { "type": "string", "format": "uuid" },
+              "message_id": { "type": "string", "format": "uuid" },
+              "timestamp": { "type": "string", "format": "date-time" }
+            }
+          },
+          "created_at": { "type": "string", "format": "date-time" }
         }
       }
     }

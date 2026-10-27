@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\BroadcastEvent;
 use App\Models\ContentItem;
 use App\Models\SpecialistProfile;
 use App\Models\User;
@@ -282,5 +283,147 @@ class YanMataTest extends TestCase
         $this->postJson("/api/v1/care/conversations/{$convId}/messages", [
             'body' => 'Yes, a warm compress or hot water bottle wrapped in a towel is a very gentle, safe way to soothe cramps.',
         ])->assertCreated()->assertJsonPath('data.sender_role', 'specialist');
+    }
+
+    public function test_device_registration_token_rotation_and_revocation(): void
+    {
+        $member = $this->actor('member');
+        Sanctum::actingAs($member);
+
+        // Register initial device
+        $res = $this->postJson('/api/v1/devices', [
+            'device_id' => 'device-android-001',
+            'device_name' => 'Tecno Camon 20',
+            'platform' => 'android',
+            'push_token' => 'fcm-token-alpha-1234567890',
+        ])->assertOk();
+
+        $res->assertJsonPath('data.device_id', 'device-android-001')
+            ->assertJsonPath('data.platform', 'android')
+            ->assertJsonPath('data.device_name', 'Tecno Camon 20')
+            ->assertJsonPath('data.push_token', 'fcm-toke...');
+
+        $this->assertDatabaseHas('user_devices', [
+            'user_id' => $member->id,
+            'device_id' => 'device-android-001',
+            'push_token' => 'fcm-token-alpha-1234567890',
+        ]);
+
+        // Rotate token
+        $this->postJson('/api/v1/devices', [
+            'device_id' => 'device-android-001',
+            'platform' => 'android',
+            'push_token' => 'fcm-token-beta-9876543210',
+        ])->assertOk();
+
+        $this->assertDatabaseHas('user_devices', [
+            'user_id' => $member->id,
+            'device_id' => 'device-android-001',
+            'push_token' => 'fcm-token-beta-9876543210',
+        ]);
+
+        // Unregister device
+        $this->deleteJson('/api/v1/devices/device-android-001')->assertNoContent();
+        $this->assertDatabaseMissing('user_devices', ['device_id' => 'device-android-001']);
+    }
+
+    public function test_logout_revokes_device_push_token_when_device_id_provided(): void
+    {
+        $member = $this->actor('member');
+        Sanctum::actingAs($member);
+
+        $this->postJson('/api/v1/devices', [
+            'device_id' => 'device-ios-002',
+            'platform' => 'ios',
+            'push_token' => 'apns-token-123',
+        ])->assertOk();
+
+        $this->assertDatabaseHas('user_devices', ['device_id' => 'device-ios-002']);
+
+        // Logout with device_id
+        $this->postJson('/api/v1/logout', ['device_id' => 'device-ios-002'])->assertNoContent();
+        $this->assertDatabaseMissing('user_devices', ['device_id' => 'device-ios-002']);
+    }
+
+    public function test_notification_preferences_get_and_update(): void
+    {
+        $member = $this->actor('member');
+        Sanctum::actingAs($member);
+
+        // Get defaults
+        $this->getJson('/api/v1/notification-preferences')
+            ->assertOk()
+            ->assertJsonPath('data.care_messages', true)
+            ->assertJsonPath('data.quiet_hours_enabled', true)
+            ->assertJsonPath('data.quiet_hours_start', '22:00')
+            ->assertJsonPath('data.quiet_hours_end', '07:00');
+
+        // Update preferences
+        $this->putJson('/api/v1/notification-preferences', [
+            'care_messages' => true,
+            'quiet_hours_start' => '21:30',
+            'quiet_hours_end' => '06:30',
+        ])->assertOk()
+            ->assertJsonPath('data.quiet_hours_start', '21:30')
+            ->assertJsonPath('data.quiet_hours_end', '06:30');
+
+        $this->assertDatabaseHas('notification_preferences', [
+            'user_id' => $member->id,
+            'quiet_hours_start' => '21:30',
+        ]);
+    }
+
+    public function test_care_message_creates_privacy_preserving_event_and_allows_polling(): void
+    {
+        $member = $this->actor('member');
+        $specialistUser = $this->actor('specialist');
+        $profile = SpecialistProfile::create([
+            'user_id' => $specialistUser->id,
+            'name' => 'Dr. Fatima Bello',
+            'title' => 'Obstetrician & Gynaecologist',
+            'credentials' => 'MBBS, FWACS (OB/GYN)',
+            'specialty' => 'Obstetrics & Gynaecology',
+            'bio' => 'Consultant in Jos',
+            'city' => 'Jos, Plateau State',
+            'verification_source' => 'MDCN #94821',
+            'is_verified' => true,
+            'is_available' => true,
+        ]);
+
+        Sanctum::actingAs($member);
+        $reqRes = $this->postJson('/api/v1/care/requests', [
+            'topic' => 'Menstrual wellbeing',
+            'stage' => 'Adulthood',
+            'summary' => 'Severe pelvic discomfort',
+            'share_journal_consent' => true,
+            'specialist_id' => $profile->id,
+        ])->assertCreated();
+
+        $convId = $reqRes->json('data.conversation_id');
+
+        // Member sends message
+        $this->postJson("/api/v1/care/conversations/{$convId}/messages", [
+            'body' => 'Noticeable sharp ache on right side.',
+        ])->assertCreated();
+
+        // Verify broadcast event in outbox
+        $event = BroadcastEvent::where('channel', 'private-user.'.$specialistUser->id)->first();
+        $this->assertNotNull($event, 'Broadcast event must be created in outbox');
+        $this->assertSame('care.message_received', $event->event);
+        $this->assertSame('care_message', $event->payload['type']);
+        $this->assertSame($convId, $event->payload['conversation_id']);
+
+        // CRITICAL INVARIANT: Zero health text, zero message body in broadcast payload
+        $this->assertArrayNotHasKey('body', $event->payload);
+        $this->assertStringNotContainsString('ache', json_encode($event->payload));
+        $this->assertStringNotContainsString('pelvic', json_encode($event->payload));
+
+        // Specialist polls events
+        Sanctum::actingAs($specialistUser);
+        $pollRes = $this->getJson('/api/v1/events/poll')
+            ->assertOk()
+            ->assertJsonCount(1, 'data');
+
+        $this->assertSame($convId, $pollRes->json('data.0.payload.conversation_id'));
     }
 }

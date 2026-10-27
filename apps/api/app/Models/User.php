@@ -47,4 +47,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(CareConversation::class);
     }
+
+    public function devices(): HasMany
+    {
+        return $this->hasMany(UserDevice::class);
+    }
+
+    public function notificationPreference(): HasOne
+    {
+        return $this->hasOne(NotificationPreference::class);
+    }
 }

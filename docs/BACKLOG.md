@@ -15,8 +15,8 @@ Statuses: TODO, IN_PROGRESS, BLOCKED, VERIFIED. VERIFIED requires evidence. Foun
 | CMS-01 | P0 | React content authoring/review/publication and media pipeline | API-01, DESIGN-01 | Publication state/permission tests; mobile refresh | IN_PROGRESS |
 | WEB-01 | P0 | Responsive React public site and learning pages | DESIGN-01, CMS-01 | Mobile/desktop QA, SEO, no private cache/index leakage | IN_PROGRESS |
 | CARE-01 | P0 | Specialist verification, in-platform support request and consented chat | API-01, MOB-01 | Scoped access/revocation tests and seeded demo conversation | IN_PROGRESS |
-| PUSH-01 | P0 | Private Reverb, FCM/APNs and local reminders | SYNC-01, CARE-01 | Physical-device state matrix, token cleanup, deduplication | TODO |
-| MOB-02 | P1 | Mobile staff draft/upload/review/publish capability | CMS-01, MOB-01 | Same policies enforced from mobile and web | TODO |
+| PUSH-01 | P0 | Private Reverb, FCM/APNs and local reminders | SYNC-01, CARE-01 | Physical-device state matrix, token cleanup, deduplication | IN_PROGRESS |
+| MOB-02 | P1 | Mobile staff draft/upload/review/publish capability | CMS-01, MOB-01 | Same policies enforced from mobile and web | IN_PROGRESS |
 | AI-01 | P1 | Evaluate bounded multilingual retrieval slice | CMS-01, clinical corpus | Documented evaluation; disabled unless gate passes | TODO |
 | DEMO-01 | P0 | Seed synthetic Jos scenarios and record genuine demo | Core vertical slices | Reproducible reset, labelled data, working API recording | IN_PROGRESS |
 | GRANT-01 | P0 | Assemble factual application evidence/repository/video | DEMO-01, founder facts | Accessible repository and final human submission package | TODO |
@@ -47,4 +47,13 @@ See [PHASE-02](evidence/PHASE-02.md). Implemented slices:
 - TECH-02 / QA-01: Activated strict prevention of lazy loading and attribute discarding in Laravel, added DB performance indexes, verified zero N+1 database queries.
 - All 17 PHP tests, 5 Flutter tests, layout tests at 200% scale, live mobile-to-API integration tests, and Android/iOS simulator builds pass cleanly.
 
-Next order: PUSH-01 Reverb/FCM/local reminders → MOB-02 media/publishing → QA/OPS production readiness. Each must retain existing regression tests and visual baselines.
+## Phase 03 implementation evidence
+
+See [PHASE-03](evidence/PHASE-03.md). Implemented slices:
+- PUSH-01: Privacy-preserving realtime events and device token lifecycle (`POST /api/v1/devices`, `DELETE /api/v1/devices/{id}`, `POST /api/v1/logout` token revocation). Strict invariant enforced: broadcast payloads and notification hints contain zero clinical body, zero journal entries, only opaque UUID identifiers (`CareMessageReceived`).
+- PUSH-01 (Mobile): Local quiet-hours calculation, discreet lock-screen notice ("A quiet moment · How has your day felt so far?"), notification preference settings in "You" profile.
+- MOB-02: Mobile Staff Editorial Studio (`StaffPortalPage`) allowing verified staff accounts (`author`, `reviewer`, `publisher`, `specialist`) to draft educational articles, advance transition states (`submit_for_review`, `approve`, `publish`), and triage/assign member care requests to Jos clinicians directly from mobile.
+- SYNC-02: Storage schema version 2 upgrade and capacity expansion to 10,000 entries.
+- All 21 PHP tests, 9 Flutter tests, live mobile sync integration, and Android debug APK & iOS simulator builds pass cleanly.
+
+Next order: QA/OPS production readiness → Media pipeline & SEO SSR → Clinical safeguarding review. Each must retain existing regression tests and visual baselines.

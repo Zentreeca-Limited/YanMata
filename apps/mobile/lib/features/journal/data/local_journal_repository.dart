@@ -16,15 +16,23 @@ class LocalJournalRepository implements JournalRepository {
     final raw = await store.read();
     if (raw == null) {
       return {
+        'schema_version': 2,
         'entries': <dynamic>[],
         'outbox': <dynamic>[],
         'conflicts': <dynamic>[],
         'cursor': null,
         'token': null,
         'owner_id': null,
+        'user_name': null,
+        'user_role': null,
       };
     }
-    return jsonDecode(raw) as Map<String, dynamic>;
+    final parsed = jsonDecode(raw) as Map<String, dynamic>;
+    parsed.putIfAbsent('schema_version', () => 2);
+    parsed.putIfAbsent('entries', () => <dynamic>[]);
+    parsed.putIfAbsent('outbox', () => <dynamic>[]);
+    parsed.putIfAbsent('conflicts', () => <dynamic>[]);
+    return parsed;
   }
 
   Future<void> _save(Map<String, dynamic> data) =>
@@ -56,6 +64,8 @@ class LocalJournalRepository implements JournalRepository {
       signedIn: d['token'] != null,
       ownerId: d['owner_id'],
       token: d['token'] as String?,
+      userName: d['user_name'] as String?,
+      userRole: d['user_role'] as String?,
     );
   });
 
@@ -74,9 +84,9 @@ class LocalJournalRepository implements JournalRepository {
       throw ArgumentError('Invalid journal entry.');
     }
     final d = await _load();
-    if ((d['entries'] as List).length >= 100) {
+    if ((d['entries'] as List).length >= 10000) {
       throw StateError(
-        'This foundation supports up to 100 entries. Please keep testing data small.',
+        'Journal storage reached capacity (10,000 entries).',
       );
     }
     final e = JournalEntry(
@@ -200,6 +210,8 @@ class LocalJournalRepository implements JournalRepository {
         }
         d['token'] = token;
         d['owner_id'] = user['id'];
+        d['user_name'] = user['name'];
+        d['user_role'] = user['role'];
         await _save(d);
       });
   @override
@@ -265,6 +277,8 @@ class LocalJournalRepository implements JournalRepository {
       await api.request('/logout', method: 'POST', token: d['token']);
     }
     d['token'] = null;
+    d['user_name'] = null;
+    d['user_role'] = null;
     await _save(d);
   });
   @override

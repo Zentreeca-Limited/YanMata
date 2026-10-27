@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CareMessageReceived;
 use App\Http\Resources\CareConversationResource;
 use App\Http\Resources\CareMessageResource;
 use App\Http\Resources\SpecialistResource;
 use App\Http\Resources\SupportRequestResource;
+use App\Models\BroadcastEvent;
 use App\Models\CareConversation;
 use App\Models\CareMessage;
 use App\Models\SpecialistProfile;
@@ -120,6 +122,30 @@ class CareController extends Controller
 
             return $message;
         });
+
+        // Realtime hint dispatch with strict privacy guarantee:
+        // NEVER include clinical body, journal data, or health text.
+        $recipientUserId = ($senderRole === 'member')
+            ? ($conv->specialist?->user_id)
+            : $conv->user_id;
+
+        if ($recipientUserId) {
+            $event = new CareMessageReceived($msg, $recipientUserId);
+
+            BroadcastEvent::create([
+                'id' => $event->eventId,
+                'channel' => 'private-user.'.$recipientUserId,
+                'event' => 'care.message_received',
+                'payload' => $event->broadcastWith(),
+                'dispatched' => true,
+            ]);
+
+            try {
+                broadcast($event);
+            } catch (\Throwable) {
+                // Non-fatal if broadcast driver / network socket is offline
+            }
+        }
 
         return new CareMessageResource($msg);
     }

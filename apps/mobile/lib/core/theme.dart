@@ -9,7 +9,9 @@ abstract final class Palette {
       cream = DesignColors.cream,
       lilac = DesignColors.lilac,
       blush = DesignColors.blush,
-      teal = DesignColors.teal;
+      teal = DesignColors.teal,
+      line = DesignColors.line,
+      slate = DesignColors.muted;
   static ThemeData get theme => ThemeData(
     useMaterial3: true,
     scaffoldBackgroundColor: cream,

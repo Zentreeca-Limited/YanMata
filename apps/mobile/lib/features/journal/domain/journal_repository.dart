@@ -76,6 +76,8 @@ class JournalState {
     this.signedIn = false,
     this.ownerId,
     this.token,
+    this.userName,
+    this.userRole,
   });
 
   final List<JournalEntry> entries;
@@ -84,6 +86,15 @@ class JournalState {
   final bool signedIn;
   final int? ownerId;
   final String? token;
+  final String? userName;
+  final String? userRole;
+
+  bool get isStaff =>
+      userRole == 'author' ||
+      userRole == 'reviewer' ||
+      userRole == 'publisher' ||
+      userRole == 'specialist' ||
+      userRole == 'admin';
 }
 
 abstract interface class JournalRepository {

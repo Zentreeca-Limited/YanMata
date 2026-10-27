@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CareController;
 use App\Http\Controllers\ContentController;
+use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\SyncController;
 use Illuminate\Support\Facades\Route;
@@ -30,5 +31,12 @@ Route::prefix('v1')->group(function () {
         Route::post('/care/conversations/{id}/messages', [CareController::class, 'sendMessage'])->middleware('throttle:60,1');
         Route::get('/studio/care/requests', [CareController::class, 'studioRequests']);
         Route::post('/studio/care/requests/{id}/assign', [CareController::class, 'studioAssign']);
+
+        // Devices, Notifications & Events
+        Route::post('/devices', [DeviceController::class, 'register']);
+        Route::delete('/devices/{device_id}', [DeviceController::class, 'destroy']);
+        Route::get('/notification-preferences', [DeviceController::class, 'getPreferences']);
+        Route::put('/notification-preferences', [DeviceController::class, 'updatePreferences']);
+        Route::get('/events/poll', [DeviceController::class, 'pollEvents']);
     });
 });

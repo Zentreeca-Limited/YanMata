@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserDevice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -34,6 +35,12 @@ class SessionController extends Controller
 
     public function logout(Request $request)
     {
+        if ($deviceId = $request->input('device_id')) {
+            UserDevice::where('user_id', $request->user()->id)
+                ->where('device_id', $deviceId)
+                ->delete();
+        }
+
         if ($request->user()->currentAccessToken() instanceof PersonalAccessToken) {
             $request->user()->currentAccessToken()->delete();
         } else {

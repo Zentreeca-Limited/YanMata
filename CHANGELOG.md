@@ -39,3 +39,12 @@
 - Hardened database queries and architecture (TECH-02): enabled strict lazy loading prevention (`Model::preventLazyLoading`) and missing attribute prevention in Laravel to completely prevent N+1 database queries; added indexes for content lookup, journal change cursors, and care messaging threads.
 - Updated OpenAPI contracts, seeded synthetic Jos specialists and demo inquiries.
 - Verified test suite: 17 API tests / 80 assertions pass, 5 Flutter tests pass, mobile 200% text scaling passes, Android debug APK and iOS simulator app builds succeed.
+
+## 2026-10-27 — Phase 03 implementation — PUSH-01 / MOB-02 / SYNC-02
+
+- Implemented privacy-preserving realtime events and push device management (PUSH-01): `user_devices`, `notification_preferences`, and `broadcast_events` database schema and endpoints (`POST /devices`, `DELETE /devices/{id}`, `GET/PUT /notification-preferences`, `GET /events/poll`). Enforced strict invariant: broadcast payloads and notification hints contain zero clinical body and zero journal entries; only opaque event IDs are transmitted (`CareMessageReceived`).
+- Added token rotation and logout revocation: `POST /logout` optionally accepts `device_id` to revoke push tokens immediately.
+- Implemented mobile local quiet hours and discreet lock-screen reminders (PUSH-01): overnight quiet hours calculation (22:00 to 07:00), discreet lock-screen preview card ("A quiet moment · How has your day felt so far?"), and user preferences in "You" (Profile) page.
+- Implemented Mobile Staff Editorial Studio (MOB-02): `StaffPortalPage` allowing verified staff users (`author`, `reviewer`, `publisher`, `specialist`) to draft educational articles with traceable sources, transition review states (`submit_for_review`, `approve`, `publish`), and triage/assign member care inquiries directly from mobile.
+- Hardened local storage (SYNC-02): schema version 2 upgrade, expanded entry capacity to 10,000 entries, and user role/name session persistence.
+- Verified test suite: 21 API tests / 117 assertions pass with strict lazy loading enabled, 9 Flutter tests pass, live two-store mobile sync passes, Android debug APK and iOS simulator app builds succeed.
