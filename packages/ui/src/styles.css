@@ -1,0 +1,262 @@
+@import "./tokens.css";
+@import "@fontsource-variable/dm-sans";
+@import "@fontsource-variable/manrope";
+:root {
+  font-family: "DM Sans Variable", sans-serif;
+  color: #302838;
+  background: #fffcf8;
+  font-synthesis: none;
+  font-weight: 400;
+  --radius: 24px;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+button,
+a,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid #24766c;
+  outline-offset: 4px;
+}
+button {
+  border: 0;
+}
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+h1,
+h2,
+h3,
+.brand {
+  font-family: "Manrope Variable", sans-serif;
+}
+h1,
+h2 {
+  letter-spacing: -0.055em;
+}
+p {
+  line-height: 1.7;
+  color: var(--muted);
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 800;
+  font-size: 26px;
+  letter-spacing: -1.2px;
+  color: var(--plum);
+  line-height: 1;
+}
+.brand svg {
+  width: 43px;
+  height: 43px;
+}
+.brand-by {
+  display: block;
+  font-family: "DM Sans Variable", sans-serif;
+  font-size: 12px;
+  letter-spacing: 2.3px;
+  margin-top: 7px;
+  font-weight: 600;
+}
+.brand.small {
+  font-size: 22px;
+}
+.brand.small svg {
+  width: 35px;
+}
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--plum);
+  color: white;
+  border: 1px solid var(--plum);
+  min-height: 48px;
+  padding: 13px 23px;
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: 14px;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+.button:hover {
+  background: #40235e;
+  transform: translateY(-1px);
+}
+.button.secondary {
+  background: transparent;
+  color: var(--plum);
+  border-color: #d8cbdf;
+}
+.button.secondary:hover {
+  background: var(--lilac);
+}
+.button.light {
+  background: white;
+  color: var(--plum);
+  border-color: white;
+}
+.button svg {
+  width: 17px;
+}
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid #e6dce9;
+  border-radius: 50px;
+  padding: 6px 11px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--plum);
+  background: #ffffff75;
+  letter-spacing: 0.02em;
+}
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+  color: var(--plum);
+  font-weight: 700;
+}
+.muted {
+  color: var(--muted);
+}
+.error {
+  background: #fff0f1;
+  border: 1px solid #e9b9bf;
+  color: #8e2032;
+  padding: 14px;
+  border-radius: 12px;
+}
+.notice {
+  padding: 12px 18px;
+  background: #f1ecfa;
+  color: #56327a;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.field {
+  display: grid;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid #dcd3e2;
+  background: #fff;
+  border-radius: 12px;
+  color: var(--ink);
+}
+.field textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: #24172c88;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  backdrop-filter: blur(5px);
+}
+dialog {
+  position: relative;
+  border: 0;
+  border-radius: 24px;
+  padding: 32px;
+  max-width: 700px;
+  width: 100%;
+  max-height: 85vh;
+  overflow: auto;
+  background: var(--cream);
+  color: var(--ink);
+  box-shadow: 0 30px 100px #27152b44;
+}
+dialog::backdrop {
+  background: #24172c88;
+  backdrop-filter: blur(5px);
+}
+.close {
+  position: absolute;
+  right: 17px;
+  top: 17px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--lilac);
+  color: var(--plum);
+}
+.article-body {
+  white-space: pre-wrap;
+  line-height: 1.85;
+}
+.source-link {
+  text-decoration: underline;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+}
+.skip {
+  position: fixed;
+  top: -80px;
+  left: 15px;
+  z-index: 200;
+  padding: 14px;
+  background: white;
+  color: var(--plum);
+}
+.skip:focus {
+  top: 12px;
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}

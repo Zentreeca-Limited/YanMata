@@ -1,0 +1,29 @@
+{
+  "name": "yanmata",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/web",
+    "apps/admin",
+    "packages/ui"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev -w @yanmata/web",
+    "dev:admin": "npm run dev -w @yanmata/admin",
+    "build": "npm run build -w @yanmata/web && npm run build -w @yanmata/admin",
+    "typecheck": "npm run typecheck -w @yanmata/web && npm run typecheck -w @yanmata/admin",
+    "test:api": "cd apps/api && php artisan test",
+    "test:mobile": "cd apps/mobile && flutter test",
+    "dev": "node scripts/dev.mjs",
+    "tokens": "node scripts/generate-tokens.mjs",
+    "format": "prettier --write \"apps/{web,admin}/src/**/*.{ts,tsx,css}\" \"packages/ui/src/**/*.{ts,tsx,css}\"",
+    "format:check": "prettier --check \"apps/{web,admin}/src/**/*.{ts,tsx,css}\" \"packages/ui/src/**/*.{ts,tsx,css}\""
+  },
+  "engines": {
+    "node": ">=22.12"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "prettier": "^3.9.10"
+  }
+}
