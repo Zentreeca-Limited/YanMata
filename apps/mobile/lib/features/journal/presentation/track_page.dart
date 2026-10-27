@@ -12,9 +12,11 @@ class Track extends ConsumerStatefulWidget {
 }
 
 class _TrackState extends ConsumerState<Track> {
+  String _activeTab = 'Cycle';
   String mood = 'Okay';
   String flow = 'none';
   String energy = 'moderate';
+  String sleepDuration = '7h 20m';
   final List<String> selectedSymptoms = [];
   final note = TextEditingController();
   bool busy = false;
@@ -73,15 +75,105 @@ class _TrackState extends ConsumerState<Track> {
 
     return PageFrame(
       children: [
-        const Eyebrow('Your personal journal'),
-        const SizedBox(height: 12),
+        const Eyebrow('Cycle tracking & daily wellbeing'),
+        const SizedBox(height: 8),
         Text(
-          'Every feeling\nhas a place.',
-          style: Theme.of(context).textTheme.headlineLarge,
+          'Track Your Cycle',
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Palette.plum,
+              ),
         ),
-        const SizedBox(height: 12),
-        const Text('Take a breath. Notice how you are today.'),
-        const SizedBox(height: 25),
+        const SizedBox(height: 6),
+        const Text(
+          'Notice your patterns without judgment. Every feeling has a place.',
+          style: TextStyle(fontSize: 13, color: Palette.slate),
+        ),
+        const SizedBox(height: 16),
+
+        // Sub-tabs: Cycle, Mood, Symptoms, Insights
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: ['Cycle', 'Mood', 'Symptoms', 'Insights'].map((tab) {
+              final isSelected = _activeTab == tab;
+              return Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: ChoiceChip(
+                  label: Text(tab),
+                  selected: isSelected,
+                  onSelected: (_) => setState(() => _activeTab = tab),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+        const SizedBox(height: 20),
+
+        // Circular Cycle Dial Card
+        SoftCard(
+          color: Colors.white,
+          child: Column(
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  SizedBox(
+                    width: 150,
+                    height: 150,
+                    child: CircularProgressIndicator(
+                      value: 12 / 28,
+                      strokeWidth: 10,
+                      backgroundColor: const Color(0xFFFCE7F3),
+                      valueColor: const AlwaysStoppedAnimation<Color>(Palette.plum),
+                    ),
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Icon(Icons.water_drop, color: Color(0xFFE11D48), size: 24),
+                      SizedBox(height: 4),
+                      Text(
+                        'Day 12',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Palette.plum,
+                        ),
+                      ),
+                      Text(
+                        'of 28',
+                        style: TextStyle(fontSize: 13, color: Palette.slate),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 18),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Palette.cream,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: const Color(0xFFE9E2E9)),
+                ),
+                child: Row(
+                  children: const [
+                    Icon(Icons.calendar_today_outlined, color: Palette.plum, size: 20),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        'You’re in the Follicular Phase. Energy may increase, and mood is often more stable during this phase.',
+                        style: TextStyle(fontSize: 12, height: 1.4),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 24),
 
         // Conflicts resolution banner if any
         state.when(
@@ -190,7 +282,7 @@ class _TrackState extends ConsumerState<Track> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'How are you feeling?',
+                'Today’s Check-in',
                 style: TextStyle(
                   fontSize: 19,
                   fontWeight: FontWeight.w600,
@@ -198,6 +290,17 @@ class _TrackState extends ConsumerState<Track> {
                 ),
               ),
               const SizedBox(height: 15),
+
+              // Mood
+              const Text(
+                'Mood',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Palette.ink,
+                ),
+              ),
+              const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
                 runSpacing: 6,
@@ -213,11 +316,36 @@ class _TrackState extends ConsumerState<Track> {
               ),
               const SizedBox(height: 20),
 
+              // Sleep Duration
+              const Text(
+                'Sleep',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Palette.ink,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                runSpacing: 6,
+                children: ['< 6h', '6h – 7h', '7h 20m', '8h – 9h', '> 9h']
+                    .map(
+                      (sl) => ChoiceChip(
+                        label: Text(sl),
+                        selected: sleepDuration == sl,
+                        onSelected: (_) => setState(() => sleepDuration = sl),
+                      ),
+                    )
+                    .toList(),
+              ),
+              const SizedBox(height: 20),
+
               // Flow section
               const Text(
                 'Cycle flow (optional)',
                 style: TextStyle(
-                  fontSize: 15,
+                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: Palette.ink,
                 ),
@@ -227,7 +355,7 @@ class _TrackState extends ConsumerState<Track> {
                 'Skip if not menstruating, or during pregnancy, menopause & later life.',
                 style: TextStyle(fontSize: 12, color: Palette.muted),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
                 runSpacing: 6,
@@ -251,12 +379,12 @@ class _TrackState extends ConsumerState<Track> {
               const Text(
                 'Energy level',
                 style: TextStyle(
-                  fontSize: 15,
+                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: Palette.ink,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
                 runSpacing: 6,
@@ -279,12 +407,12 @@ class _TrackState extends ConsumerState<Track> {
               const Text(
                 'Body & emotional signals',
                 style: TextStyle(
-                  fontSize: 15,
+                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: Palette.ink,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
                 runSpacing: 6,
@@ -341,6 +469,7 @@ class _TrackState extends ConsumerState<Track> {
           ),
         ),
         const SizedBox(height: 28),
+
         Text(
           'Your recent moments',
           style: Theme.of(context).textTheme.headlineSmall,

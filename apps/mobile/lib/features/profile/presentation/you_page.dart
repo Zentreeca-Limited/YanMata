@@ -9,9 +9,20 @@ import 'package:yanmata/core/widgets.dart';
 import 'package:yanmata/features/editorial/presentation/staff_portal_page.dart';
 import 'package:yanmata/features/journal/application/journal_controller.dart';
 import 'package:yanmata/features/journal/domain/journal_repository.dart';
+import 'package:yanmata/features/risk/presentation/risk_overview_page.dart';
 
 class You extends ConsumerStatefulWidget {
-  const You({super.key});
+  const You({
+    super.key,
+    this.onNavigateServices,
+    this.onNavigateProducts,
+    this.onNavigateTrack,
+  });
+
+  final VoidCallback? onNavigateServices;
+  final VoidCallback? onNavigateProducts;
+  final VoidCallback? onNavigateTrack;
+
   @override
   ConsumerState<You> createState() => _YouState();
 }
@@ -49,6 +60,7 @@ class _YouState extends ConsumerState<You> {
   void _exportData(JournalState state) {
     final export = {
       'exported_at': DateTime.now().toIso8601String(),
+      'member_name': state.userName ?? 'Aisha Yusuf',
       'life_stage': _selectedStage,
       'topics': _selectedTopics,
       'entries_count': state.entries.length,
@@ -117,17 +129,90 @@ class _YouState extends ConsumerState<You> {
 
     return PageFrame(
       children: [
-        const Eyebrow('Your wellbeing. Your boundaries.'),
-        const SizedBox(height: 12),
-        Text(
-          'Your space,\nyour choice.',
-          style: Theme.of(context).textTheme.headlineLarge,
+        // Member Header Card (Wireframe Screen 11)
+        SoftCard(
+          color: Colors.white,
+          child: Row(
+            children: [
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: Palette.lilac,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Palette.plum, width: 2),
+                ),
+                child: const Icon(Icons.person, color: Palette.plum, size: 36),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      s.userName ?? 'Aisha Yusuf',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Palette.plum,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      s.signedIn
+                          ? 'Connected (${s.userRole}) · Sync active'
+                          : 'Member since 2025 · Private on device',
+                      style: const TextStyle(fontSize: 12, color: Palette.slate),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-        const SizedBox(height: 14),
-        const Text(
-          'You control what is saved and whether anything leaves your phone.',
+        const SizedBox(height: 20),
+
+        // Quick Navigation Menu from Screen 11
+        SoftCard(
+          color: Colors.white,
+          child: Column(
+            children: [
+              _ProfileNavRow(
+                icon: Icons.assignment_outlined,
+                title: 'My Health Records',
+                subtitle: 'Personalised risk scores & clinical indicators',
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (_) => const RiskOverviewPage(),
+                  ),
+                ),
+              ),
+              const Divider(height: 1),
+              _ProfileNavRow(
+                icon: Icons.history,
+                title: 'Cycle History',
+                subtitle: 'View recent symptom entries and phase logs',
+                onTap: widget.onNavigateTrack ?? () {},
+              ),
+              const Divider(height: 1),
+              _ProfileNavRow(
+                icon: Icons.star_border,
+                title: 'Saved Services',
+                subtitle: 'Bookmarked clinics and hospitals in Jos',
+                onTap: widget.onNavigateServices ?? () {},
+              ),
+              const Divider(height: 1),
+              _ProfileNavRow(
+                icon: Icons.shopping_bag_outlined,
+                title: 'Saved Products',
+                subtitle: 'View products or check delivery orders',
+                onTap: widget.onNavigateProducts ?? () {},
+              ),
+            ],
+          ),
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 20),
 
         // Life Chapter Selection
         SoftCard(
@@ -204,93 +289,10 @@ class _YouState extends ConsumerState<You> {
             ],
           ),
         ),
-
         const SizedBox(height: 20),
 
-        // Cloud sync card
-        SoftCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Icon(Icons.cloud_outlined, color: Palette.plum, size: 32),
-              const SizedBox(height: 15),
-              Text(
-                s.signedIn
-                    ? 'Cloud sync connected'
-                    : 'Keep your moments together',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-              const SizedBox(height: 10),
-              Text(
-                '${s.pending} changes waiting to sync. ${s.conflicts} conflicts.',
-              ),
-              const SizedBox(height: 15),
-              if (!s.signedIn) ...[
-                TextField(
-                  controller: email,
-                  keyboardType: TextInputType.emailAddress,
-                  autocorrect: false,
-                  decoration: const InputDecoration(
-                    labelText: 'Demo account email',
-                  ),
-                ),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: password,
-                  obscureText: true,
-                  autocorrect: false,
-                  enableSuggestions: false,
-                  decoration: const InputDecoration(labelText: 'Password'),
-                ),
-                CheckboxListTile(
-                  contentPadding: EdgeInsets.zero,
-                  value: consent,
-                  onChanged: (v) => setState(() => consent = v ?? false),
-                  title: const Text(
-                    'I agree to sync this journal to my demo account.',
-                    style: TextStyle(fontSize: 12),
-                  ),
-                ),
-                FilledButton(
-                  onPressed: busy || !consent
-                      ? null
-                      : () => act(() async {
-                          await controller.connect(
-                            email.text.trim(),
-                            password.text,
-                          );
-                          password.clear();
-                        }, 'Connected. Tap Sync now to upload your journal.'),
-                  child: const Text('Connect with consent'),
-                ),
-              ] else ...[
-                FilledButton(
-                  onPressed: busy
-                      ? null
-                      : () =>
-                            act(controller.sync, 'Your journal is up to date.'),
-                  child: Text(busy ? 'Working…' : 'Sync now'),
-                ),
-                TextButton(
-                  onPressed: busy
-                      ? null
-                      : () => act(
-                          controller.disconnect,
-                          'Disconnected. Your local journal remains on this device.',
-                        ),
-                  child: const Text('Disconnect cloud account'),
-                ),
-              ],
-            ],
-          ),
-        ),
-        if (message != null) ...[
-          const SizedBox(height: 15),
-          Text(message!, style: const TextStyle(fontSize: 12)),
-        ],
-
+        // Staff Editorial Studio if staff
         if (s.isStaff) ...[
-          const SizedBox(height: 20),
           SoftCard(
             color: const Color(0xFFF3E8FF),
             child: Column(
@@ -328,9 +330,8 @@ class _YouState extends ConsumerState<You> {
               ],
             ),
           ),
+          const SizedBox(height: 20),
         ],
-
-        const SizedBox(height: 20),
 
         // Reminders & Notifications Card
         SoftCard(
@@ -444,7 +445,89 @@ class _YouState extends ConsumerState<You> {
             ],
           ),
         ),
+        const SizedBox(height: 20),
 
+        // Cloud sync card
+        SoftCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(Icons.cloud_outlined, color: Palette.plum, size: 32),
+              const SizedBox(height: 15),
+              Text(
+                s.signedIn
+                    ? 'Cloud sync connected'
+                    : 'Keep your moments together',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              const SizedBox(height: 10),
+              Text(
+                '${s.pending} changes waiting to sync. ${s.conflicts} conflicts.',
+              ),
+              const SizedBox(height: 15),
+              if (!s.signedIn) ...[
+                TextField(
+                  controller: email,
+                  keyboardType: TextInputType.emailAddress,
+                  autocorrect: false,
+                  decoration: const InputDecoration(
+                    labelText: 'Demo account email',
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: password,
+                  obscureText: true,
+                  autocorrect: false,
+                  enableSuggestions: false,
+                  decoration: const InputDecoration(labelText: 'Password'),
+                ),
+                CheckboxListTile(
+                  contentPadding: EdgeInsets.zero,
+                  value: consent,
+                  onChanged: (v) => setState(() => consent = v ?? false),
+                  title: const Text(
+                    'I agree to sync this journal to my demo account.',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ),
+                FilledButton(
+                  onPressed: busy || !consent
+                      ? null
+                      : () => act(() async {
+                          await controller.connect(
+                            email.text.trim(),
+                            password.text,
+                          );
+                          password.clear();
+                        }, 'Connected. Tap Sync now to upload your journal.'),
+                  child: const Text('Connect with consent'),
+                ),
+              ] else ...[
+                FilledButton(
+                  onPressed: busy
+                      ? null
+                      : () =>
+                            act(controller.sync, 'Your journal is up to date.'),
+                  child: Text(busy ? 'Working…' : 'Sync now'),
+                ),
+                TextButton(
+                  onPressed: busy
+                      ? null
+                      : () => act(
+                          controller.disconnect,
+                          'Disconnected. Your local journal remains on this device.',
+                        ),
+                  child: const Text('Disconnect cloud account'),
+                ),
+              ],
+            ],
+          ),
+        ),
+        if (message != null) ...[
+          const SizedBox(height: 15),
+          Text(message!, style: const TextStyle(fontSize: 12)),
+        ],
         const SizedBox(height: 20),
 
         // Export data button
@@ -471,8 +554,8 @@ class _YouState extends ConsumerState<You> {
             ],
           ),
         ),
-
         const SizedBox(height: 25),
+
         const SoftCard(
           color: Palette.blush,
           child: Text(
@@ -517,6 +600,57 @@ class _YouState extends ConsumerState<You> {
           style: TextStyle(fontSize: 12),
         ),
       ],
+    );
+  }
+}
+
+class _ProfileNavRow extends StatelessWidget {
+  const _ProfileNavRow({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 14),
+        child: Row(
+          children: [
+            Icon(icon, color: Palette.plum, size: 22),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Palette.ink,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle,
+                    style: const TextStyle(fontSize: 12, color: Palette.slate),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(Icons.chevron_right, size: 20, color: Palette.slate),
+          ],
+        ),
+      ),
     );
   }
 }

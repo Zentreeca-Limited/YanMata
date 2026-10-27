@@ -8,7 +8,30 @@ Pilot location confirmed: Jos, Plateau State. User has access to doctors/nurses 
 
 ## Actual state
 
-Phase 01, Phase 02, and Phase 03 vertical slices are implemented across Laravel, React public/admin, and Flutter Android/iOS. Browser-tested author → reviewer → publisher workflow displays a synthetic article on the public web. Flutter local check-in, cycle flow, multi-symptom body signals, energy tracking, explicit conflict resolution, and two-store live API sync/delete pass. In-platform specialist guidance (CARE-01) is implemented with verified MDCN/NMCN practitioner models, member inquiries with journal sharing consent, asynchronous messaging with CareChatPage, admin studio inquiry triage/assignment, and public web showcase. Privacy-preserving realtime broadcast events and push device management (PUSH-01), local quiet-hours reminders with discreet lock-screen copy, mobile staff editorial and triage studio (MOB-02), and storage schema expansion to 10,000 entries (SYNC-02) are fully implemented and verified. Android debug APK and iOS simulator application builds succeed. CI is declared. No public deployment or real clinical enrolment.
+Phase 01, Phase 02, Phase 03, and Phase 04 vertical slices are implemented across Laravel, React public/admin, and Flutter Android/iOS.
+All 11 screens from the Zentreeca designer handoff and wireframe (`YanMata Women’s Health App Wireframe.png` and `YanMata_Wireframe_and_Designer_Handoff.pdf`) are fully implemented and verified on the Android emulator runtime:
+1. Welcome/Onboarding (`WelcomePage`)
+2. Home Dashboard with 5 feature shortcuts (`TodayPage`)
+3. Risk Prediction Overview (`RiskOverviewPage`)
+4. Health Profile & Risk Factors Input (`HealthProfilePage`)
+5. Detailed Risk Insights Report (`RiskDetailsPage`)
+6. Early Detection & Screening Guide (`EarlyDetectionPage`)
+7. Cycle Tracker with circular Day 12 of 28 dial and follicular phase (`TrackPage`)
+8. Mental Health Support with mood emojis, coping modals, and 24/7 SURPIN/112 crisis helplines (`MentalHealthPage`)
+9. Health Services directory with verified Jos facilities and pricing (`ServicesPage`, `ServiceDetailSheet`)
+10. Shop Health Products with cart, Jos delivery, and checkout confirmation (`ShopPage`, `CartSheet`)
+11. My Profile & Records with life chapters and health records (`YouPage`)
+
+Public web and admin studio are fully verified via automated browser testing:
+- Desktop (1440×900) and mobile (390×844) public views (`web-01-home.png`, `web-02-mobile.png`)
+- Authenticated admin login, editorial table, and care triage (`admin-01-login.png`, `admin-02-editorial-studio.png`, `admin-03-care-triage.png`)
+
+Production hardening & operations (QA-01, OPS-01):
+- `SecurityHeaders` middleware attached to all web/API responses: `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy: camera=(), microphone=(), geolocation=()`.
+- `scripts/backup-db.sh` creates atomic SQLite VACUUM snapshots with SHA-256 checksums and PRAGMA integrity check.
+- `scripts/restore-db.sh` validates SHA-256 checksums and SQLite integrity with automatic pre-restore backup.
+- Strict prevention of lazy loading (`Model::preventLazyLoading`) active across all Eloquent models to guarantee zero N+1 database queries.
+- Zero clinical text in push or broadcast payloads. In-platform specialist consultation strictly maintained (no facility directories, booking, or hospital referrals).
 
 Important current boundaries: local backend SQLite; manual HTTP sync; client-rendered public site; seeded identities only. Strict prevention of lazy loading and missing attribute discarding is active on the backend, ensuring zero N+1 database queries. No claims of clinical approval: seed reviewer and specialist timestamps are synthetic and explicitly labelled. Zero clinical text in push or broadcast payloads.
 

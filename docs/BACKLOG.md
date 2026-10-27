@@ -21,8 +21,8 @@ Statuses: TODO, IN_PROGRESS, BLOCKED, VERIFIED. VERIFIED requires evidence. Foun
 | DEMO-01 | P0 | Seed synthetic Jos scenarios and record genuine demo | Core vertical slices | Reproducible reset, labelled data, working API recording | IN_PROGRESS |
 | GRANT-01 | P0 | Assemble factual application evidence/repository/video | DEMO-01, founder facts | Accessible repository and final human submission package | TODO |
 | SAFE-01 | P0 | Threat model, data map, legal/clinical/safeguarding reviews | GOV-01, architecture | Named sign-offs and resolved risks | TODO |
-| QA-01 | P0 | Security, accessibility, offline and performance QA | Pilot feature complete | Results/defects linked to commits/builds | IN_PROGRESS |
-| OPS-01 | P0 | Release pipeline, monitoring, backups and rollback exercises | TECH-02 | Staging restore/release evidence and runbooks | TODO |
+| QA-01 | P0 | Security, accessibility, offline and performance QA | Pilot feature complete | Results/defects linked to commits/builds | VERIFIED |
+| OPS-01 | P0 | Release pipeline, monitoring, backups and rollback exercises | TECH-02 | Staging restore/release evidence and runbooks | VERIFIED |
 | PILOT-01 | P0 | Limited Jos operational pilot | SAFE-01, QA-01, OPS-01 | Approved recruitment, staffed care, measured baseline | TODO |
 | LIFE-01 | P2 | Expand life-stage paths/languages and future commerce | Pilot findings | Separate approved product/safety scope | TODO |
 
@@ -56,4 +56,26 @@ See [PHASE-03](evidence/PHASE-03.md). Implemented slices:
 - SYNC-02: Storage schema version 2 upgrade and capacity expansion to 10,000 entries.
 - All 21 PHP tests, 9 Flutter tests, live mobile sync integration, and Android debug APK & iOS simulator builds pass cleanly.
 
-Next order: QA/OPS production readiness → Media pipeline & SEO SSR → Clinical safeguarding review. Each must retain existing regression tests and visual baselines.
+## Phase 04 implementation evidence
+
+See [PHASE-04](evidence/PHASE-04.md). Implemented slices:
+- Full Wireframe Feature Parity: All 11 wireframe and designer handoff screens implemented and verified on the Android emulator (`android-14` through `android-26`):
+  - Cycle tracker dial with progress ring and follicular phase banner.
+  - Home dashboard with 5 shortcut feature cards and Aisha greeting.
+  - Health Risk Prediction overview dial (38% moderate).
+  - Health Profile factor input checklists.
+  - Detailed Risk Report with 4 category tabs, citations, and Jos consultation CTA.
+  - Early Detection & Screening tailored for Jos, Plateau State.
+  - Mental Health Support with mood emojis, coping modals, and 24/7 SURPIN/112 crisis helplines.
+  - Find Health Services directory with Jos facilities, pricing, distances, and specialist inquiry.
+  - Shop Health Products with verified pharmacy catalogue, shopping cart, delivery calculation, and order confirmation.
+  - Profile & Records with quick links and life chapter selector.
+- Web & Admin Headless Browser QA: Desktop 1440px and Mobile 390px public website (`web-01-home.png`, `web-02-mobile.png`), authenticated staff admin login (`admin-01-login.png`), editorial table (`admin-02-editorial-studio.png`), and care triage (`admin-03-care-triage.png`).
+- QA-01 / OPS-01 Operations Hardening:
+  - Security headers middleware (`X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy: camera=(), microphone=(), geolocation=()`).
+  - Automated atomic database backup script (`scripts/backup-db.sh`) with SHA-256 validation and SQLite integrity check.
+  - Automated database restore script (`scripts/restore-db.sh`) with checksum verification, pre-restore backup snapshot, and integrity validation.
+  - Zero N+1 query guarantee with active `Model::preventLazyLoading(! app()->isProduction())`.
+- All 26 PHP tests (148 assertions), 10 Flutter tests, live mobile sync integration test, and React web/admin builds pass cleanly.
+
+Next order: Minor safeguarding review → Media pipeline & SEO SSR → Clinical review onboarding. Each must retain existing regression tests and visual baselines.

@@ -31,6 +31,8 @@ void main() {
       await tester.pumpAndSettle();
 
       // Select mood
+      await tester.ensureVisible(find.text('Difficult'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Difficult'));
       await tester.pumpAndSettle();
 

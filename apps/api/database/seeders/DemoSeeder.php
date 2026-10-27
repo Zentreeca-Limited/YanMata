@@ -5,6 +5,10 @@ namespace Database\Seeders;
 use App\Models\CareConversation;
 use App\Models\CareMessage;
 use App\Models\ContentItem;
+use App\Models\HealthProduct;
+use App\Models\HealthService;
+use App\Models\MentalHealthResource;
+use App\Models\RiskAssessment;
 use App\Models\SpecialistProfile;
 use App\Models\SupportRequest;
 use App\Models\User;
@@ -103,6 +107,260 @@ class DemoSeeder extends Seeder
                 'is_read' => false,
             ]
         );
+
+        // Synthetic Health Services (Jos, Plateau State)
+        $services = [
+            [
+                'name' => 'Cervical Cancer Screening',
+                'category' => 'screening',
+                'provider_name' => 'Jos University Teaching Hospital (JUTH)',
+                'provider_type' => 'hospital',
+                'address' => 'Lamingo Road, Jos, Plateau State',
+                'city' => 'Jos',
+                'distance_km' => 2.3,
+                'price_range' => '₦8,000 – ₦9,000',
+                'is_verified' => true,
+                'is_available' => true,
+                'description' => 'Comprehensive cervical screening (Pap smear, HPV DNA testing, and visual inspection) with clinical follow-up by consultant gynaecologists.',
+                'opening_hours' => 'Mon - Fri, 8:00 AM - 4:00 PM',
+                'verification_source' => 'Plateau State Ministry of Health Facility Registry #PL-HOSP-014',
+                'phone' => '+234 73 450 101',
+            ],
+            [
+                'name' => 'Maternal Care',
+                'category' => 'maternal',
+                'provider_name' => 'Plateau Specialist Hospital',
+                'provider_type' => 'hospital',
+                'address' => 'Bank Road, Jos, Plateau State',
+                'city' => 'Jos',
+                'distance_km' => 3.1,
+                'price_range' => '₦6,000 – ₦12,000',
+                'is_verified' => true,
+                'is_available' => true,
+                'description' => 'Comprehensive antenatal, obstetric assessment and maternal health services staffed by licensed midwives and specialists.',
+                'opening_hours' => '24/7 Maternity Emergency; Clinics: Mon - Thu 9:00 AM - 3:00 PM',
+                'verification_source' => 'Plateau State Ministry of Health Facility Registry #PL-HOSP-002',
+                'phone' => '+234 73 452 233',
+            ],
+            [
+                'name' => 'Mental Health Support',
+                'category' => 'mental_health',
+                'provider_name' => 'LifeSpring Wellness Centre',
+                'provider_type' => 'clinic',
+                'address' => 'Rayfield, Jos, Plateau State',
+                'city' => 'Jos',
+                'distance_km' => 4.8,
+                'price_range' => '₦3,000 – ₦10,000',
+                'is_verified' => true,
+                'is_available' => true,
+                'description' => 'Compassionate psychological counseling, anxiety & stress management, and postpartum emotional support in a peaceful setting.',
+                'opening_hours' => 'Mon - Sat, 9:00 AM - 6:00 PM',
+                'verification_source' => 'Plateau State Allied Health Accreditation #PL-WNC-088',
+                'phone' => '+234 803 123 7890',
+            ],
+            [
+                'name' => 'Family Planning',
+                'category' => 'family_planning',
+                'provider_name' => 'Primary Healthcare Centre Tudun Wada',
+                'provider_type' => 'clinic',
+                'address' => 'Tudun Wada, Jos North, Plateau State',
+                'city' => 'Jos',
+                'distance_km' => 5.2,
+                'price_range' => '₦1,000 – ₦5,000',
+                'is_verified' => true,
+                'is_available' => true,
+                'description' => 'Confidential reproductive health education, family planning consultations, and maternal wellness guidance.',
+                'opening_hours' => 'Mon - Fri, 8:30 AM - 3:30 PM',
+                'verification_source' => 'Plateau State Primary Health Care Development Board #PL-PHC-112',
+                'phone' => '+234 802 345 6789',
+            ],
+            [
+                'name' => 'Specialist Clinical Consultation',
+                'category' => 'specialist',
+                'provider_name' => 'YanMata Telehealth Clinical Wing',
+                'provider_type' => 'specialist',
+                'address' => 'In-Platform Telehealth / Jos Clinical Centre',
+                'city' => 'Jos',
+                'distance_km' => 0.0,
+                'price_range' => '₦4,000 – ₦8,000',
+                'is_verified' => true,
+                'is_available' => true,
+                'description' => 'Direct, confidential inquiry and structured follow-up with accredited Nigerian gynaecologists and adolescent health nurses inside YanMata.',
+                'opening_hours' => 'Mon - Sat, 8:00 AM - 8:00 PM',
+                'verification_source' => 'Medical and Dental Council of Nigeria (MDCN) synthetic verification #94821',
+                'phone' => '+234 800 YANMATA',
+            ],
+        ];
+
+        foreach ($services as $srv) {
+            HealthService::updateOrCreate(
+                ['name' => $srv['name'], 'provider_name' => $srv['provider_name']],
+                $srv
+            );
+        }
+
+        // Synthetic Health Products (Jos, Plateau State)
+        $products = [
+            [
+                'name' => 'Pregnancy Test Kit',
+                'category' => 'womens_health',
+                'pack_size' => '1 pack (2 test sticks)',
+                'price_ngn' => 3500,
+                'description' => 'Over 99% accurate early pregnancy detection test. Rapid results within 3-5 minutes with clear line indicators.',
+                'seller_name' => 'Zentreeca Community Pharmacy Jos',
+                'is_verified_seller' => true,
+                'stock_status' => 'in_stock',
+                'safety_info' => 'For in vitro diagnostic use. Read instruction leaflet before use. If you have questions about your result, contact YanMata care specialists.',
+            ],
+            [
+                'name' => 'Folic Acid 400mcg',
+                'category' => 'vitamins',
+                'pack_size' => '30 tablets',
+                'price_ngn' => 2800,
+                'description' => 'Essential daily vitamin B9 supplement supporting cell division, reproductive wellness, and maternal development.',
+                'seller_name' => 'Zentreeca Community Pharmacy Jos',
+                'is_verified_seller' => true,
+                'stock_status' => 'in_stock',
+                'safety_info' => 'Dietary supplement. Not a replacement for a balanced diet. Consult a healthcare provider before taking with prescription medications.',
+            ],
+            [
+                'name' => 'Iron Supplement',
+                'category' => 'vitamins',
+                'pack_size' => '30 tablets',
+                'price_ngn' => 3000,
+                'description' => 'Gentle iron bisglycinate with Vitamin C for optimal absorption to support healthy energy levels and red blood cells during heavy flow.',
+                'seller_name' => 'Plateau Health Mart Jos',
+                'is_verified_seller' => true,
+                'stock_status' => 'in_stock',
+                'safety_info' => 'Keep out of reach of children. Take with food or water to minimise stomach sensitivity.',
+            ],
+            [
+                'name' => 'Menstrual Pain Relief',
+                'category' => 'womens_health',
+                'pack_size' => '20 tablets',
+                'price_ngn' => 2500,
+                'description' => 'Targeted relief for menstrual cramps, lower back ache, and period discomfort.',
+                'seller_name' => 'Zentreeca Community Pharmacy Jos',
+                'is_verified_seller' => true,
+                'stock_status' => 'in_stock',
+                'safety_info' => 'Use strictly as directed on the packaging. Do not exceed stated dose. Avoid use if sensitive to NSAIDs.',
+            ],
+            [
+                'name' => 'Organic Cotton Sanitary Pads',
+                'category' => 'personal_care',
+                'pack_size' => '10 pads',
+                'price_ngn' => 1800,
+                'description' => 'Breathable 100% organic cotton top sheet, chlorine-free and fragrance-free pads designed for sensitive skin.',
+                'seller_name' => 'Plateau Health Mart Jos',
+                'is_verified_seller' => true,
+                'stock_status' => 'in_stock',
+                'safety_info' => 'Change pads every 4-6 hours for comfort and hygiene.',
+            ],
+        ];
+
+        foreach ($products as $prod) {
+            HealthProduct::updateOrCreate(
+                ['name' => $prod['name']],
+                $prod
+            );
+        }
+
+        // Synthetic Mental Health Resources
+        $mentalHealth = [
+            [
+                'title' => 'Anxiety & Stress Coping Strategies',
+                'category' => 'anxiety',
+                'summary' => 'Grounding techniques and gentle breathing for moments when everyday stress feels high.',
+                'body' => 'Anxiety often presents as rapid breathing, chest tightness, or racing thoughts. Practicing structured nervous system calming allows you to restore emotional equilibrium.',
+                'coping_strategies' => [
+                    '5-4-3-2-1 Grounding: Notice 5 things you see, 4 you can touch, 3 you can hear, 2 you can smell, and 1 you can taste.',
+                    'Box Breathing: Breathe in for 4 seconds, hold for 4 seconds, breathe out for 4 seconds, pause for 4 seconds.',
+                    'Gentle movement: A 10-minute quiet walk or stretching release.',
+                ],
+                'emergency_helpline' => 'SURPIN Nigeria Toll-Free: 0800 123 4567 / Emergency: 112',
+                'source_citation' => 'WHO Mental Health Guidelines & Asido Foundation Nigeria',
+            ],
+            [
+                'title' => 'Understanding Cyclical Mood Shifts',
+                'category' => 'mood',
+                'summary' => 'Why emotional changes occur during different cycle phases and how to navigate them.',
+                'body' => 'Fluctuations in estrogen and progesterone during the luteal phase naturally affect neurotransmitters like serotonin. Tracking patterns helps you differentiate normal variations from persistent low mood.',
+                'coping_strategies' => [
+                    'Track mood daily alongside physical symptoms in your YanMata journal.',
+                    'Prioritise restful sleep and hydration during the premenstrual week.',
+                    'Share your feelings with a trusted friend or accredited care provider.',
+                ],
+                'emergency_helpline' => 'SURPIN Nigeria Toll-Free: 0800 123 4567',
+                'source_citation' => 'ACOG Clinical Guidelines & WHO Adolescent Mental Health Atlas',
+            ],
+            [
+                'title' => 'Postpartum Depression & Emotional Care',
+                'category' => 'postpartum',
+                'summary' => 'Recognising maternal blues versus clinical depression and finding gentle support.',
+                'body' => 'Maternal adjustment brings intense physical and hormonal shifts. While the "baby blues" typically resolve within 14 days, postpartum depression causes sustained fatigue, feelings of inadequacy, or emotional detachment that require compassionate professional care.',
+                'coping_strategies' => [
+                    'Ask for and accept practical support from family and community.',
+                    'Speak without judgment to your midwife or gynaecologist.',
+                    'Remember that seeking mental health support is an act of love for yourself and your baby.',
+                ],
+                'emergency_helpline' => 'Plateau Maternal Support Line: 0800 765 4321 / SURPIN: 0800 123 4567',
+                'source_citation' => 'WHO Maternal Mental Health Guidelines',
+            ],
+        ];
+
+        foreach ($mentalHealth as $mh) {
+            MentalHealthResource::updateOrCreate(
+                ['title' => $mh['title']],
+                $mh
+            );
+        }
+
+        // Synthetic Risk Assessment
+        RiskAssessment::updateOrCreate(
+            ['age_group' => 'Adolescence (15–19)'],
+            [
+                'user_id' => $users['member']->id,
+                'overall_risk_score' => 38,
+                'overall_risk_label' => 'Moderate',
+                'cervical_risk_score' => 38,
+                'breast_risk_score' => 22,
+                'hormonal_risk_score' => 41,
+                'completed_sections' => [
+                    'age' => 'completed',
+                    'menstrual' => 'completed',
+                    'reproductive' => 'completed',
+                    'medical' => 'completed',
+                    'lifestyle' => 'in_progress',
+                    'family' => 'optional',
+                ],
+                'key_factors' => [
+                    'cervical' => [
+                        'Last screening 2 years ago (Recommended: every 3 years)',
+                        'HPV vaccination not recorded',
+                        'Family history of cervical cancer',
+                        'History of irregular bleeding',
+                    ],
+                    'breast' => [
+                        'No clinical breast exam recorded in the last 12 months',
+                        'No family history of early-onset breast cancer',
+                        'Regular self-awareness checks encouraged',
+                    ],
+                    'hormonal' => [
+                        'Irregular cycle intervals reported',
+                        'Occasional severe menstrual cramping',
+                        'Moderate daily stress levels',
+                    ],
+                ],
+                'recommendations' => [
+                    'Get screened regularly (Pap smear / HPV test)',
+                    'Consider HPV vaccination (if eligible)',
+                    'Adopt healthy lifestyle habits',
+                    'Track cycle symptoms for 3 consecutive months',
+                ],
+                'traceable_source' => 'WHO Cervical Cancer Elimination Initiative & Federal Ministry of Health Nigeria Guidelines',
+            ]
+        );
+
         $samples = [['A little space to understand yourself', 'Body literacy', 'Puberty', 'Your questions belong here. Explore your changing body at your own pace.'], ['Your journal, your own words', 'Periods', 'Adolescence', 'A quiet place to notice patterns, without judging your experience.'], ['You are more than a busy day', 'Emotional wellbeing', 'Adulthood', 'Make room for a moment of reflection in your everyday life.'], ['A new chapter is still your chapter', 'Healthy ageing', 'Menopause', 'Discover a space designed to grow with you, through every transition.'], ['Wellbeing has no age limit', 'Healthy ageing', 'Later life', 'Comfort, dignity and connection belong in every chapter.']];
         foreach ($samples as [$title,$topic,$stage,$summary]) {
             ContentItem::updateOrCreate(['title' => $title], ['topic' => $topic, 'stage' => $stage, 'summary' => $summary, 'body' => 'This is synthetic demonstration content for the YanMata learning experience. It has not been clinically reviewed and is not health advice.

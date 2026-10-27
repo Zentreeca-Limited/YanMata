@@ -42,6 +42,8 @@ void main() {
       expect(find.text('A moment,\njust for you.'), findsOneWidget);
       await tester.tap(find.text('Track'));
       await tester.pumpAndSettle();
+      await tester.ensureVisible(find.text('Good'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Good'));
       await tester.enterText(
         find.byType(TextField).first,

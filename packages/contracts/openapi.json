@@ -1614,8 +1614,12 @@
       "get": {
         "summary": "Member's submitted care and support requests",
         "security": [
-          { "bearerAuth": [] },
-          { "cookieAuth": [] }
+          {
+            "bearerAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
         ],
         "responses": {
           "200": {
@@ -1641,8 +1645,12 @@
       "post": {
         "summary": "Submit an in-platform care inquiry or question to a specialist",
         "security": [
-          { "bearerAuth": [] },
-          { "cookieAuth": [] }
+          {
+            "bearerAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
         ],
         "requestBody": {
           "required": true,
@@ -1650,13 +1658,37 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["topic", "stage", "summary", "share_journal_consent"],
+                "required": [
+                  "topic",
+                  "stage",
+                  "summary",
+                  "share_journal_consent"
+                ],
                 "properties": {
-                  "topic": { "type": "string" },
-                  "stage": { "type": "string", "enum": ["All chapters", "Puberty", "Adolescence", "Adulthood", "Menopause", "Later life"] },
-                  "summary": { "type": "string" },
-                  "share_journal_consent": { "type": "boolean" },
-                  "specialist_id": { "type": "string", "format": "uuid" }
+                  "topic": {
+                    "type": "string"
+                  },
+                  "stage": {
+                    "type": "string",
+                    "enum": [
+                      "All chapters",
+                      "Puberty",
+                      "Adolescence",
+                      "Adulthood",
+                      "Menopause",
+                      "Later life"
+                    ]
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "share_journal_consent": {
+                    "type": "boolean"
+                  },
+                  "specialist_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
                 }
               }
             }
@@ -1685,15 +1717,22 @@
       "get": {
         "summary": "Retrieve in-platform care conversation with messages",
         "security": [
-          { "bearerAuth": [] },
-          { "cookieAuth": [] }
+          {
+            "bearerAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
         ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string", "format": "uuid" }
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
           }
         ],
         "responses": {
@@ -1719,15 +1758,22 @@
       "post": {
         "summary": "Send an asynchronous message within a care conversation",
         "security": [
-          { "bearerAuth": [] },
-          { "cookieAuth": [] }
+          {
+            "bearerAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
         ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string", "format": "uuid" }
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
           }
         ],
         "requestBody": {
@@ -1736,9 +1782,14 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["body"],
+                "required": [
+                  "body"
+                ],
                 "properties": {
-                  "body": { "type": "string", "maxLength": 4000 }
+                  "body": {
+                    "type": "string",
+                    "maxLength": 4000
+                  }
                 }
               }
             }
@@ -1767,8 +1818,12 @@
       "post": {
         "summary": "Register or rotate a device push notification token",
         "security": [
-          { "bearerAuth": [] },
-          { "cookieAuth": [] }
+          {
+            "bearerAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
         ],
         "requestBody": {
           "required": true,
@@ -1776,13 +1831,35 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["device_id", "platform"],
+                "required": [
+                  "device_id",
+                  "platform"
+                ],
                 "properties": {
-                  "device_id": { "type": "string", "maxLength": 128 },
-                  "device_name": { "type": "string", "maxLength": 100 },
-                  "platform": { "type": "string", "enum": ["android", "ios", "web"] },
-                  "push_token": { "type": "string", "maxLength": 512, "nullable": true },
-                  "push_enabled": { "type": "boolean" }
+                  "device_id": {
+                    "type": "string",
+                    "maxLength": 128
+                  },
+                  "device_name": {
+                    "type": "string",
+                    "maxLength": 100
+                  },
+                  "platform": {
+                    "type": "string",
+                    "enum": [
+                      "android",
+                      "ios",
+                      "web"
+                    ]
+                  },
+                  "push_token": {
+                    "type": "string",
+                    "maxLength": 512,
+                    "nullable": true
+                  },
+                  "push_enabled": {
+                    "type": "boolean"
+                  }
                 }
               }
             }
@@ -1796,7 +1873,9 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "data": { "$ref": "#/components/schemas/Device" }
+                    "data": {
+                      "$ref": "#/components/schemas/Device"
+                    }
                   }
                 }
               }
@@ -1809,15 +1888,21 @@
       "delete": {
         "summary": "Unregister a device and delete its push token",
         "security": [
-          { "bearerAuth": [] },
-          { "cookieAuth": [] }
+          {
+            "bearerAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
         ],
         "parameters": [
           {
             "name": "device_id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1831,8 +1916,12 @@
       "get": {
         "summary": "Get member notification and quiet-hours preferences",
         "security": [
-          { "bearerAuth": [] },
-          { "cookieAuth": [] }
+          {
+            "bearerAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
         ],
         "responses": {
           "200": {
@@ -1842,7 +1931,9 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "data": { "$ref": "#/components/schemas/NotificationPreferences" }
+                    "data": {
+                      "$ref": "#/components/schemas/NotificationPreferences"
+                    }
                   }
                 }
               }
@@ -1853,8 +1944,12 @@
       "put": {
         "summary": "Update notification and quiet-hours preferences",
         "security": [
-          { "bearerAuth": [] },
-          { "cookieAuth": [] }
+          {
+            "bearerAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
         ],
         "requestBody": {
           "required": true,
@@ -1863,11 +1958,23 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "care_messages": { "type": "boolean" },
-                  "editorial_updates": { "type": "boolean" },
-                  "quiet_hours_enabled": { "type": "boolean" },
-                  "quiet_hours_start": { "type": "string", "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$" },
-                  "quiet_hours_end": { "type": "string", "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$" }
+                  "care_messages": {
+                    "type": "boolean"
+                  },
+                  "editorial_updates": {
+                    "type": "boolean"
+                  },
+                  "quiet_hours_enabled": {
+                    "type": "boolean"
+                  },
+                  "quiet_hours_start": {
+                    "type": "string",
+                    "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                  },
+                  "quiet_hours_end": {
+                    "type": "string",
+                    "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                  }
                 }
               }
             }
@@ -1881,7 +1988,9 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "data": { "$ref": "#/components/schemas/NotificationPreferences" }
+                    "data": {
+                      "$ref": "#/components/schemas/NotificationPreferences"
+                    }
                   }
                 }
               }
@@ -1894,15 +2003,22 @@
       "get": {
         "summary": "Poll recent broadcast events for client reconciliation",
         "security": [
-          { "bearerAuth": [] },
-          { "cookieAuth": [] }
+          {
+            "bearerAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
         ],
         "parameters": [
           {
             "name": "since",
             "in": "query",
             "required": false,
-            "schema": { "type": "string", "format": "date-time" }
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
           }
         ],
         "responses": {
@@ -1915,12 +2031,146 @@
                   "properties": {
                     "data": {
                       "type": "array",
-                      "items": { "$ref": "#/components/schemas/BroadcastEvent" }
+                      "items": {
+                        "$ref": "#/components/schemas/BroadcastEvent"
+                      }
                     }
                   }
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/services": {
+      "get": {
+        "summary": "List verified healthcare services in Jos",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of services"
+          }
+        }
+      }
+    },
+    "/services/{id}": {
+      "get": {
+        "summary": "Get health service details",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Service details"
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "summary": "List health products",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of products"
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "summary": "Get health product details",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product details"
+          }
+        }
+      }
+    },
+    "/orders": {
+      "post": {
+        "summary": "Place product order with verified pharmacy in Jos",
+        "responses": {
+          "201": {
+            "description": "Order created"
+          }
+        }
+      }
+    },
+    "/mental-health/resources": {
+      "get": {
+        "summary": "Get mental health coping strategies and emergency helplines",
+        "responses": {
+          "200": {
+            "description": "Resources and helplines"
+          }
+        }
+      }
+    },
+    "/risk-profile": {
+      "get": {
+        "summary": "Get latest risk assessment and preventive insights",
+        "responses": {
+          "200": {
+            "description": "Risk profile"
+          }
+        }
+      },
+      "post": {
+        "summary": "Save health risk assessment",
+        "responses": {
+          "201": {
+            "description": "Risk profile saved"
           }
         }
       }
@@ -2235,16 +2485,37 @@
           "is_available"
         ],
         "properties": {
-          "id": { "type": "string", "format": "uuid" },
-          "name": { "type": "string" },
-          "title": { "type": "string" },
-          "credentials": { "type": "string" },
-          "specialty": { "type": "string" },
-          "bio": { "type": "string" },
-          "city": { "type": "string" },
-          "verification_source": { "type": "string" },
-          "is_verified": { "type": "boolean" },
-          "is_available": { "type": "boolean" }
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "credentials": {
+            "type": "string"
+          },
+          "specialty": {
+            "type": "string"
+          },
+          "bio": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "verification_source": {
+            "type": "string"
+          },
+          "is_verified": {
+            "type": "boolean"
+          },
+          "is_available": {
+            "type": "boolean"
+          }
         }
       },
       "SupportRequest": {
@@ -2258,16 +2529,42 @@
           "share_journal_consent"
         ],
         "properties": {
-          "id": { "type": "string", "format": "uuid" },
-          "topic": { "type": "string" },
-          "stage": { "type": "string" },
-          "summary": { "type": "string" },
-          "status": { "type": "string" },
-          "share_journal_consent": { "type": "boolean" },
-          "specialist_id": { "type": "string", "format": "uuid", "nullable": true },
-          "conversation_id": { "type": "string", "format": "uuid", "nullable": true },
-          "specialist": { "$ref": "#/components/schemas/Specialist" },
-          "created_at": { "type": "string", "format": "date-time" }
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "topic": {
+            "type": "string"
+          },
+          "stage": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "share_journal_consent": {
+            "type": "boolean"
+          },
+          "specialist_id": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "conversation_id": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "specialist": {
+            "$ref": "#/components/schemas/Specialist"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
         }
       },
       "CareMessage": {
@@ -2280,13 +2577,34 @@
           "body"
         ],
         "properties": {
-          "id": { "type": "string", "format": "uuid" },
-          "conversation_id": { "type": "string", "format": "uuid" },
-          "sender_id": { "type": "integer" },
-          "sender_role": { "type": "string", "enum": ["member", "specialist"] },
-          "body": { "type": "string" },
-          "is_read": { "type": "boolean" },
-          "created_at": { "type": "string", "format": "date-time" }
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "conversation_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sender_id": {
+            "type": "integer"
+          },
+          "sender_role": {
+            "type": "string",
+            "enum": [
+              "member",
+              "specialist"
+            ]
+          },
+          "body": {
+            "type": "string"
+          },
+          "is_read": {
+            "type": "boolean"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
         }
       },
       "CareConversation": {
@@ -2299,30 +2617,79 @@
           "status"
         ],
         "properties": {
-          "id": { "type": "string", "format": "uuid" },
-          "support_request_id": { "type": "string", "format": "uuid" },
-          "user_id": { "type": "integer" },
-          "specialist_id": { "type": "string", "format": "uuid" },
-          "status": { "type": "string" },
-          "specialist": { "$ref": "#/components/schemas/Specialist" },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "support_request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "user_id": {
+            "type": "integer"
+          },
+          "specialist_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string"
+          },
+          "specialist": {
+            "$ref": "#/components/schemas/Specialist"
+          },
           "messages": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/CareMessage" }
+            "items": {
+              "$ref": "#/components/schemas/CareMessage"
+            }
           },
-          "last_message_at": { "type": "string", "format": "date-time", "nullable": true }
+          "last_message_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
         }
       },
       "Device": {
         "type": "object",
-        "required": ["id", "device_id", "platform", "push_enabled"],
+        "required": [
+          "id",
+          "device_id",
+          "platform",
+          "push_enabled"
+        ],
         "properties": {
-          "id": { "type": "string", "format": "uuid" },
-          "device_id": { "type": "string" },
-          "device_name": { "type": "string" },
-          "platform": { "type": "string", "enum": ["android", "ios", "web"] },
-          "push_token": { "type": "string", "nullable": true },
-          "push_enabled": { "type": "boolean" },
-          "last_seen_at": { "type": "string", "format": "date-time", "nullable": true }
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "device_id": {
+            "type": "string"
+          },
+          "device_name": {
+            "type": "string"
+          },
+          "platform": {
+            "type": "string",
+            "enum": [
+              "android",
+              "ios",
+              "web"
+            ]
+          },
+          "push_token": {
+            "type": "string",
+            "nullable": true
+          },
+          "push_enabled": {
+            "type": "boolean"
+          },
+          "last_seen_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
         }
       },
       "NotificationPreferences": {
@@ -2335,33 +2702,78 @@
           "quiet_hours_end"
         ],
         "properties": {
-          "care_messages": { "type": "boolean" },
-          "editorial_updates": { "type": "boolean" },
-          "quiet_hours_enabled": { "type": "boolean" },
-          "quiet_hours_start": { "type": "string" },
-          "quiet_hours_end": { "type": "string" }
+          "care_messages": {
+            "type": "boolean"
+          },
+          "editorial_updates": {
+            "type": "boolean"
+          },
+          "quiet_hours_enabled": {
+            "type": "boolean"
+          },
+          "quiet_hours_start": {
+            "type": "string"
+          },
+          "quiet_hours_end": {
+            "type": "string"
+          }
         }
       },
       "BroadcastEvent": {
         "type": "object",
-        "required": ["id", "channel", "event", "payload", "created_at"],
+        "required": [
+          "id",
+          "channel",
+          "event",
+          "payload",
+          "created_at"
+        ],
         "properties": {
-          "id": { "type": "string", "format": "uuid" },
-          "channel": { "type": "string" },
-          "event": { "type": "string" },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "channel": {
+            "type": "string"
+          },
+          "event": {
+            "type": "string"
+          },
           "payload": {
             "type": "object",
             "description": "Privacy-preserving payload containing opaque event identifiers; zero clinical text",
-            "required": ["event_id", "type", "conversation_id", "timestamp"],
+            "required": [
+              "event_id",
+              "type",
+              "conversation_id",
+              "timestamp"
+            ],
             "properties": {
-              "event_id": { "type": "string", "format": "uuid" },
-              "type": { "type": "string" },
-              "conversation_id": { "type": "string", "format": "uuid" },
-              "message_id": { "type": "string", "format": "uuid" },
-              "timestamp": { "type": "string", "format": "date-time" }
+              "event_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "type": {
+                "type": "string"
+              },
+              "conversation_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "message_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "timestamp": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           },
-          "created_at": { "type": "string", "format": "date-time" }
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
         }
       }
     }

@@ -1,12 +1,13 @@
-import 'package:yanmata/features/today/presentation/today_page.dart';
-import 'package:yanmata/features/journal/presentation/track_page.dart';
-import 'package:yanmata/features/learning/presentation/learn_page.dart';
-import 'package:yanmata/features/specialists/presentation/care_page.dart';
-import 'package:yanmata/features/profile/presentation/you_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../core/theme.dart';
+import 'package:yanmata/core/theme.dart';
+import 'package:yanmata/features/journal/presentation/track_page.dart';
+import 'package:yanmata/features/learning/presentation/learn_page.dart';
+import 'package:yanmata/features/profile/presentation/you_page.dart';
+import 'package:yanmata/features/services/presentation/services_page.dart';
+import 'package:yanmata/features/shop/presentation/shop_page.dart';
+import 'package:yanmata/features/specialists/presentation/care_page.dart';
+import 'package:yanmata/features/today/presentation/today_page.dart';
 
 class YanMataShell extends ConsumerStatefulWidget {
   const YanMataShell({super.key});
@@ -18,6 +19,7 @@ class _ShellState extends ConsumerState<YanMataShell>
     with WidgetsBindingObserver {
   int tab = 0;
   bool hidden = false;
+
   @override
   void initState() {
     super.initState();
@@ -45,12 +47,23 @@ class _ShellState extends ConsumerState<YanMataShell>
             children: [
               Today(
                 onTrack: () => setState(() => tab = 1),
-                onLearn: () => setState(() => tab = 2),
+                onServices: () => setState(() => tab = 2),
+                onProducts: () => setState(() => tab = 4),
+                onProfile: () => setState(() => tab = 5),
+                onLearn: () => Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(builder: (_) => const Scaffold(body: SafeArea(child: Learn()))),
+                ),
               ),
               const Track(),
-              const Learn(),
+              const ServicesPage(),
               const Care(),
-              const You(),
+              const ShopPage(),
+              You(
+                onNavigateTrack: () => setState(() => tab = 1),
+                onNavigateServices: () => setState(() => tab = 2),
+                onNavigateProducts: () => setState(() => tab = 4),
+              ),
             ],
           ),
         ),
@@ -63,7 +76,7 @@ class _ShellState extends ConsumerState<YanMataShell>
             NavigationDestination(
               icon: Icon(Icons.home_outlined),
               selectedIcon: Icon(Icons.home_rounded),
-              label: 'Today',
+              label: 'Home',
             ),
             NavigationDestination(
               icon: Icon(Icons.favorite_border),
@@ -71,16 +84,24 @@ class _ShellState extends ConsumerState<YanMataShell>
               label: 'Track',
             ),
             NavigationDestination(
-              icon: Icon(Icons.auto_stories_outlined),
-              label: 'Learn',
+              icon: Icon(Icons.local_hospital_outlined),
+              selectedIcon: Icon(Icons.local_hospital),
+              label: 'Services',
             ),
             NavigationDestination(
               icon: Icon(Icons.chat_bubble_outline),
+              selectedIcon: Icon(Icons.chat_bubble),
               label: 'Care',
             ),
             NavigationDestination(
+              icon: Icon(Icons.shopping_bag_outlined),
+              selectedIcon: Icon(Icons.shopping_bag),
+              label: 'Products',
+            ),
+            NavigationDestination(
               icon: Icon(Icons.person_outline),
-              label: 'You',
+              selectedIcon: Icon(Icons.person),
+              label: 'More',
             ),
           ],
         ),
