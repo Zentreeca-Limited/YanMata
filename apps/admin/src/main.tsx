@@ -13,8 +13,17 @@ import {
   ArrowUpRight,
   X,
   RefreshCw,
+  MessageCircle,
 } from "lucide-react";
-import { Brand, Tag, api, type Article, type Member } from "@yanmata/ui";
+import {
+  Brand,
+  Tag,
+  api,
+  type Article,
+  type Member,
+  type SupportRequest,
+  type Specialist,
+} from "@yanmata/ui";
 import "@yanmata/ui/styles.css";
 import "./styles.css";
 const blank = {
@@ -29,7 +38,11 @@ function App() {
   const [user, setUser] = useState<Member | null>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [tab, setTab] = useState<"articles" | "care">("articles");
   const [items, setItems] = useState<Article[]>([]);
+  const [careRequests, setCareRequests] = useState<SupportRequest[]>([]);
+  const [specialists, setSpecialists] = useState<Specialist[]>([]);
+  const [careFilter, setCareFilter] = useState("all");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [filter, setFilter] = useState("all");
@@ -45,14 +58,47 @@ function App() {
       setError((e as Error).message);
     }
   }
+  async function loadCare() {
+    try {
+      const [reqs, specs] = await Promise.all([
+        api<{ data: SupportRequest[] }>("/studio/care/requests"),
+        api<{ data: Specialist[] }>("/specialists"),
+      ]);
+      setCareRequests(reqs.data);
+      setSpecialists(specs.data);
+    } catch (e) {
+      setError((e as Error).message);
+    }
+  }
   useEffect(() => {
     api<{ user: Member }>("/me")
       .then((r) => setUser(r.user))
       .catch(() => {});
   }, []);
   useEffect(() => {
-    if (user) void load();
-  }, [user]);
+    if (user) {
+      if (tab === "articles") void load();
+      if (tab === "care") void loadCare();
+    }
+  }, [user, tab]);
+
+  async function assignSpecialist(requestId: string, specialistId: string) {
+    if (!specialistId) return;
+    setBusy(true);
+    setError("");
+    try {
+      await api(`/studio/care/requests/${requestId}/assign`, {
+        method: "POST",
+        body: JSON.stringify({ specialist_id: specialistId }),
+      });
+      setNotice("Specialist assigned and conversation opened.");
+      await loadCare();
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
   async function signIn(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
@@ -218,8 +264,24 @@ function App() {
       <aside className="sidebar">
         <Brand small />
         <span className="sidebar-label">WORKSPACE</span>
-        <button className="nav-active">
+        <button
+          className={`nav-btn ${tab === "articles" ? "nav-active" : ""}`}
+          onClick={() => {
+            setTab("articles");
+            setNotice("");
+          }}
+        >
           <BookOpen size={18} /> Learning library <span>{items.length}</span>
+        </button>
+        <button
+          className={`nav-btn ${tab === "care" ? "nav-active" : ""}`}
+          onClick={() => {
+            setTab("care");
+            setNotice("");
+          }}
+        >
+          <MessageCircle size={18} /> Care inquiries{" "}
+          <span>{careRequests.length}</span>
         </button>
         <div className="sidebar-note">
           <ShieldCheck size={21} />
@@ -243,189 +305,404 @@ function App() {
       <div className="studio-main">
         <header className="studio-header">
           <span>
-            Workspace <span>/</span> Learning library
+            Workspace <span>/</span>{" "}
+            {tab === "articles" ? "Learning library" : "Care inquiries"}
           </span>
           <Tag>DEVELOPMENT PREVIEW</Tag>
         </header>
         <main>
-          <div className="studio-title">
-            <div>
-              <div className="eyebrow">
-                THOUGHTFUL WORDS. MEANINGFUL IMPACT.
-              </div>
-              <h1>The learning library</h1>
-              <p>
-                Create something that helps her feel a little more understood.
-              </p>
-            </div>
-            {user.role === "author" && (
-              <button className="button" onClick={() => edit(null)}>
-                <Plus size={17} /> New article
-              </button>
-            )}
-          </div>
-          <div className="stats">
-            {[
-              ["All articles", items.length, BookOpen],
-              [
-                "In review",
-                items.filter((i) => i.status === "in_review").length,
-                Clock,
-              ],
-              [
-                "Approved",
-                items.filter((i) => i.status === "approved").length,
-                CheckCircle,
-              ],
-              [
-                "Published",
-                items.filter((i) => i.status === "published").length,
-                FileText,
-              ],
-            ].map(([label, count, Icon]) => {
-              const C = Icon as typeof BookOpen;
-              return (
-                <div className="stat" key={String(label)}>
-                  <C size={19} />
-                  <span>{String(label)}</span>
-                  <strong>{String(count)}</strong>
+          {tab === "articles" ? (
+            <>
+              <div className="studio-title">
+                <div>
+                  <div className="eyebrow">
+                    THOUGHTFUL WORDS. MEANINGFUL IMPACT.
+                  </div>
+                  <h1>The learning library</h1>
+                  <p>
+                    Create something that helps her feel a little more
+                    understood.
+                  </p>
                 </div>
-              );
-            })}
-          </div>
-          <p className="notice">
-            Synthetic demo content is labelled on the public website. A demo
-            review does not establish clinical approval.
-          </p>
-          {error && (
-            <p className="error" role="alert">
-              {error}
-            </p>
-          )}
-          {notice && (
-            <p role="status" className="notice">
-              {notice}
-            </p>
-          )}
-          <section className="library-panel">
-            <div className="library-toolbar">
-              <div className="filter-tabs">
-                {[
-                  "all",
-                  "draft",
-                  "in_review",
-                  "approved",
-                  "published",
-                  "withdrawn",
-                ].map((s) => (
-                  <button
-                    key={s}
-                    aria-pressed={filter === s}
-                    onClick={() => setFilter(s)}
-                  >
-                    {s === "all" ? "All articles" : s.replace("_", " ")}
+                {user.role === "author" && (
+                  <button className="button" onClick={() => edit(null)}>
+                    <Plus size={17} /> New article
                   </button>
-                ))}
+                )}
               </div>
-              <label className="search">
-                <Search size={16} />
-                <input
-                  placeholder="Search articles"
-                  aria-label="Search articles"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                />
-              </label>
-              <button
-                className="refresh"
-                aria-label="Refresh library"
-                onClick={load}
-              >
-                <RefreshCw size={17} />
-              </button>
-            </div>
-            <div className="table-scroll">
-              <table>
-                <thead>
-                  <tr>
-                    <th>ARTICLE</th>
-                    <th>CHAPTER</th>
-                    <th>STATUS</th>
-                    <th>VERSION</th>
-                    <th>ACTION</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {visible.map((item) => (
-                    <tr key={item.id}>
-                      <td>
-                        <strong>{item.title}</strong>
-                        <small>
-                          {item.topic} {item.is_demo ? " · Demo" : ""}
-                        </small>
-                      </td>
-                      <td>{item.stage}</td>
-                      <td>
-                        <span className={`status ${item.status}`}>
-                          {item.status.replace("_", " ")}
-                        </span>
-                      </td>
-                      <td>v{item.version}</td>
-                      <td>
-                        <div className="row-actions">
-                          {user.role === "author" &&
-                            item.status !== "published" && (
-                              <button onClick={() => edit(item)}>Edit</button>
-                            )}
-                          {user.role === "author" &&
-                            item.status === "draft" && (
-                              <button
-                                disabled={busy}
-                                onClick={() => transition(item, "submit")}
-                              >
-                                Submit
-                              </button>
-                            )}
-                          {user.role === "reviewer" &&
-                            item.status === "in_review" && (
-                              <button onClick={() => edit(item)}>Review</button>
-                            )}
-                          {user.role === "publisher" &&
-                            item.status === "approved" && (
-                              <button
-                                disabled={busy}
-                                onClick={() => transition(item, "publish")}
-                              >
-                                Publish
-                              </button>
-                            )}
-                          {user.role === "publisher" &&
-                            item.status === "published" && (
-                              <button
-                                disabled={busy}
-                                onClick={() => transition(item, "withdraw")}
-                              >
-                                Withdraw
-                              </button>
-                            )}
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              {!visible.length && (
-                <div className="empty">
-                  <BookOpen />
-                  <h3>A little room for something new.</h3>
-                  <p>No articles match this view.</p>
-                </div>
+              <div className="stats">
+                {[
+                  ["All articles", items.length, BookOpen],
+                  [
+                    "In review",
+                    items.filter((i) => i.status === "in_review").length,
+                    Clock,
+                  ],
+                  [
+                    "Approved",
+                    items.filter((i) => i.status === "approved").length,
+                    CheckCircle,
+                  ],
+                  [
+                    "Published",
+                    items.filter((i) => i.status === "published").length,
+                    FileText,
+                  ],
+                ].map(([label, count, Icon]) => {
+                  const C = Icon as typeof BookOpen;
+                  return (
+                    <div className="stat" key={String(label)}>
+                      <C size={19} />
+                      <span>{String(label)}</span>
+                      <strong>{String(count)}</strong>
+                    </div>
+                  );
+                })}
+              </div>
+              <p className="notice">
+                Synthetic demo content is labelled on the public website. A demo
+                review does not establish clinical approval.
+              </p>
+              {error && (
+                <p className="error" role="alert">
+                  {error}
+                </p>
               )}
-            </div>
-          </section>
-          <p className="studio-foot">
-            Clinical journal data is never displayed in the editorial workspace.
-          </p>
+              {notice && (
+                <p role="status" className="notice">
+                  {notice}
+                </p>
+              )}
+              <section className="library-panel">
+                <div className="library-toolbar">
+                  <div className="filter-tabs">
+                    {[
+                      "all",
+                      "draft",
+                      "in_review",
+                      "approved",
+                      "published",
+                      "withdrawn",
+                    ].map((s) => (
+                      <button
+                        key={s}
+                        aria-pressed={filter === s}
+                        onClick={() => setFilter(s)}
+                      >
+                        {s === "all" ? "All articles" : s.replace("_", " ")}
+                      </button>
+                    ))}
+                  </div>
+                  <label className="search">
+                    <Search size={16} />
+                    <input
+                      placeholder="Search articles"
+                      aria-label="Search articles"
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                    />
+                  </label>
+                  <button
+                    className="refresh"
+                    aria-label="Refresh library"
+                    onClick={load}
+                  >
+                    <RefreshCw size={17} />
+                  </button>
+                </div>
+                <div className="table-scroll">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>ARTICLE</th>
+                        <th>CHAPTER</th>
+                        <th>STATUS</th>
+                        <th>VERSION</th>
+                        <th>ACTION</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {visible.map((item) => (
+                        <tr key={item.id}>
+                          <td>
+                            <strong>{item.title}</strong>
+                            <small>
+                              {item.topic} {item.is_demo ? " · Demo" : ""}
+                            </small>
+                          </td>
+                          <td>{item.stage}</td>
+                          <td>
+                            <span className={`status ${item.status}`}>
+                              {item.status.replace("_", " ")}
+                            </span>
+                          </td>
+                          <td>v{item.version}</td>
+                          <td>
+                            <div className="row-actions">
+                              {user.role === "author" &&
+                                item.status !== "published" && (
+                                  <button onClick={() => edit(item)}>
+                                    Edit
+                                  </button>
+                                )}
+                              {user.role === "author" &&
+                                item.status === "draft" && (
+                                  <button
+                                    disabled={busy}
+                                    onClick={() => transition(item, "submit")}
+                                  >
+                                    Submit
+                                  </button>
+                                )}
+                              {user.role === "reviewer" &&
+                                item.status === "in_review" && (
+                                  <button onClick={() => edit(item)}>
+                                    Review
+                                  </button>
+                                )}
+                              {user.role === "publisher" &&
+                                item.status === "approved" && (
+                                  <button
+                                    disabled={busy}
+                                    onClick={() => transition(item, "publish")}
+                                  >
+                                    Publish
+                                  </button>
+                                )}
+                              {user.role === "publisher" &&
+                                item.status === "published" && (
+                                  <button
+                                    disabled={busy}
+                                    onClick={() => transition(item, "withdraw")}
+                                  >
+                                    Withdraw
+                                  </button>
+                                )}
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  {!visible.length && (
+                    <div className="empty">
+                      <BookOpen />
+                      <h3>A little room for something new.</h3>
+                      <p>No articles match this view.</p>
+                    </div>
+                  )}
+                </div>
+              </section>
+              <p className="studio-foot">
+                Clinical journal data is never displayed in the editorial
+                workspace.
+              </p>
+            </>
+          ) : (
+            <>
+              <div className="studio-title">
+                <div>
+                  <div className="eyebrow">
+                    IN-PLATFORM CARE & SPECIALISTS · JOS PILOT
+                  </div>
+                  <h1>Care inquiries</h1>
+                  <p>
+                    Review non-emergency questions from members and assign
+                    verified clinical reviewers.
+                  </p>
+                </div>
+              </div>
+              <div className="stats">
+                <div className="stat">
+                  <MessageCircle size={19} />
+                  <span>All inquiries</span>
+                  <strong>{careRequests.length}</strong>
+                </div>
+                <div className="stat">
+                  <Clock size={19} />
+                  <span>Pending assignment</span>
+                  <strong>
+                    {careRequests.filter((r) => r.status === "pending").length}
+                  </strong>
+                </div>
+                <div className="stat">
+                  <CheckCircle size={19} />
+                  <span>Assigned & active</span>
+                  <strong>
+                    {careRequests.filter((r) => r.status === "assigned").length}
+                  </strong>
+                </div>
+              </div>
+              <p className="notice">
+                YanMata is not an emergency service. Response times are 24–48
+                hours by verified clinical volunteers in the Jos pilot.
+              </p>
+              {error && (
+                <p className="error" role="alert">
+                  {error}
+                </p>
+              )}
+              {notice && (
+                <p role="status" className="notice">
+                  {notice}
+                </p>
+              )}
+              <section className="library-panel">
+                <div className="library-toolbar">
+                  <div className="filter-tabs">
+                    {["all", "pending", "assigned"].map((s) => (
+                      <button
+                        key={s}
+                        aria-pressed={careFilter === s}
+                        onClick={() => setCareFilter(s)}
+                      >
+                        {s === "all" ? "All inquiries" : s}
+                      </button>
+                    ))}
+                  </div>
+                  <button
+                    className="refresh"
+                    aria-label="Refresh inquiries"
+                    onClick={loadCare}
+                  >
+                    <RefreshCw size={17} />
+                  </button>
+                </div>
+                <div className="table-scroll">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Status</th>
+                        <th>Topic & Chapter</th>
+                        <th>Inquiry Summary</th>
+                        <th>Journal Shared?</th>
+                        <th>Assigned Specialist</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {careRequests
+                        .filter(
+                          (r) =>
+                            careFilter === "all" || r.status === careFilter,
+                        )
+                        .map((r) => (
+                          <tr key={r.id}>
+                            <td>
+                              <Tag>{r.status.toUpperCase()}</Tag>
+                            </td>
+                            <td>
+                              <strong>{r.topic}</strong>
+                              <small>{r.stage}</small>
+                            </td>
+                            <td>
+                              <p
+                                style={{
+                                  margin: 0,
+                                  fontSize: "13px",
+                                  maxWidth: "320px",
+                                }}
+                              >
+                                {r.summary}
+                              </p>
+                            </td>
+                            <td>
+                              {r.share_journal_consent ? (
+                                <span
+                                  style={{
+                                    color: "var(--teal)",
+                                    fontWeight: 600,
+                                    fontSize: "12px",
+                                  }}
+                                >
+                                  ✓ Consented
+                                </span>
+                              ) : (
+                                <span
+                                  style={{
+                                    color: "var(--muted)",
+                                    fontSize: "12px",
+                                  }}
+                                >
+                                  Private (No)
+                                </span>
+                              )}
+                            </td>
+                            <td>
+                              {r.specialist ? (
+                                <div>
+                                  <strong>{r.specialist.name}</strong>
+                                  <small>{r.specialist.credentials}</small>
+                                </div>
+                              ) : (
+                                <em
+                                  style={{
+                                    color: "var(--muted)",
+                                    fontSize: "12px",
+                                  }}
+                                >
+                                  Unassigned
+                                </em>
+                              )}
+                            </td>
+                            <td>
+                              {r.status === "pending" ? (
+                                <select
+                                  aria-label="Assign specialist"
+                                  onChange={(e) =>
+                                    assignSpecialist(r.id, e.target.value)
+                                  }
+                                  defaultValue=""
+                                  style={{
+                                    padding: "6px 10px",
+                                    borderRadius: "8px",
+                                    border: "1px solid var(--line)",
+                                    fontSize: "12px",
+                                  }}
+                                >
+                                  <option value="" disabled>
+                                    Assign to...
+                                  </option>
+                                  {specialists.map((s) => (
+                                    <option key={s.id} value={s.id}>
+                                      {s.name} ({s.specialty})
+                                    </option>
+                                  ))}
+                                </select>
+                              ) : (
+                                <span
+                                  style={{
+                                    fontSize: "12px",
+                                    color: "var(--teal)",
+                                    fontWeight: 500,
+                                  }}
+                                >
+                                  Assigned
+                                </span>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      {careRequests.length === 0 && (
+                        <tr>
+                          <td
+                            colSpan={6}
+                            style={{ textAlign: "center", padding: "30px" }}
+                          >
+                            No care inquiries found.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+              <p className="studio-foot">
+                Specialist conversations are confidential and held within
+                YanMata. No patient records are exposed outside assigned care.
+              </p>
+            </>
+          )}
         </main>
       </div>
       {editing !== undefined && (

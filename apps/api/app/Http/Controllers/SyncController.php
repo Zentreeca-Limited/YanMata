@@ -12,10 +12,29 @@ class SyncController extends Controller
 {
     public function push(Request $r, SyncJournal $sync)
     {
-        $data = $r->validate(['mutations' => 'required|array|min:1|max:50', 'mutations.*.mutation_id' => 'required|uuid', 'mutations.*.entry_id' => 'required|uuid', 'mutations.*.expected_version' => 'required|integer|min:0', 'mutations.*.deleted' => 'required|boolean', 'mutations.*.payload' => 'required|array:date,mood,note', 'mutations.*.payload.date' => 'required|date_format:Y-m-d', 'mutations.*.payload.mood' => 'required|in:Great,Good,Okay,Low,Difficult', 'mutations.*.payload.note' => 'present|nullable|string|max:2000']);
+        $data = $r->validate([
+            'mutations' => 'required|array|min:1|max:50',
+            'mutations.*.mutation_id' => 'required|uuid',
+            'mutations.*.entry_id' => 'required|uuid',
+            'mutations.*.expected_version' => 'required|integer|min:0',
+            'mutations.*.deleted' => 'required|boolean',
+            'mutations.*.payload' => 'required|array',
+            'mutations.*.payload.date' => 'required|date_format:Y-m-d',
+            'mutations.*.payload.mood' => 'required|in:Great,Good,Okay,Low,Difficult',
+            'mutations.*.payload.flow' => 'nullable|in:none,spotting,light,medium,heavy',
+            'mutations.*.payload.symptoms' => 'nullable|array',
+            'mutations.*.payload.symptoms.*' => 'string|max:50',
+            'mutations.*.payload.energy' => 'nullable|in:high,moderate,low,exhausted',
+            'mutations.*.payload.stage' => 'nullable|in:Puberty,Adolescence,Adulthood,Menopause,Later life',
+            'mutations.*.payload.note' => 'present|nullable|string|max:2000',
+        ]);
 
         foreach ($data['mutations'] as &$mutation) {
             $mutation['payload']['note'] ??= '';
+            $mutation['payload']['flow'] ??= 'none';
+            $mutation['payload']['symptoms'] ??= [];
+            $mutation['payload']['energy'] ??= 'moderate';
+            $mutation['payload']['stage'] ??= null;
         }
         unset($mutation);
 

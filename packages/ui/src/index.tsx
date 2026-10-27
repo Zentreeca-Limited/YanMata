@@ -48,6 +48,33 @@ export type Member = {
   role: string;
   sync_consent: boolean;
 };
+export type Specialist = {
+  id: string;
+  name: string;
+  title: string;
+  credentials: string;
+  specialty: string;
+  bio: string;
+  city: string;
+  verification_source: string;
+  is_verified: boolean;
+  is_available: boolean;
+};
+export type SupportRequest = {
+  id: string;
+  user_id: number;
+  specialist_id: string | null;
+  topic: string;
+  stage: string;
+  summary: string;
+  status: string;
+  share_journal_consent: boolean;
+  specialist?: Specialist;
+  conversation_id?: string;
+  created_at: string;
+  updated_at: string;
+  user?: Member;
+};
 export async function api<T>(
   path: string,
   options: RequestInit = {},

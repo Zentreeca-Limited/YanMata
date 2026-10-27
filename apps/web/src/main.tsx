@@ -17,7 +17,7 @@ import {
   Minus,
   Menu,
 } from "lucide-react";
-import { Brand, Tag, api, type Article } from "@yanmata/ui";
+import { Brand, Tag, api, type Article, type Specialist } from "@yanmata/ui";
 import "@yanmata/ui/styles.css";
 import "./styles.css";
 const chapters = [
@@ -65,6 +65,7 @@ const chapters = [
 function App() {
   const [chapter, setChapter] = useState(0);
   const [articles, setArticles] = useState<Article[]>([]);
+  const [specialists, setSpecialists] = useState<Specialist[]>([]);
   const [error, setError] = useState("");
   const [selected, setSelected] = useState<Article | null>(null);
   const [info, setInfo] = useState<string | null>(null);
@@ -80,6 +81,9 @@ function App() {
           "The learning library is temporarily unavailable. Please try again.",
         ),
       );
+    api<{ data: Specialist[] }>("/specialists")
+      .then((r) => setSpecialists(r.data))
+      .catch(() => {});
   };
   useEffect(load, []);
   useEffect(() => {
@@ -110,6 +114,9 @@ function App() {
           </a>
           <a onClick={() => setMenu(false)} href="#care">
             Our approach
+          </a>
+          <a onClick={() => setMenu(false)} href="#specialists">
+            Specialists
           </a>
         </nav>
         <a className="button header-cta" href="#explore">
@@ -448,6 +455,43 @@ function App() {
               Read our privacy approach <ArrowUpRight size={18} />
             </button>
           </div>
+        </section>
+        <section className="wrap specialists" id="specialists">
+          <div className="eyebrow">VERIFIED CARE CONTRIBUTORS · JOS PILOT</div>
+          <h2>
+            Qualified guidance.
+            <br />
+            <span className="serif">Never an algorithm alone.</span>
+          </h2>
+          <p className="specialists-lead">
+            In our Jos, Plateau State pilot, YanMata connects women and girls
+            directly with licensed medical practitioners and nurse specialists
+            registered with MDCN and NMCN.
+          </p>
+          <div className="specialists-grid">
+            {specialists.map((s) => (
+              <div className="specialist-card" key={s.id}>
+                <div className="specialist-avatar">{s.name[0]}</div>
+                <div>
+                  <div className="specialist-verified">
+                    <ShieldCheck size={14} /> MDCN / NMCN Verified
+                  </div>
+                  <h3>{s.name}</h3>
+                  <div className="specialist-title">
+                    {s.title} · {s.credentials}
+                  </div>
+                  <div className="specialist-specialty">{s.specialty}</div>
+                  <p>{s.bio}</p>
+                  <small className="specialist-city">📍 {s.city}</small>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="specialist-note">
+            Specialist support is asynchronous and confidential within YanMata.
+            YanMata does not provide hospital referrals, directory search or
+            emergency admissions.
+          </p>
         </section>
         <section className="wrap faq">
           <div>

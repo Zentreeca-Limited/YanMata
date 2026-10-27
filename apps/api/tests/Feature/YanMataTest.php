@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\ContentItem;
+use App\Models\SpecialistProfile;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
@@ -157,5 +158,129 @@ class YanMataTest extends TestCase
         $mutation['payload'] = array_reverse($mutation['payload'], true);
         $this->postJson('/api/v1/sync/push', ['mutations' => [$mutation]])->assertOk();
         $this->assertDatabaseCount('journal_changes', 1);
+    }
+
+    public function test_tracking_sync_accepts_cycle_symptoms_and_flow_payload(): void
+    {
+        Sanctum::actingAs($this->actor('member', true));
+        $mutation = $this->mutation();
+        $mutation['payload'] = [
+            'date' => '2026-10-27',
+            'mood' => 'Difficult',
+            'flow' => 'medium',
+            'symptoms' => ['cramps', 'fatigue', 'headache'],
+            'energy' => 'low',
+            'stage' => 'Puberty',
+            'note' => 'First day of bleeding, feeling low energy.',
+        ];
+
+        $res = $this->postJson('/api/v1/sync/push', ['mutations' => [$mutation]])
+            ->assertOk()
+            ->assertJsonPath('results.0.status', 'accepted')
+            ->assertJsonPath('results.0.server.payload.flow', 'medium')
+            ->assertJsonPath('results.0.server.payload.symptoms.0', 'cramps')
+            ->assertJsonPath('results.0.server.payload.energy', 'low');
+
+        $pull = $this->getJson('/api/v1/sync/pull')->assertOk();
+        $this->assertEquals('medium', $pull->json('entries.0.payload.flow'));
+        $this->assertEquals(['cramps', 'fatigue', 'headache'], $pull->json('entries.0.payload.symptoms'));
+    }
+
+    public function test_specialists_endpoint_returns_verified_professionals_only(): void
+    {
+        $u1 = $this->actor('specialist');
+        $u2 = $this->actor('specialist');
+
+        SpecialistProfile::create([
+            'user_id' => $u1->id,
+            'name' => 'Dr. Fatima Bello',
+            'title' => 'Obstetrician & Gynaecologist',
+            'credentials' => 'MBBS, FWACS (OB/GYN)',
+            'specialty' => 'Reproductive health',
+            'bio' => 'Consultant in Jos',
+            'city' => 'Jos, Plateau State',
+            'verification_source' => 'MDCN #12345',
+            'is_verified' => true,
+            'is_available' => true,
+        ]);
+
+        SpecialistProfile::create([
+            'user_id' => $u2->id,
+            'name' => 'Unverified Person',
+            'title' => 'Consultant',
+            'credentials' => 'None',
+            'specialty' => 'General',
+            'bio' => 'Not verified',
+            'city' => 'Jos',
+            'verification_source' => 'None',
+            'is_verified' => false,
+            'is_available' => true,
+        ]);
+
+        $res = $this->getJson('/api/v1/specialists')->assertOk()->assertJsonCount(1, 'data');
+        $this->assertEquals('Dr. Fatima Bello', $res->json('data.0.name'));
+        $this->assertTrue($res->json('data.0.is_verified'));
+    }
+
+    public function test_member_can_create_support_request_and_message_assigned_specialist(): void
+    {
+        $member = $this->actor('member');
+        $specialistUser = $this->actor('specialist');
+        $stranger = $this->actor('member');
+
+        $profile = SpecialistProfile::create([
+            'user_id' => $specialistUser->id,
+            'name' => 'Nurse Grace Danladi',
+            'title' => 'Nurse Specialist',
+            'credentials' => 'RN, RM',
+            'specialty' => 'Adolescent health',
+            'bio' => 'Adolescent health nurse in Jos',
+            'city' => 'Jos, Plateau State',
+            'verification_source' => 'NMCN #67890',
+            'is_verified' => true,
+            'is_available' => true,
+        ]);
+
+        Sanctum::actingAs($member);
+
+        // Member creates support request directly to Nurse Grace
+        $reqRes = $this->postJson('/api/v1/care/requests', [
+            'topic' => 'Menstrual wellbeing',
+            'stage' => 'Puberty',
+            'summary' => 'I have a question about cramping during my first period.',
+            'share_journal_consent' => true,
+            'specialist_id' => $profile->id,
+        ])->assertCreated();
+
+        $convId = $reqRes->json('data.conversation_id');
+        $this->assertNotNull($convId);
+
+        // Member can view conversation
+        $convRes = $this->getJson("/api/v1/care/conversations/{$convId}")
+            ->assertOk()
+            ->assertJsonPath('data.specialist.name', 'Nurse Grace Danladi')
+            ->assertJsonCount(1, 'data.messages');
+
+        // Member sends a follow-up message
+        $this->postJson("/api/v1/care/conversations/{$convId}/messages", [
+            'body' => 'Also, is hot water bottle safe for cramps?',
+        ])->assertCreated()->assertJsonPath('data.sender_role', 'member');
+
+        // Stranger cannot view conversation
+        Sanctum::actingAs($stranger);
+        $this->getJson("/api/v1/care/conversations/{$convId}")->assertForbidden();
+        $this->postJson("/api/v1/care/conversations/{$convId}/messages", [
+            'body' => 'Intruder message',
+        ])->assertForbidden();
+
+        // Specialist can view conversation and reply
+        Sanctum::actingAs($specialistUser);
+        $this->getJson("/api/v1/care/conversations/{$convId}")
+            ->assertOk()
+            ->assertJsonCount(2, 'data.messages');
+
+        $this->postJson("/api/v1/care/conversations/{$convId}/messages", [
+            'body' => 'Yes, a warm compress or hot water bottle wrapped in a towel is a very gentle, safe way to soothe cramps.',
+        ])->assertCreated()->assertJsonPath('data.sender_role', 'specialist');
     }
 }

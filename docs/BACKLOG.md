@@ -14,7 +14,7 @@ Statuses: TODO, IN_PROGRESS, BLOCKED, VERIFIED. VERIFIED requires evidence. Foun
 | SYNC-01 | P0 | Journal plus outbox/idempotency/cursor protocol | API-01, MOB-01 | Airplane-mode/replay/conflict/delete scenarios | IN_PROGRESS |
 | CMS-01 | P0 | React content authoring/review/publication and media pipeline | API-01, DESIGN-01 | Publication state/permission tests; mobile refresh | IN_PROGRESS |
 | WEB-01 | P0 | Responsive React public site and learning pages | DESIGN-01, CMS-01 | Mobile/desktop QA, SEO, no private cache/index leakage | IN_PROGRESS |
-| CARE-01 | P0 | Specialist verification, in-platform support request and consented chat | API-01, MOB-01 | Scoped access/revocation tests and seeded demo conversation | TODO |
+| CARE-01 | P0 | Specialist verification, in-platform support request and consented chat | API-01, MOB-01 | Scoped access/revocation tests and seeded demo conversation | IN_PROGRESS |
 | PUSH-01 | P0 | Private Reverb, FCM/APNs and local reminders | SYNC-01, CARE-01 | Physical-device state matrix, token cleanup, deduplication | TODO |
 | MOB-02 | P1 | Mobile staff draft/upload/review/publish capability | CMS-01, MOB-01 | Same policies enforced from mobile and web | TODO |
 | AI-01 | P1 | Evaluate bounded multilingual retrieval slice | CMS-01, clinical corpus | Documented evaluation; disabled unless gate passes | TODO |
@@ -38,4 +38,13 @@ ID / owner / status / date / implementation paths / commit or build / commands a
 
 See [PHASE-01](evidence/PHASE-01.md). Implemented slices: runnable four-app workspace; semantic colours and brand symbol; editorial roles/workflow; public/mobile learning feed; local mobile check-in; encrypted server data; manual outbox/cursor/idempotent sync; synthetic seed guard; builds and initial tests. Broad tickets remain in progress because planned database, complete clinical metadata, media, identity and release gates are outstanding.
 
-Next order: SYNC-02 encrypted database/recovery/conflict UI → ID-02 age/consent/session and data rights → TRACK-02 calendar/symptoms → CARE-01 scoped specialist messaging → PUSH-01 Reverb/FCM/local reminders → MOB-02 media/publishing → QA/OPS readiness. Each must retain existing regression tests and visual baselines.
+## Phase 02 implementation evidence
+
+See [PHASE-02](evidence/PHASE-02.md). Implemented slices:
+- CARE-01: In-platform specialist guidance (Jos pilot), MDCN/NMCN synthetic verified clinicians, member support inquiries with journal sharing consent, secure asynchronous messaging, mobile CareChatPage, admin Care inquiries table, public web specialists showcase.
+- TRACK-02 / SYNC-01: Expanded life-stage tracking with cycle flow intensity, multi-symptom body signals, energy levels, backward-compatible API sync payload, and explicit mobile conflict resolution.
+- ID-02: Life chapter selection across 5 life stages (ages 9 through 55+), topic interests, and private journal JSON data export.
+- TECH-02 / QA-01: Activated strict prevention of lazy loading and attribute discarding in Laravel, added DB performance indexes, verified zero N+1 database queries.
+- All 17 PHP tests, 5 Flutter tests, layout tests at 200% scale, live mobile-to-API integration tests, and Android/iOS simulator builds pass cleanly.
+
+Next order: PUSH-01 Reverb/FCM/local reminders → MOB-02 media/publishing → QA/OPS production readiness. Each must retain existing regression tests and visual baselines.

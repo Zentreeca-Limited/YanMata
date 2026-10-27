@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yanmata/core/theme.dart';
 import 'package:yanmata/core/widgets.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yanmata/features/journal/application/journal_controller.dart';
 import 'package:yanmata/features/journal/domain/journal_repository.dart';
 
@@ -15,6 +18,10 @@ class _YouState extends ConsumerState<You> {
   final email = TextEditingController(), password = TextEditingController();
   bool consent = false, busy = false;
   String? message;
+
+  String _selectedStage = 'Adolescence';
+  final List<String> _selectedTopics = ['Body literacy', 'Menstrual wellbeing'];
+
   @override
   void dispose() {
     email.dispose();
@@ -37,10 +44,73 @@ class _YouState extends ConsumerState<You> {
     }
   }
 
+  void _exportData(JournalState state) {
+    final export = {
+      'exported_at': DateTime.now().toIso8601String(),
+      'life_stage': _selectedStage,
+      'topics': _selectedTopics,
+      'entries_count': state.entries.length,
+      'entries': state.entries.map((e) => e.toJson()).toList(),
+    };
+    final jsonStr = const JsonEncoder.withIndent('  ').convert(export);
+
+    showDialog<void>(
+      context: context,
+      builder: (c) => AlertDialog(
+        title: const Text('Export My Journal'),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Your private journal is stored safely on this device. Below is a portable JSON copy of your recorded moments.',
+                  style: TextStyle(fontSize: 13),
+                ),
+                const SizedBox(height: 12),
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Palette.cream,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: const Color(0xFFE9E2E9)),
+                  ),
+                  child: SelectableText(
+                    jsonStr,
+                    style: const TextStyle(fontFamily: 'monospace', fontSize: 11),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: jsonStr));
+              Navigator.pop(c);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Copied export data to clipboard.')),
+              );
+            },
+            child: const Text('Copy to Clipboard'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(c),
+            child: const Text('Close'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final s = ref.watch(journalProvider).value ?? const JournalState();
     final controller = ref.read(journalProvider.notifier);
+
     return PageFrame(
       children: [
         const Eyebrow('Your wellbeing. Your boundaries.'),
@@ -49,11 +119,89 @@ class _YouState extends ConsumerState<You> {
           'Your space,\nyour choice.',
           style: Theme.of(context).textTheme.headlineLarge,
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 14),
         const Text(
-          'You can keep your journal on this device. Connecting a demo account is optional.',
+          'You control what is saved and whether anything leaves your phone.',
         ),
+        const SizedBox(height: 24),
+
+        // Life Chapter Selection
+        SoftCard(
+          color: Colors.white,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const Icon(Icons.auto_stories_outlined, color: Palette.plum, size: 24),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Your life chapter',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 6),
+              const Text(
+                'Ages 9 through later life. We adapt learning without assuming reproductive or marital status.',
+                style: TextStyle(fontSize: 13),
+              ),
+              const SizedBox(height: 16),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  ('Puberty', 'Puberty (9–14)'),
+                  ('Adolescence', 'Adolescence (15–19)'),
+                  ('Adulthood', 'Adulthood (20–44)'),
+                  ('Menopause', 'Menopause (45–54)'),
+                  ('Later life', 'Later life (55+)'),
+                ].map(
+                  (stage) => ChoiceChip(
+                    label: Text(stage.$2),
+                    selected: _selectedStage == stage.$1,
+                    onSelected: (_) => setState(() => _selectedStage = stage.$1),
+                  ),
+                ).toList(),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Topics of interest',
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 6,
+                runSpacing: 6,
+                children: [
+                  'Body literacy',
+                  'Menstrual wellbeing',
+                  'Emotional wellbeing',
+                  'Healthy ageing',
+                  'Transitions',
+                ].map(
+                  (top) => FilterChip(
+                    label: Text(top),
+                    selected: _selectedTopics.contains(top),
+                    onSelected: (val) {
+                      setState(() {
+                        if (val) {
+                          _selectedTopics.add(top);
+                        } else {
+                          _selectedTopics.remove(top);
+                        }
+                      });
+                    },
+                  ),
+                ).toList(),
+              ),
+            ],
+          ),
+        ),
+
         const SizedBox(height: 20),
+
+        // Cloud sync card
         SoftCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,11 +282,39 @@ class _YouState extends ConsumerState<You> {
           const SizedBox(height: 15),
           Text(message!, style: const TextStyle(fontSize: 12)),
         ],
+
+        const SizedBox(height: 20),
+
+        // Export data button
+        SoftCard(
+          color: Colors.white,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Data ownership & export',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'Export all your local records anytime. You own your data completely.',
+                style: TextStyle(fontSize: 13),
+              ),
+              const SizedBox(height: 14),
+              OutlinedButton.icon(
+                onPressed: () => _exportData(s),
+                icon: const Icon(Icons.download_outlined),
+                label: const Text('Export journal records'),
+              ),
+            ],
+          ),
+        ),
+
         const SizedBox(height: 25),
         const SoftCard(
           color: Palette.blush,
           child: Text(
-            'Foundation preview: account export/deletion, app PIN, consent history, automated background sync and notification settings are not yet available. Use synthetic data only.',
+            'Foundation preview: automated background sync, local notifications and biometric lock are in development. Use synthetic data only.',
             style: TextStyle(fontSize: 12),
           ),
         ),

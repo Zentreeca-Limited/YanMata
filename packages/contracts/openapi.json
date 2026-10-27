@@ -1583,6 +1583,185 @@
           }
         ]
       }
+    },
+    "/specialists": {
+      "get": {
+        "summary": "Verified independent specialists and clinical reviewers in Jos pilot",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Specialist"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/care/requests": {
+      "get": {
+        "summary": "Member's submitted care and support requests",
+        "security": [
+          { "bearerAuth": [] },
+          { "cookieAuth": [] }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SupportRequest"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Submit an in-platform care inquiry or question to a specialist",
+        "security": [
+          { "bearerAuth": [] },
+          { "cookieAuth": [] }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["topic", "stage", "summary", "share_journal_consent"],
+                "properties": {
+                  "topic": { "type": "string" },
+                  "stage": { "type": "string", "enum": ["All chapters", "Puberty", "Adolescence", "Adulthood", "Menopause", "Later life"] },
+                  "summary": { "type": "string" },
+                  "share_journal_consent": { "type": "boolean" },
+                  "specialist_id": { "type": "string", "format": "uuid" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SupportRequest"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/care/conversations/{id}": {
+      "get": {
+        "summary": "Retrieve in-platform care conversation with messages",
+        "security": [
+          { "bearerAuth": [] },
+          { "cookieAuth": [] }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/CareConversation"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/care/conversations/{id}/messages": {
+      "post": {
+        "summary": "Send an asynchronous message within a care conversation",
+        "security": [
+          { "bearerAuth": [] },
+          { "cookieAuth": [] }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["body"],
+                "properties": {
+                  "body": { "type": "string", "maxLength": 4000 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/CareMessage"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1879,6 +2058,96 @@
               }
             ]
           }
+        }
+      },
+      "Specialist": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "title",
+          "credentials",
+          "specialty",
+          "city",
+          "is_verified",
+          "is_available"
+        ],
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "name": { "type": "string" },
+          "title": { "type": "string" },
+          "credentials": { "type": "string" },
+          "specialty": { "type": "string" },
+          "bio": { "type": "string" },
+          "city": { "type": "string" },
+          "verification_source": { "type": "string" },
+          "is_verified": { "type": "boolean" },
+          "is_available": { "type": "boolean" }
+        }
+      },
+      "SupportRequest": {
+        "type": "object",
+        "required": [
+          "id",
+          "topic",
+          "stage",
+          "summary",
+          "status",
+          "share_journal_consent"
+        ],
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "topic": { "type": "string" },
+          "stage": { "type": "string" },
+          "summary": { "type": "string" },
+          "status": { "type": "string" },
+          "share_journal_consent": { "type": "boolean" },
+          "specialist_id": { "type": "string", "format": "uuid", "nullable": true },
+          "conversation_id": { "type": "string", "format": "uuid", "nullable": true },
+          "specialist": { "$ref": "#/components/schemas/Specialist" },
+          "created_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "CareMessage": {
+        "type": "object",
+        "required": [
+          "id",
+          "conversation_id",
+          "sender_id",
+          "sender_role",
+          "body"
+        ],
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "conversation_id": { "type": "string", "format": "uuid" },
+          "sender_id": { "type": "integer" },
+          "sender_role": { "type": "string", "enum": ["member", "specialist"] },
+          "body": { "type": "string" },
+          "is_read": { "type": "boolean" },
+          "created_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "CareConversation": {
+        "type": "object",
+        "required": [
+          "id",
+          "support_request_id",
+          "user_id",
+          "specialist_id",
+          "status"
+        ],
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "support_request_id": { "type": "string", "format": "uuid" },
+          "user_id": { "type": "integer" },
+          "specialist_id": { "type": "string", "format": "uuid" },
+          "status": { "type": "string" },
+          "specialist": { "$ref": "#/components/schemas/Specialist" },
+          "messages": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/CareMessage" }
+          },
+          "last_message_at": { "type": "string", "format": "date-time", "nullable": true }
         }
       }
     }

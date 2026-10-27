@@ -25,8 +25,28 @@ class JournalController extends AsyncNotifier<JournalState> {
     state = AsyncData(await _repo.read());
   }
 
-  Future<void> add(String mood, String note) =>
-      _run(() => _repo.add(mood, note));
+  Future<void> add(
+    String mood,
+    String note, {
+    String? date,
+    String flow = 'none',
+    List<String> symptoms = const [],
+    String energy = 'moderate',
+    String? stage,
+  }) => _run(
+    () => _repo.add(
+      mood,
+      note,
+      date: date,
+      flow: flow,
+      symptoms: symptoms,
+      energy: energy,
+      stage: stage,
+    ),
+  );
+
+  Future<void> resolveConflict(String entryId, {required bool keepLocal}) =>
+      _run(() => _repo.resolveConflict(entryId, keepLocal: keepLocal));
   Future<void> remove(String id) => _run(() => _repo.remove(id));
   Future<void> connect(String email, String password) =>
       _run(() => _repo.connect(email, password));

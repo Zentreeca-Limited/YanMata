@@ -30,3 +30,12 @@
 - API: 14 tests/55 assertions. Mobile: 3 tests plus opt-in live integration pass. React builds/type checks, Prettier, Pint and Flutter analysis passed.
 - Removed scaffold debug signing from Android release configuration; real signing remains a release gate.
 - Updated architecture/design status, semantic token metadata and handoff to distinguish implemented foundation from planned production features.
+
+## 2026-10-27 — Phase 02 implementation — CARE-01 / TRACK-02 / ID-02 / TECH-02
+
+- Implemented in-platform specialist guidance (CARE-01): `specialist_profiles`, `support_requests`, `care_conversations`, `care_messages` tables with strict `CarePolicy` authorization. Verified Jos practitioners seeded and displayed in public web, admin studio, and mobile care directory with direct inquiry and messaging flows.
+- Enhanced journal tracking (TRACK-02 / SYNC-01): cycle flow intensity (`none`, `spotting`, `light`, `medium`, `heavy`), body and emotional symptoms, energy levels, backward-compatible API push/pull, and explicit mobile conflict resolution UI.
+- Delivered life chapter onboarding and data ownership (ID-02): 5 life stages (Puberty 9–14 to Later life 55+), topic interests, and portable JSON journal export dialog.
+- Hardened database queries and architecture (TECH-02): enabled strict lazy loading prevention (`Model::preventLazyLoading`) and missing attribute prevention in Laravel to completely prevent N+1 database queries; added indexes for content lookup, journal change cursors, and care messaging threads.
+- Updated OpenAPI contracts, seeded synthetic Jos specialists and demo inquiries.
+- Verified test suite: 17 API tests / 80 assertions pass, 5 Flutter tests pass, mobile 200% text scaling passes, Android debug APK and iOS simulator app builds succeed.

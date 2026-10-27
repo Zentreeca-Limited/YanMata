@@ -32,6 +32,17 @@ class LocalJournalRepository implements JournalRepository {
   @override
   Future<JournalState> read() => _lock.synchronized(() async {
     final d = await _load();
+    final conflictList = (d['conflicts'] as List).map((c) {
+      final local = (c['local'] as Map)['payload'] as Map<String, dynamic>;
+      final server = c['server'] as Map<String, dynamic>?;
+      return ConflictItem(
+        entryId: (c['local'] as Map)['entry_id'] as String,
+        localPayload: local,
+        serverPayload: server?['payload'] as Map<String, dynamic>?,
+        serverVersion: (server?['version'] as int?) ?? 0,
+      );
+    }).toList();
+
     return JournalState(
       entries: (d['entries'] as List)
           .map((e) => JournalEntry.fromJson(Map<String, dynamic>.from(e)))
@@ -41,12 +52,23 @@ class LocalJournalRepository implements JournalRepository {
           .toList(),
       pending: (d['outbox'] as List).length,
       conflicts: (d['conflicts'] as List).length,
+      conflictList: conflictList,
       signedIn: d['token'] != null,
       ownerId: d['owner_id'],
+      token: d['token'] as String?,
     );
   });
+
   @override
-  Future<void> add(String mood, String note) => _lock.synchronized(() async {
+  Future<void> add(
+    String mood,
+    String note, {
+    String? date,
+    String flow = 'none',
+    List<String> symptoms = const [],
+    String energy = 'moderate',
+    String? stage,
+  }) => _lock.synchronized(() async {
     if (!['Great', 'Good', 'Okay', 'Low', 'Difficult'].contains(mood) ||
         note.length > 2000) {
       throw ArgumentError('Invalid journal entry.');
@@ -59,9 +81,13 @@ class LocalJournalRepository implements JournalRepository {
     }
     final e = JournalEntry(
       id: _uuid.v4(),
-      date: DateTime.now().toIso8601String().substring(0, 10),
+      date: date ?? DateTime.now().toIso8601String().substring(0, 10),
       mood: mood,
       note: note,
+      flow: flow,
+      symptoms: symptoms,
+      energy: energy,
+      stage: stage,
     );
     (d['entries'] as List).add(e.toJson());
     (d['outbox'] as List).add({
@@ -71,6 +97,52 @@ class LocalJournalRepository implements JournalRepository {
       'deleted': false,
       'payload': e.toJson()['payload'],
     });
+    await _save(d);
+  });
+
+  @override
+  Future<void> resolveConflict(
+    String entryId, {
+    required bool keepLocal,
+  }) => _lock.synchronized(() async {
+    final d = await _load();
+    final conflicts = d['conflicts'] as List;
+    final index = conflicts.indexWhere(
+      (c) =>
+          c['local']['entry_id'] == entryId ||
+          (c['server'] != null && c['server']['id'] == entryId),
+    );
+    if (index == -1) return;
+    final conflict = conflicts[index];
+
+    final entries = d['entries'] as List;
+    entries.removeWhere((e) => e['id'] == entryId);
+
+    if (keepLocal) {
+      final localMutation = conflict['local'] as Map;
+      final serverVersion = (conflict['server']?['version'] as int?) ?? 1;
+      final localEntry = {
+        'id': entryId,
+        'payload': localMutation['payload'],
+        'version': serverVersion + 1,
+        'deleted': false,
+      };
+      entries.add(localEntry);
+
+      (d['outbox'] as List).add({
+        'mutation_id': _uuid.v4(),
+        'entry_id': entryId,
+        'expected_version': serverVersion,
+        'deleted': false,
+        'payload': localMutation['payload'],
+      });
+    } else {
+      if (conflict['server'] != null) {
+        entries.add(conflict['server']);
+      }
+    }
+
+    conflicts.removeAt(index);
     await _save(d);
   });
   @override
