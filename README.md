@@ -1,4 +1,4 @@
-# YanMata
+# YanMata - App
 
 A private, accessible wellbeing companion for girls and women, provided by **Zentreeca Limited** (https://zentreeca.org). Initial pilot: **Jos, Plateau State, Nigeria**. Audience: **ages 9 onward, from puberty through the end of life**, with no upper age limit.
 
