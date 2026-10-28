@@ -44,6 +44,10 @@ class _FakeJournalRepo implements JournalRepository {
   @override
   Future<void> disconnect() async {}
   @override
+  Future<void> logout() async {}
+  @override
+  Future<void> deleteAccount(String password) async {}
+  @override
   Future<void> erase() async {}
   @override
   Future<void> remove(String id) async {}

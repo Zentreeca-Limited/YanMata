@@ -33,10 +33,45 @@ import { LANGUAGES, translations, type Language } from "./i18n";
 import "@yanmata/ui/styles.css";
 import "./styles.css";
 
-const androidDownloadUrl = import.meta.env.VITE_ANDROID_DOWNLOAD_URL as
-  string | undefined;
-const iosDownloadUrl = import.meta.env.VITE_IOS_DOWNLOAD_URL as
-  string | undefined;
+const androidDownloadUrl =
+  import.meta.env.VITE_ANDROID_DOWNLOAD_URL ||
+  "https://play.google.com/store/apps/details?id=org.zentreeca.yanmata";
+const iosDownloadUrl =
+  import.meta.env.VITE_IOS_DOWNLOAD_URL ||
+  "https://apps.apple.com/app/yanmata/id0000000000";
+
+function StoreGlyph({ platform }: { platform: "android" | "ios" }) {
+  if (platform === "android") {
+    return (
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <path
+          fill="#00d26a"
+          d="M7 5.7 28.8 24 7 42.3a4 4 0 0 1-1-2.7V8.4A4 4 0 0 1 7 5.7Z"
+        />
+        <path
+          fill="#00a1ff"
+          d="m28.8 24 6.8-5.7 7.6 4.3a1.7 1.7 0 0 1 0 2.8l-7.6 4.3-6.8-5.7Z"
+        />
+        <path
+          fill="#ffcc00"
+          d="M7 5.7a4 4 0 0 1 4.7-.4l23.9 13-6.8 5.7L7 5.7Z"
+        />
+        <path
+          fill="#ff4b55"
+          d="m7 42.3 21.8-18.3 6.8 5.7-23.9 13a4 4 0 0 1-4.7-.4Z"
+        />
+      </svg>
+    );
+  }
+  return (
+    <svg viewBox="0 0 48 48" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M32.7 25.4c0-5.2 4.3-7.8 4.5-7.9-2.4-3.6-6.2-4-7.6-4.1-3.2-.3-6.3 1.9-7.9 1.9-1.7 0-4.2-1.9-6.9-1.8-3.5.1-6.8 2.1-8.6 5.2-3.7 6.4-.9 15.8 2.6 21 1.7 2.5 3.8 5.3 6.5 5.2 2.6-.1 3.6-1.7 6.8-1.7 3.1 0 4 1.7 6.8 1.6 2.8 0 4.6-2.5 6.3-5 2-2.9 2.8-5.7 2.9-5.9-.1 0-5.4-2.1-5.4-8.5ZM27.5 10c1.4-1.7 2.4-4.1 2.1-6.5-2.1.1-4.7 1.4-6.2 3.2-1.3 1.5-2.5 3.9-2.2 6.2 2.4.2 4.8-1.2 6.3-2.9Z"
+      />
+    </svg>
+  );
+}
 
 const getStories = (t: Record<string, string>) => [
   {
@@ -191,6 +226,155 @@ const getFaqs = (t: Record<string, string>) => [
   [t.faq_q5, t.faq_a5],
   [t.faq_q6, t.faq_a6],
 ];
+
+type LegalPageKind = "privacy-policy" | "terms-of-use" | "account-deletion";
+
+const legalPageKind = window.location.pathname
+  .replace(/^\//, "")
+  .replace(/\/$/, "") as LegalPageKind;
+
+function LegalPage({ kind }: { kind: LegalPageKind }) {
+  const pages = {
+    "privacy-policy": {
+      eyebrow: "PRIVACY POLICY",
+      title: "Your wellbeing data deserves careful boundaries.",
+      intro:
+        "This policy explains how Zentreeca Limited handles information in YanMata. The current product is a development preview; use synthetic data until the pilot is formally opened.",
+      sections: [
+        [
+          "Information we collect",
+          "Account details such as name, email and date of birth; wellbeing information you choose to record; support conversations you choose to start; device and notification identifiers; and limited operational security records. YanMata does not sell personal data.",
+        ],
+        [
+          "How information is used",
+          "To provide age-appropriate experiences, save and synchronise records after consent, deliver in-app support, secure accounts, operate notifications, respond to requests and meet applicable legal obligations.",
+        ],
+        [
+          "Sharing and processors",
+          "Access is restricted by role and purpose. Specialist access requires assignment and scoped consent. Service providers may process only the information needed to host or protect the service under appropriate agreements. Health journals are not used for advertising or model training by default.",
+        ],
+        [
+          "Children and young people",
+          "YanMata is designed from age 9, but real enrolment of minors remains gated until Nigeria-specific consent, assent and safeguarding procedures are approved. There are no public child profiles and no automatic guardian access to private journals or chats.",
+        ],
+        [
+          "Storage, security and retention",
+          "YanMata uses transport encryption and is designed for encrypted local and server storage. Retention periods, hosting region and backup erasure schedules must be approved before the live pilot. Offline copies on disconnected devices cannot be erased remotely.",
+        ],
+        [
+          "Your choices and rights",
+          "You can control optional sync, export local journal data, log out and clear the current device, or permanently delete a member account in the app. You may also request access, correction or deletion through Zentreeca’s official contact channel.",
+        ],
+        [
+          "Contact and changes",
+          "Questions or rights requests can be sent through the official contact route at Zentreeca.org. Material policy changes will be dated and shown before they take effect.",
+        ],
+      ],
+    },
+    "terms-of-use": {
+      eyebrow: "TERMS OF USE",
+      title: "Clear expectations for using YanMata.",
+      intro:
+        "These terms govern use of the YanMata website and mobile application supplied by Zentreeca Limited. The current service is a development preview, not a clinically approved release.",
+      sections: [
+        [
+          "Eligibility and accounts",
+          "YanMata is designed for people aged 9 and older. Live minor accounts remain subject to approved consent, assent and safeguarding procedures. Keep sign-in details private and provide accurate account information.",
+        ],
+        [
+          "Education, not emergency care",
+          "YanMata provides wellbeing education and structured support workflows. It does not diagnose, prescribe, monitor emergencies, book facilities or replace a qualified healthcare professional. For an emergency in Nigeria, call 112 or seek local emergency care.",
+        ],
+        [
+          "Acceptable use",
+          "Do not misuse the service, access another person’s information, impersonate a professional, upload unlawful material, disrupt security controls or use the platform to provide unapproved medical advice.",
+        ],
+        [
+          "Privacy and content",
+          "Use of personal information is described in the Privacy Policy. Educational content may not be copied or commercially redistributed unless the applicable licence permits it.",
+        ],
+        [
+          "Availability and changes",
+          "Preview features may change, pause or be withdrawn. Store availability, realtime delivery and offline synchronisation are not guaranteed until production release requirements are complete.",
+        ],
+        [
+          "Account suspension and deletion",
+          "Accounts may be restricted for safety, security or misuse. Members can permanently delete their account from the mobile app. Staff and specialist accounts follow a controlled offboarding process to preserve required audit and governance records.",
+        ],
+        [
+          "Contact",
+          "Questions about these terms can be submitted through Zentreeca’s official contact route at Zentreeca.org.",
+        ],
+      ],
+    },
+    "account-deletion": {
+      eyebrow: "ACCOUNT DELETION",
+      title: "Delete your YanMata account and associated data.",
+      intro:
+        "Member accounts can be deleted directly inside the YanMata mobile app. Deletion requires the current password and an explicit confirmation so it cannot happen accidentally.",
+      sections: [
+        [
+          "Delete in the mobile app",
+          "Open YanMata → You → Account controls → Delete account. Read the warning, enter your current password, type DELETE, then choose Delete account permanently.",
+        ],
+        [
+          "What is deleted",
+          "The member account and server-held profile, journal records, care requests and conversations, device registrations, notification preferences, cycle settings and active access tokens are deleted. Local YanMata account data on the current device is then cleared.",
+        ],
+        [
+          "What may remain",
+          "Security records that must be retained for legal or fraud-prevention purposes may be kept only for the required period. Deleted information may persist temporarily in protected backups until the documented backup-retention window expires. This window must be finalised before the live pilot.",
+        ],
+        [
+          "Other devices and offline copies",
+          "A disconnected device cannot receive a remote deletion command. Log out, clear YanMata data or uninstall the app on every other device that may hold an offline copy.",
+        ],
+        [
+          "If you cannot access the app",
+          "Use the official contact route at Zentreeca.org and request YanMata account deletion. Identity verification will be required before any account action. Do not send health journal content with the request.",
+        ],
+      ],
+    },
+  } as const;
+  const page = pages[kind];
+
+  return (
+    <div className="legal-page">
+      <header className="legal-header wrap">
+        <a href="/" aria-label="Return to YanMata home">
+          <Brand />
+        </a>
+        <a className="legal-home-link" href="/">
+          Back to YanMata
+        </a>
+      </header>
+      <main className="legal-main wrap" id="main">
+        <div className="eyebrow">{page.eyebrow}</div>
+        <h1>{page.title}</h1>
+        <p className="legal-intro">{page.intro}</p>
+        <div className="legal-meta">
+          Effective 28 October 2026 · Development preview
+        </div>
+        <div className="legal-sections">
+          {page.sections.map(([heading, body]) => (
+            <section key={heading}>
+              <h2>{heading}</h2>
+              <p>{body}</p>
+            </section>
+          ))}
+        </div>
+      </main>
+      <footer className="legal-footer wrap">
+        <span>© {new Date().getFullYear()} Zentreeca Limited</span>
+        <nav aria-label="Legal links">
+          <a href="/privacy-policy">Privacy Policy</a>
+          <a href="/terms-of-use">Terms of Use</a>
+          <a href="/account-deletion">Account Deletion</a>
+        </nav>
+      </footer>
+    </div>
+  );
+}
 
 function App() {
   const [chapter, setChapter] = useState(0);
@@ -916,9 +1100,9 @@ function App() {
             <div className="eyebrow">YANMATA MOBILE</div>
             <h2>Your private wellbeing companion, wherever you are.</h2>
             <p>
-              Android and iPhone releases are being prepared. These placeholder
-              links can be replaced with the Play Store and App Store URLs when
-              signed production builds are approved.
+              Take YanMata with you on Android or iPhone. Store destinations are
+              configured separately so release links can be updated without a
+              redesign.
             </p>
           </div>
           <div
@@ -927,34 +1111,32 @@ function App() {
           >
             <a
               className="store-link"
-              href={androidDownloadUrl || "#download"}
-              target={androidDownloadUrl ? "_blank" : undefined}
-              rel={androidDownloadUrl ? "noreferrer" : undefined}
-              aria-disabled={!androidDownloadUrl}
-              onClick={(event) => {
-                if (!androidDownloadUrl) event.preventDefault();
-              }}
+              href={androidDownloadUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Download YanMata for Android from Google Play"
             >
-              <span className="store-icon">A</span>
+              <span className="store-icon">
+                <StoreGlyph platform="android" />
+              </span>
               <span>
-                <small>Android app</small>
-                {androidDownloadUrl ? "Download" : "Coming soon"}
+                <small>GET IT ON</small>
+                Google Play
               </span>
             </a>
             <a
               className="store-link"
-              href={iosDownloadUrl || "#download"}
-              target={iosDownloadUrl ? "_blank" : undefined}
-              rel={iosDownloadUrl ? "noreferrer" : undefined}
-              aria-disabled={!iosDownloadUrl}
-              onClick={(event) => {
-                if (!iosDownloadUrl) event.preventDefault();
-              }}
+              href={iosDownloadUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Download YanMata for iPhone from the App Store"
             >
-              <span className="store-icon">i</span>
+              <span className="store-icon apple">
+                <StoreGlyph platform="ios" />
+              </span>
               <span>
-                <small>iPhone app</small>
-                {iosDownloadUrl ? "Download" : "Coming soon"}
+                <small>DOWNLOAD ON THE</small>
+                App Store
               </span>
             </a>
           </div>
@@ -981,9 +1163,9 @@ function App() {
           <a href="#download">Get the app</a>
           <a href="#chapters">{t.nav_chapters || "Life Chapters"}</a>
           <a href="#learn">{t.nav_learn || "Learning"}</a>
-          <button onClick={() => setInfo("privacy")}>
-            {t.privacy_cta || "Privacy approach"}
-          </button>
+          <a href="/privacy-policy">Privacy Policy</a>
+          <a href="/terms-of-use">Terms of Use</a>
+          <a href="/account-deletion">Account Deletion</a>
           <a href="https://zentreeca.org" target="_blank" rel="noreferrer">
             Zentreeca <ArrowUpRight size={12} />
           </a>
@@ -1296,6 +1478,12 @@ function WomenIllustration() {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
+    {legalPageKind === "privacy-policy" ||
+    legalPageKind === "terms-of-use" ||
+    legalPageKind === "account-deletion" ? (
+      <LegalPage kind={legalPageKind} />
+    ) : (
+      <App />
+    )}
   </StrictMode>,
 );

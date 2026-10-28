@@ -6,7 +6,7 @@ Statuses: TODO, IN_PROGRESS, BLOCKED, VERIFIED. VERIFIED requires evidence. Foun
 |---|---|---|---|---|---|
 | PLAN-01 | P0 | Inspect references and establish plan/continuity docs | — | Reference inventory and linked documents | VERIFIED |
 | GOV-01 | P0 | Define age-9-plus consent/access rules, named reviewers and safeguarding owner | Founder/clinical team | Recorded decisions and credential review process | TODO |
-| DESIGN-01 | P0 | Brand/logo concepts, tokens, priority mobile/web/admin prototype | PLAN-01 | Vector identity, clickable journeys, accessible token checks | IN_PROGRESS |
+| DESIGN-01 | P0 | Brand/logo concepts, tokens, priority mobile/web/admin prototype | PLAN-01 | Vector identity, high-res multi-variant asset suite, app icons, splash, favicons | VERIFIED |
 | TECH-01 | P0 | Audit reusable reference code and licences; pin stable stack | PLAN-01 | Provenance/reuse ledger, version matrix | IN_PROGRESS |
 | TECH-02 | P0 | Scaffold monorepo and CI/dev/demo services | TECH-01 | Repeatable setup, builds, isolated seed execution | IN_PROGRESS |
 | API-01 | P0 | OpenAPI/domain schema and auth/role/consent policies | TECH-02 | Contract and ownership/role denial tests | IN_PROGRESS |
@@ -25,6 +25,7 @@ Statuses: TODO, IN_PROGRESS, BLOCKED, VERIFIED. VERIFIED requires evidence. Foun
 | OPS-01 | P0 | Release pipeline, monitoring, backups and rollback exercises | TECH-02 | Staging restore/release evidence and runbooks | VERIFIED |
 | PILOT-01 | P0 | Limited Jos operational pilot | SAFE-01, QA-01, OPS-01 | Approved recruitment, staffed care, measured baseline | TODO |
 | LIFE-01 | P2 | Expand life-stage paths/languages and nationwide hubs | Pilot findings | Dynamic locations (Jos pilot + Nigeria) & 5-lang switcher | VERIFIED |
+| ACCT-01 | P0 | Member logout, account deletion and public store-compliance pages | API-01, MOB-01, WEB-01 | Password-confirmed deletion test, local wipe behavior, legal URLs and mobile warning dialogs | VERIFIED |
 
 ## Work item evidence template
 
@@ -110,6 +111,10 @@ See [PHASE-06](evidence/PHASE-06.md). Implemented slices:
 ## Phase 07 implementation evidence
 
 See [PHASE-07](evidence/PHASE-07.md). Public launch hardening adds a production-oriented responsive landing page, configurable Android/iOS download destinations, honest pilot-readiness copy, and a synthetic-only specialist presentation. Safety corrections remove the dormant percentage-risk implementation, unverified helpline details, invented public testimonials, and automatic sync consent at registration. Store releases, clinical sign-off, credential verification and production deployment remain open gates.
+
+## Phase 08 implementation evidence
+
+See [PHASE-08](evidence/PHASE-08.md). ACCT-01 adds member self-service deletion with password re-authentication and exact confirmation, device-clearing logout, warning dialogs, public Privacy Policy, Terms of Use and Account Deletion URLs, plus configured Android/iOS store destinations.
 - Multilingual Completeness: All new web story sections, navigation tabs, account journey steps, and testimonial headings translated across English, Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), and Nigerian Pidgin (`pcm`).
 - Truthful Clinical Invariants: Replaced prototype placeholders with verified Jos pilot in-platform specialist consultation; preserved strict invariants (no external hospital booking or facility directories).
 - Verification: Web production build (`npm run --workspace=@yanmata/web build`) completed in 840ms with zero errors; TypeScript typecheck passed; Prettier formatting clean; launched live at `http://127.0.0.1:5173/`.

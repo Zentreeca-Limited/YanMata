@@ -7,6 +7,7 @@ use App\Models\UserDevice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
@@ -83,6 +84,34 @@ class SessionController extends Controller
         $request->user()->forceFill(['sync_consent' => $data['enabled']])->save();
 
         return response()->json(['enabled' => $data['enabled']]);
+    }
+
+    /** Permanently delete a member account after explicit re-authentication. */
+    public function destroy(Request $request)
+    {
+        $data = $request->validate([
+            'password' => 'required|string',
+            'confirmation' => 'required|in:DELETE',
+        ]);
+        $user = $request->user();
+
+        if ($user->role !== 'member') {
+            return response()->json([
+                'message' => 'Staff and specialist accounts require an administrator-managed offboarding process.',
+            ], 403);
+        }
+        if (! Hash::check($data['password'], $user->password)) {
+            throw ValidationException::withMessages([
+                'password' => 'The password is incorrect.',
+            ]);
+        }
+
+        DB::transaction(function () use ($user): void {
+            $user->tokens()->delete();
+            $user->delete();
+        });
+
+        return response()->noContent();
     }
 
     private function profile(User $u): array

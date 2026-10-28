@@ -566,6 +566,55 @@
         }
       }
     },
+    "/account": {
+      "delete": {
+        "summary": "Permanently delete the authenticated member account",
+        "description": "Requires password re-authentication and the exact confirmation value DELETE. Staff and specialist accounts use managed offboarding.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["password", "confirmation"],
+                "properties": {
+                  "password": {
+                    "type": "string",
+                    "format": "password"
+                  },
+                  "confirmation": {
+                    "type": "string",
+                    "enum": ["DELETE"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Account and associated member records deleted"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Managed staff or specialist account"
+          },
+          "422": {
+            "description": "Password or confirmation validation failed"
+          },
+          "429": {
+            "description": "Rate limited"
+          }
+        }
+      }
+    },
     "/logout": {
       "post": {
         "summary": "Revoke current token or invalidate browser session",

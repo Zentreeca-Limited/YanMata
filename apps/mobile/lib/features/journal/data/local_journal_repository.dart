@@ -312,6 +312,31 @@ class LocalJournalRepository implements JournalRepository {
     await _save(d);
   });
   @override
+  Future<void> logout() => _lock.synchronized(() async {
+    final d = await _load();
+    final token = d['token'] as String?;
+    if (token == null) {
+      throw StateError('No account is signed in.');
+    }
+    await api.request('/logout', method: 'POST', token: token);
+    await store.delete();
+  });
+  @override
+  Future<void> deleteAccount(String password) => _lock.synchronized(() async {
+    final d = await _load();
+    final token = d['token'] as String?;
+    if (token == null) {
+      throw StateError('No account is signed in.');
+    }
+    await api.request(
+      '/account',
+      method: 'DELETE',
+      token: token,
+      body: {'password': password, 'confirmation': 'DELETE'},
+    );
+    await store.delete();
+  });
+  @override
   Future<void> erase() => _lock.synchronized(() async {
     final d = await _load();
     if (d['token'] != null) {

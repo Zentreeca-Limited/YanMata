@@ -18,6 +18,7 @@ YanMata supports body literacy, puberty, menstrual wellbeing, symptom and mood j
 | [Architecture](docs/ARCHITECTURE.md) | Flutter/Riverpod, Laravel, React, API, offline sync and notifications |
 | [Design specification](docs/design/DESIGN.md) | Brand direction, screen inventory, states and visual quality gates |
 | [Safety and clinical governance](docs/SAFETY.md) | Privacy, safeguarding, content review and specialist access |
+| [Account deletion guide](docs/ACCOUNT-DELETION.md) | Member deletion, local cleanup, retention boundaries and verification |
 | [Backlog](docs/BACKLOG.md) | Sequenced implementation work and completion evidence |
 | [Handoff](docs/HANDOFF.md) | Current state, unknowns and next executable steps |
 | [Decisions](docs/adr/0001-foundation.md) | Architectural choices and their status |
@@ -86,7 +87,7 @@ cp apps/web/.env.example apps/web/.env
 # VITE_IOS_DOWNLOAD_URL=https://apps.apple.com/...
 ```
 
-When either value is empty, that platform is shown honestly as “Coming soon.”
+The checked-in values are temporary store destinations and must be replaced with approved live listing URLs before release. The public legal URLs are `/privacy-policy`, `/terms-of-use` and `/account-deletion`.
 
 Demo emails: `author@demo.yanmata.test`, `reviewer@demo.yanmata.test`, `publisher@demo.yanmata.test`, `member@demo.yanmata.test`. The generated password is stored locally in ignored `.env.demo.local`, never in this README or source control. Do not reuse it in production.
 

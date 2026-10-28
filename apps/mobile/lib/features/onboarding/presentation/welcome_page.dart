@@ -47,14 +47,26 @@ class WelcomePage extends ConsumerWidget {
                       ),
                       const SizedBox(height: 36),
                       Container(
-                        width: 120,
-                        height: 120,
-                        padding: const EdgeInsets.all(22),
+                        width: 124,
+                        height: 124,
+                        padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
                           color: isDark ? Palette.darkCard : Palette.blush,
                           shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Palette.plum.withValues(
+                                alpha: isDark ? 0.25 : 0.08,
+                              ),
+                              blurRadius: 20,
+                              offset: const Offset(0, 8),
+                            ),
+                          ],
                         ),
-                        child: Image.asset('assets/logo.png'),
+                        child: Image.asset(
+                          'assets/logo.png',
+                          fit: BoxFit.contain,
+                        ),
                       ),
                       const SizedBox(height: 24),
                       Text(

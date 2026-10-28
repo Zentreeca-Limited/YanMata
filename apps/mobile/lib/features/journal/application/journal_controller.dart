@@ -65,5 +65,8 @@ class JournalController extends AsyncNotifier<JournalState> {
   );
   Future<void> sync() => _run(_repo.sync);
   Future<void> disconnect() => _run(_repo.disconnect);
+  Future<void> logout() => _run(_repo.logout);
+  Future<void> deleteAccount(String password) =>
+      _run(() => _repo.deleteAccount(password));
   Future<void> erase() => _run(_repo.erase);
 }

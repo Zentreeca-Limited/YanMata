@@ -76,4 +76,31 @@ class AccountFlowTest extends TestCase
         $this->app['auth']->forgetGuards();
         $this->getJson('/api/v1/profile', ['Authorization' => "Bearer $b"])->assertJsonPath('data.answers', []);
     }
+
+    public function test_member_can_delete_account_only_after_password_and_explicit_confirmation(): void
+    {
+        $registered = $this->postJson('/api/v1/mobile/register', $this->payload())->assertCreated();
+        $token = $registered->json('token');
+        $headers = ['Authorization' => "Bearer $token"];
+
+        $this->deleteJson('/api/v1/account', [
+            'password' => 'wrong-password',
+            'confirmation' => 'DELETE',
+        ], $headers)->assertUnprocessable();
+        $this->assertDatabaseHas('users', ['email' => 'amina@example.test']);
+
+        $this->deleteJson('/api/v1/account', [
+            'password' => 'Sturdy-pass-2026',
+            'confirmation' => 'delete',
+        ], $headers)->assertUnprocessable();
+
+        $this->deleteJson('/api/v1/account', [
+            'password' => 'Sturdy-pass-2026',
+            'confirmation' => 'DELETE',
+        ], $headers)->assertNoContent();
+
+        $this->assertDatabaseMissing('users', ['email' => 'amina@example.test']);
+        $this->app['auth']->forgetGuards();
+        $this->getJson('/api/v1/me', $headers)->assertUnauthorized();
+    }
 }

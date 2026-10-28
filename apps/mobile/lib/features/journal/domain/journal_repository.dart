@@ -119,6 +119,8 @@ abstract interface class JournalRepository {
   });
   Future<void> sync();
   Future<void> disconnect();
+  Future<void> logout();
+  Future<void> deleteAccount(String password);
   Future<void> erase();
 }
 

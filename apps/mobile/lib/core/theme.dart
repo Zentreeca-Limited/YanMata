@@ -12,6 +12,7 @@ abstract final class Palette {
   static const teal = DesignColors.teal;
   static const line = DesignColors.line;
   static const slate = DesignColors.muted;
+  static const error = Color(0xFFBA1A1A);
 
   // Semantic Dark Mode Colors
   static const darkBackground = Color(0xFF1A0B14);

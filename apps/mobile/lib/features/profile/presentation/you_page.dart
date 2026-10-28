@@ -133,6 +133,122 @@ class _YouState extends ConsumerState<You> {
     );
   }
 
+  Future<void> _confirmLogout(
+    JournalController controller,
+    JournalState state,
+  ) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        icon: const Icon(Icons.logout, color: Palette.plum),
+        title: const Text('Log out of YanMata?'),
+        content: Text(
+          'Logging out revokes this session and removes this account’s journal, cached profile, and sign-in details from this device. '
+          '${state.pending > 0 ? '${state.pending} unsynced change(s) will be permanently lost. ' : ''}'
+          'Your synced account data remains on YanMata.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: const Text('Stay signed in'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: const Text('Log out and clear device'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true) {
+      await act(controller.logout, 'Logged out and cleared account data.');
+    }
+  }
+
+  Future<void> _confirmDeleteAccount(JournalController controller) async {
+    final passwordController = TextEditingController();
+    final confirmationController = TextEditingController();
+    var obscurePassword = true;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => StatefulBuilder(
+        builder: (context, setDialogState) => AlertDialog(
+          icon: const Icon(Icons.warning_amber_rounded, color: Palette.error),
+          title: const Text('Permanently delete account?'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'This permanently deletes your YanMata member account and server-held profile, journal, care conversations, device registrations, and notification preferences. This cannot be undone.',
+                ),
+                const SizedBox(height: 12),
+                const Text(
+                  'Offline copies on another disconnected device cannot be remotely erased. Remove YanMata from those devices separately.',
+                  style: TextStyle(fontSize: 12, color: Palette.slate),
+                ),
+                const SizedBox(height: 18),
+                TextField(
+                  controller: passwordController,
+                  obscureText: obscurePassword,
+                  autocorrect: false,
+                  enableSuggestions: false,
+                  decoration: InputDecoration(
+                    labelText: 'Current password',
+                    suffixIcon: IconButton(
+                      onPressed: () => setDialogState(
+                        () => obscurePassword = !obscurePassword,
+                      ),
+                      icon: Icon(
+                        obscurePassword
+                            ? Icons.visibility_outlined
+                            : Icons.visibility_off_outlined,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: confirmationController,
+                  autocorrect: false,
+                  decoration: const InputDecoration(
+                    labelText: 'Type DELETE to confirm',
+                  ),
+                  onChanged: (_) => setDialogState(() {}),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext, false),
+              child: const Text('Cancel'),
+            ),
+            FilledButton(
+              style: FilledButton.styleFrom(backgroundColor: Palette.error),
+              onPressed:
+                  passwordController.text.isEmpty ||
+                      confirmationController.text != 'DELETE'
+                  ? null
+                  : () => Navigator.pop(dialogContext, true),
+              child: const Text('Delete account permanently'),
+            ),
+          ],
+        ),
+      ),
+    );
+    final password = passwordController.text;
+    passwordController.dispose();
+    confirmationController.dispose();
+    if (confirmed == true) {
+      await act(
+        () => controller.deleteAccount(password),
+        'Your account and local account data were deleted.',
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final s = ref.watch(journalProvider).value ?? const JournalState();
@@ -803,6 +919,42 @@ class _YouState extends ConsumerState<You> {
           ),
         ),
         const SizedBox(height: 25),
+
+        if (s.signedIn) ...[
+          SoftCard(
+            color: Colors.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'Account controls',
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'Log out to clear this device, or permanently delete your member account and server-held data.',
+                  style: TextStyle(fontSize: 13),
+                ),
+                const SizedBox(height: 16),
+                OutlinedButton.icon(
+                  onPressed: busy ? null : () => _confirmLogout(controller, s),
+                  icon: const Icon(Icons.logout),
+                  label: const Text('Log out'),
+                ),
+                const SizedBox(height: 8),
+                TextButton.icon(
+                  style: TextButton.styleFrom(foregroundColor: Palette.error),
+                  onPressed: busy
+                      ? null
+                      : () => _confirmDeleteAccount(controller),
+                  icon: const Icon(Icons.delete_forever_outlined),
+                  label: const Text('Delete account'),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+        ],
 
         const SoftCard(
           color: Palette.blush,

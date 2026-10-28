@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-28 — Account controls and store compliance (ACCT-01)
+
+- Added authenticated member account deletion with password re-authentication, exact `DELETE` confirmation, token revocation and related-record deletion.
+- Added distinct mobile Logout and Delete Account controls with clear destructive-action warnings and local cleanup only after successful server acknowledgement.
+- Added public `/privacy-policy`, `/terms-of-use` and `/account-deletion` pages and a detailed account deletion operations guide.
+- Reworked the YanMata Mobile section with proper Google Play and Apple artwork, clickable configurable store destinations and responsive/focus states.
+
 ## 2026-10-28 — Public launch hardening and safety correction
 
 - Refined the supplied profile, halo and leaf identity across the shared web brand, Flutter welcome screen, Android launch/launcher assets and iOS icon set.
@@ -181,3 +188,29 @@
   - Backend: 34 PHPUnit tests / 207 assertions pass (`npm run test:api`).
   - Mobile: `flutter analyze` passes with 0 issues; all 13 Flutter test suites pass (`npm run test:mobile`).
   - Web & Admin: TypeScript typecheck passes (`npm run typecheck`); Prettier formatting passes cleanly (`npm run format:check`); web production build succeeds in 800ms (`npm run --workspace=@yanmata/web build`).
+
+## 2026-10-28 — Brand Identity & Multi-Variant Asset Suite (DESIGN-01)
+
+- Refined Brand Emblem & Artwork:
+  - Extracted and refined the official portrait logo (African woman profile with vibrant rose-magenta Gele, white hoop earring, cradling petals, and radiant halo) with sub-pixel edge anti-aliasing and transparent background.
+- High-Resolution Multi-Variant Asset Generation:
+  - Created `scripts/build_brand_assets.py` for automated asset synthesis and distribution.
+  - Transparent master emblem (1024×1024): `packages/ui/assets/brand/yanmata_emblem.png`.
+  - Scalable vector emblem: `packages/ui/assets/brand/yanmata_emblem.svg`.
+  - Full stacked logo (1600×1400) in both light and dark mode variants (`yanmata_logo_full.png`, `yanmata_logo_full_dark.png`).
+  - Horizontal/landscape logo (2000×560) in both light and dark mode variants (`yanmata_logo_horizontal.png`, `yanmata_logo_horizontal_dark.png`).
+- Mobile App Deployment (Android & iOS):
+  - Master mobile app icon in rich royal plum gradient (`#581d6e` → `#2c0b3d`) with centered emblem.
+  - Android launcher icons deployed across all 5 mipmaps: `mipmap-mdpi` (48px), `mipmap-hdpi` (72px), `mipmap-xhdpi` (96px), `mipmap-xxhdpi` (144px), `mipmap-xxxhdpi` (192px).
+  - iOS app icons deployed across all 15 resolutions in `AppIcon.appiconset` (1024px App Store to 20px).
+  - Android splash and launch screens updated: `drawable-nodpi/launch_logo.png`, `drawable-nodpi/splash_logo.png`.
+  - Mobile assets registered in `apps/mobile/pubspec.yaml` (`logo.png`, `logo_full.png`, `logo_horizontal.png`).
+  - Flutter `WelcomePage` updated with prominent emblem container and soft drop shadow.
+- Web & Admin Deployment:
+  - Scalable vector favicons (`favicon.svg`) deployed to `apps/web/public` and `apps/admin/public`.
+  - Multi-resolution Windows/browser icons (`favicon.ico` at 16, 32, 48, 64px) and Apple Touch Icons (`apple-touch-icon.png` at 180px).
+  - Updated `<Brand />` in `@yanmata/ui` to render the refined emblem across public web and admin studio headers.
+- Verification & Test Closeout:
+  - API: 35 PHPUnit tests / 217 assertions pass (`npm run test:api`).
+  - Mobile: `flutter analyze` clean (0 issues); all 13 Flutter test suites pass (`npm run test:mobile`).
+  - Web & Admin: TypeScript typecheck passes; Prettier formatting clean; production builds succeed.

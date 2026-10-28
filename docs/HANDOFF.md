@@ -23,6 +23,11 @@ All screens from the Zentreeca designer handoff and wireframe are fully implemen
 11. My Profile & Records with life chapters, health records, notification quiet hours, and language selector (`YouPage`)
 12. Aisha AI Health Companion with conversational symptom guidance, clinical guardrails, and cycle pattern intelligence (`AishaChatPage`, `AiCompanionController`)
 
+Brand Identity & Multi-Variant Asset Suite (DESIGN-01):
+- Refined Brand Emblem: Extracted and anti-aliased the official YanMata portrait mark (African woman profile with vibrant rose-magenta Gele, white hoop earring, cradling petals, and radiant halo) into high-resolution transparent master assets.
+- Complete Asset Variants: Generated stacked full logos (light/dark), horizontal/landscape logos (light/dark), mobile launcher icons across all 5 Android mipmaps and all 15 iOS `AppIcon.appiconset` resolutions, Android launch/splash screens, and web multi-resolution favicons (`favicon.svg`, `favicon.ico`, `apple-touch-icon.png`).
+- Cross-Platform Integration: Updated `<Brand />` in `@yanmata/ui` to render the refined emblem across public web and admin studio headers; updated Flutter `WelcomePage` with prominent badge framing; registered assets in `pubspec.yaml`; created `scripts/build_brand_assets.py` for automated regeneration.
+
 Public Website Story Integration, Navigation Polish & Multilingual Localisation (`apps/web`):
 - Generalized National & Global Scope: Truthfully framed Jos as the initial clinical review pilot launch hub while expanding copy across web and mobile to represent Nigeria, Africa, and beyond ("Made with care in Nigeria, for Africa and the world").
 - Multilingual Public Web: The public website has English, Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), and Nigerian Pidgin (`pcm`) copy. Non-English clinical and safeguarding copy still requires human linguistic and clinical review before release.
