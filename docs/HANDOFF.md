@@ -1,4 +1,4 @@
-# Agent handoff — 27 October 2026
+# Agent handoff — 28 October 2026
 
 ## Confirmed user intent
 
@@ -8,33 +8,34 @@ Pilot location confirmed: Jos, Plateau State. User has access to doctors/nurses 
 
 ## Actual state
 
-Phase 01, Phase 02, Phase 03, Phase 04, and Phase 05 vertical slices are implemented across Laravel, React public/admin, and Flutter Android/iOS.
-All 11 screens from the Zentreeca designer handoff and wireframe are fully implemented and verified on the Android emulator runtime, along with Phase 05 enhancements:
-1. Welcome/Onboarding (`WelcomePage`)
-2. Home Dashboard with 5 feature shortcuts, live cycle widget, Aisha AI card, multilingual header, location pill, and dark mode toggle (`TodayPage`)
-3. Risk Prediction Overview (`RiskOverviewPage`)
-4. Health Profile & Risk Factors Input (`HealthProfilePage`)
-5. Detailed Risk Insights Report (`RiskDetailsPage`)
-6. Early Detection & Screening Guide (`EarlyDetectionPage`)
-7. Cycle Tracker with circular dial, dynamic phase, and 3-question cycle setup flow (`TrackPage`, `CycleSetupDialog`)
+Phase 01, Phase 02, Phase 03, Phase 04, Phase 05, and Phase 06 vertical slices are implemented across Laravel, React public/admin, and Flutter Android/iOS.
+All screens from the Zentreeca designer handoff and wireframe are fully implemented and verified on the Android emulator runtime, including the full wireframe Account Flow:
+1. Native Branded Launch & Welcome (`WelcomePage`, `android-39-onboarding.png`)
+2. Screen 3: Authentication (Sign Up & Sign In with DOB picker, age gate >= 9, terms, guest bypass) (`AuthPage`, `android-40-auth-signup.png`)
+3. Screen 4: Complete Health Profile questionnaire (Menstrual, Reproductive, Medical, Lifestyle, Family with minor safeguarding) (`CompleteProfilePage`, `android-41-complete-profile.png`)
+4. Screen 5: Personalized Health Insights (evidence-based WHO/FMOH guidance without fake risk percentages, category filters, priority badges, "Go to Dashboard" CTA) (`PersonalizedInsightsPage`, `android-42-personalized-insights.png`)
+5. Home Dashboard with dynamic personalized greeting ("Good day, Zainab ☀️"), 5 feature shortcuts, live cycle widget, Aisha AI card, multilingual header, location pill, and dark mode toggle (`TodayPage`, `android-43-today-personalized-greeting.png`)
+6. Cycle Tracker with circular dial, dynamic phase, and 3-question cycle setup flow (`TrackPage`, `CycleSetupDialog`)
+7. Early Detection & Screening Guide (`EarlyDetectionPage`)
 8. Mental Health Support with mood emojis, coping modals, and 24/7 SURPIN/112 crisis helplines (`MentalHealthPage`)
 9. Health Services directory with dynamic city filtering (`ServicesPage`, `ServiceDetailSheet`, `LocationPickerSheet`)
 10. Shop Health Products with cart, dynamic delivery, and checkout confirmation (`ShopPage`, `CartSheet`)
 11. My Profile & Records with life chapters, health records, notification quiet hours, and language selector (`YouPage`)
 12. Aisha AI Health Companion with conversational symptom guidance, clinical guardrails, and cycle pattern intelligence (`AishaChatPage`, `AiCompanionController`)
 
-Multilingual system covers English, Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), and Nigerian Pidgin (`pcm`) on mobile and web. System-wide light/dark mode transitions verified on mobile, public web, and admin. Dynamic location engine spans Nigeria (Jos Pilot Hub, Abuja, Lagos, Kano, Ibadan, Port Harcourt, Enugu, Kaduna, Nationwide).
+Multilingual system covers English, Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), and Nigerian Pidgin (`pcm`) on mobile and web. System-wide light/dark mode transitions verified on mobile, public web, and admin with warm rose-aubergine feminine aesthetics and Fraunces typography. Dynamic location engine spans Nigeria (Jos Pilot Hub, Abuja, Lagos, Kano, Ibadan, Port Harcourt, Enugu, Kaduna, Nationwide). Dynamic cycle settings sync with Laravel backend (`GET/PUT /api/v1/cycle-settings`).
 
 Public web and admin studio are fully verified via automated browser testing:
 - Desktop (1440×900) and mobile (390×844) public views (`web-01-home.png`, `web-02-mobile.png`)
 - Authenticated admin login, editorial table, and care triage (`admin-01-login.png`, `admin-02-editorial-studio.png`, `admin-03-care-triage.png`)
 
 Production hardening & operations (QA-01, OPS-01):
-- `SecurityHeaders` middleware attached to all web/API responses: `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy: camera=(), microphone=(), geolocation=()`.
+- `SecurityHeaders` middleware attached to all web/API responses.
 - `scripts/backup-db.sh` creates atomic SQLite VACUUM snapshots with SHA-256 checksums and PRAGMA integrity check.
 - `scripts/restore-db.sh` validates SHA-256 checksums and SQLite integrity with automatic pre-restore backup.
 - Strict prevention of lazy loading (`Model::preventLazyLoading`) active across all Eloquent models to guarantee zero N+1 database queries.
 - Zero clinical text in push or broadcast payloads. In-platform specialist consultation strictly maintained (no facility directories, booking, or hospital referrals).
+- All 34 PHPUnit tests (207 assertions) pass; Pint passes with 0 issues; `flutter analyze` clean (0 warnings, 0 infos); all 13 Flutter test suites pass; Prettier and TypeScript checks pass.
 
 Important current boundaries: local backend SQLite; manual HTTP sync; client-rendered public site; seeded identities only. Strict prevention of lazy loading and missing attribute discarding is active on the backend, ensuring zero N+1 database queries. No claims of clinical approval: seed reviewer and specialist timestamps are synthetic and explicitly labelled. Zero clinical text in push or broadcast payloads.
 

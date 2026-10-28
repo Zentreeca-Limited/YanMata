@@ -3,12 +3,13 @@
 use App\Http\Controllers\AiCompanionController;
 use App\Http\Controllers\CareController;
 use App\Http\Controllers\ContentController;
+use App\Http\Controllers\CycleSettingsController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\HealthProductController;
 use App\Http\Controllers\HealthServiceController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MentalHealthController;
-use App\Http\Controllers\RiskAssessmentController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\SyncController;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +18,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/health', fn () => ['service' => 'YanMata API', 'version' => '0.1.0', 'demo' => (bool) config('yanmata.demo')]);
     Route::get('/content', [ContentController::class, 'index'])->middleware('throttle:60,1');
     Route::get('/specialists', [CareController::class, 'specialists'])->middleware('throttle:60,1');
+    Route::post('/mobile/register', [SessionController::class, 'register'])->middleware('throttle:login');
     Route::post('/mobile/login', [SessionController::class, 'login'])->middleware('throttle:login');
 
     // Dynamic Locations & Coverage Hubs
@@ -29,7 +31,6 @@ Route::prefix('v1')->group(function () {
     // Health Products & Ordering
     Route::get('/products', [HealthProductController::class, 'index'])->middleware('throttle:60,1');
     Route::get('/products/{id}', [HealthProductController::class, 'show'])->middleware('throttle:60,1');
-    Route::post('/orders', [HealthProductController::class, 'order'])->middleware('throttle:60,1');
 
     // AI Companion & Cycle Insights
     Route::post('/ai/companion/chat', [AiCompanionController::class, 'chat'])->middleware('throttle:30,1');
@@ -39,8 +40,6 @@ Route::prefix('v1')->group(function () {
     Route::get('/mental-health/resources', [MentalHealthController::class, 'resources'])->middleware('throttle:60,1');
 
     // Risk Assessment & Health Profiling
-    Route::get('/risk-profile', [RiskAssessmentController::class, 'getLatest'])->middleware('throttle:60,1');
-    Route::post('/risk-profile', [RiskAssessmentController::class, 'store'])->middleware('throttle:60,1');
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/me', [SessionController::class, 'me']);
@@ -48,6 +47,12 @@ Route::prefix('v1')->group(function () {
         Route::put('/consent/sync', [SessionController::class, 'consent']);
         Route::post('/sync/push', [SyncController::class, 'push'])->middleware('throttle:60,1');
         Route::get('/sync/pull', [SyncController::class, 'pull'])->middleware('throttle:60,1');
+        Route::post('/orders', [HealthProductController::class, 'order'])->middleware('throttle:20,1');
+        Route::get('/profile', [ProfileController::class, 'show']);
+        Route::put('/profile', [ProfileController::class, 'update'])->middleware('throttle:30,1');
+        Route::get('/insights', [ProfileController::class, 'insights'])->middleware('throttle:60,1');
+        Route::get('/cycle-settings', [CycleSettingsController::class, 'show']);
+        Route::put('/cycle-settings', [CycleSettingsController::class, 'update'])->middleware('throttle:60,1');
         Route::get('/orders/my', [HealthProductController::class, 'myOrders']);
         Route::get('/studio/content', [ContentController::class, 'studio']);
         Route::post('/studio/content', [ContentController::class, 'store']);

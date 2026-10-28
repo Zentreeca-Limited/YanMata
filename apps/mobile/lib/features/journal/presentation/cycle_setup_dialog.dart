@@ -31,7 +31,9 @@ class _CycleSetupDialogState extends ConsumerState<CycleSetupDialog> {
   void initState() {
     super.initState();
     final current = ref.read(cycleSettingsProvider);
-    _selectedDate = current.lastPeriodDate;
+    _selectedDate = current.configured
+        ? current.lastPeriodDate
+        : DateTime.now().subtract(const Duration(days: 14));
     _cycleLength = current.cycleLength;
     _periodDuration = current.periodDuration;
   }

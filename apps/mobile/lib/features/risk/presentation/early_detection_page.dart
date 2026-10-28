@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yanmata/core/theme.dart';
 import 'package:yanmata/core/widgets.dart';
-import 'package:yanmata/features/risk/presentation/risk_overview_page.dart';
+import 'package:yanmata/features/account/application/account_provider.dart';
+import 'package:yanmata/features/account/presentation/complete_profile_page.dart';
+import 'package:yanmata/features/account/presentation/personalized_insights_page.dart';
 import 'package:yanmata/features/services/presentation/services_page.dart';
 
-class EarlyDetectionPage extends StatelessWidget {
+class EarlyDetectionPage extends ConsumerWidget {
   const EarlyDetectionPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: Palette.cream,
       appBar: AppBar(
@@ -48,7 +51,7 @@ class EarlyDetectionPage extends StatelessWidget {
           const SizedBox(height: 24),
 
           const Text(
-            'Screening & Prevention in Jos',
+            'Screening & Prevention',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -61,7 +64,8 @@ class EarlyDetectionPage extends StatelessWidget {
             icon: Icons.biotech_outlined,
             title: 'Cervical Cancer Screening',
             subtitle: 'Pap smear / HPV DNA testing (Recommended every 3 years)',
-            facility: 'Available at JUTH & Plateau Specialist Hospital',
+            facility:
+                'Available at designated secondary & tertiary health centres',
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute<void>(builder: (_) => const ServicesPage()),
@@ -73,7 +77,7 @@ class EarlyDetectionPage extends StatelessWidget {
             icon: Icons.favorite_border,
             title: 'Breast Health Check',
             subtitle: 'Clinical breast exam / Mammography guidance',
-            facility: 'Available at Plateau Specialist Hospital',
+            facility: 'Available at specialist clinical screening facilities',
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute<void>(builder: (_) => const ServicesPage()),
@@ -85,7 +89,7 @@ class EarlyDetectionPage extends StatelessWidget {
             icon: Icons.medical_services_outlined,
             title: 'Other Preventive Checks',
             subtitle: 'Routine blood pressure, iron levels, and reproductive wellness',
-            facility: 'Available at Primary Healthcare Centre Tudun Wada',
+            facility: 'Available at primary healthcare centres',
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute<void>(builder: (_) => const ServicesPage()),
@@ -94,11 +98,19 @@ class EarlyDetectionPage extends StatelessWidget {
           const SizedBox(height: 24),
 
           FilledButton(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute<void>(builder: (_) => const RiskOverviewPage()),
-            ),
-            child: const Text('Start Risk Assessment'),
+            onPressed: () {
+              final profile = ref.read(healthProfileProvider).value;
+              final isCompleted = profile?.completed ?? false;
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (_) => isCompleted
+                      ? const PersonalizedInsightsPage()
+                      : const CompleteProfilePage(),
+                ),
+              );
+            },
+            child: const Text('Start Health Assessment'),
           ),
           const SizedBox(height: 12),
 
@@ -108,7 +120,7 @@ class EarlyDetectionPage extends StatelessWidget {
               builder: (c) => AlertDialog(
                 title: const Text('How Early Detection Works'),
                 content: const Text(
-                  'YanMata aligns with World Health Organization (WHO) and Nigerian Federal Ministry of Health guidelines. By assessing age-stratified indicators and tracking recurring symptoms, we recommend when to seek professional screening in Jos.',
+                  'YanMata aligns with World Health Organization (WHO) and Nigerian Federal Ministry of Health guidelines. By assessing age-stratified indicators and tracking recurring symptoms, we recommend when to seek professional screening in your area.',
                 ),
                 actions: [
                   TextButton(

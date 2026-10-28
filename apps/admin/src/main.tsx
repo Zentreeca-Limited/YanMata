@@ -317,8 +317,17 @@ function App() {
             {tab === "articles" ? "Learning library" : "Care inquiries"}
           </span>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <span style={{ fontSize: 12, color: "var(--muted)", display: "flex", alignItems: "center", gap: 4 }}>
-              <Globe size={14} /> National Coverage: Jos · Abuja · Lagos · Kano · Telehealth
+            <span
+              style={{
+                fontSize: 12,
+                color: "var(--muted)",
+                display: "flex",
+                alignItems: "center",
+                gap: 4,
+              }}
+            >
+              <Globe size={14} /> National Coverage: Jos · Abuja · Lagos · Kano
+              · Telehealth
             </span>
             <button
               aria-label="Toggle theme"

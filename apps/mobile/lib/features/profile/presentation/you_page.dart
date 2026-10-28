@@ -9,11 +9,13 @@ import 'package:yanmata/core/notifications.dart';
 import 'package:yanmata/core/theme.dart';
 import 'package:yanmata/core/theme_provider.dart';
 import 'package:yanmata/core/widgets.dart';
+import 'package:yanmata/features/account/application/account_provider.dart';
+import 'package:yanmata/features/account/presentation/complete_profile_page.dart';
+import 'package:yanmata/features/account/presentation/personalized_insights_page.dart';
 import 'package:yanmata/features/ai/presentation/ai_companion_page.dart';
 import 'package:yanmata/features/editorial/presentation/staff_portal_page.dart';
 import 'package:yanmata/features/journal/application/journal_controller.dart';
 import 'package:yanmata/features/journal/domain/journal_repository.dart';
-import 'package:yanmata/features/risk/presentation/risk_overview_page.dart';
 import 'package:yanmata/features/services/application/location_provider.dart';
 import 'package:yanmata/features/services/presentation/location_picker_sheet.dart';
 
@@ -66,7 +68,7 @@ class _YouState extends ConsumerState<You> {
   void _exportData(JournalState state) {
     final export = {
       'exported_at': DateTime.now().toIso8601String(),
-      'member_name': state.userName ?? 'Aisha Yusuf',
+      'member_name': state.userName ?? 'Guest',
       'life_stage': _selectedStage,
       'topics': _selectedTopics,
       'entries_count': state.entries.length,
@@ -163,7 +165,7 @@ class _YouState extends ConsumerState<You> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      s.userName ?? 'Aisha Yusuf',
+                      s.userName ?? ref.tr('guest_name'),
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -196,13 +198,19 @@ class _YouState extends ConsumerState<You> {
               _ProfileNavRow(
                 icon: Icons.assignment_outlined,
                 title: 'My Health Records',
-                subtitle: 'Personalised risk scores & clinical indicators',
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (_) => const RiskOverviewPage(),
-                  ),
-                ),
+                subtitle: 'Personalised clinical insights & health indicators',
+                onTap: () {
+                  final profile = ref.read(healthProfileProvider).value;
+                  final isCompleted = profile?.completed ?? false;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (_) => isCompleted
+                          ? const PersonalizedInsightsPage()
+                          : const CompleteProfilePage(),
+                    ),
+                  );
+                },
               ),
               const Divider(height: 1),
               _ProfileNavRow(
@@ -215,7 +223,7 @@ class _YouState extends ConsumerState<You> {
               _ProfileNavRow(
                 icon: Icons.star_border,
                 title: 'Saved Services',
-                subtitle: 'Bookmarked clinics and hospitals in Jos',
+                subtitle: 'Bookmarked care providers and services',
                 onTap: widget.onNavigateServices ?? () {},
               ),
               const Divider(height: 1),

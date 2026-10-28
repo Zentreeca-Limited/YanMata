@@ -8,7 +8,6 @@ use App\Models\ContentItem;
 use App\Models\HealthProduct;
 use App\Models\HealthService;
 use App\Models\MentalHealthResource;
-use App\Models\RiskAssessment;
 use App\Models\SpecialistProfile;
 use App\Models\SupportRequest;
 use App\Models\User;
@@ -378,52 +377,6 @@ class DemoSeeder extends Seeder
                 $mh
             );
         }
-
-        // Synthetic Risk Assessment
-        RiskAssessment::updateOrCreate(
-            ['age_group' => 'Adolescence (15–19)'],
-            [
-                'user_id' => $users['member']->id,
-                'overall_risk_score' => 38,
-                'overall_risk_label' => 'Moderate',
-                'cervical_risk_score' => 38,
-                'breast_risk_score' => 22,
-                'hormonal_risk_score' => 41,
-                'completed_sections' => [
-                    'age' => 'completed',
-                    'menstrual' => 'completed',
-                    'reproductive' => 'completed',
-                    'medical' => 'completed',
-                    'lifestyle' => 'in_progress',
-                    'family' => 'optional',
-                ],
-                'key_factors' => [
-                    'cervical' => [
-                        'Last screening 2 years ago (Recommended: every 3 years)',
-                        'HPV vaccination not recorded',
-                        'Family history of cervical cancer',
-                        'History of irregular bleeding',
-                    ],
-                    'breast' => [
-                        'No clinical breast exam recorded in the last 12 months',
-                        'No family history of early-onset breast cancer',
-                        'Regular self-awareness checks encouraged',
-                    ],
-                    'hormonal' => [
-                        'Irregular cycle intervals reported',
-                        'Occasional severe menstrual cramping',
-                        'Moderate daily stress levels',
-                    ],
-                ],
-                'recommendations' => [
-                    'Get screened regularly (Pap smear / HPV test)',
-                    'Consider HPV vaccination (if eligible)',
-                    'Adopt healthy lifestyle habits',
-                    'Track cycle symptoms for 3 consecutive months',
-                ],
-                'traceable_source' => 'WHO Cervical Cancer Elimination Initiative & Federal Ministry of Health Nigeria Guidelines',
-            ]
-        );
 
         $samples = [['A little space to understand yourself', 'Body literacy', 'Puberty', 'Your questions belong here. Explore your changing body at your own pace.'], ['Your journal, your own words', 'Periods', 'Adolescence', 'A quiet place to notice patterns, without judging your experience.'], ['You are more than a busy day', 'Emotional wellbeing', 'Adulthood', 'Make room for a moment of reflection in your everyday life.'], ['A new chapter is still your chapter', 'Healthy ageing', 'Menopause', 'Discover a space designed to grow with you, through every transition.'], ['Wellbeing has no age limit', 'Healthy ageing', 'Later life', 'Comfort, dignity and connection belong in every chapter.']];
         foreach ($samples as [$title,$topic,$stage,$summary]) {

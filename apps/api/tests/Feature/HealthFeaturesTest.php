@@ -98,6 +98,8 @@ class HealthFeaturesTest extends TestCase
             ],
         ];
 
+        $this->postJson('/api/v1/orders', $orderPayload)->assertUnauthorized();
+        Sanctum::actingAs(User::factory()->create(['role' => 'member']));
         $orderRes = $this->postJson('/api/v1/orders', $orderPayload);
         $orderRes->assertCreated()
             ->assertJsonPath('data.status', 'confirmed')
@@ -128,31 +130,22 @@ class HealthFeaturesTest extends TestCase
             ->assertJsonCount(3, 'helplines');
     }
 
-    public function test_can_get_and_store_risk_assessment(): void
+    public function test_cycle_settings_sync_requires_consent_and_resolves_conflicts(): void
     {
-        $user = User::factory()->create(['role' => 'member']);
+        $this->getJson('/api/v1/cycle-settings')->assertUnauthorized();
+        $user = User::factory()->create(['role' => 'member', 'sync_consent' => false]);
         Sanctum::actingAs($user);
+        $body = ['last_period_date' => now()->subDays(10)->format('Y-m-d'), 'cycle_length' => 30, 'period_duration' => 5];
+        $this->putJson('/api/v1/cycle-settings', $body)->assertForbidden();
 
-        $payload = [
-            'age_group' => 'Adolescence (15–19)',
-            'overall_risk_score' => 38,
-            'overall_risk_label' => 'Moderate',
-            'cervical_risk_score' => 38,
-            'breast_risk_score' => 22,
-            'hormonal_risk_score' => 41,
-            'completed_sections' => ['age' => 'completed', 'menstrual' => 'completed'],
-            'key_factors' => ['cervical' => ['Last screening 2 years ago']],
-            'recommendations' => ['Get screened regularly'],
-        ];
+        $user->forceFill(['sync_consent' => true])->save();
+        $this->getJson('/api/v1/cycle-settings')->assertOk()->assertJsonPath('data', null);
+        $this->putJson('/api/v1/cycle-settings', $body)->assertOk()->assertJsonPath('applied', true)->assertJsonPath('data.cycle_length', 30);
 
-        $this->postJson('/api/v1/risk-profile', $payload)
-            ->assertCreated()
-            ->assertJsonPath('data.overall_risk_score', 38);
-
-        $getRes = $this->getJson('/api/v1/risk-profile');
-        $getRes->assertOk()
-            ->assertJsonPath('data.overall_risk_score', 38)
-            ->assertJsonPath('data.cervical_risk_score', 38);
+        $stale = array_merge($body, ['client_updated_at' => now()->subDay()->toIso8601String(), 'cycle_length' => 26]);
+        $this->putJson('/api/v1/cycle-settings', $stale)->assertOk()->assertJsonPath('applied', false)->assertJsonPath('data.cycle_length', 30);
+        $this->putJson('/api/v1/cycle-settings', array_merge($body, ['cycle_length' => 5]))->assertUnprocessable();
+        $this->putJson('/api/v1/cycle-settings', ['last_period_date' => now()->addDay()->format('Y-m-d'), 'cycle_length' => 28, 'period_duration' => 5])->assertUnprocessable();
     }
 
     public function test_security_headers_are_attached(): void

@@ -111,6 +111,12 @@ abstract interface class JournalRepository {
   Future<void> resolveConflict(String entryId, {required bool keepLocal});
   Future<void> remove(String id);
   Future<void> connect(String email, String password);
+  Future<void> register({
+    required String name,
+    required String email,
+    required String password,
+    required String dateOfBirth,
+  });
   Future<void> sync();
   Future<void> disconnect();
   Future<void> erase();

@@ -88,4 +88,14 @@ See [PHASE-05](evidence/PHASE-05.md). Implemented slices:
 - Aisha AI Health Companion & Cycle Intelligence: Privacy-preserving AI companion (`POST /api/v1/ai/companion/chat`, `GET /api/v1/ai/cycle/insights`) with clinical guardrails, multilingual replies, and zero health text in logs (`android-36`, `android-37`, `web-05`).
 - All 29 PHP tests (172 assertions), 10 Flutter tests (including 200% accessibility text scale), Laravel Pint, Flutter analysis, and React production builds pass cleanly.
 
-Next order: Minor safeguarding review → Media pipeline & SEO SSR → Clinical review onboarding. Each must retain existing regression tests and visual baselines.
+## Phase 06 implementation evidence
+
+See [PHASE-06](evidence/PHASE-06.md). Implemented slices:
+- Wireframe Account Flow: End-to-end user journey matching Zentreeca wireframe (`YanMata Women’s Health App Wireframe.png` right side): `SPLASH` -> `GETTING STARTED` -> `AUTHENTICATION` (Sign Up / Sign In) -> `COMPLETE HEALTH PROFILE` (Screen 4) -> `PERSONALIZED HEALTH INSIGHTS` (Screen 5) -> `TAKE ACTION / DASHBOARD`.
+- Dynamic Personalized Greeting: Eliminated hardcoded "Aisha" name; derives authenticated user's first name ("Good day, Zainab ☀️") with localized neutral fallback.
+- Feminine Visual Aesthetic & Branded Launch: Warm rose-aubergine palette (`#1A0B14`, `#26121D`, `#34192A`, `#F4A6C4`), Fraunces serif headlines, YanMata heart logo on native splash screen and launcher icons.
+- Clinical Integrity & Minor Safeguarding: Replaced fabricated numeric risk scores with evidence-based personalized guidance grounded in WHO & FMOH Nigeria protocols; age gate >= 9 years; minors aged 9–17 only receive age-appropriate menstrual & lifestyle questions.
+- Dynamic Cycle Backend Sync: Bidirectional synchronization of cycle preferences (`GET /api/v1/cycle-settings`, `PUT /api/v1/cycle-settings`) with last-write-wins timestamp conflict resolution and sync consent enforcement.
+- Verification: 34 PHPUnit tests (207 assertions) pass; Pint passes with 0 issues; `flutter analyze` clean with 0 issues; 13 Flutter test suites pass; Prettier and TypeScript checks pass; 4 live emulator screenshots captured (`android-40` through `android-43`).
+
+Next order: Named clinical reviewer verification protocols → Offline native Drift DB migration → Prerendering/SSR for public site. Each must retain existing regression tests and visual baselines.

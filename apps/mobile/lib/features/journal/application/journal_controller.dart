@@ -50,6 +50,19 @@ class JournalController extends AsyncNotifier<JournalState> {
   Future<void> remove(String id) => _run(() => _repo.remove(id));
   Future<void> connect(String email, String password) =>
       _run(() => _repo.connect(email, password));
+  Future<void> register({
+    required String name,
+    required String email,
+    required String password,
+    required String dateOfBirth,
+  }) => _run(
+    () => _repo.register(
+      name: name,
+      email: email,
+      password: password,
+      dateOfBirth: dateOfBirth,
+    ),
+  );
   Future<void> sync() => _run(_repo.sync);
   Future<void> disconnect() => _run(_repo.disconnect);
   Future<void> erase() => _run(_repo.erase);

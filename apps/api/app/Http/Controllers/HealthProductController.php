@@ -53,7 +53,7 @@ class HealthProductController extends Controller
 
         $order = ProductOrder::create([
             'id' => (string) Str::uuid(),
-            'user_id' => $request->user()?->id,
+            'user_id' => $request->user()->id,
             'customer_name' => $data['customer_name'],
             'customer_phone' => $data['customer_phone'],
             'delivery_address' => $data['delivery_address'],
@@ -64,7 +64,7 @@ class HealthProductController extends Controller
 
         return response()->json([
             'data' => $order,
-            'message' => 'Your order has been placed with the verified pharmacy in Jos.',
+            'message' => 'Your order has been placed with the verified seller.',
         ], 201);
     }
 

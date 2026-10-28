@@ -169,121 +169,152 @@ class _TrackState extends ConsumerState<Track> {
         ),
         const SizedBox(height: 20),
 
-        // Circular Cycle Dial Card
-        SoftCard(
-          color: isDark ? Palette.darkCard : Colors.white,
-          child: Column(
-            children: [
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  SizedBox(
-                    width: 156,
-                    height: 156,
-                    child: CircularProgressIndicator(
-                      value: progress,
-                      strokeWidth: 11,
-                      backgroundColor: isDark
-                          ? Palette.darkSurface
-                          : const Color(0xFFFCE7F3),
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        isDark ? Palette.darkAccent : Palette.plum,
-                      ),
-                    ),
-                  ),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(
-                        Icons.water_drop,
-                        color: Color(0xFFE11D48),
-                        size: 24,
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Day ${cycle.currentDayOfCycle}',
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: isDark ? Palette.darkText : Palette.plum,
+        // Circular Cycle Dial Card (or setup prompt until configured)
+        if (!cycle.configured)
+          SoftCard(
+            color: isDark ? Palette.darkCard : Colors.white,
+            child: Column(
+              children: [
+                Icon(
+                  Icons.water_drop_outlined,
+                  size: 40,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  ref.tr('cycle_empty_title'),
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  ref.tr('cycle_empty_body'),
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: 16),
+                FilledButton(
+                  onPressed: () => CycleSetupDialog.show(context),
+                  child: Text(ref.tr('cycle_empty_cta')),
+                ),
+              ],
+            ),
+          )
+        else
+          SoftCard(
+            color: isDark ? Palette.darkCard : Colors.white,
+            child: Column(
+              children: [
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SizedBox(
+                      width: 156,
+                      height: 156,
+                      child: CircularProgressIndicator(
+                        value: progress,
+                        strokeWidth: 11,
+                        backgroundColor: isDark
+                            ? Palette.darkSurface
+                            : const Color(0xFFFCE7F3),
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          isDark ? Palette.darkAccent : Palette.plum,
                         ),
                       ),
-                      Text(
-                        'of ${cycle.cycleLength}',
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: isDark ? Palette.darkMuted : Palette.slate,
+                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.water_drop,
+                          color: Color(0xFFE11D48),
+                          size: 24,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Day ${cycle.currentDayOfCycle}',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: isDark ? Palette.darkText : Palette.plum,
+                          ),
+                        ),
+                        Text(
+                          'of ${cycle.cycleLength}',
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: isDark ? Palette.darkMuted : Palette.slate,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 18),
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: isDark ? Palette.darkSurface : Palette.cream,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: isDark
+                          ? Palette.darkBorder
+                          : const Color(0xFFE9E2E9),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.calendar_today_outlined,
+                        color: Palette.plum,
+                        size: 20,
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              cycle.currentPhase,
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
+                                color: isDark ? Palette.darkText : Palette.plum,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              _getPhaseDescription(cycle.currentPhase),
+                              style: TextStyle(
+                                fontSize: 12,
+                                height: 1.4,
+                                color: isDark ? Palette.darkMuted : Palette.ink,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                ],
-              ),
-              const SizedBox(height: 18),
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: isDark ? Palette.darkSurface : Palette.cream,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: isDark
-                        ? Palette.darkBorder
-                        : const Color(0xFFE9E2E9),
-                  ),
                 ),
-                child: Row(
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
-                      Icons.calendar_today_outlined,
-                      color: Palette.plum,
-                      size: 20,
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            cycle.currentPhase,
-                            style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700,
-                              color: isDark ? Palette.darkText : Palette.plum,
-                            ),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            _getPhaseDescription(cycle.currentPhase),
-                            style: TextStyle(
-                              fontSize: 12,
-                              height: 1.4,
-                              color: isDark ? Palette.darkMuted : Palette.ink,
-                            ),
-                          ),
-                        ],
-                      ),
+                    TextButton.icon(
+                      onPressed: () => CycleSetupDialog.show(context),
+                      icon: const Icon(Icons.edit_calendar_rounded, size: 16),
+                      label: Text(ref.tr('set_cycle_details')),
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton.icon(
-                    onPressed: () => CycleSetupDialog.show(context),
-                    icon: const Icon(Icons.edit_calendar_rounded, size: 16),
-                    label: Text(ref.tr('set_cycle_details')),
-                  ),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
         const SizedBox(height: 24),
 
         // If activeTab == Insights: Display AI Cycle Intelligence & Anomaly Detection
-        if (_activeTab == 'Insights') ...[
+        if (_activeTab == 'Insights' && cycle.configured) ...[
           SoftCard(
             color: isDark ? Palette.darkCard : Colors.white,
             child: Column(

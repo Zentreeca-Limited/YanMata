@@ -35,6 +35,13 @@ class _FakeJournalRepo implements JournalRepository {
   @override
   Future<void> connect(String email, String password) async {}
   @override
+  Future<void> register({
+    required String name,
+    required String email,
+    required String password,
+    required String dateOfBirth,
+  }) async {}
+  @override
   Future<void> disconnect() async {}
   @override
   Future<void> erase() async {}

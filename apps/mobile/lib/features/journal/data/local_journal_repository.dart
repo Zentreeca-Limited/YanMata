@@ -185,31 +185,65 @@ class LocalJournalRepository implements JournalRepository {
             'device_name': 'YanMata mobile',
           },
         );
-        final token = result['token'] as String;
-        final user = result['user'] as Map;
-        if (d['owner_id'] != null && d['owner_id'] != user['id']) {
-          await api.request('/logout', method: 'POST', token: token);
-          throw StateError(
-            'This journal belongs to another account. Erase this device journal before switching accounts.',
-          );
-        }
-        try {
-          await api.request(
-            '/consent/sync',
-            method: 'PUT',
-            token: token,
-            body: {'enabled': true},
-          );
-        } catch (_) {
-          await api.request('/logout', method: 'POST', token: token);
-          rethrow;
-        }
-        d['token'] = token;
-        d['owner_id'] = user['id'];
-        d['user_name'] = user['name'];
-        d['user_role'] = user['role'];
-        await _save(d);
+        await _establish(d, result, ensureConsent: true);
       });
+
+  @override
+  Future<void> register({
+    required String name,
+    required String email,
+    required String password,
+    required String dateOfBirth,
+  }) => _lock.synchronized(() async {
+    final d = await _load();
+    final result = await api.request(
+      '/mobile/register',
+      method: 'POST',
+      body: {
+        'name': name,
+        'email': email,
+        'password': password,
+        'date_of_birth': dateOfBirth,
+        'accept_terms': true,
+        'device_name': 'YanMata mobile',
+      },
+    );
+    await _establish(d, result, ensureConsent: false);
+  });
+
+  Future<void> _establish(
+    Map<String, dynamic> d,
+    Map<String, dynamic> result, {
+    required bool ensureConsent,
+  }) async {
+    final token = result['token'] as String;
+    final user = result['user'] as Map;
+    if (d['owner_id'] != null && d['owner_id'] != user['id']) {
+      await api.request('/logout', method: 'POST', token: token);
+      throw StateError(
+        'This journal belongs to another account. Erase this device journal before switching accounts.',
+      );
+    }
+    if (ensureConsent && user['sync_consent'] != true) {
+      try {
+        await api.request(
+          '/consent/sync',
+          method: 'PUT',
+          token: token,
+          body: {'enabled': true},
+        );
+      } catch (_) {
+        await api.request('/logout', method: 'POST', token: token);
+        rethrow;
+      }
+    }
+    d['token'] = token;
+    d['owner_id'] = user['id'];
+    d['user_name'] = user['name'];
+    d['user_role'] = user['role'];
+    await _save(d);
+  }
+
   @override
   Future<void> sync() => _lock.synchronized(() async {
     final d = await _load();

@@ -30,6 +30,17 @@ class Api {
     final response = await http.Response.fromStream(
       await _client.send(request).timeout(const Duration(seconds: 20)),
     );
+    if (response.statusCode == 422) {
+      try {
+        final errors = (jsonDecode(response.body) as Map)['errors'] as Map?;
+        final first = errors?.values.first;
+        if (first is List && first.isNotEmpty) {
+          throw Exception('${first.first}');
+        }
+      } on FormatException {
+        // fall through to the generic message
+      }
+    }
     if (response.statusCode >= 400) {
       throw Exception(
         response.statusCode == 401

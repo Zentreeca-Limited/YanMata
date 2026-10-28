@@ -1,3 +1,5 @@
+import 'account_strings.dart';
+
 enum AppLanguage {
   english('en', 'English', 'English'),
   hausa('ha', 'Hausa', 'Harshen Hausa'),
@@ -26,6 +28,11 @@ class AppStrings {
       'ob_body': 'Cycle care, women’s wellness and trusted guidance — private, and made for every stage of life.',
       'ob_start': 'Get started',
       'ob_footer': 'Ages 9 through later life · Your health data is never sold',
+      'cycle_empty_title': 'Set up your cycle',
+      'cycle_empty_body':
+          'Answer 3 quick questions to see your day, phase and next period.',
+      'cycle_empty_cta': 'Set up in 1 minute →',
+      'guest_name': 'Guest',
       'greeting_prefix': 'Good day,',
       'greeting_subtitle': 'Your health matters. You’re not alone.',
       'care_quote_eyebrow': 'A LITTLE CARE, EVERY DAY',
@@ -187,6 +194,11 @@ class AppStrings {
       'ob_body': 'Kula da al’ada, lafiyar mata da amintaccen jagora — a sirri, ga kowane mataki na rayuwa.',
       'ob_start': 'Fara yanzu',
       'ob_footer': 'Daga shekara 9 zuwa tsufa · Ba za a taba sayar da bayanan lafiyarki ba',
+      'cycle_empty_title': 'Saita zagayen haihuwarki',
+      'cycle_empty_body':
+          'Amsa tambayoyi 3 don ganin ranarki, matakinki da haila ta gaba.',
+      'cycle_empty_cta': 'Saita cikin minti 1 →',
+      'guest_name': 'Baƙo',
       'greeting_prefix': 'Barka da rana,',
       'greeting_subtitle': 'Lafiyarki tana da muhimmanci. Ba ke kadai bace.',
       'care_quote_eyebrow': 'KULA KULLUM, DA SAUKI',
@@ -347,6 +359,11 @@ class AppStrings {
       'ob_body': 'Ìtọ́jú ọjọ́ ìkọ́sẹ̀, ìlera obìnrin àti ìtọ́sọ́nà tó yẹ — ní àṣírí, fún gbogbo ipele ayé.',
       'ob_start': 'Bẹ̀rẹ̀',
       'ob_footer': 'Ọmọ ọdún 9 títí dé ọjọ́ ogbó · A kì í ta dátà ìlera rẹ',
+      'cycle_empty_title': 'Ṣètò ọjọ́ nǹkan oṣù rẹ',
+      'cycle_empty_body':
+          'Dáhùn ìbéèrè mẹ́ta láti rí ọjọ́, ìpele àti nǹkan oṣù tó kàn.',
+      'cycle_empty_cta': 'Ṣètò ní ìṣẹ́jú kan →',
+      'guest_name': 'Àlejò',
       'greeting_prefix': 'Ẹ kú ojúmọ́,',
       'greeting_subtitle': 'Àlàáfíà rẹ ṣe pàtàkì. O kò dá wà rárá.',
       'care_quote_eyebrow': 'ÌTỌ́JÚ KÉKERÉ, LÓJOOJÚMỌ́',
@@ -511,6 +528,11 @@ class AppStrings {
       'ob_body': 'Nlekọta oge nsọ, ahụike ndị inyom na nduzi a pụrụ ịtụkwasị obi — na nzuzo, maka ọkwa ndụ niile.',
       'ob_start': 'Malite',
       'ob_footer': 'Afọ 9 ruo ọgbọ ochie · A naghị ere data ahụike gị',
+      'cycle_empty_title': 'Hazie usoro oge nsọ gị',
+      'cycle_empty_body':
+          'Zaa ajụjụ atọ iji hụ ụbọchị, ọkwa na oge nsọ na-esote.',
+      'cycle_empty_cta': 'Hazie n’otu nkeji →',
+      'guest_name': 'Onye ọbịa',
       'greeting_prefix': 'Ndewo,',
       'greeting_subtitle': 'Ahụike gị dị oke mkpa. Ị nọghị naanị gị.',
       'care_quote_eyebrow': 'NLEKỌTA NTA, KWA ỤBỌCHỊ',
@@ -674,6 +696,10 @@ class AppStrings {
       'ob_start': 'Start now',
       'ob_footer':
           'From 9 years go reach old age · We no dey sell your health data',
+      'cycle_empty_title': 'Set your period cycle',
+      'cycle_empty_body': 'Answer 3 quick questions make you see your day, phase and next period.',
+      'cycle_empty_cta': 'Set am in 1 minute →',
+      'guest_name': 'Guest',
       'greeting_prefix': 'How body,',
       'greeting_subtitle':
           'Your bodi and health matter well well. You no dey alone.',
@@ -834,7 +860,12 @@ class AppStrings {
     Map<String, String>? params,
   }) {
     final langMap = _localizedValues[lang.code] ?? _localizedValues['en']!;
-    var str = langMap[key] ?? _localizedValues['en']![key] ?? key;
+    var str =
+        langMap[key] ??
+        accountStrings[lang.code]?[key] ??
+        _localizedValues['en']![key] ??
+        accountStrings['en']![key] ??
+        key;
     if (params != null) {
       params.forEach((k, v) {
         str = str.replaceAll('{$k}', v);

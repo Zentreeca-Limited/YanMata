@@ -5,12 +5,14 @@ import 'package:yanmata/core/localization/locale_provider.dart';
 import 'package:yanmata/core/theme.dart';
 import 'package:yanmata/core/theme_provider.dart';
 import 'package:yanmata/core/widgets.dart';
+import 'package:yanmata/features/account/application/account_provider.dart';
+import 'package:yanmata/features/account/presentation/complete_profile_page.dart';
+import 'package:yanmata/features/account/presentation/personalized_insights_page.dart';
 import 'package:yanmata/features/ai/presentation/ai_companion_page.dart';
 import 'package:yanmata/features/journal/application/cycle_settings_provider.dart';
 import 'package:yanmata/features/journal/application/journal_controller.dart';
 import 'package:yanmata/features/mental_health/presentation/mental_health_page.dart';
 import 'package:yanmata/features/risk/presentation/early_detection_page.dart';
-import 'package:yanmata/features/risk/presentation/risk_overview_page.dart';
 import 'package:yanmata/features/services/application/location_provider.dart';
 import 'package:yanmata/features/services/presentation/location_picker_sheet.dart';
 
@@ -172,7 +174,7 @@ class Today extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${ref.tr('greeting_prefix')} Aisha ☀️',
+                    _greeting(ref),
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w800,
@@ -253,7 +255,15 @@ class Today extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${ref.tr('cycle_card_prefix')} ${ref.tr('day_of_cycle', params: {'day': '${cycle.currentDayOfCycle}', 'total': '${cycle.cycleLength}'})}',
+                          cycle.configured
+                              ? ref.tr(
+                                  'day_of_cycle',
+                                  params: {
+                                    'day': '${cycle.currentDayOfCycle}',
+                                    'total': '${cycle.cycleLength}',
+                                  },
+                                )
+                              : ref.tr('cycle_empty_title'),
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -262,7 +272,9 @@ class Today extends ConsumerWidget {
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          '${cycle.currentPhase} · ${ref.tr('cycle_card_action')}',
+                          cycle.configured
+                              ? '${cycle.currentPhase} · ${ref.tr('cycle_card_action')}'
+                              : ref.tr('cycle_empty_cta'),
                           style: TextStyle(
                             fontSize: 12,
                             color: isDark ? Palette.darkAccent : Palette.plum,
@@ -298,10 +310,18 @@ class Today extends ConsumerWidget {
           icon: Icons.shield_outlined,
           title: ref.tr('shortcut_risk'),
           subtitle: ref.tr('shortcut_risk_sub'),
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute<void>(builder: (_) => const RiskOverviewPage()),
-          ),
+          onTap: () {
+            final profile = ref.read(healthProfileProvider).value;
+            final isCompleted = profile?.completed ?? false;
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (_) => isCompleted
+                    ? const PersonalizedInsightsPage()
+                    : const CompleteProfilePage(),
+              ),
+            );
+          },
         ),
         const SizedBox(height: 12),
 
@@ -507,4 +527,21 @@ class _FeatureCard extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Personal greeting from the signed-in member's first name; neutral when
+/// there is no account (never a hardcoded name).
+String _greeting(WidgetRef ref) {
+  final prefix = ref.tr('greeting_prefix');
+  final name = ref
+      .watch(journalProvider)
+      .value
+      ?.userName
+      ?.trim()
+      .split(' ')
+      .first;
+  if (name == null || name.isEmpty) {
+    return '${prefix.replaceAll(RegExp(r'[,،]\s*$'), '')} ☀️';
+  }
+  return '$prefix $name ☀️';
 }

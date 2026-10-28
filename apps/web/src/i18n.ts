@@ -1,4 +1,4 @@
-export type Language = 'en' | 'ha' | 'yo' | 'ig' | 'pcm';
+export type Language = "en" | "ha" | "yo" | "ig" | "pcm";
 
 export interface LanguageInfo {
   code: Language;
@@ -7,16 +7,17 @@ export interface LanguageInfo {
 }
 
 export const LANGUAGES: LanguageInfo[] = [
-  { code: 'en', name: 'English', native: 'English' },
-  { code: 'ha', name: 'Hausa', native: 'Harshen Hausa' },
-  { code: 'yo', name: 'Yoruba', native: 'Èdè Yorùbá' },
-  { code: 'ig', name: 'Igbo', native: 'Asụsụ Igbo' },
-  { code: 'pcm', name: 'Pidgin', native: 'Naija / Pidgin' },
+  { code: "en", name: "English", native: "English" },
+  { code: "ha", name: "Hausa", native: "Harshen Hausa" },
+  { code: "yo", name: "Yoruba", native: "Èdè Yorùbá" },
+  { code: "ig", name: "Igbo", native: "Asụsụ Igbo" },
+  { code: "pcm", name: "Pidgin", native: "Naija / Pidgin" },
 ];
 
 export const translations: Record<Language, Record<string, string>> = {
   en: {
-    announcement: "A new chapter in women’s wellbeing. Made with care, in Nigeria.",
+    announcement:
+      "A new chapter in women’s wellbeing. Made with care, in Nigeria.",
     preview_tag: "PRODUCT PREVIEW",
     nav_chapters: "Your life, your chapters",
     nav_learn: "Learn & grow",
@@ -27,7 +28,8 @@ export const translations: Record<Language, Record<string, string>> = {
     hero_tag: "FOR EVERY CHAPTER OF WOMANHOOD",
     hero_title_1: "Growing. Changing.",
     hero_title_2: "Always you.",
-    hero_desc: "Your body has a story. You deserve a space to understand it. Meet YanMata — your wellbeing companion, from your first questions to every chapter that follows.",
+    hero_desc:
+      "Your body has a story. You deserve a space to understand it. Meet YanMata — your wellbeing companion, from your first questions to every chapter that follows.",
     hero_action_find: "Find your space",
     hero_action_explore: "Explore your chapter",
     trust_privacy: "Privacy comes first",
@@ -38,19 +40,25 @@ export const translations: Record<Language, Record<string, string>> = {
     values_change: "With you, through change",
     chapters_eyebrow: "LIFE DOESN’T STAND STILL. NEITHER DOES CARE.",
     chapters_title: "Every chapter. A little more understood.",
-    chapters_desc: "There’s no single way to be a woman. Find the support that feels right for where you are.",
+    chapters_desc:
+      "There’s no single way to be a woman. Find the support that feels right for where you are.",
     support_eyebrow: "SMALL MOMENTS. MEANINGFUL CARE.",
     support_title: "A space that’s yours.",
-    support_desc: "Less overwhelm. More understanding. Thoughtful tools for your everyday wellbeing.",
+    support_desc:
+      "Less overwhelm. More understanding. Thoughtful tools for your everyday wellbeing.",
     ai_modal_title: "Ask Aisha AI",
-    ai_modal_desc: "Private 24/7 educational guidance on women's reproductive health, cycle symptoms, and emotional wellbeing.",
-    ai_placeholder: "Type a question in English, Hausa, Yoruba, Igbo, or Pidgin...",
-    ai_disclaimer: "Aisha is an educational companion. In medical emergencies, contact SURPIN (0800 123 4567) or 112.",
+    ai_modal_desc:
+      "Private 24/7 educational guidance on women's reproductive health, cycle symptoms, and emotional wellbeing.",
+    ai_placeholder:
+      "Type a question in English, Hausa, Yoruba, Igbo, or Pidgin...",
+    ai_disclaimer:
+      "Aisha is an educational companion. In medical emergencies, contact SURPIN (0800 123 4567) or 112.",
     theme_light: "Light",
     theme_dark: "Dark",
   },
   ha: {
-    announcement: "Sabuwar hanyar kula da lafiyar mata. An yi ta da kauna a Najeriya.",
+    announcement:
+      "Sabuwar hanyar kula da lafiyar mata. An yi ta da kauna a Najeriya.",
     preview_tag: "FARKON GANI",
     nav_chapters: "Matakan Rayuwarki",
     nav_learn: "Koyi & Ci gaba",
@@ -61,7 +69,8 @@ export const translations: Record<Language, Record<string, string>> = {
     hero_tag: "GA DUKKAN MATAKAN RAYUWAR MACE",
     hero_title_1: "Kina girma. Kina canzawa.",
     hero_title_2: "Kullum kanki ce.",
-    hero_desc: "Jikinki yana da labari mai dadi. Kin cancanci wurin fahimtar sa. Sadu da YanMata — abokiyar tafiyarki ta samun lafiya.",
+    hero_desc:
+      "Jikinki yana da labari mai dadi. Kin cancanci wurin fahimtar sa. Sadu da YanMata — abokiyar tafiyarki ta samun lafiya.",
     hero_action_find: "Fara amfani yanzu",
     hero_action_explore: "Duba matakinki",
     trust_privacy: "Sirrinki na farko",
@@ -72,19 +81,24 @@ export const translations: Record<Language, Record<string, string>> = {
     values_change: "Tare da ke a canji",
     chapters_eyebrow: "RAYUWA NA TAFIYA. HAKA KUMA KULA.",
     chapters_title: "Kowane mataki. Cikakkiyar fahimta.",
-    chapters_desc: "Babu hanya daya kacal ta zama mace. Nemo kulawar da ta dace da matakin da kike ciki.",
+    chapters_desc:
+      "Babu hanya daya kacal ta zama mace. Nemo kulawar da ta dace da matakin da kike ciki.",
     support_eyebrow: "LOKACI KADAN. BABBAN TAIMAKO.",
     support_title: "Wuri na musamman a gare ki.",
-    support_desc: "Rage damuwa. Samun natsuwa. Kayan aiki masu amfani ga lafiyarki ta yau da kullum.",
+    support_desc:
+      "Rage damuwa. Samun natsuwa. Kayan aiki masu amfani ga lafiyarki ta yau da kullum.",
     ai_modal_title: "Tambayi Aisha AI",
-    ai_modal_desc: "Shawarwarin ilimin lafiya a asirce 24/7 game da haila, canjin jiki, da lafiyar hankali.",
+    ai_modal_desc:
+      "Shawarwarin ilimin lafiya a asirce 24/7 game da haila, canjin jiki, da lafiyar hankali.",
     ai_placeholder: "Rubuta tambaya da Hausa ko wani harshe...",
-    ai_disclaimer: "Aisha na koyarwa ne. Idan ciwo ya tsananta, kira SURPIN (0800 123 4567) ko 112.",
+    ai_disclaimer:
+      "Aisha na koyarwa ne. Idan ciwo ya tsananta, kira SURPIN (0800 123 4567) ko 112.",
     theme_light: "Haske",
     theme_dark: "Duhu",
   },
   yo: {
-    announcement: "Àkókò tuntun fún àlàáfíà àwọn obìnrin. Pẹ̀lú ìfẹ́ ní Nàìjíríà.",
+    announcement:
+      "Àkókò tuntun fún àlàáfíà àwọn obìnrin. Pẹ̀lú ìfẹ́ ní Nàìjíríà.",
     preview_tag: "ÀKỌ́WÒ",
     nav_chapters: "Àwọn Ìpele Ọjọ́ Orí",
     nav_learn: "Kẹ́kọ̀ọ́ & Dàgbà",
@@ -95,7 +109,8 @@ export const translations: Record<Language, Record<string, string>> = {
     hero_tag: "FÚN GBOGBO ÌPELE OBÌNRIN",
     hero_title_1: "O ń dàgbà. O ń yípadà.",
     hero_title_2: "Ìwọ náà ni.",
-    hero_desc: "Ara rẹ ní ìtàn tirẹ̀. O yẹ kí o ní ààyè láti mọ̀ nípa rẹ̀. Pàdé YanMata — olùrànlọ́wọ́ àlàáfíà rẹ.",
+    hero_desc:
+      "Ara rẹ ní ìtàn tirẹ̀. O yẹ kí o ní ààyè láti mọ̀ nípa rẹ̀. Pàdé YanMata — olùrànlọ́wọ́ àlàáfíà rẹ.",
     hero_action_find: "Wá àyè tirẹ",
     hero_action_explore: "Wo ìpele rẹ",
     trust_privacy: "Àṣírí ló ṣe pàtàkì jù",
@@ -106,19 +121,24 @@ export const translations: Record<Language, Record<string, string>> = {
     values_change: "A wà pẹ̀lú rẹ nínú àyípadà",
     chapters_eyebrow: "AYÉ KÒ DÚRÓ. BẸ́Ẹ̀ NÀÁ NI ÌTỌ́JÚ.",
     chapters_title: "Gbogbo ìpele. Òye kíkún.",
-    chapters_desc: "Kò sí ọ̀nà kan ṣoṣo láti jẹ́ obìnrin. Wá ìtìlẹ́yìn tó bá ibi tí o wà mu.",
+    chapters_desc:
+      "Kò sí ọ̀nà kan ṣoṣo láti jẹ́ obìnrin. Wá ìtìlẹ́yìn tó bá ibi tí o wà mu.",
     support_eyebrow: "ÀKÓKÒ KÉKERÉ. ÌTỌ́JÚ PÚPỌ̀.",
     support_title: "Ààyè tó jẹ́ tìrẹ nìkan.",
-    support_desc: "Dín ìnira kù. Ní àlàáfíà ọkàn. Àwọn ohun èlò tí a fi tọ́jú rẹ lónìí.",
+    support_desc:
+      "Dín ìnira kù. Ní àlàáfíà ọkàn. Àwọn ohun èlò tí a fi tọ́jú rẹ lónìí.",
     ai_modal_title: "Béèrè lọ́wọ́ Aisha AI",
-    ai_modal_desc: "Ìrànlọ́wọ́ ẹ̀kọ́ lórí nǹkan oṣù àti ilera pẹ̀lú àṣírí ní gbogbo ìgbà.",
+    ai_modal_desc:
+      "Ìrànlọ́wọ́ ẹ̀kọ́ lórí nǹkan oṣù àti ilera pẹ̀lú àṣírí ní gbogbo ìgbà.",
     ai_placeholder: "Kọ ìbéèrè rẹ ní Èdè Yorùbá tàbí èdè míràn...",
-    ai_disclaimer: "Fún ẹ̀kọ́ nìkan ni Aisha wà. Tí ara bá le, pe SURPIN (0800 123 4567) tàbí 112.",
+    ai_disclaimer:
+      "Fún ẹ̀kọ́ nìkan ni Aisha wà. Tí ara bá le, pe SURPIN (0800 123 4567) tàbí 112.",
     theme_light: "Ìmọ́lẹ̀",
     theme_dark: "Òkùnkùn",
   },
   ig: {
-    announcement: "Oge ọhụrụ maka ahụike ụmụ nwanyị. Mere n’ịhụnanya na Nigeria.",
+    announcement:
+      "Oge ọhụrụ maka ahụike ụmụ nwanyị. Mere n’ịhụnanya na Nigeria.",
     preview_tag: "MBIDO",
     nav_chapters: "Oge Ndụ Gị",
     nav_learn: "Mụta & Too",
@@ -129,7 +149,8 @@ export const translations: Record<Language, Record<string, string>> = {
     hero_tag: "MACA OGE Ọ BỤLA N’NDỤ NWANYỊ",
     hero_title_1: "Ị na-eto. Ị na-agbanwe.",
     hero_title_2: "Ọ bụ gị mgbe niile.",
-    hero_desc: "Ahụ gị nwere akụkọ. O kwesịrị ka ị nwee ohere ịghọta ya. Zute YanMata — enyi ahụike gị.",
+    hero_desc:
+      "Ahụ gị nwere akụkọ. O kwesịrị ka ị nwee ohere ịghọta ya. Zute YanMata — enyi ahụike gị.",
     hero_action_find: "Chọta ohere gị",
     hero_action_explore: "Nyochaa oge ndụ gị",
     trust_privacy: "Nzuzo na-abịa na mbụ",
@@ -140,19 +161,23 @@ export const translations: Record<Language, Record<string, string>> = {
     values_change: "Nọnyeere gị n’ mgbanwe",
     chapters_eyebrow: "NDỤ ANAGHỊ AKWỤSỊ AKWỤSỊ. NLEKỌTA ANAGHỊ AKWỤSỊKWA.",
     chapters_title: "Oge ọ bụla. Aghọtara nke ọma.",
-    chapters_desc: "Enweghị otu ụzọ naanị iji bụrụ nwanyị. Chọta nkwado dabara n’ebe ị nọ.",
+    chapters_desc:
+      "Enweghị otu ụzọ naanị iji bụrụ nwanyị. Chọta nkwado dabara n’ebe ị nọ.",
     support_eyebrow: "OGE NTA. EZI NLEKỌTA.",
     support_title: "Ebe bụ nke gị.",
-    support_desc: "Belata nchekasị. Nwekwuo nghọta. Ngwa nlekọta maka ahụike gị kwa ụbọchị.",
+    support_desc:
+      "Belata nchekasị. Nwekwuo nghọta. Ngwa nlekọta maka ahụike gị kwa ụbọchị.",
     ai_modal_title: "Jụọ Aisha AI",
     ai_modal_desc: "Enyemaka nzuzo banyere oge nsọ na ahụike n’oge ọ bụla.",
     ai_placeholder: "Dee ajụjụ gị n’Asụsụ Igbo ma ọ bụ n’asụsụ ọzọ...",
-    ai_disclaimer: "Aisha bụ maka mmụta. N’oge mberede, kpọọ SURPIN (0800 123 4567) ma ọ bụ 112.",
+    ai_disclaimer:
+      "Aisha bụ maka mmụta. N’oge mberede, kpọọ SURPIN (0800 123 4567) ma ọ bụ 112.",
     theme_light: "Ìhè",
     theme_dark: "Ọchịchịrị",
   },
   pcm: {
-    announcement: "Beta new chapter for women health. We build am with love for Nigeria.",
+    announcement:
+      "Beta new chapter for women health. We build am with love for Nigeria.",
     preview_tag: "TESTING",
     nav_chapters: "Your Life Levels",
     nav_learn: "Learn & Grow",
@@ -163,7 +188,8 @@ export const translations: Record<Language, Record<string, string>> = {
     hero_tag: "FOR EVERY STAGE OF WOMAN LIFE",
     hero_title_1: "You dey grow. You dey change.",
     hero_title_2: "Na still you.",
-    hero_desc: "Your body get special tori. You deserve beta place wey you go understand am well. Meet YanMata — your health buddy.",
+    hero_desc:
+      "Your body get special tori. You deserve beta place wey you go understand am well. Meet YanMata — your health buddy.",
     hero_action_find: "Find your own space",
     hero_action_explore: "Check your stage",
     trust_privacy: "Secret dey first",
@@ -174,14 +200,18 @@ export const translations: Record<Language, Record<string, string>> = {
     values_change: "We dey with you as body dey change",
     chapters_eyebrow: "LIFE NO DEY WAIT. CARE NO SUPPOSE WAIT.",
     chapters_title: "Every life stage. You go understand am well.",
-    chapters_desc: "No be only one way dey to be woman. Find correct care wey match your exact level.",
+    chapters_desc:
+      "No be only one way dey to be woman. Find correct care wey match your exact level.",
     support_eyebrow: "SMALL SMALL TIME. CORRECT CARE.",
     support_title: "Place wey be your own.",
-    support_desc: "No more confusion. Better peace of mind. Easy tools for your everyday health.",
+    support_desc:
+      "No more confusion. Better peace of mind. Easy tools for your everyday health.",
     ai_modal_title: "Ask Aisha AI",
-    ai_modal_desc: "Secret guide wey go explain period, cramps and wellness give you 24/7.",
+    ai_modal_desc:
+      "Secret guide wey go explain period, cramps and wellness give you 24/7.",
     ai_placeholder: "Type your question in Pidgin or any language...",
-    ai_disclaimer: "Aisha na to learn. If bodi dey pain you die, call SURPIN (0800 123 4567) or 112.",
+    ai_disclaimer:
+      "Aisha na to learn. If bodi dey pain you die, call SURPIN (0800 123 4567) or 112.",
     theme_light: "Light",
     theme_dark: "Dark",
   },

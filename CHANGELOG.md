@@ -97,3 +97,32 @@
   - Created `UiFeedback` utility with floating rounded-pill snackbars, success pills, and confirmation dialogs.
   - Wrapped header rows and labels in `Wrap` and `Expanded` to guarantee zero pixel overflow at 200% font scale.
 - Verified test suite: 29 API tests / 172 assertions pass with strict lazy loading enabled, 10 Flutter tests pass, Laravel Pint passes, Flutter analysis passes with zero warnings, React web/admin builds succeed.
+
+## 2026-10-28 — Phase 06 implementation — Wireframe Account Flow, Dynamic User Greeting, Feminine Dark Styling, Branded Launch & Cycle Backend Sync
+
+- Wireframe Account Flow (Mobile & Backend):
+  - Designed and delivered full sequential onboarding and account journey from wireframe (`YanMata Women’s Health App Wireframe.png` right side): `SPLASH` -> `GETTING STARTED` -> `AUTHENTICATION` (Sign Up / Sign In) -> `COMPLETE HEALTH PROFILE` (Screen 4) -> `PERSONALIZED HEALTH INSIGHTS` (Screen 5) -> `DASHBOARD`.
+  - Added `date_of_birth` on `users` table and encrypted `health_profiles` table.
+  - Implemented `ProfileController` (`GET/PUT /api/v1/profile`, `GET /api/v1/insights`) and `SessionController::register`.
+  - Added `HealthProfileNotifier` and `PersonalizedInsightsNotifier` with Riverpod integration.
+  - Interactive Date of Birth picker enforcing minimum age of 9 years; terms agreement; password visibility toggle; guest bypass (`android-40-auth-signup.png`).
+  - Screen 4 health questionnaire with bottom sheets for Menstrual Cycle, Reproductive History, Medical History, Lifestyle & Habits, and Family History (`android-41-complete-profile.png`).
+  - Screen 5 personalized clinical recommendations with category filters, priority tags, WHO/FMOH sources, and "Go to Dashboard" action (`android-42-personalized-insights.png`).
+- Clinical Integrity & Minor Safeguarding:
+  - Completely eradicated fabricated numeric risk scores (e.g. 38% moderate). Rebuilt insights engine using WHO and Federal Ministry of Health (FMOH) Nigeria clinical protocols with explicit review statuses (`reviewed`, `pending_clinical_review`).
+  - Implemented minor safeguarding: users aged 9–17 only receive age-appropriate menstrual & lifestyle questions; adult reproductive and cervical cancer screening sections are hidden.
+- Dynamic User Greeting:
+  - Eliminated hardcoded "Aisha" name from home screen. Greeting dynamically derives the authenticated user's first name ("Good day, Zainab ☀️"), with clean multilingual fallback ("Good day ☀️", "Barka da rana ☀️") for guest sessions (`android-43-today-personalized-greeting.png`).
+- Feminine Visual Styling & Branded Launch:
+  - Added Fraunces serif typeface for elegant headings across mobile.
+  - Refined warm rose-aubergine palette (`#1A0B14`, `#26121D`, `#34192A`, `#F4A6C4`) with theme-adaptive bottom navigation bar.
+  - Replaced default Flutter launcher icons and splash drawables with YanMata heart brand symbol across Android and iOS.
+- Dynamic Cycle Backend Sync:
+  - Added `cycle_settings` table and `CycleSettingsController` (`GET/PUT /api/v1/cycle-settings`).
+  - Bidirectional cycle synchronization in `CycleSettingsNotifier` with last-write-wins conflict resolution and member sync consent enforcement.
+  - Unconfigured users display clean setup prompts rather than synthetic guesses.
+- Verification & Test Closeout:
+  - Backend: 34 PHPUnit tests / 207 assertions pass; Pint code style passes cleanly.
+  - Mobile: `flutter analyze` passes with 0 issues; Dart formatting 100% clean; all 13 Flutter test suites pass.
+  - Web & Admin: TypeScript typecheck and Prettier formatting checks pass cleanly.
+  - Live Android emulator evidence recorded: `android-40` through `android-43`.
