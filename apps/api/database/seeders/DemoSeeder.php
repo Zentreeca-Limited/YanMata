@@ -18,8 +18,8 @@ class DemoSeeder extends Seeder
 {
     public function run(): void
     {
-        if (! app()->environment(['local', 'testing']) || ! config('yanmata.demo')) {
-            throw new \RuntimeException('Demo seeding requires local/testing environment and YANMATA_DEMO=true.');
+        if (! config('yanmata.demo')) {
+            throw new \RuntimeException('Demo seeding requires YANMATA_DEMO=true.');
         }
         $password = getenv('YANMATA_DEMO_PASSWORD');
         if (! $password || strlen($password) < 12) {
