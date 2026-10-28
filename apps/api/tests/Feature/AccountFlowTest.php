@@ -17,10 +17,10 @@ class AccountFlowTest extends TestCase
         ], $o);
     }
 
-    public function test_register_returns_token_and_enables_sync(): void
+    public function test_register_returns_token_without_assuming_sync_consent(): void
     {
         $res = $this->postJson('/api/v1/mobile/register', $this->payload())->assertCreated();
-        $res->assertJsonPath('user.name', 'Amina Bello')->assertJsonPath('user.sync_consent', true);
+        $res->assertJsonPath('user.name', 'Amina Bello')->assertJsonPath('user.sync_consent', false);
         $this->withToken($res->json('token'))->getJson('/api/v1/me')->assertOk();
     }
 

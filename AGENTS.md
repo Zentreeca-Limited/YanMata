@@ -4,7 +4,7 @@ Read README.md, docs/HANDOFF.md, docs/BACKLOG.md and relevant architecture/desig
 
 ## Implementation invariants
 
-- Audience is ages 9 through the end of life, with no upper age limit. Preserve age-appropriate experiences and minor safeguarding. Facility directories, hospital referrals and facility booking are out of scope; specialist support stays within YanMata.
+- Audience is ages 9 through the end of life, with no upper age limit. Preserve age-appropriate experiences and minor safeguarding. The user has authorised a synthetic health-services directory to match the supplied wireframe. Keep listings clearly labelled and governed; external appointment booking and emergency referral automation remain out of scope. Specialist support stays within YanMata.
 
 - Flutter uses Riverpod. Keep presentation/controllers, application use cases, domain types and data adapters separate. No GetX or business logic in widgets.
 - Laravel owns authorisation, clinical publishing rules and shared data. Thin HTTP controllers delegate to use cases; policies enforce resource ownership and professional access. React public/admin apps are required; do not substitute Filament.

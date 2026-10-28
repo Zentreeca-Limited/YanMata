@@ -1,12 +1,12 @@
 # Delivery plan
 
-Planning baseline: 27 October 2026. Owner: Zentreeca Limited. Product: YanMata. Pilot: Jos, Plateau State. User confirms access to clinical reviewers (doctors and nurses in public/private hospitals); named reviewers, credentials and capacity remain to be recorded. Hospital affiliation does not create a requirement for facility integration or institutional partnerships.
+Planning baseline: 27 October 2026, amended 28 October 2026. Owner: Zentreeca Limited. Product: YanMata. Pilot: Jos, Plateau State. User confirms access to clinical reviewers (doctors and nurses in public/private hospitals); named reviewers, credentials and capacity remain to be recorded. A synthetic services directory is now in demo scope; no institutional partnership may be inferred from a listing.
 
 ## 1. Intended outcome
 
 Build a cohesive public website, Android/iOS Flutter application, React administration/specialist portal and Laravel backend. Deliver a real, testable product using synthetic demo fixtures before collecting health data from pilot participants. Maintain a long-term life-stage roadmap while concentrating initial delivery on a small set of safe, useful journeys.
 
-Confirmed audience: ages 9 onward, from puberty through the end of life, with no upper age limit. Design and implementation must include younger users from the foundation; an adult-only product is not the agreed scope. Facility directories, hospital referrals, facility search and facility appointment booking are out of scope. Specialists interact with users inside YanMata. Planning assumptions: English first, Hausa next after professional translation and local review; invited verified professionals; no open peer-to-peer messaging. Age-appropriate consent, access and safeguarding procedures still need definition before live enrolment.
+Confirmed audience: ages 9 onward, from puberty through the end of life, with no upper age limit. Design and implementation must include younger users from the foundation; an adult-only product is not the agreed scope. The user later authorised a synthetic facility/service search experience to follow the supplied wireframe. External appointment booking and automated emergency referral remain excluded. Specialists interact with users inside YanMata. Planning assumptions: English first, Hausa next after professional translation and local review; invited verified professionals; no open peer-to-peer messaging. Age-appropriate consent, access and safeguarding procedures still need definition before live enrolment.
 
 ## 2. Grant fit and immediate deadline
 

@@ -1,6 +1,6 @@
 # Safety, privacy and clinical governance
 
-This is an engineering/product control plan, not a legal compliance opinion or clinical protocol. Obtain Nigeria-specific privacy, professional-practice and child-consent review before real-user enrolment. The audience is confirmed as ages 9 through the end of life. Age-appropriate operating and minor-access protocols remain to be defined. Facilities, hospital referrals and facility booking are outside the product scope.
+This is an engineering/product control plan, not a legal compliance opinion or clinical protocol. Obtain Nigeria-specific privacy, professional-practice and child-consent review before real-user enrolment. The audience is confirmed as ages 9 through the end of life. Age-appropriate operating and minor-access protocols remain to be defined. The demo health-services directory is synthetic; live listings require source ownership, verification dates and a correction process. External booking and automated emergency referral remain outside the current scope.
 
 ## Clinical information
 

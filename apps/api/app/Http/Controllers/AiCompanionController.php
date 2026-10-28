@@ -41,8 +41,7 @@ class AiCompanionController extends Controller
                     'reply' => $this->emergencyReply($lang),
                     'is_emergency' => true,
                     'helplines' => [
-                        ['name' => 'SURPIN Suicide Research & Prevention Initiative Nigeria', 'number' => '0800 123 4567', 'cost' => 'Toll-Free'],
-                        ['name' => 'National Emergency Response (Police, Fire, Ambulance)', 'number' => '112', 'cost' => 'Free'],
+                        ['name' => 'Nigeria national emergency number', 'number' => '112', 'cost' => 'Emergency service'],
                     ],
                     'suggested_actions' => [
                         'Seek emergency medical help immediately',
@@ -61,9 +60,8 @@ class AiCompanionController extends Controller
                 'reply' => $aiResponse['reply'],
                 'is_emergency' => false,
                 'citations' => [
-                    'World Health Organization (WHO) Reproductive and Maternal Health Guidelines',
-                    'Federal Ministry of Health Nigeria Adolescent Health Policy',
-                    'American College of Obstetricians and Gynecologists (ACOG)',
+                    'WHO menstrual health fact sheet — https://www.who.int/news-room/fact-sheets/detail/menstrual-health',
+                    'Nigeria Federal Ministry of Health, Family Health — https://health.gov.ng/family-health/',
                 ],
                 'follow_up_questions' => $aiResponse['follow_ups'],
                 'suggested_actions' => $aiResponse['suggested_actions'],
@@ -97,18 +95,18 @@ class AiCompanionController extends Controller
             $energyOutlook = 'Gentle rest and warmth. Iron-rich foods and hydration help replenishment.';
         } elseif ($currentDay <= ($cycleLength / 2) - 2) {
             $currentPhase = 'Follicular Phase';
-            $energyOutlook = 'Rising estrogen stimulates mental clarity and vitality. Great for active projects.';
+            $energyOutlook = 'Energy and mood can vary from person to person. Notice your own pattern without pressure.';
         } elseif ($currentDay <= ($cycleLength / 2) + 2) {
             $currentPhase = 'Ovulatory Window';
-            $energyOutlook = 'Peak fertility and confidence. Your body temperature may increase slightly.';
+            $energyOutlook = 'This is an estimated mid-cycle window, not a fertility or contraception guarantee.';
         } else {
             $currentPhase = 'Luteal Phase';
-            $energyOutlook = 'Progesterone dominance. Gentle magnesium, warm herbal teas, and steady pacing relieve PMS.';
+            $energyOutlook = 'Some people notice changes before a period; rest, hydration and symptom tracking may help.';
         }
 
         return response()->json([
             'data' => [
-                'regularity' => ($cycleLength >= 21 && $cycleLength <= 35) ? 'Healthy & Regular' : 'Mild Variation',
+                'regularity' => ($cycleLength >= 21 && $cycleLength <= 35) ? 'Within a common adult range' : 'Pattern varies',
                 'phase' => $currentPhase,
                 'day_of_cycle' => $currentDay,
                 'total_days' => $cycleLength,
@@ -130,11 +128,11 @@ class AiCompanionController extends Controller
     private function emergencyReply(string $lang): string
     {
         return match ($lang) {
-            'ha' => 'Muna tare da ke. Don Allah ki nemi taimakon gaggawa yanzu. Kiran wadannan lambobin kyauta ne a Najeriya, ko ki ziyarci asibiti mafi kusa.',
-            'yo' => 'A wà pẹ̀lú rẹ. Jọ̀wọ́ wá ìrànlọ́wọ́ pàjáwìrì ní kíákíá. Àwọn nọ́mbà wọ̀nyí jẹ́ ọ̀fẹ́ ní Nàìjíríà, tàbí kí o lọ sí ilé ìwòsàn tó súnmọ́ ọ jù.',
-            'ig' => 'Anyị nọnyeere gị. Biko chọọ enyemaka mberede ugbu a. Ịkpọ nọmba ndị a bụ n’efu na Nigeria, ma ọ bụ gaa n’ụlọ ọgwụ kacha nso.',
-            'pcm' => 'We dey with you. Abeg make you find emergency help right now. Call these free helpline sharp-sharp or go the nearest clinic/hospital.',
-            default => 'You are not alone. Please reach out for immediate emergency care. These verified hotlines in Nigeria are free and confidential, or visit the nearest medical emergency center immediately.',
+            'ha' => 'Muna tare da ke. Don Allah ki nemi taimakon gaggawa yanzu. Ki kira 112 a Najeriya, ko ki je wurin ba da agajin gaggawa mafi kusa tare da amintaccen mutum.',
+            'yo' => 'A wà pẹ̀lú rẹ. Jọ̀wọ́ wá ìrànlọ́wọ́ pàjáwìrì ní kíákíá. Pe 112 ní Nàìjíríà, tàbí lọ sí ibi ìtọ́jú pàjáwìrì tó súnmọ́ ọ pẹ̀lú ẹni tí o gbẹ́kẹ̀ lé.',
+            'ig' => 'Anyị nọnyeere gị. Biko chọọ enyemaka mberede ugbu a. Kpọọ 112 na Nigeria, ma ọ bụ gaa n’ebe enyemaka mberede kacha nso gị na onye ị tụkwasịrị obi.',
+            'pcm' => 'We dey with you. Abeg find emergency help now. Call 112 for Nigeria, or go the nearest emergency centre with person wey you trust.',
+            default => 'You are not alone. Call 112 in Nigeria or go to the nearest emergency department with a trusted person now.',
         };
     }
 

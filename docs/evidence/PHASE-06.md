@@ -23,7 +23,7 @@ In accordance with user requirements:
     - `GET /api/v1/profile`: Returns user age, minor flag, required sections, and answers.
     - `PUT /api/v1/profile`: Validates section inputs, updates encrypted profile, marks completion.
     - `GET /api/v1/insights`: Generates personalized recommendations with category, priority, and clinical source citations.
-  - `app/Http/Controllers/SessionController.php`: `register` endpoint validating age >= 9, terms acceptance, password >= 10 chars, creating member account with `sync_consent = true`.
+  - `app/Http/Controllers/SessionController.php`: `register` endpoint validating age >= 9, terms acceptance and password >= 10 chars. New accounts begin with `sync_consent = false`; sync requires a separate explicit choice.
 - **Flutter Account Module**:
   - `lib/core/localization/account_strings.dart`: Complete translations across English, Hausa, Yoruba, Igbo, and Nigerian Pidgin.
   - `lib/features/account/domain/health_profile.dart`: `HealthProfile` and `PersonalizedInsight` models.
@@ -41,7 +41,7 @@ In accordance with user requirements:
 ### 3. Feminine Visual Styling & Branded Launch
 - Fraunces serif typeface registered in `pubspec.yaml` and applied to headlines.
 - Warm rose-aubergine palette configured in `lib/core/theme.dart`.
-- Android launch drawables (`drawable`, `drawable-v21`, `drawable-nodpi`, `values-v31`, `values-night-v31`) and iOS launch image assets updated with the official YanMata logo (`assets/logo.png`).
+- Android launch drawables (`drawable`, `drawable-v21`, `drawable-nodpi`, `values-v31`, `values-night-v31`) and iOS launch image assets use the refined profile, halo and leaf mark derived from the supplied YanMata wireframe.
 
 ### 4. Dynamic Cycle Settings Backend Sync
 - `apps/api/database/migrations/2026_10_28_000100_create_cycle_settings_table.php`: `cycle_settings` table.

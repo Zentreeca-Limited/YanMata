@@ -4,7 +4,7 @@
 
 YanMata is supplied by Zentreeca Limited. Build a working product: Flutter Android/iOS with Riverpod, offline-first/realtime sync, WebSockets, FCM and local reminders; Laravel backend; React public website and React administration. Use clean architecture with MVC presentation/controller separation. Support life-stage female wellbeing, verifiable content, specialists and publishing from web/mobile. Demo uses synthetic seeded data with real workflows. Preserve polished UI and comprehensive continuity docs.
 
-Pilot location confirmed: Jos, Plateau State. User has access to doctors/nurses in public/private hospitals for review. Audience confirmed: ages 9 onward, from puberty through the end of life, with no upper age limit. Facilities and hospital referrals are explicitly out of scope. Preserve in-platform specialist interaction. Named clinicians and age-appropriate consent/access protocols still need definition; facility partnerships are not a prerequisite.
+Pilot location confirmed: Jos, Plateau State. User has access to doctors/nurses in public/private hospitals for review. Audience confirmed: ages 9 onward, from puberty through the end of life, with no upper age limit. On 28 October the user authorised the synthetic health-services directory from the supplied wireframe. Preserve in-platform specialist interaction; external booking and automated emergency referral remain out of scope. Named clinicians and age-appropriate consent/access protocols still need definition.
 
 ## Actual state
 
@@ -17,7 +17,7 @@ All screens from the Zentreeca designer handoff and wireframe are fully implemen
 5. Home Dashboard with dynamic personalized greeting ("Good day, Zainab ☀️"), 5 feature shortcuts, live cycle widget, Aisha AI card, multilingual header, location pill, and dark mode toggle (`TodayPage`, `android-43-today-personalized-greeting.png`)
 6. Cycle Tracker with circular dial, dynamic phase, and 3-question cycle setup flow (`TrackPage`, `CycleSetupDialog`)
 7. Early Detection & Screening Guide (`EarlyDetectionPage`)
-8. Mental Health Support with mood emojis, coping modals, and 24/7 SURPIN/112 crisis helplines (`MentalHealthPage`)
+8. Mental Health Support with mood emojis, coping modals, and Nigeria's official emergency number 112 (`MentalHealthPage`)
 9. Health Services directory with dynamic city filtering (`ServicesPage`, `ServiceDetailSheet`, `LocationPickerSheet`)
 10. Shop Health Products with cart, dynamic delivery, and checkout confirmation (`ShopPage`, `CartSheet`)
 11. My Profile & Records with life chapters, health records, notification quiet hours, and language selector (`YouPage`)
@@ -25,14 +25,14 @@ All screens from the Zentreeca designer handoff and wireframe are fully implemen
 
 Public Website Story Integration, Navigation Polish & Multilingual Localisation (`apps/web`):
 - Generalized National & Global Scope: Truthfully framed Jos as the initial clinical review pilot launch hub while expanding copy across web and mobile to represent Nigeria, Africa, and beyond ("Made with care in Nigeria, for Africa and the world").
-- 100% Multilingual Public Web: Refactored every section of the public website (chapters, 6 core wireframe stories, 5 journey steps, real testimonials, support cards, learning room notices, privacy bullets, specialists, 6 FAQs, closing section, footer, and interactive dialogs) to be 100% reactive to language switching across English, Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), and Nigerian Pidgin (`pcm`) with 209 synchronized keys.
+- Multilingual Public Web: The public website has English, Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), and Nigerian Pidgin (`pcm`) copy. Non-English clinical and safeguarding copy still requires human linguistic and clinical review before release.
 - Streamlined & De-noised Top Menu: Clean, breathable desktop navigation focused on 4 core anchors (`Stories`, `Chapters`, `Specialists`, `Learning`) plus a glowing `Aisha AI` pill; secondary anchors (`Account Journey`, `Real Stories`, `Our Approach`) cleanly housed in the mobile drawer.
 - Sticky Glassmorphism Header: Frosted-glass backdrop blur (`backdrop-filter: blur(16px)`), subtle border, and responsive mobile slide-down drawer with animated menu toggle (`Menu` / `X`).
 - Fluid Micro-Animations: Nav link underline slide, rotating sparkle pulse on Aisha AI pill, floating ambient notes in Hero, ambient phone mockup float, smooth tab switch entry transition (`showcaseFadeIn`), interactive card hover lifts on journey steps & testimonials, and accessible `prefers-reduced-motion` compliance.
 - 6 Core Health Stories / Features Showcase: Interactive phone mockup displaying live mobile app screen captures (`public/screens/*.png`) across Cycle Rhythm, Aisha AI 24/7 Companion, Clinical Preventive Insights, Encrypted 5-Pillar Health Profile, Mental Health Wellbeing, and Verified Specialists.
 - Wireframe Account Flow (5 steps): Visualized from first-time onboarding (ages 9+) through private age-gated registration, 5-pillar health profile assessment, WHO/FMOH evidence-based clinical insights, and daily companion rhythm.
-- Real Stories & Personas: True-to-life perspectives from adolescents, adult women, and clinicians in our pilot hub and nationwide (Amina, 14, Jos; Zainab, 28, Abuja; Dr. Fatima Aliyu, Gynecologist).
-- Truthful Clinical Invariants: In-platform specialist consultation strictly maintained (no external hospital booking or facility directories); zero fake risk scores (WHO & FMOH citations only).
+- Pilot Readiness: Invented testimonials and clinician identities were removed. The public site now uses explicit product, pilot-learning and clinical-readiness statements.
+- Truthful Clinical Invariants: in-platform specialist consultation remains primary; the services directory is synthetic and must never imply a partnership. No external booking or automated emergency referral. No fabricated risk scores or provider credentials.
 
 Multilingual system covers English, Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), and Nigerian Pidgin (`pcm`) on mobile and web. System-wide light/dark mode transitions verified on mobile, public web, and admin with warm rose-aubergine feminine aesthetics and Fraunces typography. Dynamic location engine spans Nigeria (Jos Pilot Hub, Abuja, Lagos, Kano, Ibadan, Port Harcourt, Enugu, Kaduna, Nationwide). Dynamic cycle settings sync with Laravel backend (`GET/PUT /api/v1/cycle-settings`).
 
@@ -45,7 +45,7 @@ Production hardening & operations (QA-01, OPS-01):
 - `scripts/backup-db.sh` creates atomic SQLite VACUUM snapshots with SHA-256 checksums and PRAGMA integrity check.
 - `scripts/restore-db.sh` validates SHA-256 checksums and SQLite integrity with automatic pre-restore backup.
 - Strict prevention of lazy loading (`Model::preventLazyLoading`) active across all Eloquent models to guarantee zero N+1 database queries.
-- Zero clinical text in push or broadcast payloads. In-platform specialist consultation strictly maintained (no facility directories, booking, or hospital referrals).
+- Zero clinical text in push or broadcast payloads. The synthetic services directory must stay visibly labelled; external booking and automated emergency referral remain excluded.
 - All 34 PHPUnit tests (207 assertions) pass; Pint passes with 0 issues; `flutter analyze` clean (0 warnings, 0 infos); all 13 Flutter test suites pass; Prettier and TypeScript checks pass.
 
 Important current boundaries: local backend SQLite; manual HTTP sync; client-rendered public site; seeded identities only. Strict prevention of lazy loading and missing attribute discarding is active on the backend, ensuring zero N+1 database queries. No claims of clinical approval: seed reviewer and specialist timestamps are synthetic and explicitly labelled. Zero clinical text in push or broadcast payloads.

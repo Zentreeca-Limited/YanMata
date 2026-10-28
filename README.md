@@ -2,13 +2,13 @@
 
 A private, accessible wellbeing companion for girls and women, provided by **Zentreeca Limited** (https://zentreeca.org). Initial pilot: **Jos, Plateau State, Nigeria**. Audience: **ages 9 onward, from puberty through the end of life**, with no upper age limit.
 
-## Project status — 27 October 2026
+## Project status — 28 October 2026
 
-**Phase 01 working foundation is implemented.** The React website and editorial studio run against Laravel; the Flutter app supports local check-ins, learning and consented manual sync. Android debug and iOS simulator builds succeed. The real two-store mobile/Laravel integration test passes. This is a synthetic-data development preview, **not a production release**. See [phase evidence](docs/evidence/PHASE-01.md) and [foundation decisions](docs/adr/0002-foundation-implementation.md).
+Seven phased working slices are implemented across the React public site and editorial studio, Laravel API, and Flutter app. This is a synthetic-data development preview, **not a production or clinically approved release**. See the [latest phase evidence](docs/evidence/PHASE-07.md) and [foundation decisions](docs/adr/0002-foundation-implementation.md).
 
 ## Product
 
-YanMata supports body literacy, puberty, menstrual wellbeing, symptom and mood journaling, trusted health education, and access to verified professionals. Its life-stage scope spans puberty from age 9, adolescence, adulthood, pregnancy/postpartum where relevant, perimenopause, menopause and later life, including end-of-life wellbeing. Facility listings, hospital referrals and facility booking are out of scope; professional interaction takes place within YanMata. Experiences adapt to a person's chosen needs without assuming pregnancy, sexual activity or a regular menstrual cycle.
+YanMata supports body literacy, puberty, menstrual wellbeing, symptom and mood journaling, trusted health education, and in-platform professional support. Its life-stage scope spans puberty from age 9, adolescence, adulthood, pregnancy/postpartum where relevant, perimenopause, menopause and later life, including end-of-life wellbeing. The current demo includes synthetic health-service listings based on the supplied wireframe; external appointment booking and emergency referral automation are not implemented. Experiences adapt to a person's chosen needs without assuming pregnancy, sexual activity or a regular menstrual cycle.
 
 ## Read first
 
@@ -77,6 +77,17 @@ npm run dev
 
 Preview addresses: public web `http://127.0.0.1:5173`, editorial studio `http://127.0.0.1:5174`, API `http://127.0.0.1:8091`. The dev runner checks for occupied ports and does not terminate unrelated services. Stop it with Ctrl+C.
 
+The public app-download cards read optional URLs from `apps/web/.env`:
+
+```sh
+cp apps/web/.env.example apps/web/.env
+# Set only after signed store releases are approved:
+# VITE_ANDROID_DOWNLOAD_URL=https://play.google.com/...
+# VITE_IOS_DOWNLOAD_URL=https://apps.apple.com/...
+```
+
+When either value is empty, that platform is shown honestly as “Coming soon.”
+
 Demo emails: `author@demo.yanmata.test`, `reviewer@demo.yanmata.test`, `publisher@demo.yanmata.test`, `member@demo.yanmata.test`. The generated password is stored locally in ignored `.env.demo.local`, never in this README or source control. Do not reuse it in production.
 
 ```sh
@@ -115,6 +126,6 @@ python3 scripts/test-live-mobile.py
 
 ## Current limits and next phase
 
-The secure-storage adapter is capped at 100 entries; encrypted database migration is next. Sync is manual; conflicts are preserved but resolution UI is pending. Public web is currently a client-rendered preview. Self-registration, minor consent/assent, staff MFA, account recovery/export/deletion, cycle calendar/symptoms, specialist messaging, mobile publishing, media upload, Reverb, FCM/APNs and scheduled reminders are not yet implemented. Do not use real patient information or claim production/clinical readiness.
+Public web remains client-rendered. Production hosting, signed store builds, native encrypted database migration, physical-device notification delivery, staff MFA, account recovery/deletion, named clinical and safeguarding sign-off, practitioner credential verification, and pilot operating procedures remain release gates. Some workflows exist as tested demo slices; their presence does not establish clinical effectiveness or operational readiness. Do not use real patient information or claim production/clinical readiness.
 
 The [backlog](docs/BACKLOG.md), [handoff](docs/HANDOFF.md) and [changelog](CHANGELOG.md) distinguish verified foundation slices from remaining work. Brand symbol masters are in `packages/design/assets` (SVG plus 4096px PNG); the full identity suite is still in progress.

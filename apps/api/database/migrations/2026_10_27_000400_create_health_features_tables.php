@@ -76,7 +76,7 @@ return new class extends Migration
             $t->string('summary');
             $t->text('body');
             $t->text('coping_strategies'); // JSON array
-            $t->string('emergency_helpline')->default('SURPIN Nigeria: 0800 123 4567 / Emergency: 112');
+            $t->string('emergency_helpline')->default('Nigeria national emergency number: 112');
             $t->string('source_citation')->default('WHO Mental Health Atlas & Asido Foundation Nigeria');
             $t->timestamps();
         });

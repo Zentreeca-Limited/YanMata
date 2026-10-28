@@ -305,7 +305,7 @@ class Today extends ConsumerWidget {
         ),
         const SizedBox(height: 12),
 
-        // Health Risk Prediction Shortcut Card
+        // Personalised health guidance shortcut card
         _FeatureCard(
           icon: Icons.shield_outlined,
           title: ref.tr('shortcut_risk'),

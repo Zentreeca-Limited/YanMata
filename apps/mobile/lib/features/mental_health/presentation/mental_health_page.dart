@@ -293,7 +293,7 @@ class _MentalHealthPageState extends State<MentalHealthPage> {
                 ),
                 SizedBox(height: 6),
                 Text(
-                  '• SURPIN Toll-Free: 0800 123 4567 / 0908 021 7555\n• Emergency Ambulance / Police: 112\n• Asido Foundation Helpline: 0902 808 0416',
+                  'If you or someone else is in immediate danger, call Nigeria’s national emergency number: 112. If it is safe, stay with a trusted person while help is arranged.',
                   style: TextStyle(
                     fontSize: 12,
                     height: 1.5,

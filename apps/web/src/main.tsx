@@ -28,10 +28,15 @@ import {
   UserCheck,
   Compass,
 } from "lucide-react";
-import { Brand, Tag, api, type Article, type Specialist } from "@yanmata/ui";
+import { Brand, Tag, api, type Article } from "@yanmata/ui";
 import { LANGUAGES, translations, type Language } from "./i18n";
 import "@yanmata/ui/styles.css";
 import "./styles.css";
+
+const androidDownloadUrl = import.meta.env.VITE_ANDROID_DOWNLOAD_URL as
+  string | undefined;
+const iosDownloadUrl = import.meta.env.VITE_IOS_DOWNLOAD_URL as
+  string | undefined;
 
 const getStories = (t: Record<string, string>) => [
   {
@@ -140,27 +145,6 @@ const getJourneySteps = (t: Record<string, string>) => [
   },
 ];
 
-const getTestimonials = (t: Record<string, string>) => [
-  {
-    quote: t.test_quote_1,
-    name: t.test_name_1,
-    title: t.test_title_1,
-    avatar: "A",
-  },
-  {
-    quote: t.test_quote_2,
-    name: t.test_name_2,
-    title: t.test_title_2,
-    avatar: "Z",
-  },
-  {
-    quote: t.test_quote_3,
-    name: t.test_name_3,
-    title: t.test_title_3,
-    avatar: "F",
-  },
-];
-
 const getChapters = (t: Record<string, string>) => [
   {
     label: t.ch_label_0,
@@ -212,7 +196,6 @@ function App() {
   const [chapter, setChapter] = useState(0);
   const [activeStory, setActiveStory] = useState(0);
   const [articles, setArticles] = useState<Article[]>([]);
-  const [specialists, setSpecialists] = useState<Specialist[]>([]);
   const [error, setError] = useState("");
   const [selected, setSelected] = useState<Article | null>(null);
   const [info, setInfo] = useState<string | null>(null);
@@ -231,7 +214,6 @@ function App() {
   const t = translations[lang] || translations.en;
   const stories = getStories(t);
   const journeySteps = getJourneySteps(t);
-  const testimonials = getTestimonials(t);
   const chapters = getChapters(t);
   const faqs = getFaqs(t);
 
@@ -254,9 +236,6 @@ function App() {
             "The learning library is temporarily unavailable. Please try again.",
         ),
       );
-    api<{ data: Specialist[] }>("/specialists")
-      .then((r) => setSpecialists(r.data))
-      .catch(() => {});
   };
   useEffect(load, []);
   useEffect(() => {
@@ -360,9 +339,9 @@ function App() {
               <a
                 className="nav-link"
                 onClick={() => setMenu(false)}
-                href="#voices"
+                href="#download"
               >
-                {t.voices_eyebrow || "Real Stories"}
+                Get the app
               </a>
               <a
                 className="nav-link"
@@ -693,37 +672,25 @@ function App() {
           </div>
         </section>
 
-        {/* Real Stories / Testimonials Section */}
         <section className="testimonials-section" id="voices">
           <div className="wrap">
             <div className="section-heading">
               <div>
-                <div className="eyebrow">
-                  {t.voices_eyebrow || "REAL VOICES · STORIES OF CARE & TRUST"}
-                </div>
-                <h2>
-                  {t.voices_title ||
-                    "Why Nigerian Women & Clinicians Trust YanMata"}
-                </h2>
+                <div className="eyebrow">BUILT WITH CARE IN NIGERIA</div>
+                <h2>A thoughtful beginning, shaped around real needs.</h2>
               </div>
               <p>
-                {t.voices_desc ||
-                  "Authentic perspectives from girls, mothers, and healthcare professionals experiencing the YanMata platform."}
+                We are preparing a Jos, Plateau State pilot. Public enrolment is
+                not yet open, and all demo people and records are synthetic.
               </p>
             </div>
-            <div className="testimonials-grid">
-              {testimonials.map((test, i) => (
-                <div className="testimonial-card" key={i}>
-                  <p className="testimonial-quote">“{test.quote}”</p>
-                  <div className="testimonial-author">
-                    <div className="testimonial-avatar">{test.avatar}</div>
-                    <div>
-                      <h5>{test.name}</h5>
-                      <small>{test.title}</small>
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <div className="pilot-note">
+              <ShieldCheck size={24} />
+              <p>
+                Health content and specialist services will move beyond the demo
+                only after their clinical, safeguarding and operational reviews
+                are complete.
+              </p>
             </div>
           </div>
         </section>
@@ -889,29 +856,39 @@ function App() {
           </div>
         </section>
         <section className="wrap specialists" id="specialists">
-          <div className="eyebrow">{t.specialists_eyebrow}</div>
-          <h2>{t.specialists_title}</h2>
-          <p className="specialists-lead">{t.specialists_lead}</p>
-          <div className="specialists-grid">
-            {specialists.map((s) => (
-              <div className="specialist-card" key={s.id}>
-                <div className="specialist-avatar">{s.name[0]}</div>
-                <div>
-                  <div className="specialist-verified">
-                    <ShieldCheck size={14} /> {t.specialists_badge}
-                  </div>
-                  <h3>{s.name}</h3>
-                  <div className="specialist-title">
-                    {s.title} · {s.credentials}
-                  </div>
-                  <div className="specialist-specialty">{s.specialty}</div>
-                  <p>{s.bio}</p>
-                  <small className="specialist-city">📍 {s.city}</small>
-                </div>
+          <div className="eyebrow">IN-PLATFORM SPECIALIST SUPPORT</div>
+          <h2>A careful path to qualified guidance.</h2>
+          <p className="specialists-lead">
+            YanMata includes a working specialist-support workflow. Named
+            professionals will be shown publicly only after their identity,
+            credentials, scope and availability have been verified.
+          </p>
+          <div className="specialists-grid readiness-grid">
+            <div className="specialist-card">
+              <ShieldCheck className="readiness-icon" />
+              <div>
+                <h3>Credentials checked</h3>
+                <p>
+                  Registration, scope of practice and expiry are reviewed before
+                  activation.
+                </p>
               </div>
-            ))}
+            </div>
+            <div className="specialist-card">
+              <Lock className="readiness-icon" />
+              <div>
+                <h3>Access stays scoped</h3>
+                <p>
+                  Specialist access is assigned, consented and limited to the
+                  support request.
+                </p>
+              </div>
+            </div>
           </div>
-          <p className="specialist-note">{t.specialists_note}</p>
+          <p className="specialist-note">
+            Demo profiles are synthetic. Specialist support is not an emergency
+            service and public enrolment is not yet open.
+          </p>
         </section>
         <section className="wrap faq">
           <div>
@@ -934,6 +911,54 @@ function App() {
             ))}
           </div>
         </section>
+        <section className="download-section wrap" id="download">
+          <div className="download-copy">
+            <div className="eyebrow">YANMATA MOBILE</div>
+            <h2>Your private wellbeing companion, wherever you are.</h2>
+            <p>
+              Android and iPhone releases are being prepared. These placeholder
+              links can be replaced with the Play Store and App Store URLs when
+              signed production builds are approved.
+            </p>
+          </div>
+          <div
+            className="download-actions"
+            aria-label="Mobile app availability"
+          >
+            <a
+              className="store-link"
+              href={androidDownloadUrl || "#download"}
+              target={androidDownloadUrl ? "_blank" : undefined}
+              rel={androidDownloadUrl ? "noreferrer" : undefined}
+              aria-disabled={!androidDownloadUrl}
+              onClick={(event) => {
+                if (!androidDownloadUrl) event.preventDefault();
+              }}
+            >
+              <span className="store-icon">A</span>
+              <span>
+                <small>Android app</small>
+                {androidDownloadUrl ? "Download" : "Coming soon"}
+              </span>
+            </a>
+            <a
+              className="store-link"
+              href={iosDownloadUrl || "#download"}
+              target={iosDownloadUrl ? "_blank" : undefined}
+              rel={iosDownloadUrl ? "noreferrer" : undefined}
+              aria-disabled={!iosDownloadUrl}
+              onClick={(event) => {
+                if (!iosDownloadUrl) event.preventDefault();
+              }}
+            >
+              <span className="store-icon">i</span>
+              <span>
+                <small>iPhone app</small>
+                {iosDownloadUrl ? "Download" : "Coming soon"}
+              </span>
+            </a>
+          </div>
+        </section>
         <section className="wrap closing">
           <span>✳</span>
           <div className="eyebrow">{t.closing_eyebrow}</div>
@@ -952,7 +977,8 @@ function App() {
         <div className="footer-links">
           <a href="#stories">{t.nav_stories || "App Stories"}</a>
           <a href="#journey">{t.nav_journey || "Account Journey"}</a>
-          <a href="#voices">{t.voices_eyebrow || "Real Voices"}</a>
+          <a href="#voices">Our approach</a>
+          <a href="#download">Get the app</a>
           <a href="#chapters">{t.nav_chapters || "Life Chapters"}</a>
           <a href="#learn">{t.nav_learn || "Learning"}</a>
           <button onClick={() => setInfo("privacy")}>
@@ -1062,8 +1088,7 @@ function App() {
                 <AlertCircle size={18} /> EMERGENCY CRISIS SUPPORT (NIGERIA)
               </div>
               <p style={{ margin: "6px 0 0", color: "#881337", fontSize: 13 }}>
-                • SURPIN Toll-Free: <strong>0800 123 4567</strong>
-                <br />• National Emergency: <strong>112</strong>
+                National emergency number: <strong>112</strong>
               </p>
             </div>
           )}

@@ -45,7 +45,7 @@ class SessionController extends Controller
             throw ValidationException::withMessages(['date_of_birth' => 'YanMata is for ages 9 and over.']);
         }
         $user = new User(['name' => trim($d['name']), 'email' => strtolower($d['email']), 'password' => $d['password']]);
-        $user->forceFill(['role' => 'member', 'sync_consent' => true, 'date_of_birth' => $d['date_of_birth']])->save();
+        $user->forceFill(['role' => 'member', 'sync_consent' => false, 'date_of_birth' => $d['date_of_birth']])->save();
 
         return response()->json([
             'user' => $this->profile($user),

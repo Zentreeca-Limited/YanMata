@@ -21,7 +21,7 @@ class HealthFeaturesTest extends TestCase
             'id' => (string) Str::uuid(),
             'name' => 'Cervical Cancer Screening',
             'category' => 'screening',
-            'provider_name' => 'Jos University Teaching Hospital (JUTH)',
+            'provider_name' => 'Synthetic Jos Hospital One',
             'provider_type' => 'hospital',
             'address' => 'Lamingo Road, Jos',
             'city' => 'Jos',
@@ -31,14 +31,14 @@ class HealthFeaturesTest extends TestCase
             'is_available' => true,
             'description' => 'Comprehensive cervical screening.',
             'opening_hours' => 'Mon - Fri, 8:00 AM - 4:00 PM',
-            'verification_source' => 'Plateau State Ministry of Health Facility Registry #PL-HOSP-014',
+            'verification_source' => 'Synthetic fixture; no verification claim',
         ]);
 
         HealthService::create([
             'id' => (string) Str::uuid(),
             'name' => 'Maternal Care',
             'category' => 'maternal',
-            'provider_name' => 'Plateau Specialist Hospital',
+            'provider_name' => 'Synthetic Plateau Demo Service',
             'provider_type' => 'hospital',
             'address' => 'Bank Road, Jos',
             'city' => 'Jos',
@@ -48,7 +48,7 @@ class HealthFeaturesTest extends TestCase
             'is_available' => true,
             'description' => 'Antenatal and delivery care.',
             'opening_hours' => '24/7 Maternity Emergency',
-            'verification_source' => 'Plateau State Ministry of Health Facility Registry #PL-HOSP-002',
+            'verification_source' => 'Synthetic fixture; no verification claim',
         ]);
 
         $res = $this->getJson('/api/v1/services');
@@ -60,7 +60,7 @@ class HealthFeaturesTest extends TestCase
 
         $searched = $this->getJson('/api/v1/services?query=Plateau');
         $searched->assertOk()->assertJsonCount(1, 'data')
-            ->assertJsonPath('data.0.provider_name', 'Plateau Specialist Hospital');
+            ->assertJsonPath('data.0.provider_name', 'Synthetic Plateau Demo Service');
     }
 
     public function test_can_list_products_and_place_order(): void
@@ -120,14 +120,15 @@ class HealthFeaturesTest extends TestCase
             'summary' => 'Grounding techniques and gentle breathing.',
             'body' => 'Grounding exercises restore emotional equilibrium.',
             'coping_strategies' => ['Box breathing', '5-4-3-2-1 Grounding'],
-            'emergency_helpline' => 'SURPIN Nigeria: 0800 123 4567',
+            'emergency_helpline' => 'Nigeria national emergency number: 112',
             'source_citation' => 'WHO Guidelines',
         ]);
 
         $res = $this->getJson('/api/v1/mental-health/resources');
         $res->assertOk()
             ->assertJsonCount(1, 'data')
-            ->assertJsonCount(3, 'helplines');
+            ->assertJsonCount(1, 'helplines')
+            ->assertJsonPath('helplines.0.phone', '112');
     }
 
     public function test_cycle_settings_sync_requires_consent_and_resolves_conflicts(): void
@@ -185,7 +186,8 @@ class HealthFeaturesTest extends TestCase
         ]);
         $crisis->assertOk()
             ->assertJsonPath('data.is_emergency', true)
-            ->assertJsonCount(2, 'data.helplines');
+            ->assertJsonCount(1, 'data.helplines')
+            ->assertJsonPath('data.helplines.0.number', '112');
     }
 
     public function test_ai_cycle_insights(): void
@@ -198,7 +200,7 @@ class HealthFeaturesTest extends TestCase
         ]);
 
         $res->assertOk()
-            ->assertJsonPath('data.regularity', 'Healthy & Regular')
+            ->assertJsonPath('data.regularity', 'Within a common adult range')
             ->assertJsonPath('data.phase', 'Follicular Phase')
             ->assertJsonPath('data.total_days', 28);
     }

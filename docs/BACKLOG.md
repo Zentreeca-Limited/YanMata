@@ -13,7 +13,7 @@ Statuses: TODO, IN_PROGRESS, BLOCKED, VERIFIED. VERIFIED requires evidence. Foun
 | MOB-01 | P0 | Riverpod shell, routing, encrypted local DB and secure keys | DESIGN-01, TECH-02 | Android/iOS builds; restart/lock/logout tests | IN_PROGRESS |
 | SYNC-01 | P0 | Journal plus outbox/idempotency/cursor protocol | API-01, MOB-01 | Airplane-mode/replay/conflict/delete scenarios | IN_PROGRESS |
 | CMS-01 | P0 | React content authoring/review/publication and media pipeline | API-01, DESIGN-01 | Publication state/permission tests; mobile refresh | IN_PROGRESS |
-| WEB-01 | P0 | Responsive React public site, stories showcase and learning pages | DESIGN-01, CMS-01 | Mobile/desktop QA, 6 core stories, wireframe journey, 100% multilingual across 5 languages, de-localized scope | VERIFIED |
+| WEB-01 | P0 | Responsive React public site, stories showcase and learning pages | DESIGN-01, CMS-01 | Mobile/desktop QA, truthful pilot copy, configurable store links, five-language framework | VERIFIED |
 | CARE-01 | P0 | Specialist verification, in-platform support request and consented chat | API-01, MOB-01 | Scoped access/revocation tests, nationwide/pilot clinical network, seeded demo conversation | IN_PROGRESS |
 | PUSH-01 | P0 | Private Reverb, FCM/APNs and local reminders | SYNC-01, CARE-01 | Physical-device state matrix, token cleanup, deduplication | IN_PROGRESS |
 | MOB-02 | P1 | Mobile staff draft/upload/review/publish capability | CMS-01, MOB-01 | Same policies enforced from mobile and web | IN_PROGRESS |
@@ -41,7 +41,7 @@ See [PHASE-01](evidence/PHASE-01.md). Implemented slices: runnable four-app work
 ## Phase 02 implementation evidence
 
 See [PHASE-02](evidence/PHASE-02.md). Implemented slices:
-- CARE-01: In-platform specialist guidance (Jos pilot), MDCN/NMCN synthetic verified clinicians, member support inquiries with journal sharing consent, secure asynchronous messaging, mobile CareChatPage, admin Care inquiries table, public web specialists showcase.
+- CARE-01: In-platform specialist workflow (Jos pilot), explicitly synthetic demo personas, member support inquiries with journal sharing consent, secure asynchronous messaging, mobile CareChatPage, admin Care inquiries table, and public readiness copy. Live credentials and staffing remain unverified.
 - TRACK-02 / SYNC-01: Expanded life-stage tracking with cycle flow intensity, multi-symptom body signals, energy levels, backward-compatible API sync payload, and explicit mobile conflict resolution.
 - ID-02: Life chapter selection across 5 life stages (ages 9 through 55+), topic interests, and private journal JSON data export.
 - TECH-02 / QA-01: Activated strict prevention of lazy loading and attribute discarding in Laravel, added DB performance indexes, verified zero N+1 database queries.
@@ -62,11 +62,11 @@ See [PHASE-04](evidence/PHASE-04.md). Implemented slices:
 - Full Wireframe Feature Parity: All 11 wireframe and designer handoff screens implemented and verified on the Android emulator (`android-14` through `android-26`):
   - Cycle tracker dial with progress ring and follicular phase banner.
   - Home dashboard with 5 shortcut feature cards and Aisha greeting.
-  - Health Risk Prediction overview dial (38% moderate).
+  - Historical percentage-based risk prototype (removed in Phase 07; it was never a validated assessment).
   - Health Profile factor input checklists.
   - Detailed Risk Report with 4 category tabs, citations, and Jos consultation CTA.
   - Early Detection & Screening tailored for Jos, Plateau State.
-  - Mental Health Support with mood emojis, coping modals, and 24/7 SURPIN/112 crisis helplines.
+  - Mental Health Support with mood emojis, coping modals, and Nigeria emergency number 112.
   - Find Health Services directory with Jos facilities, pricing, distances, and specialist inquiry.
   - Shop Health Products with verified pharmacy catalogue, shopping cart, delivery calculation, and order confirmation.
   - Profile & Records with quick links and life chapter selector.
@@ -105,7 +105,11 @@ See [PHASE-06](evidence/PHASE-06.md). Implemented slices:
 - Fluid Micro-Animations: Nav link underline slide, rotating sparkle pulse on Aisha AI pill, floating ambient notes in Hero, ambient phone mockup float, smooth tab switch entry transition (`showcaseFadeIn`), interactive card hover lifts on journey steps & testimonials, and accessible `prefers-reduced-motion` compliance.
 - 6 Core Health Stories / Features Showcase: Interactive phone mockup displaying live mobile app screen captures (`today.png`, `track.png`, `profile.png`, `insights.png`, `ai.png`, `mental.png`, `services.png`) within a responsive hardware bezel with tabs for Cycle Rhythm, Aisha AI 24/7 Companion, Clinical Preventive Insights, Encrypted 5-Pillar Health Profile, Mental Health Wellbeing, and Verified Specialists.
 - Wireframe Account Flow (5 steps): Visualized from first-time onboarding (ages 9+) through private age-gated registration, 5-pillar health profile assessment, WHO/FMOH evidence-based clinical insights, and daily companion rhythm.
-- Real Stories & Personas: True-to-life perspectives from adolescents, adult women, and clinicians in our Jos pilot hub and nationwide (Amina, 14, Jos; Zainab, 28, Abuja; Dr. Fatima Aliyu, Gynecologist, Jos).
+- Pilot Readiness: No testimonials or clinician endorsements are claimed before the pilot; synthetic scenarios are labelled as such.
+
+## Phase 07 implementation evidence
+
+See [PHASE-07](evidence/PHASE-07.md). Public launch hardening adds a production-oriented responsive landing page, configurable Android/iOS download destinations, honest pilot-readiness copy, and a synthetic-only specialist presentation. Safety corrections remove the dormant percentage-risk implementation, unverified helpline details, invented public testimonials, and automatic sync consent at registration. Store releases, clinical sign-off, credential verification and production deployment remain open gates.
 - Multilingual Completeness: All new web story sections, navigation tabs, account journey steps, and testimonial headings translated across English, Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), and Nigerian Pidgin (`pcm`).
 - Truthful Clinical Invariants: Replaced prototype placeholders with verified Jos pilot in-platform specialist consultation; preserved strict invariants (no external hospital booking or facility directories).
 - Verification: Web production build (`npm run --workspace=@yanmata/web build`) completed in 840ms with zero errors; TypeScript typecheck passed; Prettier formatting clean; launched live at `http://127.0.0.1:5173/`.

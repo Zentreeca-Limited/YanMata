@@ -24,7 +24,7 @@ Five primary tabs: **Today, Track, Learn, Care, You**. This deliberately makes e
 | Today | Gentle greeting, private check-in, optional cycle summary, one relevant learning card, care shortcut |
 | Track | Calendar/list, period log, symptom/mood/sleep/energy entry, history, detail/edit, uncertainty-aware insights, conflict resolution |
 | Learn | Topics/life stages, search, article with sources/reviewer/date, captioned video/transcript, saved/downloaded items |
-| Care | In-platform specialist profiles and availability, support request, consented sharing, conversation, reporting/help; no facility search, maps or hospital referrals |
+| Care | In-platform specialist support, consented sharing, conversation and reporting/help; optional synthetic services directory matching the supplied wireframe. Live facility data requires verification and correction ownership. No external booking or automated emergency referral. |
 | You | Profile/topics, privacy/consent, app lock, notifications/quiet hours, devices, export/delete, language/accessibility, support |
 | Staff mobile | Draft list/editor, media upload/progress, review feedback, submit, publish for authorised role, audit status |
 

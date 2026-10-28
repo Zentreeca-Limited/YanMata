@@ -41,7 +41,7 @@ export const translations: Record<Language, Record<string, string>> = {
     hero_note_2: "Every version of you.",
     hero_note_2_sub: "Always welcome here.",
     hero_art_caption: "YOUR JOURNEY. YOUR SPACE.",
-    values_rooted: "Rooted in clinical guidelines (WHO & FMOH)",
+    values_rooted: "Built for reviewed health guidance",
     values_built: "Built for real Nigerian lives",
     values_private: "Private by design · No data sold",
     values_change: "With you, through every change",
@@ -66,7 +66,7 @@ export const translations: Record<Language, Record<string, string>> = {
     cycle_h2: "One-tap symptom, mood, and flow logging",
     cycle_h3:
       "Age-appropriate tracking: safe for young adolescents (ages 9+) without adult fertility prompts",
-    cycle_h4: "100% offline-ready encrypted storage with zero cloud tracking",
+    cycle_h4: "Offline-first private journal with consented sync",
     ai_badge: "MULTILINGUAL & 24/7",
     ai_title: "Aisha: Your Culturally Grounded AI Wellbeing Companion",
     ai_lead:
@@ -74,8 +74,7 @@ export const translations: Record<Language, Record<string, string>> = {
     ai_h1: "Conversational empathy in 5 Nigerian languages",
     ai_h2:
       "Strict clinical boundaries: educational guidance, not automated prescribing",
-    ai_h3:
-      "Automatic mental health crisis triage (SURPIN Nigeria 0800 123 4567 & 112)",
+    ai_h3: "Clear safety boundaries and reviewed urgent-help information",
     ai_h4:
       "Zero telemetry: your questions and conversations stay completely private",
     insights_badge: "NO FAKE RISK SCORES",
@@ -107,15 +106,15 @@ export const translations: Record<Language, Record<string, string>> = {
       "Hormones, life stress, and reproductive milestones profoundly impact emotional wellbeing. YanMata provides daily mood check-ins, mindful breathing exercises, and instant crisis hotlines.",
     mental_h1: "Daily mood and emotional rhythm logging with somatic check-ins",
     mental_h2: "Evidence-based somatic calming and guided breathing exercises",
-    mental_h3:
-      "Immediate emergency support with SURPIN Nigeria helpline integration",
+    mental_h3: "Clear emergency guidance using Nigeria’s national 112 number",
     mental_h4:
       "Safe, stigma-free space designed for young girls and mature women alike",
-    care_badge: "MDCN & NMCN VERIFIED",
+    care_badge: "SPECIALIST WORKFLOW PREVIEW",
     care_title: "Verified In-Platform Specialist Consultations",
     care_lead:
       "Direct, asynchronous, confidential access to licensed gynecologists, reproductive health nurses, and maternal health experts across our clinical network. Never an algorithm alone.",
-    care_h1: "100% credential-checked specialists verified with MDCN and NMCN",
+    care_h1:
+      "Credential verification is required before a specialist goes live",
     care_h2: "Confidential in-app messaging with end-to-end audit trail",
     care_h3:
       "Strict clinical boundaries: no fake hospital referrals or external booking",
@@ -179,17 +178,17 @@ export const translations: Record<Language, Record<string, string>> = {
     voices_desc:
       "Authentic perspectives from girls, mothers, and healthcare professionals experiencing the YanMata platform.",
     test_quote_1:
-      "When I first started my period, I was too shy to ask anyone at school. YanMata explained everything to me in Hausa without making me feel ashamed. Aisha AI answered my questions kindly, and knowing my details are private made me feel safe.",
-    test_name_1: "Amina B.",
-    test_title_1: "Student (Age 14) · Pilot Participant, Plateau",
+      "The first pilot will test whether age-appropriate body literacy feels clear, private and respectful.",
+    test_name_1: "Pilot learning goal",
+    test_title_1: "Synthetic scenario · not a participant testimonial",
     test_quote_2:
-      "Tracking my irregular cycles used to be stressful because every app assumed a standard 28-day cycle. YanMata's 5-pillar health profile captured my medical history, and the clinical insights actually cited WHO guidelines instead of showing random panic numbers.",
-    test_name_2: "Zainab O.",
-    test_title_2: "Architect (Age 28) · Abuja",
+      "The team will assess whether flexible cycle tracking supports different patterns without treating a 28-day cycle as universal.",
+    test_name_2: "Product learning goal",
+    test_title_2: "Synthetic scenario · not a user result",
     test_quote_3:
-      "As a physician practicing in Nigeria, seeing a health platform that adheres strictly to FMOH Nigeria guidelines and MDCN verification standards is refreshing. YanMata respects patient privacy, maintains minor safeguarding, and connects patients to verified clinicians responsibly.",
-    test_name_3: "Dr. Fatima Aliyu",
-    test_title_3: "Consultant Gynecologist (MDCN Verified)",
+      "Clinical reviewers will review health copy, sources and escalation boundaries before pilot publication.",
+    test_name_3: "Clinical readiness goal",
+    test_title_3: "Process statement · no credential claim",
     support_eyebrow: "SMALL MOMENTS. MEANINGFUL CARE.",
     support_title: "A space that’s yours.",
     support_desc:
@@ -210,17 +209,17 @@ export const translations: Record<Language, Record<string, string>> = {
     support_stack_1_tag: "BODY LITERACY",
     support_stack_2_title: "Space for your feelings",
     support_stack_2_tag: "EMOTIONAL WELLBEING",
-    support_care_title: "Verified In-Platform Support.",
+    support_care_title: "In-Platform Support, When Ready.",
     support_care_desc:
-      "Connect directly with licensed gynecologists and reproductive nurse specialists across our clinical network. Confidential and respectful.",
+      "The product includes a private specialist-support workflow. Live access will open only after practitioner and operating checks are complete.",
     support_convo_q: "Some questions need a listening ear.",
-    support_convo_a: "And a licensed doctor to answer.",
-    support_care_badge: "MDCN & NMCN Verified · In-Platform Support",
+    support_convo_a: "And a carefully reviewed support pathway.",
+    support_care_badge: "Pilot workflow · verification pending",
     learn_eyebrow: "THE LEARNING ROOM",
     learn_title: "A little knowledge. A little more confidence.",
     learn_desc: "Take a breath. Find something for you.",
     learn_notice:
-      "Demonstration content. Clinical sources traceable to WHO & FMOH.",
+      "Demonstration content. Source and reviewer fields are part of the publishing workflow.",
     learn_card_meta: "DEMO · NOT CLINICALLY REVIEWED",
     learn_loading: "The learning room is being prepared.",
     learn_retry: "Retry",
@@ -235,11 +234,11 @@ export const translations: Record<Language, Record<string, string>> = {
     privacy_b2: "Private journaling designed for offline use",
     privacy_b3: "Age-appropriate care, from 9 through later life",
     privacy_cta: "Read our privacy approach",
-    specialists_eyebrow: "VERIFIED IN-PLATFORM CLINICAL NETWORK",
-    specialists_title: "Qualified guidance. Never an algorithm alone.",
+    specialists_eyebrow: "IN-PLATFORM SUPPORT READINESS",
+    specialists_title: "Human review is part of the plan.",
     specialists_lead:
-      "Starting with our pilot rollout and expanding across Nigeria, YanMata connects women and girls directly with licensed medical practitioners and nurse specialists registered with MDCN and NMCN.",
-    specialists_badge: "MDCN / NMCN Verified",
+      "The pilot workflow is being prepared for reviewed, private support. No practitioner is presented as available until credential and operating checks are complete.",
+    specialists_badge: "Synthetic demo profiles",
     specialists_note:
       "Specialist support is asynchronous and confidential within YanMata. YanMata does not provide hospital referrals, directory search or emergency admissions.",
     faq_eyebrow: "A FEW THINGS YOU MAY BE WONDERING",
@@ -252,13 +251,13 @@ export const translations: Record<Language, Record<string, string>> = {
       "Privacy is foundational. YanMata is built offline-first: your menstrual logs, symptoms, and 5-pillar health profile remain encrypted on your device. We do not sell user data, harvest telemetry, or share personal health records with third parties.",
     faq_q3: "Are the clinical insights based on real science?",
     faq_a3:
-      "Yes. YanMata does not generate fabricated risk scores or fake percentage likelihoods. Every personalized insight is traceable to clinical guidelines from the World Health Organization (WHO) and Federal Ministry of Health (FMOH) Nigeria.",
+      "The product is designed to show source and reviewer details for health guidance. Demo material is clearly labelled and does not establish clinical validation.",
     faq_q4: "How does specialist consultation work in YanMata?",
     faq_a4:
-      "Verified MDCN-registered doctors and NMCN-registered nurse specialists provide asynchronous, confidential in-app consultations. Invariants: YanMata does not offer hospital booking or facility directories — specialist support remains strictly within the platform.",
+      "The demo includes an in-app specialist workflow. Real specialists will appear only after credential and operating checks are complete.",
     faq_q5: "Can I ask Aisha AI in my local language?",
     faq_a5:
-      "Yes! Aisha AI is trained to understand and respond supportively in English, Hausa, Yoruba, Igbo, and Nigerian Pidgin. It is equipped with automatic emergency triage connecting to Nigeria's SURPIN helpline (0800 123 4567) and emergency services (112).",
+      "The companion currently demonstrates multilingual educational responses with safety boundaries. It is not a clinician or emergency service.",
     faq_q6: "When can I use the mobile app?",
     faq_a6:
       "The Flutter app is under active development for Android and iOS. We are preparing pilot rollouts across Nigeria and beyond. Public app-store releases will follow pilot evaluations.",
@@ -285,7 +284,7 @@ export const translations: Record<Language, Record<string, string>> = {
     ai_placeholder:
       "Type a question in English, Hausa, Yoruba, Igbo, or Pidgin...",
     ai_disclaimer:
-      "Aisha is an educational companion. In medical emergencies, contact SURPIN (0800 123 4567) or 112.",
+      "Aisha is an educational companion. In an immediate emergency in Nigeria, call 112.",
     theme_light: "Light",
     theme_dark: "Dark",
   },
@@ -348,8 +347,7 @@ export const translations: Record<Language, Record<string, string>> = {
       "Amsoshin tambayoyi a asirce cikin Hausa, Turanci, Yarbanci, Igbo, da Pidgin bisa ka'idojin likitanci da kariya a lokacin gaggawa.",
     ai_h1: "Tattaunawa mai cike da fahimta a harsuna 5 na Najeriya",
     ai_h2: "Iyakokin likitanci: ilimantarwa ba rubuta magani a kaikaice ba",
-    ai_h3:
-      "Kariyar gaggawa ta tabin hankali (SURPIN Nigeria 0800 123 4567 & 112)",
+    ai_h3: "Jagorar gaggawa ta lambar Najeriya 112",
     ai_h4: "Babu bin diddigin bayananki: maganganunki na sirri ne gaba daya",
     insights_badge: "BABU LISSALIN KARYA",
     insights_title: "Shawarwarin Likitanci Bisa Ka'idojin WHO & FMOH",
@@ -379,7 +377,7 @@ export const translations: Record<Language, Record<string, string>> = {
       "Sauyin yanayin jiki da al'amuran rayuwa na shafar natsuwa. YanMata na ba da damar auna yanayin zuciya, motsa jiki don samun sauki, da lambobin gaggawa.",
     mental_h1: "Rikodin yanayin zuciya da sauyin rai na kullum",
     mental_h2: "Dabarun natsuwa da saukake numfashi da bincike ya tabbatar",
-    mental_h3: "Taimakon gaggawa ta lambar SURPIN Nigeria nan take",
+    mental_h3: "Jagorar gaggawa ta lambar Najeriya 112",
     mental_h4: "Wuri mai aminci ba tare da kyama ba ga kowace mace",
     care_badge: "LIKITOCIN MDCN & NMCN",
     care_title: "Saduwa da Kwararrun Likitoci a Cikin Manhaja",
@@ -527,7 +525,7 @@ export const translations: Record<Language, Record<string, string>> = {
       "Likitoci da ma'aikatan jinya masu rajista da MDCN da NMCN suna ba da amsoshi a asirce a cikin manhaja. Ka'ida: YanMata ba ta tura asibiti ba — taimako yana cikin manhaja kadai.",
     faq_q5: "Zan iya tambayar Aisha AI da harshena na asali?",
     faq_a5:
-      "Kwarai! Aisha AI tana fahimta kuma tana amsawa da Hausa, Turanci, Yarbanci, Igbo, da Pidgin. Kuma tana da lambar gaggawa ta SURPIN (0800 123 4567) da 112.",
+      "Aisha tana nuna amsoshin ilimi a Hausa, Turanci, Yarbanci, Igbo da Pidgin. A cikin gaggawa a Najeriya, kira 112.",
     faq_q6: "Yaushe zan iya amfani da manhajar a waya?",
     faq_a6:
       "Ana ci gaba da aikin manhajar Flutter don Android da iOS. Muna fara gwaji kafin fitar da ita a hukumance ga kowa.",
@@ -554,7 +552,7 @@ export const translations: Record<Language, Record<string, string>> = {
     ai_placeholder:
       "Rubuta tambayarki da Hausa, Turanci, Yarbanci, Igbo, ko Pidgin...",
     ai_disclaimer:
-      "Aisha abokiyar ilimi ce. A lokacin gaggawa, kira SURPIN (0800 123 4567) ko 112.",
+      "Aisha abokiyar ilimi ce. A lokacin gaggawa a Najeriya, kira 112.",
     theme_light: "Haske",
     theme_dark: "Duhu",
   },
@@ -615,8 +613,7 @@ export const translations: Record<Language, Record<string, string>> = {
       "Ìdáhùn pẹ̀lú àánú ní Èdè Yorùbá, Hausa, Igbo, Gẹ̀ẹ́sì, àti Pidgin tí ó dá lórí ìmọ̀ ìṣègùn tòótọ́.",
     ai_h1: "Ìfọ̀rọ̀wérọ̀ ní èdè 5 ti orílẹ̀-èdè Nàìjíríà",
     ai_h2: "Ìlànà ìṣègùn: ẹ̀kọ́ ìlera kọ́kọ́, kì í ṣe kíkọ oògùn lásán",
-    ai_h3:
-      "Ìrànlọ́wọ́ kíákíá fún ìlera ọpọlọ (SURPIN Nigeria 0800 123 4567 & 112)",
+    ai_h3: "Ìtọ́sọ́nà pàjáwìrì pẹ̀lú nọ́mbà 112 Nàìjíríà",
     ai_h4: "Àṣírí rẹ wà ní àbò: a kì í ṣe àkọsílẹ̀ ìfọ̀rọ̀wérọ̀ rẹ",
     insights_badge: "KÒ SÍ ÌṢIRÒ ÈTÀN",
     insights_title: "Ìmọ̀ràn Ìlera Tó Dá Lórí Ìlànà WHO & FMOH",
@@ -641,7 +638,7 @@ export const translations: Record<Language, Record<string, string>> = {
       "Àyípadà homonu àti wàhálà ayé ń ní ipa lórí ìmọ̀lára. YanMata ń fún ọ ní ààyè láti kọ bí ọkàn rẹ ṣe rí, ìmí ẹ̀dùn ìbàlẹ̀, àti nọ́mbà ìrànlọ́wọ́.",
     mental_h1: "Àkọsílẹ̀ ìmọ̀lára àti ìṣe ọkàn ojoojúmọ́",
     mental_h2: "Ọgbọ́n mímí fún ìbàlẹ̀ ọkàn tí ìmọ̀ sáyẹ́ǹsì fọwọ́ sí",
-    mental_h3: "Ìrànlọ́wọ́ pàjáwìrì pẹ̀lú SURPIN Nigeria lẹ́sẹ̀kẹsẹ̀",
+    mental_h3: "Ìtọ́sọ́nà pàjáwìrì pẹ̀lú nọ́mbà 112 Nàìjíríà",
     mental_h4: "Ààyè tó dára láìsí ẹ̀gàn fún gbogbo obìnrin",
     care_badge: "ONÍṢÈGÙN MDCN & NMCN",
     care_title: "Ìbáraẹnisọ̀rọ̀ Pẹ̀lú Àwọn Oníṣègùn Gidi",
@@ -787,7 +784,7 @@ export const translations: Record<Language, Record<string, string>> = {
       "Àwọn dọ́kítà àti nọ́ọ̀sì tó forúkọsílẹ̀ lábẹ́ MDCN àti NMCN ń pèsè ìdáhùn ní ìkọ̀kọ̀ nínú manhaja. Ìlànà wa: YanMata kì í ránni lọ sí ilé-ìwòsàn — ìtọ́sọ́nà wà nínú manhaja nìkan.",
     faq_q5: "Ṣé mo lè fi èdè mi béèrè lọ́wọ́ Aisha AI?",
     faq_a5:
-      "Bẹ́ẹ̀ ni! Aisha AI gbọ́ tí ó sì ń dáhùn ní Èdè Yorùbá, Hausa, Igbo, Gẹ̀ẹ́sì, àti Pidgin. Ó sì ní nọ́mbà pàjáwìrì SURPIN (0800 123 4567) àti 112.",
+      "Aisha ń ṣàfihàn ìdáhùn ẹ̀kọ́ ní Yorùbá, Hausa, Igbo, Gẹ̀ẹ́sì àti Pidgin. Ní pàjáwìrì ní Nàìjíríà, pe 112.",
     faq_q6: "Ìgbà wo ni mo lè lo manhaja lórí fóònù mi?",
     faq_a6:
       "A ń ṣe àgbékalẹ̀ manhaja Flutter fún Android àti iOS lọ́wọ́. A ń bẹ̀rẹ̀ pẹ̀lú àkọ́wò kí a tó tú u síta fún gbogbo ènìyàn.",
@@ -813,8 +810,7 @@ export const translations: Record<Language, Record<string, string>> = {
       "Ìtọ́sọ́nà ẹ̀kọ́ ní ìkọ̀kọ̀ 24/7 lórí ìlera obìnrin, nǹkan oṣù, àti ìbàlẹ̀ ọkàn.",
     ai_placeholder:
       "Kọ ìbéèrè rẹ ní Èdè Yorùbá, Hausa, Igbo, Gẹ̀ẹ́sì, tàbí Pidgin...",
-    ai_disclaimer:
-      "Aisha jẹ́ olùrànlọ́wọ́ ẹ̀kọ́. Ní àkókò pàjáwìrì, kan sí SURPIN (0800 123 4567) tàbí 112.",
+    ai_disclaimer: "Aisha jẹ́ olùrànlọ́wọ́ ẹ̀kọ́. Ní pàjáwìrì ní Nàìjíríà, pe 112.",
     theme_light: "Ìmọ́lẹ̀",
     theme_dark: "Òkùnkùn",
   },
@@ -877,7 +873,7 @@ export const translations: Record<Language, Record<string, string>> = {
     ai_h1: "Mkparịta ụka n'asụsụ 5 nke ala Nigeria",
     ai_h2:
       "Oke ahụike doro anya: nkuzi ahụike, ọ bụghị ide ọgwụ na-enweghị dọkịta",
-    ai_h3: "Nchedo mberede maka uche (SURPIN Nigeria 0800 123 4567 & 112)",
+    ai_h3: "Nduzi mberede site na nọmba Nigeria 112",
     ai_h4: "Nzuzo zuru oke: mkparịta ụka gị bụ naanị nke gị",
     insights_badge: "ENWEGHỊ ỌNỤỌGỤGỤ ỤGHA",
     insights_title: "Ndụmọdụ Ahụike Dabere n'Ụkpụrụ WHO & FMOH",
@@ -904,7 +900,7 @@ export const translations: Record<Language, Record<string, string>> = {
       "Mgbanwe homonu na nchegbu ndụ na-emetụta uche. YanMata na-enye gị ohere ide otu obi si dị gị, izu ike n'iku ume, na nọmba enyemaka.",
     mental_h1: "Ideba mmetụta uche gị na ọnọdụ obi kwa ụbọchị",
     mental_h2: "Usoro iku ume na ime ka uche dajụọ sayensị kwadoro",
-    mental_h3: "Enyemaka ngwa ngwa site na SURPIN Nigeria n'oge ọ bụla",
+    mental_h3: "Nduzi mberede site na nọmba Nigeria 112",
     mental_h4: "Ebe nchekwa na-enweghị ihere ma ọ bụ ikpe maka nwanyị ọ bụla",
     care_badge: "NDỊ DỌKỊTA MDCN & NMCN",
     care_title: "Mkparịta Ụka Nzuzo nke Ndị Dọkịta Zuru Ezu",
@@ -1053,7 +1049,7 @@ export const translations: Record<Language, Record<string, string>> = {
       "Ndị dọkịta na ndị nọọsụ nwere asambodo MDCN na NMCN na-aza ajụjụ na nzuzo n'ime ngwa anyị. Usoro anyị: YanMata anaghị ezipụ mmadụ n'ụlọ ọgwụ — nkwado dị naanị n'ime ngwa a.",
     faq_q5: "Enwere m ike iji asụsụ m jụọ Aisha AI ajụjụ?",
     faq_a5:
-      "Ee! Aisha AI na-aghọta ma na-aza n'Asụsụ Igbo, Hausa, Yoruba, Bekee, na Pidgin. O nwekwara nọmba mberede SURPIN (0800 123 4567) na 112.",
+      "Aisha na-egosi azịza mmụta n’Igbo, Hausa, Yoruba, Bekee na Pidgin. N’oge mberede na Nigeria, kpọọ 112.",
     faq_q6: "Olee mgbe m nwere ike iji ngwa ekwentị a?",
     faq_a6:
       "A ka na-arụ ngwa Flutter a maka Android na iOS. Anyị na-eme nyocha ule tupu anyị wepụta ya maka mmadụ niile.",
@@ -1079,7 +1075,7 @@ export const translations: Record<Language, Record<string, string>> = {
     ai_placeholder:
       "Dee ajụjụ gị n'Asụsụ Igbo, Hausa, Yoruba, Bekee, ma ọ bụ Pidgin...",
     ai_disclaimer:
-      "Aisha bụ onye inyeaka na mmụta. N'oge mberede, kpọtụrụ SURPIN (0800 123 4567) ma ọ bụ 112.",
+      "Aisha bụ onye inyeaka na mmụta. N’oge mberede na Nigeria, kpọọ 112.",
     theme_light: "Ihe Ìhè",
     theme_dark: "Ọchịchịrị",
   },
@@ -1141,8 +1137,7 @@ export const translations: Record<Language, Record<string, string>> = {
     ai_h1: "Chat freely in 5 Nigerian languages",
     ai_h2:
       "Clear boundaries: health education first, no be to write medicine carelessly",
-    ai_h3:
-      "Direct mental health emergency help (SURPIN Nigeria 0800 123 4567 & 112)",
+    ai_h3: "Emergency guidance with Nigeria national number 112",
     ai_h4: "Zero monitoring: your chat remain strictly your secret",
     insights_badge: "NO FAKE RISK PERCENTAGE",
     insights_title: "Doctor Insights Based on WHO & FMOH Standards",
@@ -1168,7 +1163,7 @@ export const translations: Record<Language, Record<string, string>> = {
       "Body hormones and life wahala dey affect mind. YanMata give you space to check your mood, breathe well to calm down, and direct helpline.",
     mental_h1: "Record your mood and heart feeling every day",
     mental_h2: "Calm breathing exercise wey medical research prove",
-    mental_h3: "Quick emergency support with SURPIN Nigeria helpline",
+    mental_h3: "Emergency guidance with Nigeria national number 112",
     mental_h4: "Safe place without any shame for every woman",
     care_badge: "MDCN & NMCN VERIFIED",
     care_title: "Chat With Verified Doctors Inside App",
@@ -1316,7 +1311,7 @@ export const translations: Record<Language, Record<string, string>> = {
       "Verified doctors and nurses with MDCN and NMCN license dey answer your question inside app in secret. Our rule: YanMata no dey book hospital bed — support dey inside app only.",
     faq_q5: "I fit ask Aisha AI in my own language?",
     faq_a5:
-      "Yes now! Aisha AI dey understand and answer well in Pidgin, Hausa, Yoruba, Igbo, and English. And e get emergency helpline for SURPIN (0800 123 4567) and 112.",
+      "Aisha dey show educational answers for Pidgin, Hausa, Yoruba, Igbo and English. For emergency in Nigeria, call 112.",
     faq_q6: "When I fit use the mobile app for my phone?",
     faq_a6:
       "We dey actively build the Flutter app for Android and iOS. We dey run our pilot first before public store release.",
@@ -1343,7 +1338,7 @@ export const translations: Record<Language, Record<string, string>> = {
     ai_placeholder:
       "Type your question in Pidgin, Hausa, Yoruba, Igbo, or English...",
     ai_disclaimer:
-      "Aisha na learning assistant. In medical emergency, call SURPIN (0800 123 4567) or 112.",
+      "Aisha na learning assistant. For emergency in Nigeria, call 112.",
     theme_light: "Light",
     theme_dark: "Dark",
   },

@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-28 — Public launch hardening and safety correction
+
+- Refined the supplied profile, halo and leaf identity across the shared web brand, Flutter welcome screen, Android launch/launcher assets and iOS icon set.
+- Reworked the public site into a responsive product presentation with app walkthroughs, an honest pilot-readiness section and Android/iOS release placeholders.
+- Removed invented public testimonials and provider credential claims; specialist and facility demo fixtures are now explicitly synthetic and unavailable.
+- Removed unverified crisis numbers. Emergency guidance now uses Nigeria's official national number, 112, and the bounded companion links to named source pages.
+- New accounts no longer opt into health-data sync automatically. Sync remains a separate explicit consent action.
+- Updated scope documentation to reflect the user-authorised synthetic services directory while retaining the external booking and automated emergency-referral boundary.
+
 ## 2026-10-27 — Planning foundation
 
 - Reviewed supplied app-flow image and designer handoff, grant call/form and reference project manifests.
