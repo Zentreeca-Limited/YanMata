@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-28 — Live API mobile integration (MOB-03)
+
+- Set the Flutter default API to `https://yanmata.zentreeca.org/api/v1` while preserving explicit local emulator/simulator overrides.
+- Added configurable live integration execution through `YANMATA_API_BASE_URL`.
+- Reworked the live test to use an isolated synthetic account with explicit sync consent and cleanup rather than relying on a deployed seed password.
+- Verified registration, consent, two-store journal push/pull, deletion propagation and account removal against the deployed API.
+- Added a user-safe HTTP 429 rate-limit message and verified Android debug and iOS simulator builds.
+- Isolated account deletion under a named Laravel limiter so prior sync traffic cannot incorrectly block a member's first deletion attempt; added a regression test and deployed the correction.
+
 ## 2026-10-28 — Age-inclusive public website imagery (WEB-03)
 
 - Added four original HD editorial images representing adolescence through later life, mature wellbeing, private mobile use and illustrative specialist support.

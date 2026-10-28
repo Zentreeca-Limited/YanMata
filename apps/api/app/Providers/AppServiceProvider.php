@@ -34,5 +34,6 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(SupportRequest::class, CarePolicy::class);
 
         RateLimiter::for('login', fn (Request $request) => [Limit::perMinute(5)->by('login-account:'.hash('sha256', strtolower((string) $request->input('email')).'|'.$request->ip())), Limit::perMinute(30)->by('login-ip:'.$request->ip())]);
+        RateLimiter::for('account-deletion', fn (Request $request) => Limit::perMinute(5)->by('account-deletion:'.($request->user()?->getAuthIdentifier() ?? $request->ip())));
     }
 }

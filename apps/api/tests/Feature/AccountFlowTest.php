@@ -103,4 +103,20 @@ class AccountFlowTest extends TestCase
         $this->app['auth']->forgetGuards();
         $this->getJson('/api/v1/me', $headers)->assertUnauthorized();
     }
+
+    public function test_sync_requests_do_not_consume_the_account_deletion_limit(): void
+    {
+        $registered = $this->postJson('/api/v1/mobile/register', $this->payload())->assertCreated();
+        $headers = ['Authorization' => 'Bearer '.$registered->json('token')];
+
+        $this->putJson('/api/v1/consent/sync', ['enabled' => true], $headers)->assertOk();
+        foreach (range(1, 6) as $_) {
+            $this->getJson('/api/v1/sync/pull', $headers)->assertOk();
+        }
+
+        $this->deleteJson('/api/v1/account', [
+            'password' => 'Sturdy-pass-2026',
+            'confirmation' => 'DELETE',
+        ], $headers)->assertNoContent();
+    }
 }

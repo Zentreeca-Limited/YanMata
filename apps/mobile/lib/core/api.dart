@@ -7,7 +7,7 @@ class Api {
   final http.Client _client;
   static const base = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'http://127.0.0.1:8091/api/v1',
+    defaultValue: 'https://yanmata.zentreeca.org/api/v1',
   );
   Future<Map<String, dynamic>> request(
     String path, {
@@ -47,6 +47,8 @@ class Api {
             ? 'Your session expired. Sign in again.'
             : response.statusCode == 403
             ? 'This action needs permission or sync consent.'
+            : response.statusCode == 429
+            ? 'Too many requests. Wait a moment and try again.'
             : 'Unable to complete the request (${response.statusCode}). Please try again.',
       );
     }

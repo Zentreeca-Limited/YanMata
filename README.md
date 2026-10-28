@@ -4,7 +4,7 @@ A private, accessible wellbeing companion for girls and women, provided by **Zen
 
 ## Project status — 28 October 2026
 
-Ten phased working slices are implemented across the React public site and editorial studio, Laravel API, and Flutter app. This is a synthetic-data development preview, **not a production or clinically approved release**. See the [latest phase evidence](docs/evidence/PHASE-10.md) and [foundation decisions](docs/adr/0002-foundation-implementation.md).
+Eleven phased working slices are implemented across the React public site and editorial studio, Laravel API, and Flutter app. This is a synthetic-data development preview, **not a production or clinically approved release**. See the [latest phase evidence](docs/evidence/PHASE-11.md) and [foundation decisions](docs/adr/0002-foundation-implementation.md).
 
 ## Product
 
@@ -94,6 +94,8 @@ Demo emails: `author@demo.yanmata.test`, `reviewer@demo.yanmata.test`, `publishe
 ```sh
 cd apps/mobile
 flutter pub get
+# Live API is the checked-in default for normal and release builds:
+flutter run
 # Android emulator
 flutter run --dart-define=API_BASE_URL=http://10.0.2.2:8091/api/v1
 # iOS simulator: select the simulator in Flutter, then
@@ -113,6 +115,8 @@ npm run test:api
 npm run test:mobile
 # With local API running and demo accounts seeded:
 python3 scripts/test-live-mobile.py
+# Against the deployed synthetic-data API:
+YANMATA_API_BASE_URL=https://yanmata.zentreeca.org/api/v1 python3 scripts/test-live-mobile.py
 ```
 
 `npm run tokens` regenerates semantic colour outputs; `npm run format` formats React/shared source. PHP: `cd apps/api && vendor/bin/pint`. Dart: `cd apps/mobile && dart format lib test`. CI is declared in `.github/workflows/verify.yml`; remote CI has not run because no remote repository is configured.

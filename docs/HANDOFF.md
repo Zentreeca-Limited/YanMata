@@ -36,7 +36,7 @@ Pilot location confirmed: Jos, Plateau State. User has access to doctors/nurses 
 
 ## Actual state
 
-Phase 01 through Phase 10 vertical slices are implemented across Laravel, React public/admin, and Flutter Android/iOS.
+Phase 01 through Phase 11 vertical slices are implemented across Laravel, React public/admin, and Flutter Android/iOS.
 All screens from the Zentreeca designer handoff and wireframe are fully implemented and verified on the Android emulator runtime, including the full wireframe Account Flow:
 1. Native Branded Launch & Welcome (`WelcomePage`, `android-39-onboarding.png`)
 2. Screen 3: Authentication (Sign Up & Sign In with DOB picker, age gate >= 9, terms, guest bypass) (`AuthPage`, `android-40-auth-signup.png`)
@@ -67,6 +67,8 @@ Public Website Story Integration, Navigation Polish & Multilingual Localisation 
 - Wireframe Account Flow (5 steps): Visualized from first-time onboarding (ages 9+) through private age-gated registration, 5-pillar health profile assessment, WHO/FMOH evidence-based clinical insights, and daily companion rhythm.
 - Release-facing copy: public web and mobile no longer present YanMata as a development preview, demo, test, coming-soon product or incomplete pilot. Legal and safety boundaries remain explicit without claiming clinical approval or pilot results. See `docs/evidence/PHASE-09.md`.
 - Age-inclusive editorial photography: the illustrated hero is retained and four original, optimized editorial images now represent adolescence through later life, private mobile use and illustrative specialist support. Image subjects are fictional and must never be presented as users, clinicians, reviewers, partners or testimonial sources. See `docs/evidence/PHASE-10.md`.
+- Live mobile API: Flutter now defaults to `https://yanmata.zentreeca.org/api/v1`; local Android/iOS URLs remain explicit development overrides. An isolated synthetic-account test verifies registration, consent, two-store journal synchronization, deletion propagation and account cleanup against the deployed API. The server still reports demo mode. See `docs/evidence/PHASE-11.md`.
+- Account deletion rate limiting is isolated under the named `account-deletion` limiter. Do not revert it to numeric `throttle:5,1`: numeric route throttles share an authenticated-user counter, and prior sync traffic can otherwise block a first deletion request.
 - Truthful Clinical Invariants: in-platform specialist consultation remains primary; the services directory is synthetic and must never imply a partnership. No external booking or automated emergency referral. No fabricated risk scores or provider credentials.
 
 Multilingual system covers English, Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), and Nigerian Pidgin (`pcm`) on mobile and web. System-wide light/dark mode transitions verified on mobile, public web, and admin with warm rose-aubergine feminine aesthetics and Fraunces typography. Dynamic location engine spans Nigeria (Jos Pilot Hub, Abuja, Lagos, Kano, Ibadan, Port Harcourt, Enugu, Kaduna, Nationwide). Dynamic cycle settings sync with Laravel backend (`GET/PUT /api/v1/cycle-settings`).
@@ -112,7 +114,7 @@ Minor-access protocol for the confirmed age-9-plus audience; named clinical/safe
 
 ## Verification
 
-See `docs/evidence/PHASE-01.md` through `docs/evidence/PHASE-10.md` for commands, screenshots, defects, and limitations.
+See `docs/evidence/PHASE-01.md` through `docs/evidence/PHASE-11.md` for commands, screenshots, defects, and limitations.
 Phase 05 checks:
 - API: 29 tests / 172 assertions pass with strict lazy loading prevention active.
 - Laravel Pint: passed with zero style violations.

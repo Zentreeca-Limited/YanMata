@@ -44,7 +44,7 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/me', [SessionController::class, 'me']);
         Route::post('/logout', [SessionController::class, 'logout']);
-        Route::delete('/account', [SessionController::class, 'destroy'])->middleware('throttle:5,1');
+        Route::delete('/account', [SessionController::class, 'destroy'])->middleware('throttle:account-deletion');
         Route::put('/consent/sync', [SessionController::class, 'consent']);
         Route::post('/sync/push', [SyncController::class, 'push'])->middleware('throttle:60,1');
         Route::get('/sync/pull', [SyncController::class, 'pull'])->middleware('throttle:60,1');
