@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-28 — Production-facing copy hardening (COPY-01)
+
+- Removed development-preview, demo, testing, coming-soon and pre-pilot language from customer-facing public web and Flutter screens across five languages.
+- Rewrote Privacy Policy, Terms of Use, account deletion, learning, profile and specialist wording as durable service copy without claiming clinical approval or pilot results.
+- Removed the fictional mobile health-service fallback; API failures now show a safe, retryable error state instead of synthetic provider listings.
+- Removed blanket accreditation claims from the service directory and retained per-listing verification status.
+- Added compact legal-page overflow protection and recorded desktop/compact visual evidence.
+- Verified web production build/formatting, Flutter static analysis and 17 Flutter tests (one opt-in live API test skipped).
+
 ## 2026-10-28 — Opaque mobile navigation panel (WEB-02)
 
 - Fixed the public website’s small-screen navigation so page content can no longer show through the open menu.

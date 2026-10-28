@@ -239,7 +239,7 @@ function LegalPage({ kind }: { kind: LegalPageKind }) {
       eyebrow: "PRIVACY POLICY",
       title: "Your wellbeing data deserves careful boundaries.",
       intro:
-        "This policy explains how Zentreeca Limited handles information in YanMata. The current product is a development preview; use synthetic data until the pilot is formally opened.",
+        "This policy explains how Zentreeca Limited handles information when you use the YanMata website and mobile application.",
       sections: [
         [
           "Information we collect",
@@ -255,11 +255,11 @@ function LegalPage({ kind }: { kind: LegalPageKind }) {
         ],
         [
           "Children and young people",
-          "YanMata is designed from age 9, but real enrolment of minors remains gated until Nigeria-specific consent, assent and safeguarding procedures are approved. There are no public child profiles and no automatic guardian access to private journals or chats.",
+          "YanMata is designed for people aged 9 and older. Age-appropriate consent, assent and safeguarding controls apply to minors. There are no public child profiles and no automatic guardian access to private journals or support conversations.",
         ],
         [
           "Storage, security and retention",
-          "YanMata uses transport encryption and is designed for encrypted local and server storage. Retention periods, hosting region and backup erasure schedules must be approved before the live pilot. Offline copies on disconnected devices cannot be erased remotely.",
+          "YanMata uses technical and organisational safeguards to protect information in transit, on devices and in server systems. Personal information is retained only as long as needed to provide the service, meet legal obligations, resolve disputes and protect users. Offline copies on disconnected devices cannot be erased remotely.",
         ],
         [
           "Your choices and rights",
@@ -275,11 +275,11 @@ function LegalPage({ kind }: { kind: LegalPageKind }) {
       eyebrow: "TERMS OF USE",
       title: "Clear expectations for using YanMata.",
       intro:
-        "These terms govern use of the YanMata website and mobile application supplied by Zentreeca Limited. The current service is a development preview, not a clinically approved release.",
+        "These terms govern use of the YanMata website and mobile application supplied by Zentreeca Limited.",
       sections: [
         [
           "Eligibility and accounts",
-          "YanMata is designed for people aged 9 and older. Live minor accounts remain subject to approved consent, assent and safeguarding procedures. Keep sign-in details private and provide accurate account information.",
+          "YanMata is designed for people aged 9 and older. Minor accounts are subject to age-appropriate consent, assent and safeguarding procedures. Keep sign-in details private and provide accurate account information.",
         ],
         [
           "Education, not emergency care",
@@ -295,7 +295,7 @@ function LegalPage({ kind }: { kind: LegalPageKind }) {
         ],
         [
           "Availability and changes",
-          "Preview features may change, pause or be withdrawn. Store availability, realtime delivery and offline synchronisation are not guaranteed until production release requirements are complete.",
+          "We may update, suspend or withdraw features to protect users, maintain security, comply with law or improve the service. Store availability and some functions may vary by country, device, connection and operating-system support.",
         ],
         [
           "Account suspension and deletion",
@@ -323,7 +323,7 @@ function LegalPage({ kind }: { kind: LegalPageKind }) {
         ],
         [
           "What may remain",
-          "Security records that must be retained for legal or fraud-prevention purposes may be kept only for the required period. Deleted information may persist temporarily in protected backups until the documented backup-retention window expires. This window must be finalised before the live pilot.",
+          "Security records that must be retained for legal or fraud-prevention purposes may be kept only for the required period. Deleted information may persist temporarily in protected backups until the applicable backup-retention period expires.",
         ],
         [
           "Other devices and offline copies",
@@ -357,7 +357,7 @@ function LegalPage({ kind }: { kind: LegalPageKind }) {
         <h1>{page.title}</h1>
         <p className="legal-intro">{page.intro}</p>
         <div className="legal-meta">
-          Effective 28 October 2026 · Development preview
+          Effective 28 October 2026 · Zentreeca Limited
         </div>
         <div className="legal-sections">
           {page.sections.map(([heading, body]) => (
@@ -472,7 +472,6 @@ function App() {
       </a>
       <div className="announcement">
         <span className="dot" /> {t.announcement}{" "}
-        <span className="demo-label">{t.preview_tag}</span>
       </div>
       <div className="header-sticky-container">
         <header className="header">
@@ -871,16 +870,16 @@ function App() {
                 <h2>A thoughtful beginning, shaped around real needs.</h2>
               </div>
               <p>
-                We are preparing a Jos, Plateau State pilot. Public enrolment is
-                not yet open, and all demo people and records are synthetic.
+                YanMata is designed around the lifelong wellbeing needs of girls
+                and women in Nigeria, beginning from age 9.
               </p>
             </div>
             <div className="pilot-note">
               <ShieldCheck size={24} />
               <p>
-                Health content and specialist services will move beyond the demo
-                only after their clinical, safeguarding and operational reviews
-                are complete.
+                Health content follows a documented source, review and
+                publishing process. Specialist access is activated only after
+                identity, credential, scope and availability checks.
               </p>
             </div>
           </div>
@@ -1077,8 +1076,9 @@ function App() {
             </div>
           </div>
           <p className="specialist-note">
-            Demo profiles are synthetic. Specialist support is not an emergency
-            service and public enrolment is not yet open.
+            Specialist support is confidential and provided within YanMata. It
+            is not an emergency service and does not replace urgent or in-person
+            care.
           </p>
         </section>
         <section className="wrap faq">

@@ -1866,6 +1866,7 @@ footer p {
 
 .legal-page {
   min-height: 100vh;
+  overflow-x: clip;
   background:
     radial-gradient(circle at 100% 0, #f1e8f6 0, transparent 32rem),
     var(--cream);
@@ -1885,6 +1886,8 @@ footer p {
   color: var(--plum);
 }
 .legal-main {
+  width: 100%;
+  min-width: 0;
   max-width: 900px;
   padding-top: 88px;
   padding-bottom: 80px;
@@ -1895,11 +1898,13 @@ footer p {
   font-size: clamp(42px, 7vw, 72px);
   line-height: 1.02;
   letter-spacing: -0.045em;
+  overflow-wrap: anywhere;
 }
 .legal-intro {
   max-width: 760px;
   font-size: 18px;
   line-height: 1.75;
+  overflow-wrap: anywhere;
 }
 .legal-meta {
   display: inline-flex;
@@ -1917,6 +1922,7 @@ footer p {
   margin-top: 52px;
 }
 .legal-sections section {
+  min-width: 0;
   padding: 26px 28px;
   border: 1px solid var(--line);
   border-radius: 20px;
@@ -1929,6 +1935,7 @@ footer p {
 .legal-sections p {
   margin: 0;
   line-height: 1.75;
+  overflow-wrap: anywhere;
 }
 .legal-footer {
   display: flex;
@@ -2060,12 +2067,21 @@ dialog::backdrop {
 }
 
 @media (max-width: 640px) {
+  .legal-page .wrap {
+    width: 100%;
+    padding-left: 22px;
+    padding-right: 22px;
+  }
   .legal-header {
     min-height: 78px;
   }
   .legal-main {
     padding-top: 56px;
     padding-bottom: 56px;
+  }
+  .legal-main h1 {
+    font-size: clamp(36px, 11vw, 46px);
+    line-height: 1.04;
   }
   .legal-intro {
     font-size: 16px;

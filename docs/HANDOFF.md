@@ -8,7 +8,7 @@ Pilot location confirmed: Jos, Plateau State. User has access to doctors/nurses 
 
 ## Actual state
 
-Phase 01 through Phase 08 vertical slices are implemented across Laravel, React public/admin, and Flutter Android/iOS.
+Phase 01 through Phase 09 vertical slices are implemented across Laravel, React public/admin, and Flutter Android/iOS.
 All screens from the Zentreeca designer handoff and wireframe are fully implemented and verified on the Android emulator runtime, including the full wireframe Account Flow:
 1. Native Branded Launch & Welcome (`WelcomePage`, `android-39-onboarding.png`)
 2. Screen 3: Authentication (Sign Up & Sign In with DOB picker, age gate >= 9, terms, guest bypass) (`AuthPage`, `android-40-auth-signup.png`)
@@ -37,7 +37,7 @@ Public Website Story Integration, Navigation Polish & Multilingual Localisation 
 - Fluid Micro-Animations: Nav link underline slide, rotating sparkle pulse on Aisha AI pill, floating ambient notes in Hero, ambient phone mockup float, smooth tab switch entry transition (`showcaseFadeIn`), interactive card hover lifts on journey steps & testimonials, and accessible `prefers-reduced-motion` compliance.
 - 6 Core Health Stories / Features Showcase: Interactive phone mockup displaying live mobile app screen captures (`public/screens/*.png`) across Cycle Rhythm, Aisha AI 24/7 Companion, Clinical Preventive Insights, Encrypted 5-Pillar Health Profile, Mental Health Wellbeing, and Verified Specialists.
 - Wireframe Account Flow (5 steps): Visualized from first-time onboarding (ages 9+) through private age-gated registration, 5-pillar health profile assessment, WHO/FMOH evidence-based clinical insights, and daily companion rhythm.
-- Pilot Readiness: Invented testimonials and clinician identities were removed. The public site now uses explicit product, pilot-learning and clinical-readiness statements.
+- Release-facing copy: public web and mobile no longer present YanMata as a development preview, demo, test, coming-soon product or incomplete pilot. Legal and safety boundaries remain explicit without claiming clinical approval or pilot results. See `docs/evidence/PHASE-09.md`.
 - Truthful Clinical Invariants: in-platform specialist consultation remains primary; the services directory is synthetic and must never imply a partnership. No external booking or automated emergency referral. No fabricated risk scores or provider credentials.
 
 Multilingual system covers English, Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), and Nigerian Pidgin (`pcm`) on mobile and web. System-wide light/dark mode transitions verified on mobile, public web, and admin with warm rose-aubergine feminine aesthetics and Fraunces typography. Dynamic location engine spans Nigeria (Jos Pilot Hub, Abuja, Lagos, Kano, Ibadan, Port Harcourt, Enugu, Kaduna, Nationwide). Dynamic cycle settings sync with Laravel backend (`GET/PUT /api/v1/cycle-settings`).
@@ -54,6 +54,7 @@ Production hardening & operations (QA-01, OPS-01):
 - `scripts/restore-db.sh` validates SHA-256 checksums and SQLite integrity with automatic pre-restore backup.
 - Strict prevention of lazy loading (`Model::preventLazyLoading`) active across all Eloquent models to guarantee zero N+1 database queries.
 - Zero clinical text in push or broadcast payloads. The synthetic services directory must stay visibly labelled; external booking and automated emergency referral remain excluded.
+- The Flutter client no longer falls back to fictional health-service listings when the API is empty or unavailable. Governed server records remain the only source displayed to members; failures show a retry state.
 - All 35 PHPUnit tests (217 assertions) pass; Pint passes with 0 issues; `flutter analyze` is clean; 17 Flutter tests pass with one opt-in live API test skipped; Prettier, TypeScript and both React production builds pass.
 
 Important current boundaries: local backend SQLite; manual HTTP sync; client-rendered public site; seeded identities only. Strict prevention of lazy loading and missing attribute discarding is active on the backend, ensuring zero N+1 database queries. No claims of clinical approval: seed reviewer and specialist timestamps are synthetic and explicitly labelled. Zero clinical text in push or broadcast payloads.
@@ -82,7 +83,7 @@ Minor-access protocol for the confirmed age-9-plus audience; named clinical/safe
 
 ## Verification
 
-See `docs/evidence/PHASE-01.md` through `docs/evidence/PHASE-08.md` for commands, screenshots, defects, and limitations.
+See `docs/evidence/PHASE-01.md` through `docs/evidence/PHASE-09.md` for commands, screenshots, defects, and limitations.
 Phase 05 checks:
 - API: 29 tests / 172 assertions pass with strict lazy loading prevention active.
 - Laravel Pint: passed with zero style violations.

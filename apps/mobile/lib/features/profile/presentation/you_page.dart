@@ -834,9 +834,7 @@ class _YouState extends ConsumerState<You> {
                   controller: email,
                   keyboardType: TextInputType.emailAddress,
                   autocorrect: false,
-                  decoration: const InputDecoration(
-                    labelText: 'Demo account email',
-                  ),
+                  decoration: const InputDecoration(labelText: 'Account email'),
                 ),
                 const SizedBox(height: 12),
                 TextField(
@@ -851,7 +849,7 @@ class _YouState extends ConsumerState<You> {
                   value: consent,
                   onChanged: (v) => setState(() => consent = v ?? false),
                   title: const Text(
-                    'I agree to sync this journal to my demo account.',
+                    'I agree to sync this journal to my YanMata account.',
                     style: TextStyle(fontSize: 12),
                   ),
                 ),
@@ -961,7 +959,7 @@ class _YouState extends ConsumerState<You> {
         const SoftCard(
           color: Palette.blush,
           child: Text(
-            'Foundation preview: automated background sync, local notifications and biometric lock are in development. Use synthetic data only.',
+            'Your journal sync and notifications follow your privacy choices. You can manage consent and reminders at any time.',
             style: TextStyle(fontSize: 12),
           ),
         ),
@@ -997,7 +995,7 @@ class _YouState extends ConsumerState<You> {
         ),
         const SizedBox(height: 12),
         const Text(
-          'YanMata by Zentreeca · Ages 9 through later life\nNigeria · Development preview',
+          'YanMata by Zentreeca · Ages 9 through later life\nNigeria · Privacy-first wellbeing support',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 12),
         ),

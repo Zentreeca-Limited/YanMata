@@ -138,7 +138,7 @@ class LocationPickerSheet extends ConsumerWidget {
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: const Text(
-                              'PILOT HUB',
+                              'LOCAL HUB',
                               style: TextStyle(
                                 fontSize: 9.5,
                                 fontWeight: FontWeight.w800,

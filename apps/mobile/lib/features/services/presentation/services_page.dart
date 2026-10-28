@@ -32,12 +32,12 @@ class _ServicesPageState extends ConsumerState<ServicesPage> {
     final locationLabel = location.city == 'All Locations'
         ? 'Nationwide & Global'
         : (location.city == 'Jos'
-              ? 'Jos (Pilot Hub)'
+              ? 'Jos, Plateau State'
               : '${location.city}${location.state.isNotEmpty ? ', ${location.state}' : ''}');
 
     return PageFrame(
       children: [
-        Eyebrow('Verified healthcare · $locationLabel'),
+        Eyebrow('Health services · $locationLabel'),
         const SizedBox(height: 8),
         Text(
           'Find Health Services',
@@ -48,7 +48,7 @@ class _ServicesPageState extends ConsumerState<ServicesPage> {
         ),
         const SizedBox(height: 6),
         Text(
-          'Accredited hospitals, community clinics, and specialists with verified credentials and clear pricing.',
+          'Browse available health-service information, location details and verification status.',
           style: TextStyle(
             fontSize: 13,
             color: isDark ? Palette.darkMuted : Palette.slate,
@@ -141,9 +141,20 @@ class _ServicesPageState extends ConsumerState<ServicesPage> {
               child: CircularProgressIndicator(),
             ),
           ),
-          error: (err, _) => SoftCard(
+          error: (_, _) => SoftCard(
             color: Palette.blush,
-            child: Text('Unable to load services: $err'),
+            child: Column(
+              children: [
+                const Text(
+                  'We could not load health services. Check your connection and try again.',
+                ),
+                const SizedBox(height: 8),
+                TextButton(
+                  onPressed: () => ref.invalidate(healthServicesProvider),
+                  child: const Text('Try again'),
+                ),
+              ],
+            ),
           ),
           data: (services) {
             if (services.isEmpty) {

@@ -18,7 +18,7 @@ export const translations: Record<Language, Record<string, string>> = {
   en: {
     announcement:
       "A new chapter in women’s wellbeing. Made with care, in Nigeria.",
-    preview_tag: "PRODUCT PREVIEW",
+    preview_tag: "YANMATA",
     nav_chapters: "Chapters",
     nav_stories: "Stories",
     nav_journey: "The Journey",
@@ -109,7 +109,7 @@ export const translations: Record<Language, Record<string, string>> = {
     mental_h3: "Clear emergency guidance using Nigeria’s national 112 number",
     mental_h4:
       "Safe, stigma-free space designed for young girls and mature women alike",
-    care_badge: "SPECIALIST WORKFLOW PREVIEW",
+    care_badge: "IN-PLATFORM SPECIALIST SUPPORT",
     care_title: "Verified In-Platform Specialist Consultations",
     care_lead:
       "Direct, asynchronous, confidential access to licensed gynecologists, reproductive health nurses, and maternal health experts across our clinical network. Never an algorithm alone.",
@@ -178,17 +178,17 @@ export const translations: Record<Language, Record<string, string>> = {
     voices_desc:
       "Authentic perspectives from girls, mothers, and healthcare professionals experiencing the YanMata platform.",
     test_quote_1:
-      "The first pilot will test whether age-appropriate body literacy feels clear, private and respectful.",
-    test_name_1: "Pilot learning goal",
-    test_title_1: "Synthetic scenario · not a participant testimonial",
+      "Age-appropriate body literacy should always feel clear, private and respectful.",
+    test_name_1: "Body literacy principle",
+    test_title_1: "Age-appropriate learning",
     test_quote_2:
       "The team will assess whether flexible cycle tracking supports different patterns without treating a 28-day cycle as universal.",
     test_name_2: "Product learning goal",
-    test_title_2: "Synthetic scenario · not a user result",
+    test_title_2: "Flexible cycle awareness",
     test_quote_3:
-      "Clinical reviewers will review health copy, sources and escalation boundaries before pilot publication.",
-    test_name_3: "Clinical readiness goal",
-    test_title_3: "Process statement · no credential claim",
+      "Health guidance follows a documented source, clinical review and publishing process.",
+    test_name_3: "Clinical governance",
+    test_title_3: "Reviewed publishing process",
     support_eyebrow: "SMALL MOMENTS. MEANINGFUL CARE.",
     support_title: "A space that’s yours.",
     support_desc:
@@ -209,19 +209,18 @@ export const translations: Record<Language, Record<string, string>> = {
     support_stack_1_tag: "BODY LITERACY",
     support_stack_2_title: "Space for your feelings",
     support_stack_2_tag: "EMOTIONAL WELLBEING",
-    support_care_title: "In-Platform Support, When Ready.",
+    support_care_title: "Private In-Platform Support.",
     support_care_desc:
-      "The product includes a private specialist-support workflow. Live access will open only after practitioner and operating checks are complete.",
+      "Connect privately with a specialist whose identity, credentials, scope and availability have been checked before activation.",
     support_convo_q: "Some questions need a listening ear.",
     support_convo_a: "And a carefully reviewed support pathway.",
-    support_care_badge: "Pilot workflow · verification pending",
+    support_care_badge: "Credential review required",
     learn_eyebrow: "THE LEARNING ROOM",
     learn_title: "A little knowledge. A little more confidence.",
     learn_desc: "Take a breath. Find something for you.",
-    learn_notice:
-      "Demonstration content. Source and reviewer fields are part of the publishing workflow.",
-    learn_card_meta: "DEMO · NOT CLINICALLY REVIEWED",
-    learn_loading: "The learning room is being prepared.",
+    learn_notice: "Educational content includes source and reviewer details.",
+    learn_card_meta: "EDUCATIONAL · SOURCE DETAILS INCLUDED",
+    learn_loading: "No learning articles are available right now.",
     learn_retry: "Retry",
     learn_error:
       "The learning library is temporarily unavailable. Please try again.",
@@ -229,16 +228,16 @@ export const translations: Record<Language, Record<string, string>> = {
     privacy_eyebrow: "PERSONAL MEANS PERSONAL.",
     privacy_title: "Your wellbeing. Your boundaries.",
     privacy_desc:
-      "We’re building YanMata around trust. That means thoughtful permissions, discreet experiences and control over what you share.",
+      "YanMata is built around trust, with thoughtful permissions, discreet experiences and control over what you share.",
     privacy_b1: "No account needed to explore learning",
     privacy_b2: "Private journaling designed for offline use",
     privacy_b3: "Age-appropriate care, from 9 through later life",
     privacy_cta: "Read our privacy approach",
-    specialists_eyebrow: "IN-PLATFORM SUPPORT READINESS",
-    specialists_title: "Human review is part of the plan.",
+    specialists_eyebrow: "IN-PLATFORM SPECIALIST SUPPORT",
+    specialists_title: "Qualified guidance, with clear boundaries.",
     specialists_lead:
-      "The pilot workflow is being prepared for reviewed, private support. No practitioner is presented as available until credential and operating checks are complete.",
-    specialists_badge: "Synthetic demo profiles",
+      "YanMata provides private support from professionals whose identity, credentials, scope and availability are checked before activation.",
+    specialists_badge: "Credential review required",
     specialists_note:
       "Specialist support is asynchronous and confidential within YanMata. YanMata does not provide hospital referrals, directory search or emergency admissions.",
     faq_eyebrow: "A FEW THINGS YOU MAY BE WONDERING",
@@ -251,32 +250,32 @@ export const translations: Record<Language, Record<string, string>> = {
       "Privacy is foundational. YanMata is built offline-first: your menstrual logs, symptoms, and 5-pillar health profile remain encrypted on your device. We do not sell user data, harvest telemetry, or share personal health records with third parties.",
     faq_q3: "Are the clinical insights based on real science?",
     faq_a3:
-      "The product is designed to show source and reviewer details for health guidance. Demo material is clearly labelled and does not establish clinical validation.",
+      "Health guidance includes source and reviewer details so you can understand where the information comes from and when it was reviewed.",
     faq_q4: "How does specialist consultation work in YanMata?",
     faq_a4:
-      "The demo includes an in-app specialist workflow. Real specialists will appear only after credential and operating checks are complete.",
+      "Specialist support takes place privately inside YanMata. Professionals appear only after identity, credential, scope and availability checks.",
     faq_q5: "Can I ask Aisha AI in my local language?",
     faq_a5:
-      "The companion currently demonstrates multilingual educational responses with safety boundaries. It is not a clinician or emergency service.",
-    faq_q6: "When can I use the mobile app?",
+      "Aisha provides multilingual educational responses with clear safety boundaries. It is not a clinician or emergency service.",
+    faq_q6: "Where can I get the mobile app?",
     faq_a6:
-      "The Flutter app is under active development for Android and iOS. We are preparing pilot rollouts across Nigeria and beyond. Public app-store releases will follow pilot evaluations.",
+      "Use the Android and iPhone download links on this page. Store availability may vary by country and device.",
     closing_eyebrow: "YOU DESERVE TO FEEL UNDERSTOOD.",
     closing_title: "Here for the woman you are. And the one you’re becoming.",
     closing_desc:
       "Thoughtfully built by Zentreeca. Made with care in Nigeria, for Africa and the world.",
-    closing_cta: "About our pilot rollout",
+    closing_cta: "How YanMata supports you",
     footer_tagline: "Every chapter of you.",
     footer_disclaimer:
-      "Development preview · Not a hospital or emergency referral service",
+      "Educational wellbeing support · Not an emergency service",
     modal_privacy_title: "Your trust is part of the design.",
     modal_privacy_body:
-      "This development preview offers anonymous learning. The mobile foundation stores journal entries using device secure storage, with cloud synchronisation only after explicit consent. Clinical governance, account deletion/export, staff MFA and independent security validation remain release requirements. Please use synthetic data while testing.",
-    modal_pilot_title: "Starting with care. Scaling across Nigeria.",
+      "You can explore educational information without an account. Journal synchronisation requires your explicit consent, and privacy controls let you manage what is stored and shared.",
+    modal_pilot_title: "Built with care in Nigeria.",
     modal_pilot_body:
-      "YanMata is being developed for girls and women from age 9 through later life. Our pilot begins with clinical review support from verified Nigerian doctors and nurses, designed to expand nationwide and across Africa. Recruitment and public app downloads have not opened. This is a working product preview, not an invitation to submit personal health information.",
+      "YanMata supports girls and women from age 9 through later life with age-appropriate learning, private wellbeing tools and carefully governed in-platform specialist support.",
     modal_article_demo_notice:
-      "Demonstration content. Not clinically reviewed or medical advice. Workflow review timestamps are synthetic.",
+      "Educational information. Not a diagnosis or prescription. Review the source and reviewer details provided.",
     modal_article_source: "Background source: World Health Organization ↗",
     ai_modal_title: "Ask Aisha AI",
     ai_modal_desc:
@@ -291,7 +290,7 @@ export const translations: Record<Language, Record<string, string>> = {
   ha: {
     announcement:
       "Sabuwar hanyar kula da lafiyar mata. An yi ta da kauna a Najeriya.",
-    preview_tag: "FARKON GANI",
+    preview_tag: "YANMATA",
     nav_chapters: "Matakai",
     nav_stories: "Labarai",
     nav_journey: "Tafiyar Mai Amfani",
@@ -487,9 +486,9 @@ export const translations: Record<Language, Record<string, string>> = {
     learn_eyebrow: "DAKIN ILIMANTARWA",
     learn_title: "Dan ilimi kadan. Babban kwarin gwiwa.",
     learn_desc: "Dauki numfashi. Nemo abin da ya dace da ke.",
-    learn_notice: "Bayanan gwaji ne. Tushen ilimi daga WHO & FMOH.",
-    learn_card_meta: "BAYANIN GWAJI · TUSHE DAGA WHO/FMOH",
-    learn_loading: "Ana shirya dakin ilimantarwa.",
+    learn_notice: "Bayanan ilimi suna dauke da tushe da bayanan bita.",
+    learn_card_meta: "ILIMI · AN HADA BAYANAN TUSHE",
+    learn_loading: "Babu bayanan ilimi a halin yanzu.",
     learn_retry: "Sake Gwada",
     learn_error:
       "Dakin ilimantarwa baya aiki a yanzu. Da fatan a sake gwadawa.",
@@ -505,7 +504,7 @@ export const translations: Record<Language, Record<string, string>> = {
     specialists_eyebrow: "KWARARRUN LIKITOCI A MANHAJA",
     specialists_title: "Kwarewar likitanci ta gaskiya. Ba na'ura kadai ba.",
     specialists_lead:
-      "Tun daga farkon gwajinmu har zuwa fadin Najeriya da Afirka, YanMata na hada mata da likitoci da ungozomomi masu rajista a karkashin MDCN da NMCN.",
+      "YanMata na ba da taimako na sirri daga kwararru da aka duba asalinsu, takardunsu, aikinsu da lokacinsu kafin a kunna asusunsu.",
     specialists_badge: "Likitocin MDCN / NMCN",
     specialists_note:
       "Taimakon likita a YanMata na asirce ne a cikin manhaja. YanMata bata bayar da tura asibiti a kaikaice ba ko rajistar asibitoci.",
@@ -528,23 +527,23 @@ export const translations: Record<Language, Record<string, string>> = {
       "Aisha tana nuna amsoshin ilimi a Hausa, Turanci, Yarbanci, Igbo da Pidgin. A cikin gaggawa a Najeriya, kira 112.",
     faq_q6: "Yaushe zan iya amfani da manhajar a waya?",
     faq_a6:
-      "Ana ci gaba da aikin manhajar Flutter don Android da iOS. Muna fara gwaji kafin fitar da ita a hukumance ga kowa.",
+      "Yi amfani da hanyoyin saukar da manhajar Android da iPhone da ke wannan shafin. Samuwa na iya bambanta da kasa da na'ura.",
     closing_eyebrow: "KIN CANCANCI SAMUN FAHIMTA.",
     closing_title:
       "Muna tare da ke a matsayin macen da kike yanzu. Da wacce za ki zama.",
     closing_desc:
       "Zentreeca ce ta gina ta da kyakkyawan tsari. An yi ta a Najeriya, don Afirka da dukkan duniya.",
-    closing_cta: "Game da gwajin manhajar",
+    closing_cta: "Yadda YanMata ke taimaka miki",
     footer_tagline: "Kowane mataki na rayuwarki.",
-    footer_disclaimer: "Samfurin gwaji ne · Ba asibitin gaggawa ba ne",
+    footer_disclaimer: "Ilimin jin dadi · Ba sabis na gaggawa ba ne",
     modal_privacy_title: "Amanarki na cikin tsarinmu.",
     modal_privacy_body:
-      "Wannan samfurin gwaji yana ba da ilimi ba tare da an bayyana sunanki ba. Manhaja tana ajiye rubutunka a boye a cikin wayarka, kuma ba za a tura komai kan intanet ba sai da izininki.",
-    modal_pilot_title: "Fara da kulawa. Fadadawa a fadin Najeriya da Afirka.",
+      "Za ki iya karanta bayanan ilimi ba tare da asusu ba. Ana daidaita bayanan rubutunki da izininki kawai, kuma kina da iko a kan abin da ake ajiyewa da rabawa.",
+    modal_pilot_title: "An gina ta da kulawa a Najeriya.",
     modal_pilot_body:
-      "Ana gina YanMata ne don 'yan mata da mata daga shekaru 9 zuwa girma. Gwajinmu yana samun goyon bayan likitocin Najeriya da ungozomomi, kuma an tsara shi ya bazu a dukkan fadin Najeriya da Afirka.",
+      "YanMata tana tallafa wa 'yan mata da mata daga shekaru 9 zuwa tsufa ta hanyar ilimi da ya dace da shekaru, kayan kula da kai na sirri da taimakon kwararru a cikin manhaja.",
     modal_article_demo_notice:
-      "Bayanan gwaji ne. Ba shawarar likita ba ne. Lokutan duba na gwaji ne.",
+      "Bayanan ilimi ne. Ba binciken cuta ko rubutun magani ba ne. Duba tushe da bayanan bitar da aka bayar.",
     modal_article_source: "Tushen bincike: World Health Organization (WHO) ↗",
     ai_modal_title: "Tambayi Aisha AI",
     ai_modal_desc:
@@ -559,7 +558,7 @@ export const translations: Record<Language, Record<string, string>> = {
   yo: {
     announcement:
       "Àkókò tuntun fún àlàáfíà àwọn obìnrin. Pẹ̀lú ìfẹ́ ní Nàìjíríà.",
-    preview_tag: "ÀKỌ́WÒ",
+    preview_tag: "YANMATA",
     nav_chapters: "Àwọn Ìpele",
     nav_stories: "Àwọn Ìtàn",
     nav_journey: "Ìrìn-Àjò Rẹ",
@@ -747,9 +746,9 @@ export const translations: Record<Language, Record<string, string>> = {
     learn_eyebrow: "YÀRÁ Ẹ̀KỌ́ ÌLERA",
     learn_title: "Ìmọ̀ díẹ̀. Ìgboyà púpọ̀ sí i.",
     learn_desc: "Mí ìmí ẹ̀dùn. Wá ohun tó dára fún ọ.",
-    learn_notice: "Àwọn àkọsílẹ̀ àpẹẹrẹ. Orísun ìtọ́jú láti WHO & FMOH.",
-    learn_card_meta: "ÀKỌSÍLẸ̀ ÀPẸẸRẸ · ORÍSUN WHO/FMOH",
-    learn_loading: "A ń pèsè yàrá ẹ̀kọ́ lọ́wọ́.",
+    learn_notice: "Àkóónú ẹ̀kọ́ ní orísun àti àlàyé àyẹ̀wò.",
+    learn_card_meta: "Ẹ̀KỌ́ · ÀLÀYÉ ORÍSUN WÀ NÍBẸ̀",
+    learn_loading: "Kò sí àpilẹ̀kọ ẹ̀kọ́ ní àkókò yìí.",
     learn_retry: "Tún Gbìyànjú",
     learn_error: "Yàrá ẹ̀kọ́ kò sí ní àkókò yìí. Jọ̀wọ́ tún gbìyànjú.",
     privacy_pill: "Ìtàn rẹ jẹ́ ti ìwọ nìkan.",
@@ -787,23 +786,23 @@ export const translations: Record<Language, Record<string, string>> = {
       "Aisha ń ṣàfihàn ìdáhùn ẹ̀kọ́ ní Yorùbá, Hausa, Igbo, Gẹ̀ẹ́sì àti Pidgin. Ní pàjáwìrì ní Nàìjíríà, pe 112.",
     faq_q6: "Ìgbà wo ni mo lè lo manhaja lórí fóònù mi?",
     faq_a6:
-      "A ń ṣe àgbékalẹ̀ manhaja Flutter fún Android àti iOS lọ́wọ́. A ń bẹ̀rẹ̀ pẹ̀lú àkọ́wò kí a tó tú u síta fún gbogbo ènìyàn.",
+      "Lo àwọn ọna ìgbàsílẹ̀ Android àti iPhone lórí ojú-ewé yìí. Wíwà rẹ̀ lè yàtọ̀ sí orílẹ̀-èdè àti ẹ̀rọ.",
     closing_eyebrow: "O YẸ KÍ O NÍ ÒYE TÓ PÉYE.",
     closing_title:
       "A wà níbí fún obìnrin tí o jẹ́ lónìí. Àti èyí tí o ń dàgbà sí.",
     closing_desc:
       "Zentreeca ló fi ìṣọ́ra kọ́ ọ. A ṣe é pẹ̀lú ìfẹ́ ní Nàìjíríà, fún Áfíríkà àti gbogbo àgbáyé.",
-    closing_cta: "Nípa àkọ́wò manhaja wa",
+    closing_cta: "Bí YanMata ṣe ń ṣe àtìlẹ́yìn fún ọ",
     footer_tagline: "Gbogbo ìpele ayé rẹ.",
-    footer_disclaimer: "Àkọ́wò ìdàgbàsókè · Kì í ṣe ilé-ìwòsàn pàjáwìrì",
+    footer_disclaimer: "Àtìlẹ́yìn ìlera ẹ̀kọ́ · Kì í ṣe iṣẹ́ pàjáwìrì",
     modal_privacy_title: "Ìgbẹ́kẹ̀lé rẹ wà nínú àgbékalẹ̀ wa.",
     modal_privacy_body:
-      "Àkọ́wò yìí ń fún ọ ní ẹ̀kọ́ láìsí dídárúkọ rẹ. Manhaja foonu ń fi àwọn àkọsílẹ̀ rẹ pamọ́ sínú ẹ̀rọ rẹ, a kì í sì í gbé e sórí íńtánẹ́ẹ̀tì láìsí àṣẹ rẹ.",
-    modal_pilot_title: "Bíbẹ̀rẹ̀ pẹ̀lú ìtọ́jú. Fífẹ̀ káàkiri Nàìjíríà àti Áfíríkà.",
+      "O lè ka àkóónú ẹ̀kọ́ láìní àkọọ́lẹ̀. Ìfọwọ́sowọ́pọ̀ àkọsílẹ̀ rẹ nílò àṣẹ rẹ, ìwọ sì ní agbára lórí ohun tí a fi pamọ́ tàbí pín.",
+    modal_pilot_title: "A ṣe é pẹ̀lú ìtọ́jú ní Nàìjíríà.",
     modal_pilot_body:
-      "A ń ṣe YanMata fún àwọn ọmọbìnrin àti obìnrin láti ọmọ ọdún 9 títí di ọjọ́ ogbó. Àkọ́wò wa bẹ̀rẹ̀ pẹ̀lú àtìlẹyìn àwọn dọ́kítà àti nọ́ọ̀sì Nàìjíríà, a sì ṣe é láti fẹ̀ sí gbogbo Nàìjíríà àti Áfíríkà.",
+      "YanMata ń ṣe àtìlẹ́yìn fún àwọn ọmọbìnrin àti obìnrin láti ọmọ ọdún 9 sí ọjọ́ ogbó pẹ̀lú ẹ̀kọ́ tó bá ọjọ́-ori mu, irinṣẹ́ ìlera àṣírí àti àtìlẹ́yìn amọ̀ja nínú manhaja.",
     modal_article_demo_notice:
-      "Àkọsílẹ̀ àpẹẹrẹ ni. Kì í ṣe ìmọ̀ràn ìṣègùn gidi. Àwọn àkókò àyẹ̀wò jẹ́ ti àpẹẹrẹ.",
+      "Àlàyé ẹ̀kọ́ ni. Kì í ṣe àyẹ̀wò àìsàn tàbí ìwé-oògùn. Ṣàyẹ̀wò orísun àti àlàyé àyẹ̀wò.",
     modal_article_source: "Orísun ìmọ̀: World Health Organization (WHO) ↗",
     ai_modal_title: "Béèrè lọ́wọ́ Aisha AI",
     ai_modal_desc:
@@ -817,7 +816,7 @@ export const translations: Record<Language, Record<string, string>> = {
   ig: {
     announcement:
       "Oge ọhụrụ maka ahụike ụmụ nwanyị. Mere n’ịhụnanya na Nigeria.",
-    preview_tag: "MBIDO",
+    preview_tag: "YANMATA",
     nav_chapters: "Nkebi Ndụ",
     nav_stories: "Akụkọ",
     nav_journey: "Njem Gị",
@@ -1012,9 +1011,9 @@ export const translations: Record<Language, Record<string, string>> = {
     learn_eyebrow: "ỤLỌ MMỤTA AHỤỊKE",
     learn_title: "Obere ihe ọmụma. Nkwuwa okwu karịa.",
     learn_desc: "Kuo ume. Chọta ihe dị mma maka gị.",
-    learn_notice: "Ihe omume ngosi. Ebe nchọpụta sitere na WHO & FMOH.",
-    learn_card_meta: "NGOSI · ENYOCHARA SITE NA WHO/FMOH",
-    learn_loading: "A na-akwadebe ụlọ mmụta ahụike.",
+    learn_notice: "Ihe mmụta nwere ebe ozi na nkọwa nyocha.",
+    learn_card_meta: "MMỤTA · NKỌWA EBE OZI DỊ",
+    learn_loading: "Enweghị akụkọ mmụta ugbu a.",
     learn_retry: "Nwaa Ọzọ",
     learn_error: "Ụlọ mmụta ahụike anaghị arụ ọrụ ugbu a. Biko nwaa ọzọ.",
     privacy_pill: "Akụkọ gị bụ nke gị naanị.",
@@ -1029,7 +1028,7 @@ export const translations: Record<Language, Record<string, string>> = {
     specialists_eyebrow: "NDỊ DỌKỊTA ZURU EZU NA NGWA",
     specialists_title: "Nduzi ọkachamara. Ọ bụghị naanị kọmputa.",
     specialists_lead:
-      "Site na mbido nyocha anyị ruo Nigeria na Africa niile, YanMata na-ejikọ ụmụ nwanyị na ndị dọkịta na ndị nọọsụ nwere ikike n'okpuru MDCN na NMCN.",
+      "YanMata na-enye nkwado nzuzo site n'aka ndị ọkachamara a nyochara njirimara, akwụkwọ ikike, oke ọrụ na oge ha tupu arụ ọrụ.",
     specialists_badge: "Ndị Dọkịta MDCN / NMCN",
     specialists_note:
       "Nkwado ndị dọkịta na YanMata bụ na nzuzo n'ime ngwa a. YanMata anaghị ezipụ mmadụ n'ụlọ ọgwụ ma ọ bụ na-ere ohere.",
@@ -1052,22 +1051,22 @@ export const translations: Record<Language, Record<string, string>> = {
       "Aisha na-egosi azịza mmụta n’Igbo, Hausa, Yoruba, Bekee na Pidgin. N’oge mberede na Nigeria, kpọọ 112.",
     faq_q6: "Olee mgbe m nwere ike iji ngwa ekwentị a?",
     faq_a6:
-      "A ka na-arụ ngwa Flutter a maka Android na iOS. Anyị na-eme nyocha ule tupu anyị wepụta ya maka mmadụ niile.",
+      "Jiri njikọ nbudata Android na iPhone dị na ibe a. Nnweta nwere ike ịdị iche dịka obodo na ngwaọrụ.",
     closing_eyebrow: "O KWESỊRỊ KA A GHỌTA GỊ.",
     closing_title: "Anyị nọ ebe a maka nwanyị ị bụ taa. Na onye ị na-eto ịbụ.",
     closing_desc:
       "Zentreeca ji nlezianya wuo ya. E ji ịhụnanya mee ya na Nigeria, maka Africa na ụwa niile.",
-    closing_cta: "Banyere nyocha ule ngwa anyị",
+    closing_cta: "Otu YanMata si akwado gị",
     footer_tagline: "Nkebi ndụ gị ọ bụla.",
-    footer_disclaimer: "Ngwa nyocha · Ọ bụghị ụlọ ọgwụ mberede",
+    footer_disclaimer: "Nkwado mmụta ọdịmma · Ọ bụghị ọrụ mberede",
     modal_privacy_title: "Ntụkwasị obi gị dị n'atụmatụ anyị.",
     modal_privacy_body:
-      "Ngosipụta a na-enye ohere ịmụta ihe na-ekwupụtaghị aha gị. Ngwa ekwentị na-echekwa akụkọ gị n'ekwentị gị, anyị agaghị ebufe ihe n'ịntanetị ma ọ bụghị na ị kwere.",
-    modal_pilot_title: "Ịmalite na nlekọta. Ịgbasa na Nigeria na Africa niile.",
+      "Ị nwere ike ịgụ ihe mmụta na-enweghị akaụntụ. Mmekọrịta akwụkwọ gị chọrọ nkwenye gị, ị nwekwara ike ịhọrọ ihe a na-echekwa ma ọ bụ kesaa.",
+    modal_pilot_title: "E ji nlekọta wuo ya na Nigeria.",
     modal_pilot_body:
-      "A na-ewu YanMata maka ụmụ agbọghọ na ụmụ nwanyị site n'afọ 9 ruo agadi. Nyocha ule anyị nwere nkwado ndị dọkịta na ndị nọọsụ Nigeria, e mere ya ka o ruo Nigeria na Africa niile.",
+      "YanMata na-akwado ụmụ agbọghọ na ụmụ nwanyị site n'afọ 9 ruo agadi site na mmụta dabara afọ, ngwa ọdịmma nzuzo na nkwado ọkachamara n'ime ngwa.",
     modal_article_demo_notice:
-      "Ihe omume ngosi. Ọ bụghị ezigbo ndụmọdụ ahụike. Oge nyocha bụ nke atụmatụ.",
+      "Ozi mmụta. Ọ bụghị nchọpụta ọrịa ma ọ bụ ọgwụ edere. Lelee ebe ozi na nkọwa nyocha enyere.",
     modal_article_source: "Ebe nchọpụta: World Health Organization (WHO) ↗",
     ai_modal_title: "Jụọ Aisha AI",
     ai_modal_desc:
@@ -1081,8 +1080,8 @@ export const translations: Record<Language, Record<string, string>> = {
   },
   pcm: {
     announcement:
-      "Beta new chapter for women health. We build am with love for Nigeria.",
-    preview_tag: "TESTING",
+      "New chapter for women health. We build am with care for Nigeria.",
+    preview_tag: "YANMATA",
     nav_chapters: "Levels",
     nav_stories: "Stories",
     nav_journey: "The Journey",
@@ -1272,10 +1271,9 @@ export const translations: Record<Language, Record<string, string>> = {
     learn_eyebrow: "THE LEARNING ROOM",
     learn_title: "Small knowledge. Big confidence.",
     learn_desc: "Take deep breath. Find something good for you.",
-    learn_notice:
-      "Testing sample articles. Medical facts follow WHO & FMOH rules.",
-    learn_card_meta: "SAMPLE · SOURCES FROM WHO/FMOH",
-    learn_loading: "We dey prepare the learning room.",
+    learn_notice: "Educational articles include source and review details.",
+    learn_card_meta: "EDUCATIONAL · SOURCE DETAILS INCLUDED",
+    learn_loading: "No learning article dey available right now.",
     learn_retry: "Try Again",
     learn_error:
       "Learning room no dey available now. Abeg try again small time.",
@@ -1291,7 +1289,7 @@ export const translations: Record<Language, Record<string, string>> = {
     specialists_eyebrow: "VERIFIED DOCTORS NETWORK",
     specialists_title: "Qualified guidance. No be computer alone.",
     specialists_lead:
-      "From our first pilot roll-out to all over Naija and Africa, YanMata dey connect women and girls directly to verified doctors and nurses wey register with MDCN and NMCN.",
+      "YanMata dey give private support from professionals wey identity, credentials, work scope and availability don dey checked before activation.",
     specialists_badge: "MDCN / NMCN Verified",
     specialists_note:
       "Doctor support for YanMata na secret inside this app. YanMata no dey do hospital referral or sell doctor booking.",
@@ -1314,23 +1312,24 @@ export const translations: Record<Language, Record<string, string>> = {
       "Aisha dey show educational answers for Pidgin, Hausa, Yoruba, Igbo and English. For emergency in Nigeria, call 112.",
     faq_q6: "When I fit use the mobile app for my phone?",
     faq_a6:
-      "We dey actively build the Flutter app for Android and iOS. We dey run our pilot first before public store release.",
+      "Use the Android and iPhone download links for this page. Store availability fit depend on your country and device.",
     closing_eyebrow: "YOU DESERVE TO DEY UNDERSTOOD.",
     closing_title:
       "We dey here for the woman wey you be now. And the one wey you dey become.",
     closing_desc:
       "Built with pure care by Zentreeca. Made with love for Nigeria, for Africa and the whole world.",
-    closing_cta: "About our pilot rollout",
+    closing_cta: "How YanMata dey support you",
     footer_tagline: "Every level of you.",
-    footer_disclaimer: "Development preview · No be hospital emergency service",
+    footer_disclaimer:
+      "Educational wellbeing support · No be emergency service",
     modal_privacy_title: "Your trust na part of our design.",
     modal_privacy_body:
-      "This preview dey give you anonymous learning. Mobile app dey store your journal locked for your phone, and we no dey upload anything unless you say make we do so.",
-    modal_pilot_title: "Starting with care. Scaling across Nigeria and Africa.",
+      "You fit read educational information without account. Journal sync need your clear permission, and privacy controls let you choose wetin dem store or share.",
+    modal_pilot_title: "Built with care for Nigeria.",
     modal_pilot_body:
-      "We dey build YanMata for girls and women from 9 years old till old age. Our pilot dey supported by real Nigerian doctors and nurses, and we design am to reach all Nigeria and Africa. This na development preview, no be hospital referral.",
+      "YanMata dey support girls and women from 9 years old till old age with age-correct learning, private wellbeing tools and specialist support inside the app.",
     modal_article_demo_notice:
-      "Testing sample article. No be clinical prescription. Timestamps na sample.",
+      "Educational information. No be diagnosis or prescription. Check the source and reviewer details.",
     modal_article_source: "Medical source: World Health Organization (WHO) ↗",
     ai_modal_title: "Ask Aisha AI",
     ai_modal_desc:

@@ -27,10 +27,15 @@ Statuses: TODO, IN_PROGRESS, BLOCKED, VERIFIED. VERIFIED requires evidence. Foun
 | LIFE-01 | P2 | Expand life-stage paths/languages and nationwide hubs | Pilot findings | Dynamic locations (Jos pilot + Nigeria) & 5-lang switcher | VERIFIED |
 | ACCT-01 | P0 | Member logout, account deletion and public store-compliance pages | API-01, MOB-01, WEB-01 | Password-confirmed deletion test, local wipe behavior, legal URLs and mobile warning dialogs | VERIFIED |
 | WEB-02 | P0 | Opaque, accessible small-screen public navigation | WEB-01 | Light/dark open-menu inspection at 360px and 390px, no content bleed or horizontal overflow | VERIFIED |
+| COPY-01 | P0 | Production-facing web/mobile language and durable legal copy | WEB-01, ACCT-01 | Copy audit, builds/tests, compact/desktop visual evidence and documented human-review gates | VERIFIED |
 
 ## Work item evidence template
 
 ID / owner / status / date / implementation paths / commit or build / commands and results / visual evidence / known defects / next step. Keep clinical approvals separate from engineering assertions.
+
+## COPY-01 evidence
+
+See [PHASE-09](evidence/PHASE-09.md). Public web and Flutter customer-facing copy no longer describes YanMata as a development preview, demo, test, beta, coming-soon product or incomplete pilot. Durable legal/service language replaces release-status notices; fictional mobile service fallbacks were removed; and service-load failures now show a safe retry state. Human legal, linguistic and clinical sign-off remains an explicit release gate.
 
 ## PLAN-01 evidence
 

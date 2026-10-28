@@ -17,7 +17,7 @@ class AppStrings {
   static const Map<String, Map<String, String>> _localizedValues = {
     'en': {
       'app_name': 'YanMata',
-      'preview_badge': 'PREVIEW',
+      'preview_badge': 'YANMATA',
       'nav_home': 'Home',
       'nav_track': 'Track',
       'nav_services': 'Services',
@@ -59,11 +59,10 @@ class AppStrings {
       'shortcut_mental': 'Mental Health Support',
       'shortcut_mental_sub': 'Explore coping tools and supportive resources →',
       'shortcut_services': 'Find Health Services',
-      'shortcut_services_sub':
-          'Explore clearly labelled demo service listings →',
+      'shortcut_services_sub': 'Explore health services and support options →',
       'shortcut_products': 'Shop Health Products',
       'shortcut_products_sub':
-          'Explore the synthetic demo wellness catalogue →',
+          'Explore wellness essentials and personal care products →',
       'shortcut_early': 'Early Detection & Screening',
       'shortcut_early_sub': 'Detect early. Protect your health and future →',
       'shortcut_ai': 'Aisha AI Health Companion',
@@ -182,7 +181,7 @@ class AppStrings {
     },
     'ha': {
       'app_name': 'YanMata',
-      'preview_badge': 'FARKON GANI',
+      'preview_badge': 'YANMATA',
       'nav_home': 'Gida',
       'nav_track': 'Bibiya',
       'nav_services': 'Asibitoci',
@@ -347,7 +346,7 @@ class AppStrings {
     },
     'yo': {
       'app_name': 'YanMata',
-      'preview_badge': 'ÀKỌ́WÒ',
+      'preview_badge': 'YANMATA',
       'nav_home': 'Ilé',
       'nav_track': 'Àkíyèsí',
       'nav_services': 'Ilé Ìwòsàn',
@@ -516,7 +515,7 @@ class AppStrings {
     },
     'ig': {
       'app_name': 'YanMata',
-      'preview_badge': 'MBIDO',
+      'preview_badge': 'YANMATA',
       'nav_home': 'Ụlọ',
       'nav_track': 'Nlele',
       'nav_services': 'Ụlọ Ọgwụ',
@@ -683,7 +682,7 @@ class AppStrings {
     },
     'pcm': {
       'app_name': 'YanMata',
-      'preview_badge': 'TESTING',
+      'preview_badge': 'YANMATA',
       'nav_home': 'Home',
       'nav_track': 'Track',
       'nav_services': 'Klinik',

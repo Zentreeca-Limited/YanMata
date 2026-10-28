@@ -67,7 +67,7 @@ final availableLocationsProvider = FutureProvider<List<LocationHub>>((
       city: 'Jos',
       state: 'Plateau State',
       country: 'Nigeria',
-      label: 'Jos, Plateau State (Pilot Launch Hub)',
+      label: 'Jos, Plateau State',
       isPilotHub: true,
     ),
     LocationHub(
@@ -105,7 +105,7 @@ class SelectedLocationNotifier extends Notifier<LocationHub> {
       city: 'Jos',
       state: 'Plateau State',
       country: 'Nigeria',
-      label: 'Jos, Plateau State (Pilot Launch Hub)',
+      label: 'Jos, Plateau State',
       isPilotHub: true,
     );
   }

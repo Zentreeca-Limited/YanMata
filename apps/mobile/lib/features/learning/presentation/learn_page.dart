@@ -22,7 +22,7 @@ class Learn extends ConsumerWidget {
         const SizedBox(height: 20),
         const SoftCard(
           child: Text(
-            'Demo articles are synthetic and have not been clinically reviewed.',
+            'Educational information includes source and review details. It does not replace care from a qualified professional.',
             style: TextStyle(fontSize: 12),
           ),
         ),
@@ -31,7 +31,9 @@ class Learn extends ConsumerWidget {
           data: (items) => Column(
             children: [
               if (items.isEmpty)
-                const Text('The learning room is being prepared.'),
+                const Text(
+                  'No learning articles are available right now. Please check again later.',
+                ),
               ...items.map(
                 (a) => Padding(
                   padding: const EdgeInsets.only(bottom: 16),
@@ -94,7 +96,7 @@ class Learn extends ConsumerWidget {
           error: (e, _) => Column(
             children: [
               const Text(
-                'Connect to load the learning library. Offline article downloads are coming in the next phase.',
+                'We could not load the learning library. Check your connection and try again.',
               ),
               TextButton(
                 onPressed: () => ref.invalidate(learningProvider),
@@ -126,7 +128,7 @@ class ArticlePage extends StatelessWidget {
         const SizedBox(height: 20),
         const SoftCard(
           child: Text(
-            'Demonstration content · Not clinical advice. Review metadata in this environment is synthetic.',
+            'Educational information · Not a diagnosis or prescription. Review the source and reviewer details below.',
             style: TextStyle(fontSize: 12),
           ),
         ),

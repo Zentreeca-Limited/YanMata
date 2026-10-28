@@ -156,7 +156,7 @@ class _StaffPortalPageState extends ConsumerState<StaffPortalPage>
                   controller: summaryCtrl,
                   maxLines: 2,
                   decoration: const InputDecoration(
-                    labelText: 'Summary / Preview note',
+                    labelText: 'Article summary',
                     hintText: 'A brief summary of what readers will learn.',
                   ),
                 ),

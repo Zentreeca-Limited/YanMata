@@ -59,7 +59,7 @@ class Care extends ConsumerWidget {
                   Icon(Icons.forum_outlined, size: 32, color: Palette.plum),
                   Spacer(),
                   Text(
-                    'JOS PILOT',
+                    'PRIVATE SUPPORT',
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
@@ -87,7 +87,7 @@ class Care extends ConsumerWidget {
                 )
               else
                 const Text(
-                  'Connect your demo account in the "You" tab to start a conversation.',
+                  'Sign in from the "You" tab to start a private conversation.',
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,

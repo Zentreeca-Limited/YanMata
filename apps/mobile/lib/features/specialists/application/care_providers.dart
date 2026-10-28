@@ -50,7 +50,7 @@ class MyCareRequestsNotifier extends AsyncNotifier<List<SupportRequestItem>> {
   }) async {
     final token = _token;
     if (token == null) {
-      throw StateError('Sign in with a demo account to contact a specialist.');
+      throw StateError('Sign in to contact a specialist.');
     }
     final item = await _repo.createRequest(
       token,
