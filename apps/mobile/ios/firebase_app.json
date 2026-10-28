@@ -1,0 +1,28 @@
+{
+  "project_info": {
+    "project_number": "1098473372320",
+    "project_id": "yanmata-app",
+    "storage_bucket": "yanmata-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1098473372320:ios:3ee4c1619a1f29013da7c5",
+        "ios_client_info": {
+          "bundle_id": "com.yanmata.app"
+        }
+      },
+      "api_key": [
+        {
+          "current_key": "AIzaSyAk9HE_wB0TbVx3jW0qn6TRRoAjXDKRqcM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -32,10 +32,37 @@ Statuses: TODO, IN_PROGRESS, BLOCKED, VERIFIED. VERIFIED requires evidence. Foun
 | MOB-03 | P0 | Connect Flutter Android/iOS builds to the deployed HTTPS API | DEPLOY-01, MOB-01, SYNC-01 | Public endpoint probes, isolated authenticated two-store sync/delete test and native builds | VERIFIED |
 | DEPLOY-01 | P0 | Live server deployment at 52.0.227.75 under yanmata.zentreeca.org with SES email | TECH-02, OPS-01 | Remote Caddy multi-host, PHP 8.3 FPM, SQLite migrations/seeds, SES live email, SPA/API live curls | VERIFIED |
 | PIPE-01 | P0 | Automated GitHub Actions CI/CD deployment pipeline and local deploy CLI | DEPLOY-01 | `.github/workflows/deploy.yml`, `scripts/deploy.sh`, zero-downtime rsync, automated smoke testing | VERIFIED |
+| CONFIG-01 | P0 | Update app ID to com.yanmata.app, register Firebase push, and initialize Shorebird | MOB-01 | `com.yanmata.app` on Android/iOS, Firebase project `yanmata-app`, `google-services.json`, `GoogleService-Info.plist`, Shorebird app `c0ff34cc-7485-4640-92dc-8179b7d36089` | VERIFIED |
 
 ## Work item evidence template
 
 ID / owner / status / date / implementation paths / commit or build / commands and results / visual evidence / known defects / next step. Keep clinical approvals separate from engineering assertions.
+
+## CONFIG-01 evidence
+
+28 October 2026: Changed mobile application ID, registered Firebase push services, and configured Shorebird.
+- Application ID / Bundle ID:
+  - Updated Android `namespace` and `applicationId` to `com.yanmata.app` in `apps/mobile/android/app/build.gradle.kts`.
+  - Moved Kotlin entry point to `apps/mobile/android/app/src/main/kotlin/com/yanmata/app/MainActivity.kt` with package `com.yanmata.app`.
+  - Updated iOS `PRODUCT_BUNDLE_IDENTIFIER` to `com.yanmata.app` across all Release, Debug, and Profile configurations in `Runner.xcodeproj/project.pbxproj`.
+- Firebase Registration & Configuration:
+  - Created Firebase project `yanmata-app` (`YanMata`, project number: `1098473372320`).
+  - Registered Android app `1:1098473372320:android:d127438d1f89509c3da7c5` (`com.yanmata.app`).
+  - Registered iOS app `1:1098473372320:ios:3ee4c1619a1f29013da7c5` (`com.yanmata.app`).
+  - Downloaded and placed `google-services.json` in `apps/mobile/android/app/google-services.json`.
+  - Downloaded and placed `GoogleService-Info.plist` in `apps/mobile/ios/Runner/GoogleService-Info.plist` and linked in `project.pbxproj`.
+  - Saved iOS Firebase JSON descriptor in `apps/mobile/ios/firebase_app.json`.
+  - Configured Google Services Gradle plugin classpath `com.google.gms:google-services:4.4.2` and applied plugin in `android/app/build.gradle.kts`.
+- Shorebird Code Push Registration:
+  - Initialized Shorebird for YanMata under organization `devkingssolutions@gmail.com`.
+  - Assigned Shorebird App ID: `c0ff34cc-7485-4640-92dc-8179b7d36089`.
+  - Created `apps/mobile/shorebird.yaml` and registered as asset in `apps/mobile/pubspec.yaml`.
+  - Verified `shorebird doctor` — all endpoint reachability and configuration checks passed.
+- Verification:
+  - `flutter analyze`: 0 issues.
+  - `flutter test`: 17 passed.
+  - `flutter build apk --debug`: compiled successfully with verified package `com.yanmata.app`.
+  - `flutter build ios --config-only`: resolved pods and configured for `com.yanmata.app`.
 
 ## PIPE-01 evidence
 

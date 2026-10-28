@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-10-28 — App ID com.yanmata.app, Firebase push registration, and Shorebird setup (CONFIG-01)
+
+- Changed Android package name and applicationId to `com.yanmata.app` (`build.gradle.kts` and moved `MainActivity.kt` to `com/yanmata/app`).
+- Changed iOS bundle identifier to `com.yanmata.app` across all build targets in `project.pbxproj`.
+- Provisioned Firebase project `yanmata-app` and registered Android (`1:1098473372320:android:d127438d1f89509c3da7c5`) and iOS (`1:1098473372320:ios:3ee4c1619a1f29013da7c5`) client applications.
+- Downloaded and placed `google-services.json` in `apps/mobile/android/app/` and `GoogleService-Info.plist` in `apps/mobile/ios/Runner/` (with additional JSON descriptor in `apps/mobile/ios/firebase_app.json`).
+- Applied Google Services Gradle plugin `4.4.2` in Android build configuration.
+- Initialized Shorebird code push with App ID `c0ff34cc-7485-4640-92dc-8179b7d36089` and registered `shorebird.yaml` in `pubspec.yaml` assets.
+- Verified Android APK compilation, iOS pod resolution, and Flutter static analysis/tests.
+
+
 ## 2026-10-28 — Live API mobile integration (MOB-03)
 
 - Set the Flutter default API to `https://yanmata.zentreeca.org/api/v1` while preserving explicit local emulator/simulator overrides.

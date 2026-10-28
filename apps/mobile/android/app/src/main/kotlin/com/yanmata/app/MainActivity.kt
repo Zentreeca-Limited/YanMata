@@ -1,4 +1,4 @@
-package org.zentreeca.yanmata
+package com.yanmata.app
 
 import io.flutter.embedding.android.FlutterActivity
 

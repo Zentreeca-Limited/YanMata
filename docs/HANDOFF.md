@@ -1,5 +1,19 @@
 # Agent handoff — 28 October 2026
 
+## Mobile App ID, Firebase & Shorebird (28 October 2026)
+
+- **Application ID / Bundle ID**: `com.yanmata.app` for both Android and iOS.
+- **Firebase Project**:
+  - Project ID: `yanmata-app` (Project number: `1098473372320`)
+  - Android App ID: `1:1098473372320:android:d127438d1f89509c3da7c5`
+  - iOS App ID: `1:1098473372320:ios:3ee4c1619a1f29013da7c5`
+  - Android Config: `apps/mobile/android/app/google-services.json`
+  - iOS Config: `apps/mobile/ios/Runner/GoogleService-Info.plist` & `apps/mobile/ios/firebase_app.json`
+- **Shorebird Code Push**:
+  - App ID: `c0ff34cc-7485-4640-92dc-8179b7d36089` (App Name: `YanMata`)
+  - Config: `apps/mobile/shorebird.yaml` (registered in `apps/mobile/pubspec.yaml`)
+  - Account: `devkingssolutions@gmail.com`
+
 ## Confirmed user intent
 
 YanMata is supplied by Zentreeca Limited. Build a working product: Flutter Android/iOS with Riverpod, offline-first/realtime sync, WebSockets, FCM and local reminders; Laravel backend; React public website and React administration. Use clean architecture with MVC presentation/controller separation. Support life-stage female wellbeing, verifiable content, specialists and publishing from web/mobile. Demo uses synthetic seeded data with real workflows. Preserve polished UI and comprehensive continuity docs. Deploy to remote server `52.0.227.75` under `yanmata.zentreeca.org` with AWS SES mail delivery customized for `yanmata@zentreeca.org`.
