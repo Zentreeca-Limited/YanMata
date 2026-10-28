@@ -29,10 +29,24 @@ Statuses: TODO, IN_PROGRESS, BLOCKED, VERIFIED. VERIFIED requires evidence. Foun
 | WEB-02 | P0 | Opaque, accessible small-screen public navigation | WEB-01 | Light/dark open-menu inspection at 360px and 390px, no content bleed or horizontal overflow | VERIFIED |
 | COPY-01 | P0 | Production-facing web/mobile language and durable legal copy | WEB-01, ACCT-01 | Copy audit, builds/tests, compact/desktop visual evidence and documented human-review gates | VERIFIED |
 | DEPLOY-01 | P0 | Live server deployment at 52.0.227.75 under yanmata.zentreeca.org with SES email | TECH-02, OPS-01 | Remote Caddy multi-host, PHP 8.3 FPM, SQLite migrations/seeds, SES live email, SPA/API live curls | VERIFIED |
+| PIPE-01 | P0 | Automated GitHub Actions CI/CD deployment pipeline and local deploy CLI | DEPLOY-01 | `.github/workflows/deploy.yml`, `scripts/deploy.sh`, zero-downtime rsync, automated smoke testing | VERIFIED |
 
 ## Work item evidence template
 
 ID / owner / status / date / implementation paths / commit or build / commands and results / visual evidence / known defects / next step. Keep clinical approvals separate from engineering assertions.
+
+## PIPE-01 evidence
+
+28 October 2026: Implemented full automated deployment pipeline.
+- GitHub Actions CI/CD (`.github/workflows/deploy.yml`):
+  - Triggers on `push` to `main` branch or manual on-demand execution (`workflow_dispatch`).
+  - Concurrency group `production-deployment` ensures single-stream deterministic deployments.
+  - Job 1 (`verify`): Checks out code, sets up Node 22 & PHP 8.3, runs typechecks, production builds, and backend tests.
+  - Job 2 (`deploy`): Deploys to AWS EC2 instance (`52.0.227.75`), syncs backend code and built SPAs (`/` and `/admin`), executes composer/artisan/permissions/reloads, and runs automated live smoke tests.
+- CLI Deployment Script (`scripts/deploy.sh`):
+  - Portable, 1-command deployment runner: `./scripts/deploy.sh [path/to/pem]`.
+  - Executes local builds, tests, optimized rsync without permission/time failures, remote post-deploy tasks, and automated HTTP status checks.
+  - Verified live execution against production server in under 30s.
 
 ## DEPLOY-01 evidence
 

@@ -18,6 +18,20 @@ The YanMata platform is deployed and running live on AWS server `52.0.227.75` un
   - Content: `52.0.227.75`
   - Proxy status: Proxied (or DNS only; Caddy handles automatic SSL certificates either way).
 
+## Deployment pipeline & CI/CD (PIPE-01)
+
+Two deployment mechanisms are established:
+1. **GitHub Actions Workflow** (`.github/workflows/deploy.yml`):
+   - Automatically tests, builds, and deploys on push to `main` branch, or via manual `workflow_dispatch` button.
+   - Required GitHub Repository Secrets (`Settings > Secrets and variables > Actions`):
+     - `SERVER_SSH_KEY`: Content of the SSH private key (`yanmata.pem`).
+     - `SERVER_HOST`: `52.0.227.75` (optional, default provided).
+     - `SERVER_USER`: `ubuntu` (optional, default provided).
+2. **Local / CLI Deploy Script** (`scripts/deploy.sh`):
+   - 1-command deployment from developer terminal:
+     `./scripts/deploy.sh ~/Downloads/yanmata.pem`
+   - Builds production web/admin SPAs, runs PHPUnit test suite, synchronizes files, optimizes Laravel caches, restarts PHP-FPM/Caddy, and verifies live health checks.
+
 Pilot location confirmed: Jos, Plateau State. User has access to doctors/nurses in public/private hospitals for review. Audience confirmed: ages 9 onward, from puberty through the end of life, with no upper age limit. On 28 October the user authorised the synthetic health-services directory from the supplied wireframe. Preserve in-platform specialist interaction; external booking and automated emergency referral remain out of scope. Named clinicians and age-appropriate consent/access protocols still need definition.
 
 ## Actual state

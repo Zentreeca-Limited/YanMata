@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-10-28 — Automated Deployment Pipeline (PIPE-01)
+
+- Added automated GitHub Actions deployment pipeline (`.github/workflows/deploy.yml`) with automated testing, multi-app production builds, deterministic rsync deployment, remote cache optimization, and live health-check verification.
+- Added portable deployment shell script (`scripts/deploy.sh`) for rapid one-command CLI deployments with automated health checks.
+- Fixed directory ownership and permissions (`ubuntu:www-data`, `775`, `g+s`) on `/var/www/yanmata` to ensure clean, error-free automated rsync and runtime cache generation.
+- Updated `.github/workflows/verify.yml` to test with PHP 8.3 matching production environment.
+
+
 ## 2026-10-28 — Live Server Deployment at 52.0.227.75 (DEPLOY-01)
 
 - Deployed YanMata to target remote server `52.0.227.75` (Ubuntu 24.04 LTS `aarch64`) under domain `yanmata.zentreeca.org` and direct IP fallback `http://52.0.227.75`.

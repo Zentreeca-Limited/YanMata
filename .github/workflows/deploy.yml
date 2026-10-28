@@ -1,0 +1,160 @@
+name: Deploy Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: production-deployment
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Test & Verify
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build Web & Admin
+        run: npm run build
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, pdo_sqlite, bcmath, curl, zip, gd
+          coverage: none
+
+      - name: Run Backend Tests
+        working-directory: apps/api
+        run: |
+          composer install --no-interaction --prefer-dist
+          cp .env.example .env
+          php artisan key:generate
+          php artisan test
+
+  deploy:
+    name: Deploy to AWS EC2
+    needs: verify
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies & Build
+        run: |
+          npm ci
+          npm run build
+
+      - name: Configure SSH Key
+        env:
+          SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          HOST: ${{ secrets.SERVER_HOST || '52.0.227.75' }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
+
+      - name: Deploy Backend Files
+        env:
+          HOST: ${{ secrets.SERVER_HOST || '52.0.227.75' }}
+          USER: ${{ secrets.SERVER_USER || 'ubuntu' }}
+        run: |
+          rsync -avz --delete \
+            --exclude '.git' \
+            --exclude 'node_modules' \
+            --exclude 'vendor' \
+            --exclude '.env' \
+            --exclude 'tests' \
+            --exclude 'storage' \
+            --exclude 'bootstrap/cache/*.php' \
+            --exclude 'database/database.sqlite' \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
+            apps/api/ "${USER}@${HOST}:/var/www/yanmata/backend/"
+
+      - name: Deploy Public Web SPA
+        env:
+          HOST: ${{ secrets.SERVER_HOST || '52.0.227.75' }}
+          USER: ${{ secrets.SERVER_USER || 'ubuntu' }}
+        run: |
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
+            apps/web/dist/ "${USER}@${HOST}:/var/www/yanmata/web/"
+
+      - name: Deploy Editorial Admin SPA
+        env:
+          HOST: ${{ secrets.SERVER_HOST || '52.0.227.75' }}
+          USER: ${{ secrets.SERVER_USER || 'ubuntu' }}
+        run: |
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
+            apps/admin/dist/ "${USER}@${HOST}:/var/www/yanmata/admin/"
+
+      - name: Remote Post-Deploy Provisioning
+        env:
+          HOST: ${{ secrets.SERVER_HOST || '52.0.227.75' }}
+          USER: ${{ secrets.SERVER_USER || 'ubuntu' }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "${USER}@${HOST}" "bash -s" << 'EOF'
+          set -euo pipefail
+          cd /var/www/yanmata/backend
+
+          echo "  -> Installing Composer dependencies..."
+          composer install --no-dev --optimize-autoloader --no-interaction --quiet
+
+          echo "  -> Running database migrations..."
+          php artisan migrate --force
+
+          echo "  -> Optimizing framework caches..."
+          php artisan optimize
+
+          echo "  -> Securing directory permissions..."
+          sudo chown -R ubuntu:www-data /var/www/yanmata
+          sudo chmod -R 775 /var/www/yanmata
+          sudo chmod -R g+s /var/www/yanmata
+          sudo chmod 664 /var/www/yanmata/backend/database/database.sqlite
+
+          echo "  -> Reloading PHP-FPM..."
+          sudo systemctl reload php8.3-fpm
+
+          echo "  -> Reloading Caddy..."
+          sudo systemctl reload caddy
+          EOF
+
+      - name: Live Smoke Test Verification
+        env:
+          HOST: ${{ secrets.SERVER_HOST || '52.0.227.75' }}
+        run: |
+          echo "Checking application health endpoint..."
+          curl -f -s -H "Host: yanmata.zentreeca.org" "http://${HOST}/up"
+          echo "Checking API content catalog..."
+          curl -f -s -H "Host: yanmata.zentreeca.org" "http://${HOST}/api/v1/content" > /dev/null
+          echo "Checking public web SPA..."
+          curl -f -s -H "Host: yanmata.zentreeca.org" "http://${HOST}/" > /dev/null
+          echo "Checking editorial studio SPA..."
+          curl -f -s -H "Host: yanmata.zentreeca.org" "http://${HOST}/admin" > /dev/null
+          echo "✅ All live smoke test checks passed successfully!"
