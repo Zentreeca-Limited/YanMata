@@ -327,124 +327,113 @@ function App() {
         <span className="dot" /> {t.announcement}{" "}
         <span className="demo-label">{t.preview_tag}</span>
       </div>
-      <header className="header">
-        <Brand />
-        <nav className={menu ? "open" : ""} aria-label="Main navigation">
-          <a onClick={() => setMenu(false)} href="#stories">
-            {t.nav_stories || "App Stories"}
-          </a>
-          <a onClick={() => setMenu(false)} href="#journey">
-            {t.nav_journey || "The Journey"}
-          </a>
-          <a onClick={() => setMenu(false)} href="#chapters">
-            {t.nav_chapters}
-          </a>
-          <a onClick={() => setMenu(false)} href="#voices">
-            {t.voices_eyebrow || "Real Stories"}
-          </a>
-          <a onClick={() => setMenu(false)} href="#learn">
-            {t.nav_learn}
-          </a>
-          <a onClick={() => setMenu(false)} href="#care">
-            {t.nav_care}
-          </a>
-          <a onClick={() => setMenu(false)} href="#specialists">
-            {t.nav_specialists}
-          </a>
-          <button
-            className="ai-nav-btn"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 6,
-              cursor: "pointer",
-              background: "none",
-              border: "none",
-              color: "var(--plum)",
-              fontWeight: 600,
-              fontSize: 13,
-            }}
-            onClick={() => {
-              setMenu(false);
-              setAiOpen(true);
-            }}
+      <div className="header-sticky-container">
+        <header className="header">
+          <Brand />
+          <nav
+            className={menu ? "nav-menu open" : "nav-menu"}
+            aria-label="Main navigation"
           >
-            <Sparkles size={15} color="var(--plum)" /> {t.nav_ai}
-          </button>
-        </nav>
-        <div
-          className="header-controls"
-          style={{ display: "flex", alignItems: "center", gap: 10 }}
-        >
-          {/* Language Selector */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 4,
-              background: "var(--lilac)",
-              padding: "6px 10px",
-              borderRadius: 20,
-              fontSize: 13,
-              color: "var(--plum)",
-              fontWeight: 600,
-            }}
-          >
-            <Globe size={14} />
-            <select
-              aria-label="Select language"
-              value={lang}
-              onChange={(e) => setLang(e.target.value as Language)}
-              style={{
-                background: "transparent",
-                border: "none",
-                color: "inherit",
-                fontWeight: "inherit",
-                cursor: "pointer",
-                outline: "none",
-                fontSize: "inherit",
+            <a
+              className="nav-link"
+              onClick={() => setMenu(false)}
+              href="#stories"
+            >
+              {t.nav_stories || "Stories"}
+            </a>
+            <a
+              className="nav-link"
+              onClick={() => setMenu(false)}
+              href="#chapters"
+            >
+              {t.nav_chapters || "Chapters"}
+            </a>
+            <a
+              className="nav-link"
+              onClick={() => setMenu(false)}
+              href="#specialists"
+            >
+              {t.nav_specialists || "Specialists"}
+            </a>
+            <a
+              className="nav-link"
+              onClick={() => setMenu(false)}
+              href="#learn"
+            >
+              {t.nav_learn || "Learning"}
+            </a>
+            <button
+              className="nav-ai-pill"
+              onClick={() => {
+                setMenu(false);
+                setAiOpen(true);
               }}
             >
-              {LANGUAGES.map((l) => (
-                <option key={l.code} value={l.code}>
-                  {l.native}
-                </option>
-              ))}
-            </select>
+              <Sparkles size={14} />
+              <span>{t.nav_ai || "Aisha AI"}</span>
+            </button>
+            <div className="mobile-only-links">
+              <a
+                className="nav-link"
+                onClick={() => setMenu(false)}
+                href="#journey"
+              >
+                {t.nav_journey || "Account Journey"}
+              </a>
+              <a
+                className="nav-link"
+                onClick={() => setMenu(false)}
+                href="#voices"
+              >
+                {t.voices_eyebrow || "Real Stories"}
+              </a>
+              <a
+                className="nav-link"
+                onClick={() => setMenu(false)}
+                href="#care"
+              >
+                {t.nav_care || "Our Approach"}
+              </a>
+            </div>
+          </nav>
+          <div className="header-controls">
+            {/* Language Selector */}
+            <div className="lang-pill">
+              <Globe size={13} />
+              <select
+                aria-label="Select language"
+                value={lang}
+                onChange={(e) => setLang(e.target.value as Language)}
+              >
+                {LANGUAGES.map((l) => (
+                  <option key={l.code} value={l.code}>
+                    {l.native}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {/* Theme Toggle */}
+            <button
+              className="theme-toggle"
+              aria-label="Toggle theme"
+              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            >
+              {theme === "light" ? <Moon size={15} /> : <Sun size={15} />}
+            </button>
+            <a className="button header-cta" href="#stories">
+              {t.cta_meet} <ArrowUpRight size={14} />
+            </a>
+            <button
+              className="menu-toggle"
+              aria-label="Toggle navigation"
+              aria-expanded={menu}
+              onClick={() => setMenu(!menu)}
+            >
+              {menu ? <X size={20} /> : <Menu size={20} />}
+            </button>
           </div>
-          {/* Theme Toggle */}
-          <button
-            className="theme-toggle"
-            aria-label="Toggle theme"
-            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: 36,
-              height: 36,
-              borderRadius: "50%",
-              background: "var(--lilac)",
-              border: "none",
-              color: "var(--plum)",
-              cursor: "pointer",
-            }}
-          >
-            {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
-          </button>
-          <a className="button header-cta" href="#stories">
-            {t.cta_meet} <ArrowUpRight />
-          </a>
-          <button
-            className="menu-toggle"
-            aria-label="Toggle navigation"
-            aria-expanded={menu}
-            onClick={() => setMenu(!menu)}
-          >
-            <Menu />
-          </button>
-        </div>
-      </header>
+        </header>
+      </div>
       <main id="main">
         <section className="hero wrap">
           <div className="hero-copy">
@@ -578,6 +567,7 @@ function App() {
             role="tabpanel"
             aria-labelledby={`story-tab-${activeStory}`}
             className="story-showcase"
+            key={activeStory}
           >
             <div className="phone-mockup-wrapper">
               <div className="phone-mockup">

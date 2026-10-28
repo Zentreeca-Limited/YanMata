@@ -100,11 +100,14 @@ See [PHASE-06](evidence/PHASE-06.md). Implemented slices:
 
 ## Public Website Story Showcase Evidence (WEB-01)
 
+- Streamlined & De-noised Top Menu: Clean, breathable desktop navigation focused on 4 core anchors (`Stories`, `Chapters`, `Specialists`, `Learning`) plus a glowing `Aisha AI` pill; secondary anchors (`Account Journey`, `Real Stories`, `Our Approach`) cleanly housed in the mobile drawer.
+- Sticky Glassmorphism Header: Frosted-glass backdrop blur (`backdrop-filter: blur(16px)`), subtle border, and responsive mobile slide-down drawer with animated menu toggle (`Menu` / `X`).
+- Fluid Micro-Animations: Nav link underline slide, rotating sparkle pulse on Aisha AI pill, floating ambient notes in Hero, ambient phone mockup float, smooth tab switch entry transition (`showcaseFadeIn`), interactive card hover lifts on journey steps & testimonials, and accessible `prefers-reduced-motion` compliance.
 - 6 Core Health Stories / Features Showcase: Interactive phone mockup displaying live mobile app screen captures (`today.png`, `track.png`, `profile.png`, `insights.png`, `ai.png`, `mental.png`, `services.png`) within a responsive hardware bezel with tabs for Cycle Rhythm, Aisha AI 24/7 Companion, Clinical Preventive Insights, Encrypted 5-Pillar Health Profile, Mental Health Wellbeing, and Verified Specialists.
 - Wireframe Account Flow (5 steps): Visualized from first-time onboarding (ages 9+) through private age-gated registration, 5-pillar health profile assessment, WHO/FMOH evidence-based clinical insights, and daily companion rhythm.
 - Real Stories & Personas: True-to-life perspectives from adolescents, adult women, and clinicians in our Jos pilot hub and nationwide (Amina, 14, Jos; Zainab, 28, Abuja; Dr. Fatima Aliyu, Gynecologist, Jos).
 - Multilingual Completeness: All new web story sections, navigation tabs, account journey steps, and testimonial headings translated across English, Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), and Nigerian Pidgin (`pcm`).
 - Truthful Clinical Invariants: Replaced prototype placeholders with verified Jos pilot in-platform specialist consultation; preserved strict invariants (no external hospital booking or facility directories).
-- Verification: Web production build (`npm run --workspace=@yanmata/web build`) completed in 785ms with zero errors; TypeScript typecheck passed; Prettier formatting clean; launched live at `http://127.0.0.1:5173/`.
+- Verification: Web production build (`npm run --workspace=@yanmata/web build`) completed in 840ms with zero errors; TypeScript typecheck passed; Prettier formatting clean; launched live at `http://127.0.0.1:5173/`.
 
 Next order: Named clinical reviewer verification protocols → Offline native Drift DB migration → Prerendering/SSR for public site. Each must retain existing regression tests and visual baselines.

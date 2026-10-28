@@ -127,8 +127,22 @@
   - Web & Admin: TypeScript typecheck and Prettier formatting checks pass cleanly.
   - Live Android emulator evidence recorded: `android-40` through `android-43`.
 
-## 2026-10-28 — Public Website Story Integration & Wireframe Showcase (WEB-01)
+## 2026-10-28 — Public Website Story Integration & Navigation Polish (WEB-01)
 
+- Streamlined & De-noised Top Menu:
+  - Simplified desktop navigation to 4 clear, breathable anchor links (`Stories`, `Chapters`, `Specialists`, `Learning`) plus an ambient glowing `Aisha AI` pill button.
+  - Moved secondary anchors (`Account Journey`, `Real Stories`, `Our Approach`) into the animated mobile drawer.
+  - Replaced inline header control styling with dedicated `.lang-pill` and `.theme-toggle` classes.
+- Sticky Glassmorphism Header & Clean Animations:
+  - Added sticky header with frosted glass backdrop blur (`backdrop-filter: blur(16px)`), subtle translucent border, and smooth transition.
+  - Interactive navigation links with animated underline slide on hover (`scaleX`).
+  - Aisha AI pill with rotating sparkle shimmer and hover lift.
+  - Hero section floating ambient notes with gentle multi-axis floating keyframe animations (`floatTop`, `floatBottom`) and star twinkle.
+  - Stories showcase with re-mounting entry fade-and-slide (`showcaseFadeIn`) when toggling between the 6 health stories.
+  - Mobile phone mockup with smooth ambient float (`phoneAmbient`) and hover elevation.
+  - Micro-interactions on journey cards, testimonial cards, and action buttons with smooth cubic-bezier transitions.
+  - Added dialog pop and backdrop fade-in animations for Aisha AI and info modals.
+  - Enforced `prefers-reduced-motion` accessibility standard.
 - 6 Core Health Stories & Features Showcase:
   - Added interactive tabbed story showcase with a realistic mobile phone mockup displaying live mobile app screen captures (`today.png`, `track.png`, `profile.png`, `insights.png`, `ai.png`, `mental.png`, `services.png`).
   - Covers 6 foundational wireframe features: Cycle Rhythm & Period Tracking, Aisha AI 24/7 Companion, Clinical Preventive Insights (WHO/FMOH Nigeria), Encrypted 5-Pillar Health Profile, Mental Health & Emotional Wellbeing, and Verified In-Platform Specialists & Services.
@@ -142,4 +156,4 @@
   - Updated care card and FAQ items to truthfully represent our active Jos pilot hub with verified MDCN/NMCN clinicians and Aisha AI emergency triage (SURPIN 0800 123 4567, 112).
   - Maintained strict product invariants: zero external hospital referrals and zero facility booking.
 - Verification:
-  - Production build (`npm run --workspace=@yanmata/web build`) completed in 785ms; Prettier code formatting passes cleanly; TypeScript checks pass with zero errors. Live website running and launched at `http://127.0.0.1:5173/`.
+  - Production build (`npm run --workspace=@yanmata/web build`) completed in 840ms; Prettier code formatting passes cleanly; TypeScript checks pass with zero errors. Live website running and launched at `http://127.0.0.1:5173/`.
