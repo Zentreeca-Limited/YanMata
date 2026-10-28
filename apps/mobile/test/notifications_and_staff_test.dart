@@ -8,16 +8,21 @@ import 'package:yanmata/features/journal/application/journal_controller.dart';
 import 'package:yanmata/features/profile/presentation/you_page.dart';
 
 class _FakeJournalRepo implements JournalRepository {
-  _FakeJournalRepo({this.isStaff = false});
+  _FakeJournalRepo({this.isStaff = false, this.signedIn = false});
   final bool isStaff;
+  final bool signedIn;
 
   @override
   Future<JournalState> read() async {
     return JournalState(
-      signedIn: isStaff,
-      ownerId: isStaff ? 2 : null,
-      token: isStaff ? 'fake-token' : null,
-      userName: isStaff ? 'Amina Author' : null,
+      signedIn: isStaff || signedIn,
+      ownerId: isStaff || signedIn ? 2 : null,
+      token: isStaff || signedIn ? 'fake-token' : null,
+      userName: isStaff
+          ? 'Amina Author'
+          : signedIn
+          ? 'Amina Member'
+          : null,
       userRole: isStaff ? 'author' : 'member',
     );
   }
@@ -205,5 +210,46 @@ void main() {
         expect(find.text('Care Inquiries'), findsOneWidget);
       },
     );
+
+    testWidgets('Member logout and deletion controls show clear warnings', (
+      tester,
+    ) async {
+      await tester.binding.setSurfaceSize(const Size(430, 1400));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+
+      final fakeRepo = _FakeJournalRepo(signedIn: true);
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [journalRepositoryProvider.overrideWithValue(fakeRepo)],
+          child: MaterialApp(
+            theme: Palette.theme,
+            home: const Scaffold(body: You()),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final accountControls = find.text('Account controls');
+      await tester.scrollUntilVisible(
+        accountControls,
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
+      expect(find.text('Log out'), findsOneWidget);
+      expect(find.text('Delete account'), findsOneWidget);
+
+      await tester.tap(find.text('Log out'));
+      await tester.pumpAndSettle();
+      expect(find.text('Log out of YanMata?'), findsOneWidget);
+      expect(find.text('Log out and clear device'), findsOneWidget);
+      await tester.tap(find.text('Stay signed in'));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Delete account'));
+      await tester.pumpAndSettle();
+      expect(find.text('Permanently delete account?'), findsOneWidget);
+      expect(find.text('Type DELETE to confirm'), findsOneWidget);
+      expect(find.text('Delete account permanently'), findsOneWidget);
+    });
   });
 }

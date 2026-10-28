@@ -4,7 +4,7 @@ A private, accessible wellbeing companion for girls and women, provided by **Zen
 
 ## Project status — 28 October 2026
 
-Seven phased working slices are implemented across the React public site and editorial studio, Laravel API, and Flutter app. This is a synthetic-data development preview, **not a production or clinically approved release**. See the [latest phase evidence](docs/evidence/PHASE-07.md) and [foundation decisions](docs/adr/0002-foundation-implementation.md).
+Eight phased working slices are implemented across the React public site and editorial studio, Laravel API, and Flutter app. This is a synthetic-data development preview, **not a production or clinically approved release**. See the [latest phase evidence](docs/evidence/PHASE-08.md) and [foundation decisions](docs/adr/0002-foundation-implementation.md).
 
 ## Product
 
@@ -127,6 +127,6 @@ python3 scripts/test-live-mobile.py
 
 ## Current limits and next phase
 
-Public web remains client-rendered. Production hosting, signed store builds, native encrypted database migration, physical-device notification delivery, staff MFA, account recovery/deletion, named clinical and safeguarding sign-off, practitioner credential verification, and pilot operating procedures remain release gates. Some workflows exist as tested demo slices; their presence does not establish clinical effectiveness or operational readiness. Do not use real patient information or claim production/clinical readiness.
+Public web remains client-rendered. Production hosting, signed store builds and live store URLs, native encrypted database migration, physical-device notification delivery, staff MFA, account recovery, approved retention schedules, named clinical and safeguarding sign-off, practitioner credential verification, and pilot operating procedures remain release gates. Member account deletion is implemented and tested; its legal copy and backup-retention language still require privacy/legal approval. Some workflows exist as tested demo slices; their presence does not establish clinical effectiveness or operational readiness. Do not use real patient information or claim production/clinical readiness.
 
 The [backlog](docs/BACKLOG.md), [handoff](docs/HANDOFF.md) and [changelog](CHANGELOG.md) distinguish verified foundation slices from remaining work. Brand symbol masters are in `packages/design/assets` (SVG plus 4096px PNG); the full identity suite is still in progress.

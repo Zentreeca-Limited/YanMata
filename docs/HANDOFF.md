@@ -8,7 +8,7 @@ Pilot location confirmed: Jos, Plateau State. User has access to doctors/nurses 
 
 ## Actual state
 
-Phase 01, Phase 02, Phase 03, Phase 04, Phase 05, and Phase 06 vertical slices are implemented across Laravel, React public/admin, and Flutter Android/iOS.
+Phase 01 through Phase 08 vertical slices are implemented across Laravel, React public/admin, and Flutter Android/iOS.
 All screens from the Zentreeca designer handoff and wireframe are fully implemented and verified on the Android emulator runtime, including the full wireframe Account Flow:
 1. Native Branded Launch & Welcome (`WelcomePage`, `android-39-onboarding.png`)
 2. Screen 3: Authentication (Sign Up & Sign In with DOB picker, age gate >= 9, terms, guest bypass) (`AuthPage`, `android-40-auth-signup.png`)
@@ -22,6 +22,7 @@ All screens from the Zentreeca designer handoff and wireframe are fully implemen
 10. Shop Health Products with cart, dynamic delivery, and checkout confirmation (`ShopPage`, `CartSheet`)
 11. My Profile & Records with life chapters, health records, notification quiet hours, and language selector (`YouPage`)
 12. Aisha AI Health Companion with conversational symptom guidance, clinical guardrails, and cycle pattern intelligence (`AishaChatPage`, `AiCompanionController`)
+13. Member account controls with device-clearing logout, password-confirmed permanent deletion and explicit warning dialogs (`You`, `LocalJournalRepository`, `DELETE /api/v1/account`)
 
 Brand Identity & Multi-Variant Asset Suite (DESIGN-01):
 - Refined Brand Emblem: Extracted and anti-aliased the official YanMata portrait mark (African woman profile with vibrant rose-magenta Gele, white hoop earring, cradling petals, and radiant halo) into high-resolution transparent master assets.
@@ -44,6 +45,7 @@ Multilingual system covers English, Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), an
 Public web and admin studio are fully verified via automated browser testing:
 - Desktop (1440×900) and mobile (390×844) public views (`web-01-home.png`, `web-02-mobile.png`)
 - Authenticated admin login, editorial table, and care triage (`admin-01-login.png`, `admin-02-editorial-studio.png`, `admin-03-care-triage.png`)
+- Public Privacy Policy, Terms of Use and Account Deletion routes plus configured Google Play/App Store cards (`PHASE-08.md`)
 
 Production hardening & operations (QA-01, OPS-01):
 - `SecurityHeaders` middleware attached to all web/API responses.
@@ -51,7 +53,7 @@ Production hardening & operations (QA-01, OPS-01):
 - `scripts/restore-db.sh` validates SHA-256 checksums and SQLite integrity with automatic pre-restore backup.
 - Strict prevention of lazy loading (`Model::preventLazyLoading`) active across all Eloquent models to guarantee zero N+1 database queries.
 - Zero clinical text in push or broadcast payloads. The synthetic services directory must stay visibly labelled; external booking and automated emergency referral remain excluded.
-- All 34 PHPUnit tests (207 assertions) pass; Pint passes with 0 issues; `flutter analyze` clean (0 warnings, 0 infos); all 13 Flutter test suites pass; Prettier and TypeScript checks pass.
+- All 35 PHPUnit tests (217 assertions) pass; Pint passes with 0 issues; `flutter analyze` is clean; 17 Flutter tests pass with one opt-in live API test skipped; Prettier, TypeScript and both React production builds pass.
 
 Important current boundaries: local backend SQLite; manual HTTP sync; client-rendered public site; seeded identities only. Strict prevention of lazy loading and missing attribute discarding is active on the backend, ensuring zero N+1 database queries. No claims of clinical approval: seed reviewer and specialist timestamps are synthetic and explicitly labelled. Zero clinical text in push or broadcast payloads.
 
@@ -70,7 +72,7 @@ Wireframe reviewed visually; PDF text reviewed across four pages. It adds produc
 1. Read AGENTS, README, ADR 0002, and evidence documents (`PHASE-01.md`, `PHASE-02.md`, `PHASE-03.md`) before changing implemented flows.
 2. Deliver QA & operations hardening (QA-01, OPS-01): rate-limiting audit, automated backup and restore script, metrics redaction, error boundary inspection.
 3. Deliver native encrypted Drift database migration with outbox/cursor preservation and crash tests. Keep the real two-store API integration test.
-4. Add public prerendering/SSR and SEO, plus offline content validity windows.
+4. Replace temporary store destinations with approved live listings, obtain privacy/legal review of the public policies, then add public prerendering/SSR and SEO plus offline content validity windows.
 5. Refresh browser screenshots after layout changes, run mobile visual tests, record exact test/build outcomes, and update backlog/change log.
 
 ## Open decisions
@@ -79,7 +81,7 @@ Minor-access protocol for the confirmed age-9-plus audience; named clinical/safe
 
 ## Verification
 
-See `docs/evidence/PHASE-01.md`, `docs/evidence/PHASE-02.md`, `docs/evidence/PHASE-03.md`, `docs/evidence/PHASE-04.md`, and `docs/evidence/PHASE-05.md` for commands, screenshots, defects, and limitations.
+See `docs/evidence/PHASE-01.md` through `docs/evidence/PHASE-08.md` for commands, screenshots, defects, and limitations.
 Phase 05 checks:
 - API: 29 tests / 172 assertions pass with strict lazy loading prevention active.
 - Laravel Pint: passed with zero style violations.

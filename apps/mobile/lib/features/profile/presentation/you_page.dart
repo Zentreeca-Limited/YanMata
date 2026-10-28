@@ -941,15 +941,17 @@ class _YouState extends ConsumerState<You> {
                   icon: const Icon(Icons.logout),
                   label: const Text('Log out'),
                 ),
-                const SizedBox(height: 8),
-                TextButton.icon(
-                  style: TextButton.styleFrom(foregroundColor: Palette.error),
-                  onPressed: busy
-                      ? null
-                      : () => _confirmDeleteAccount(controller),
-                  icon: const Icon(Icons.delete_forever_outlined),
-                  label: const Text('Delete account'),
-                ),
+                if (s.userRole == 'member') ...[
+                  const SizedBox(height: 8),
+                  TextButton.icon(
+                    style: TextButton.styleFrom(foregroundColor: Palette.error),
+                    onPressed: busy
+                        ? null
+                        : () => _confirmDeleteAccount(controller),
+                    icon: const Icon(Icons.delete_forever_outlined),
+                    label: const Text('Delete account'),
+                  ),
+                ],
               ],
             ),
           ),

@@ -32,7 +32,7 @@ Every screen requires appropriate loading, empty, validation, network failure, o
 
 ## Public website
 
-Pages: Home; How YanMata Works; Life Stages; Learn index/detail; Meet Our Specialists (verified public professional information only); Safety & Privacy; About Zentreeca; Jos Pilot/Contact; legal policies and accessibility. Home composition: clear benefit and authentic illustration → three core journeys → life-stage education → clinical review process → privacy/offline explanation → Jos pilot → download/pilot CTA. Only show store badges when real releases exist. Never invent testimonials, user counts, certifications or hospital endorsements.
+Pages: Home; How YanMata Works; Life Stages; Learn index/detail; Meet Our Specialists (verified public professional information only); Safety & Privacy; About Zentreeca; Jos Pilot/Contact; legal policies and accessibility. Home composition: clear benefit and authentic illustration → three core journeys → life-stage education → clinical review process → privacy/offline explanation → Jos pilot → download/pilot CTA. Store cards use environment-configured destinations; temporary development destinations must be replaced by approved live listings before release and never serve as evidence of availability. Never invent testimonials, user counts, certifications or hospital endorsements.
 
 Design at 360/390 mobile, 768 tablet and 1440 desktop, with fluid layouts between. Prioritise fast text/content delivery, responsive images, captions and no autoplay video. Health journal and private conversation routes must never become publicly indexable.
 

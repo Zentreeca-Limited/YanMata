@@ -338,6 +338,10 @@ function LegalPage({ kind }: { kind: LegalPageKind }) {
   } as const;
   const page = pages[kind];
 
+  useEffect(() => {
+    document.title = `${page.eyebrow.replace(" POLICY", "")} • YanMata`;
+  }, [page.eyebrow]);
+
   return (
     <div className="legal-page">
       <header className="legal-header wrap">
@@ -370,6 +374,9 @@ function LegalPage({ kind }: { kind: LegalPageKind }) {
           <a href="/privacy-policy">Privacy Policy</a>
           <a href="/terms-of-use">Terms of Use</a>
           <a href="/account-deletion">Account Deletion</a>
+          <a href="https://zentreeca.org" target="_blank" rel="noreferrer">
+            Contact Zentreeca
+          </a>
         </nav>
       </footer>
     </div>
