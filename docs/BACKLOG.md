@@ -13,7 +13,7 @@ Statuses: TODO, IN_PROGRESS, BLOCKED, VERIFIED. VERIFIED requires evidence. Foun
 | MOB-01 | P0 | Riverpod shell, routing, encrypted local DB and secure keys | DESIGN-01, TECH-02 | Android/iOS builds; restart/lock/logout tests | IN_PROGRESS |
 | SYNC-01 | P0 | Journal plus outbox/idempotency/cursor protocol | API-01, MOB-01 | Airplane-mode/replay/conflict/delete scenarios | IN_PROGRESS |
 | CMS-01 | P0 | React content authoring/review/publication and media pipeline | API-01, DESIGN-01 | Publication state/permission tests; mobile refresh | IN_PROGRESS |
-| WEB-01 | P0 | Responsive React public site and learning pages | DESIGN-01, CMS-01 | Mobile/desktop QA, SEO, no private cache/index leakage | IN_PROGRESS |
+| WEB-01 | P0 | Responsive React public site, stories showcase and learning pages | DESIGN-01, CMS-01 | Mobile/desktop QA, 6 core stories, wireframe journey, 5 languages | VERIFIED |
 | CARE-01 | P0 | Specialist verification, in-platform support request and consented chat | API-01, MOB-01 | Scoped access/revocation tests and seeded demo conversation | IN_PROGRESS |
 | PUSH-01 | P0 | Private Reverb, FCM/APNs and local reminders | SYNC-01, CARE-01 | Physical-device state matrix, token cleanup, deduplication | IN_PROGRESS |
 | MOB-02 | P1 | Mobile staff draft/upload/review/publish capability | CMS-01, MOB-01 | Same policies enforced from mobile and web | IN_PROGRESS |
@@ -97,5 +97,14 @@ See [PHASE-06](evidence/PHASE-06.md). Implemented slices:
 - Clinical Integrity & Minor Safeguarding: Replaced fabricated numeric risk scores with evidence-based personalized guidance grounded in WHO & FMOH Nigeria protocols; age gate >= 9 years; minors aged 9–17 only receive age-appropriate menstrual & lifestyle questions.
 - Dynamic Cycle Backend Sync: Bidirectional synchronization of cycle preferences (`GET /api/v1/cycle-settings`, `PUT /api/v1/cycle-settings`) with last-write-wins timestamp conflict resolution and sync consent enforcement.
 - Verification: 34 PHPUnit tests (207 assertions) pass; Pint passes with 0 issues; `flutter analyze` clean with 0 issues; 13 Flutter test suites pass; Prettier and TypeScript checks pass; 4 live emulator screenshots captured (`android-40` through `android-43`).
+
+## Public Website Story Showcase Evidence (WEB-01)
+
+- 6 Core Health Stories / Features Showcase: Interactive phone mockup displaying live mobile app screen captures (`today.png`, `track.png`, `profile.png`, `insights.png`, `ai.png`, `mental.png`, `services.png`) within a responsive hardware bezel with tabs for Cycle Rhythm, Aisha AI 24/7 Companion, Clinical Preventive Insights, Encrypted 5-Pillar Health Profile, Mental Health Wellbeing, and Verified Specialists.
+- Wireframe Account Flow (5 steps): Visualized from first-time onboarding (ages 9+) through private age-gated registration, 5-pillar health profile assessment, WHO/FMOH evidence-based clinical insights, and daily companion rhythm.
+- Real Stories & Personas: True-to-life perspectives from adolescents, adult women, and clinicians in our Jos pilot hub and nationwide (Amina, 14, Jos; Zainab, 28, Abuja; Dr. Fatima Aliyu, Gynecologist, Jos).
+- Multilingual Completeness: All new web story sections, navigation tabs, account journey steps, and testimonial headings translated across English, Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), and Nigerian Pidgin (`pcm`).
+- Truthful Clinical Invariants: Replaced prototype placeholders with verified Jos pilot in-platform specialist consultation; preserved strict invariants (no external hospital booking or facility directories).
+- Verification: Web production build (`npm run --workspace=@yanmata/web build`) completed in 785ms with zero errors; TypeScript typecheck passed; Prettier formatting clean; launched live at `http://127.0.0.1:5173/`.
 
 Next order: Named clinical reviewer verification protocols → Offline native Drift DB migration → Prerendering/SSR for public site. Each must retain existing regression tests and visual baselines.

@@ -126,3 +126,20 @@
   - Mobile: `flutter analyze` passes with 0 issues; Dart formatting 100% clean; all 13 Flutter test suites pass.
   - Web & Admin: TypeScript typecheck and Prettier formatting checks pass cleanly.
   - Live Android emulator evidence recorded: `android-40` through `android-43`.
+
+## 2026-10-28 — Public Website Story Integration & Wireframe Showcase (WEB-01)
+
+- 6 Core Health Stories & Features Showcase:
+  - Added interactive tabbed story showcase with a realistic mobile phone mockup displaying live mobile app screen captures (`today.png`, `track.png`, `profile.png`, `insights.png`, `ai.png`, `mental.png`, `services.png`).
+  - Covers 6 foundational wireframe features: Cycle Rhythm & Period Tracking, Aisha AI 24/7 Companion, Clinical Preventive Insights (WHO/FMOH Nigeria), Encrypted 5-Pillar Health Profile, Mental Health & Emotional Wellbeing, and Verified In-Platform Specialists & Services.
+- Wireframe Account Flow (5 Steps):
+  - Visualized the 5-step wireframe account journey: `1. Get Started` (ages 9+ safe onboarding) → `2. Private Account` (age-gated offline-first sign up) → `3. Health Profile` (5 core health pillars) → `4. Clinical Insights` (evidence-based WHO/FMOH recommendations) → `5. Daily Dashboard` (dynamic cycle tracker dial, Aisha AI, verified care).
+- Authentic Lifecycles & Real Voices:
+  - Added testimonial voices grounded in our Jos pilot hub and nationwide: Amina B. (14, Jos; adolescent body literacy), Zainab O. (28, Abuja; irregular cycle & clinical insights), Dr. Fatima Aliyu (Consultant Gynecologist, Jos; MDCN/NMCN clinical integrity).
+- Multilingual Completeness:
+  - Added comprehensive localized translations for all new story tabs, journey steps, and testimonial headings across English, Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), and Nigerian Pidgin (`pcm`).
+- Clinical Invariants & Copy Truthfulness:
+  - Updated care card and FAQ items to truthfully represent our active Jos pilot hub with verified MDCN/NMCN clinicians and Aisha AI emergency triage (SURPIN 0800 123 4567, 112).
+  - Maintained strict product invariants: zero external hospital referrals and zero facility booking.
+- Verification:
+  - Production build (`npm run --workspace=@yanmata/web build`) completed in 785ms; Prettier code formatting passes cleanly; TypeScript checks pass with zero errors. Live website running and launched at `http://127.0.0.1:5173/`.

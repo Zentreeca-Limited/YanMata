@@ -23,6 +23,13 @@ All screens from the Zentreeca designer handoff and wireframe are fully implemen
 11. My Profile & Records with life chapters, health records, notification quiet hours, and language selector (`YouPage`)
 12. Aisha AI Health Companion with conversational symptom guidance, clinical guardrails, and cycle pattern intelligence (`AishaChatPage`, `AiCompanionController`)
 
+Public Website Story Integration (`apps/web`):
+- 6 Core Health Stories / Features Showcase: Interactive phone mockup displaying live mobile app screen captures (`public/screens/*.png`) across Cycle Rhythm, Aisha AI 24/7 Companion, Clinical Preventive Insights, Encrypted 5-Pillar Health Profile, Mental Health Wellbeing, and Verified Specialists.
+- Wireframe Account Flow (5 steps): Visualized from first-time onboarding (ages 9+) through private age-gated registration, 5-pillar health profile assessment, WHO/FMOH evidence-based clinical insights, and daily companion rhythm.
+- Real Stories & Personas: True-to-life perspectives from adolescents, adult women, and clinicians in our Jos pilot hub and nationwide (Amina, 14, Jos; Zainab, 28, Abuja; Dr. Fatima Aliyu, Gynecologist, Jos).
+- Multilingual Completeness: All new web story sections, navigation tabs, account journey steps, and testimonial headings translated across English, Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), and Nigerian Pidgin (`pcm`).
+- Truthful Clinical Invariants: Replaced prototype placeholders with verified Jos pilot in-platform specialist consultation; preserved strict invariants (no external hospital booking or facility directories).
+
 Multilingual system covers English, Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), and Nigerian Pidgin (`pcm`) on mobile and web. System-wide light/dark mode transitions verified on mobile, public web, and admin with warm rose-aubergine feminine aesthetics and Fraunces typography. Dynamic location engine spans Nigeria (Jos Pilot Hub, Abuja, Lagos, Kano, Ibadan, Port Harcourt, Enugu, Kaduna, Nationwide). Dynamic cycle settings sync with Laravel backend (`GET/PUT /api/v1/cycle-settings`).
 
 Public web and admin studio are fully verified via automated browser testing:

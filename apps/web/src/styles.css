@@ -1242,3 +1242,306 @@ footer p {
   line-height: 1.6;
   margin-top: 16px;
 }
+
+/* --- Phase 06 Stories & Feature Showcase --- */
+.stories-section {
+  padding-top: 80px;
+  padding-bottom: 90px;
+  background: var(--bg);
+}
+
+.stories-tabs {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 16px;
+  margin-bottom: 36px;
+  scrollbar-width: none;
+}
+.stories-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.story-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+.story-tab-btn:hover {
+  border-color: var(--plum);
+  color: var(--plum);
+}
+.story-tab-btn.active {
+  background: var(--plum);
+  color: #fff;
+  border-color: var(--plum);
+  box-shadow: 0 4px 14px rgba(118, 41, 102, 0.25);
+}
+
+.story-showcase {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  align-items: center;
+  gap: 60px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 32px;
+  padding: 48px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.04);
+}
+
+.phone-mockup-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.phone-mockup {
+  width: 290px;
+  height: 580px;
+  background: #111;
+  border-radius: 44px;
+  border: 10px solid #241421;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+.phone-notch {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 18px;
+  background: #241421;
+  border-radius: 10px;
+  z-index: 10;
+}
+
+.phone-screen-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.story-details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.story-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: var(--plum);
+  background: var(--lilac);
+  padding: 5px 12px;
+  border-radius: 20px;
+  width: fit-content;
+}
+.story-details h3 {
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0;
+}
+.story-lead {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 0;
+}
+.story-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.story-bullets li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.story-bullets li svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--teal);
+}
+.story-action-row {
+  margin-top: 12px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+/* --- Wireframe Account Flow / Journey Section --- */
+.journey-section {
+  padding-top: 80px;
+  padding-bottom: 90px;
+  border-top: 1px solid var(--line);
+}
+.journey-steps {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+  margin-top: 40px;
+  position: relative;
+}
+.journey-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+.journey-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--plum);
+}
+.journey-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--lilac);
+  color: var(--plum);
+  font-size: 13px;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+}
+.journey-card h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0;
+}
+.journey-card p {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0;
+}
+.journey-card .journey-tag {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--teal);
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+/* --- Real Stories / Personas Section --- */
+.testimonials-section {
+  padding-top: 80px;
+  padding-bottom: 90px;
+  background: var(--lilac);
+}
+[data-theme="dark"] .testimonials-section {
+  background: var(--surface);
+}
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 36px;
+}
+.testimonial-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 30px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+.testimonial-quote {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--ink);
+  font-style: italic;
+  margin: 0;
+  flex: 1;
+}
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
+.testimonial-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--blush);
+  color: var(--plum);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.testimonial-author h5 {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--ink);
+}
+.testimonial-author small {
+  font-size: 12px;
+  color: var(--muted);
+  display: block;
+}
+
+@media (max-width: 980px) {
+  .story-showcase {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 30px;
+  }
+  .journey-steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .journey-steps {
+    grid-template-columns: 1fr;
+  }
+  .phone-mockup {
+    width: 250px;
+    height: 500px;
+  }
+}

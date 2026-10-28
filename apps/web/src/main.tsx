@@ -21,11 +21,179 @@ import {
   Sun,
   Send,
   AlertCircle,
+  Activity,
+  Calendar,
+  Smile,
+  CheckCircle2,
+  UserCheck,
+  Compass,
 } from "lucide-react";
 import { Brand, Tag, api, type Article, type Specialist } from "@yanmata/ui";
 import { LANGUAGES, translations, type Language } from "./i18n";
 import "@yanmata/ui/styles.css";
 import "./styles.css";
+
+const stories = [
+  {
+    id: "cycle",
+    tabKey: "tab_cycle",
+    icon: Calendar,
+    title: "Intuitive Cycle Rhythm & Period Tracking",
+    badge: "CORE WIREFRAME FEATURE",
+    lead: "A dynamic visual dial that adapts to your phase, flow, symptoms, and rhythm. Designed without judgment, predicting your next cycle while respecting natural irregularity.",
+    highlights: [
+      "Dynamic cycle phase visualization (Follicular, Ovulatory, Luteal, Menstrual)",
+      "One-tap symptom, mood, and flow logging",
+      "Age-appropriate tracking: safe for young adolescents (ages 9+) without adult fertility prompts",
+      "100% offline-ready encrypted storage with zero cloud tracking",
+    ],
+    image: "/screens/today.png",
+    alt: "YanMata mobile app cycle rhythm dial and daily care overview",
+  },
+  {
+    id: "ai",
+    tabKey: "tab_ai",
+    icon: Sparkles,
+    title: "Aisha: Your Culturally Grounded AI Wellbeing Companion",
+    badge: "MULTILINGUAL & 24/7",
+    lead: "Empathetic, judgment-free answers to your intimate health questions in English, Hausa, Yoruba, Igbo, and Nigerian Pidgin. Rooted in clinical guidelines with built-in emergency safeguarding.",
+    highlights: [
+      "Conversational empathy in 5 Nigerian languages",
+      "Strict clinical boundaries: educational guidance, not automated prescribing",
+      "Automatic mental health crisis triage (SURPIN Nigeria 0800 123 4567 & 112)",
+      "Zero telemetry: your questions and conversations stay completely private",
+    ],
+    image: "/screens/ai.png",
+    alt: "Aisha AI companion interactive conversation in Nigerian context",
+  },
+  {
+    id: "insights",
+    tabKey: "tab_insights",
+    icon: Activity,
+    title: "Evidence-Based Clinical Insights (WHO & FMOH Nigeria)",
+    badge: "NO FAKE RISK SCORES",
+    lead: "Personalized preventive health advice generated from your 5-pillar health profile. Every insight includes traceable medical evidence from WHO and Federal Ministry of Health Nigeria guidelines.",
+    highlights: [
+      "Traceable citations and evidence level (High, Moderate)",
+      "Life-stage specific: cervical screening for adults, HPV education for teens",
+      "Strict minor safeguarding: excludes adult reproductive warnings for ages 9–17",
+      "Proactive lifestyle and nutrition recommendations tailored to local Nigerian diets",
+    ],
+    image: "/screens/insights.png",
+    alt: "Evidence-based preventive health insights with WHO and FMOH citations",
+  },
+  {
+    id: "profile",
+    tabKey: "tab_profile",
+    icon: UserCheck,
+    title: "Comprehensive 5-Pillar Encrypted Health Profile",
+    badge: "LOCAL ENCRYPTED STORAGE",
+    lead: "A complete clinical baseline built around five pillars: Menstrual Rhythm, Reproductive History, Medical Conditions, Lifestyle, and Family History. Encrypted locally and synchronized securely.",
+    highlights: [
+      "Structured 5-pillar assessment from the wireframe onboarding flow",
+      "Age-adapted forms: skips unnecessary adult questions for adolescents",
+      "Local SQLite outbox encryption with zero unauthorized cloud sharing",
+      "Exportable summary for your in-platform specialist consultations",
+    ],
+    image: "/screens/profile.png",
+    alt: "YanMata 5-pillar encrypted health profile overview",
+  },
+  {
+    id: "mental",
+    tabKey: "tab_mental",
+    icon: Smile,
+    title: "Integrated Mental Health, Mood & Crisis Support",
+    badge: "EMOTIONAL CARE",
+    lead: "Hormones, life stress, and reproductive milestones profoundly impact emotional wellbeing. YanMata provides daily mood check-ins, mindful breathing exercises, and instant crisis hotlines.",
+    highlights: [
+      "Daily mood and emotional rhythm logging with somatic check-ins",
+      "Evidence-based somatic calming and guided breathing exercises",
+      "Immediate emergency support with SURPIN Nigeria helpline integration",
+      "Safe, stigma-free space designed for young girls and mature women alike",
+    ],
+    image: "/screens/mental.png",
+    alt: "YanMata mental health mood tracking and breathing exercises",
+  },
+  {
+    id: "care",
+    tabKey: "tab_care",
+    icon: MessageCircle,
+    title: "Verified In-Platform Specialist Consultations (Jos Pilot)",
+    badge: "MDCN & NMCN VERIFIED",
+    lead: "Direct, asynchronous, confidential access to licensed gynecologists, reproductive health nurses, and maternal health experts in our Jos pilot hub. Never an algorithm alone.",
+    highlights: [
+      "100% credential-checked specialists verified with MDCN and NMCN",
+      "Confidential in-app messaging with end-to-end audit trail",
+      "Strict clinical boundaries: no fake hospital referrals or external booking",
+      "Integrated with YanMata maternal & reproductive health services",
+    ],
+    image: "/screens/services.png",
+    alt: "In-platform verified specialist consultations and health services",
+  },
+];
+
+const journeySteps = [
+  {
+    step: 1,
+    titleKey: "journey_step_1",
+    subKey: "journey_step_1_sub",
+    tag: "Ages 9+ Safe",
+    icon: Compass,
+  },
+  {
+    step: 2,
+    titleKey: "journey_step_2",
+    subKey: "journey_step_2_sub",
+    tag: "Encrypted & Offline",
+    icon: Lock,
+  },
+  {
+    step: 3,
+    titleKey: "journey_step_3",
+    subKey: "journey_step_3_sub",
+    tag: "5 Health Pillars",
+    icon: Activity,
+  },
+  {
+    step: 4,
+    titleKey: "journey_step_4",
+    subKey: "journey_step_4_sub",
+    tag: "WHO / FMOH Guidelines",
+    icon: ShieldCheck,
+  },
+  {
+    step: 5,
+    titleKey: "journey_step_5",
+    subKey: "journey_step_5_sub",
+    tag: "Daily Companion",
+    icon: Heart,
+  },
+];
+
+const testimonials = [
+  {
+    quote:
+      "When I first started my period, I was too shy to ask anyone at school. YanMata explained everything to me in Hausa without making me feel ashamed. Aisha AI answered my questions kindly, and knowing my details are private made me feel safe.",
+    name: "Amina B.",
+    title: "Student (Age 14) · Jos, Plateau State",
+    avatar: "A",
+  },
+  {
+    quote:
+      "Tracking my irregular cycles used to be stressful because every app assumed a standard 28-day cycle. YanMata's 5-pillar health profile captured my medical history, and the clinical insights actually cited WHO guidelines instead of showing random panic numbers.",
+    name: "Zainab O.",
+    title: "Architect (Age 28) · Abuja (Jos Pilot Participant)",
+    avatar: "Z",
+  },
+  {
+    quote:
+      "As a physician practicing in Plateau State, seeing a health platform that adheres strictly to FMOH Nigeria guidelines and MDCN verification standards is refreshing. YanMata respects patient privacy, maintains minor safeguarding, and connects patients to verified clinicians responsibly.",
+    name: "Dr. Fatima Aliyu",
+    title: "Consultant Gynecologist (MDCN Verified) · Jos",
+    avatar: "F",
+  },
+];
+
 const chapters = [
   {
     label: "Puberty",
@@ -68,8 +236,10 @@ const chapters = [
     icon: "❀",
   },
 ];
+
 function App() {
   const [chapter, setChapter] = useState(0);
+  const [activeStory, setActiveStory] = useState(0);
   const [articles, setArticles] = useState<Article[]>([]);
   const [specialists, setSpecialists] = useState<Specialist[]>([]);
   const [error, setError] = useState("");
@@ -160,8 +330,17 @@ function App() {
       <header className="header">
         <Brand />
         <nav className={menu ? "open" : ""} aria-label="Main navigation">
+          <a onClick={() => setMenu(false)} href="#stories">
+            {t.nav_stories || "App Stories"}
+          </a>
+          <a onClick={() => setMenu(false)} href="#journey">
+            {t.nav_journey || "The Journey"}
+          </a>
           <a onClick={() => setMenu(false)} href="#chapters">
             {t.nav_chapters}
+          </a>
+          <a onClick={() => setMenu(false)} href="#voices">
+            {t.voices_eyebrow || "Real Stories"}
           </a>
           <a onClick={() => setMenu(false)} href="#learn">
             {t.nav_learn}
@@ -253,7 +432,7 @@ function App() {
           >
             {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
           </button>
-          <a className="button header-cta" href="#explore">
+          <a className="button header-cta" href="#stories">
             {t.cta_meet} <ArrowUpRight />
           </a>
           <button
@@ -270,13 +449,14 @@ function App() {
         <section className="hero wrap">
           <div className="hero-copy">
             <Tag>
-              <span className="tiny-flower">✳</span> FOR EVERY CHAPTER OF
-              WOMANHOOD
+              <span className="tiny-flower">✳</span>{" "}
+              {t.hero_tag ||
+                "AGES 9 THROUGH LIFELONG CARE · JOS PILOT TO NATIONWIDE"}
             </Tag>
             <h1>
-              Growing. Changing.
+              {t.hero_title_1 || "Growing. Changing."}
               <br />
-              Always <span className="serif">you.</span>
+              <span className="serif">{t.hero_title_2 || "Always you."}</span>
               <svg viewBox="0 0 180 18" aria-hidden="true">
                 <path
                   d="M4 13Q80-2 176 7"
@@ -288,26 +468,25 @@ function App() {
               </svg>
             </h1>
             <p>
-              Your body has a story. You deserve a space to understand it.
-              <br className="desktop" /> Meet YanMata — your wellbeing
-              companion, from your
-              <br className="desktop" /> first questions to every chapter that
-              follows.
+              {t.hero_desc ||
+                "Your body has a rhythm. Your story deserves understanding. Meet YanMata — your private wellbeing companion from puberty at age 9 to motherhood, menopause, and lifelong health."}
             </p>
             <div className="hero-actions">
-              <a className="button" href="#explore">
-                Find your space <ArrowUpRight />
+              <a className="button" href="#stories">
+                {t.hero_action_find || "Explore App Stories"} <ArrowUpRight />
               </a>
               <a className="text-link" href="#chapters">
-                Explore your chapter <ArrowRight size={16} />
+                {t.hero_action_explore || "Explore your chapter"}{" "}
+                <ArrowRight size={16} />
               </a>
             </div>
             <div className="hero-trust">
               <span>
-                <ShieldCheck /> Privacy comes first
+                <ShieldCheck />{" "}
+                {t.trust_privacy || "Privacy comes first (Offline-first)"}
               </span>
               <span>
-                <Heart /> Designed around you
+                <Heart /> {t.trust_designed || "Minor safeguarding (Ages 9+)"}
               </span>
             </div>
           </div>
@@ -342,14 +521,148 @@ function App() {
           </div>
         </section>
         <div className="values-strip">
-          <span>Rooted in understanding</span>
+          <span>
+            {t.values_rooted || "Rooted in clinical guidelines (WHO & FMOH)"}
+          </span>
           <i>✳</i>
-          <span>Built for real life</span>
+          <span>{t.values_built || "Built for real Nigerian lives"}</span>
           <i>✳</i>
-          <span>Private by design</span>
+          <span>{t.values_private || "Private by design · No data sold"}</span>
           <i>✳</i>
-          <span>With you, through change</span>
+          <span>{t.values_change || "With you, through every change"}</span>
         </div>
+
+        {/* Stories Section: 6 Core Wireframe Features */}
+        <section className="stories-section wrap" id="stories">
+          <div className="section-heading">
+            <div>
+              <div className="eyebrow">
+                {t.stories_eyebrow ||
+                  "THE BLUEPRINT STORIES · DESIGNER WIREFRAME"}
+              </div>
+              <h2>
+                {t.stories_title ||
+                  "6 Core Health Stories. One Connected Space."}
+              </h2>
+            </div>
+            <p>
+              {t.stories_desc ||
+                "Every screen and feature in YanMata was crafted from our designer blueprint to solve real, everyday healthcare challenges faced by Nigerian girls and women."}
+            </p>
+          </div>
+          <div
+            className="stories-tabs"
+            role="tablist"
+            aria-label="YanMata Core Stories"
+          >
+            {stories.map((s, idx) => {
+              const Icon = s.icon;
+              return (
+                <button
+                  key={s.id}
+                  role="tab"
+                  id={`story-tab-${idx}`}
+                  aria-selected={activeStory === idx}
+                  aria-controls="story-showcase-panel"
+                  className={`story-tab-btn ${activeStory === idx ? "active" : ""}`}
+                  onClick={() => setActiveStory(idx)}
+                >
+                  <Icon size={16} />
+                  <span>{t[s.tabKey] || s.title}</span>
+                </button>
+              );
+            })}
+          </div>
+          <div
+            id="story-showcase-panel"
+            role="tabpanel"
+            aria-labelledby={`story-tab-${activeStory}`}
+            className="story-showcase"
+          >
+            <div className="phone-mockup-wrapper">
+              <div className="phone-mockup">
+                <div className="phone-notch" />
+                <img
+                  src={stories[activeStory].image}
+                  alt={stories[activeStory].alt}
+                  className="phone-screen-img"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <div className="story-details">
+              <span className="story-badge">
+                <Sparkles size={12} /> {stories[activeStory].badge}
+              </span>
+              <h3>{stories[activeStory].title}</h3>
+              <p className="story-lead">{stories[activeStory].lead}</p>
+              <ul className="story-bullets">
+                {stories[activeStory].highlights.map((h, i) => (
+                  <li key={i}>
+                    <CheckCircle2 size={18} />
+                    <span>{h}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="story-action-row">
+                <a className="button" href="#journey">
+                  See Account Journey <ArrowRight size={16} />
+                </a>
+                <button
+                  className="text-link"
+                  style={{
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 6,
+                  }}
+                  onClick={() => setAiOpen(true)}
+                >
+                  Ask Aisha AI <Sparkles size={14} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Wireframe Account Journey Section (5 steps) */}
+        <section className="journey-section wrap" id="journey">
+          <div className="section-heading">
+            <div>
+              <div className="eyebrow">
+                {t.journey_eyebrow || "THE WIREFRAME ACCOUNT JOURNEY"}
+              </div>
+              <h2>
+                {t.journey_title ||
+                  "Dignified, Private & Personal From Day One"}
+              </h2>
+            </div>
+            <p>
+              {t.journey_desc ||
+                "Following our wireframe blueprint: from first-time launch to encrypted health profiling, personalized clinical insights, and daily proactive care."}
+            </p>
+          </div>
+          <div className="journey-steps">
+            {journeySteps.map((j) => {
+              const Icon = j.icon;
+              return (
+                <div className="journey-card" key={j.step}>
+                  <div className="journey-number">{j.step}</div>
+                  <div
+                    style={{ display: "flex", alignItems: "center", gap: 8 }}
+                  >
+                    <Icon size={18} color="var(--plum)" />
+                    <h4>{t[j.titleKey]}</h4>
+                  </div>
+                  <p>{t[j.subKey]}</p>
+                  <span className="journey-tag">✓ {j.tag}</span>
+                </div>
+              );
+            })}
+          </div>
+        </section>
         <section className="wrap chapters" id="chapters">
           <div className="section-heading">
             <div>
@@ -410,19 +723,56 @@ function App() {
             </div>
           </div>
         </section>
+
+        {/* Real Stories / Testimonials Section */}
+        <section className="testimonials-section" id="voices">
+          <div className="wrap">
+            <div className="section-heading">
+              <div>
+                <div className="eyebrow">
+                  {t.voices_eyebrow || "REAL VOICES · JOS PILOT & NATIONWIDE"}
+                </div>
+                <h2>
+                  {t.voices_title ||
+                    "Why Nigerian Women & Clinicians Trust YanMata"}
+                </h2>
+              </div>
+              <p>
+                {t.voices_desc ||
+                  "Authentic perspectives from girls, mothers, and healthcare professionals experiencing the YanMata platform."}
+              </p>
+            </div>
+            <div className="testimonials-grid">
+              {testimonials.map((test, i) => (
+                <div className="testimonial-card" key={i}>
+                  <p className="testimonial-quote">“{test.quote}”</p>
+                  <div className="testimonial-author">
+                    <div className="testimonial-avatar">{test.avatar}</div>
+                    <div>
+                      <h5>{test.name}</h5>
+                      <small>{test.title}</small>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section className="support-section" id="explore">
           <div className="wrap">
             <div className="section-heading">
               <div>
-                <div className="eyebrow">SMALL MOMENTS. MEANINGFUL CARE.</div>
+                <div className="eyebrow">
+                  {t.support_eyebrow || "SMALL MOMENTS. MEANINGFUL CARE."}
+                </div>
                 <h2>
                   A space that’s <span className="serif">yours.</span>
                 </h2>
               </div>
               <p>
-                Less overwhelm. More understanding.
-                <br />
-                Thoughtful tools for your everyday wellbeing.
+                {t.support_desc ||
+                  "Less overwhelm. More understanding. Thoughtful tools for your everyday wellbeing."}
               </p>
             </div>
             <div className="support-grid">
@@ -486,19 +836,20 @@ function App() {
                 <div className="feature-icon">
                   <MessageCircle />
                 </div>
-                <h3>You don’t have to guess.</h3>
+                <h3>Verified In-Platform Support.</h3>
                 <p>
-                  In-platform specialist conversations are part of our roadmap.
-                  A human connection, in your own space.
+                  Connect directly with licensed gynecologists and reproductive
+                  nurse specialists in our Jos pilot hub. Confidential and
+                  respectful.
                 </p>
                 <div className="mini-conversation">
                   <span className="conversation-bubble">
                     Some questions need a listening ear.
                   </span>
                   <span className="conversation-answer">
-                    And a little room to ask. <Heart size={12} />
+                    And a licensed doctor to answer. <Heart size={12} />
                   </span>
-                  <small>Specialist service not yet available</small>
+                  <small>MDCN & NMCN Verified · Jos Pilot Hub</small>
                 </div>
               </article>
             </div>
@@ -641,19 +992,27 @@ function App() {
             {[
               [
                 "Who is YanMata for?",
-                "Girls and women from age 9 through the end of life. Your experience will adapt to your stage and interests, with age-appropriate safeguards for younger users.",
+                "Girls and women from age 9 through the end of life. The experience adapts to your stage with strict minor safeguarding: adolescents (ages 9–17) receive body literacy and cycle education without adult fertility prompts or adult screening reminders.",
               ],
               [
-                "Is YanMata a medical service?",
-                "YanMata is being built for wellbeing education, personal reflection and in-platform specialist support. This preview does not diagnose conditions or provide medical advice.",
+                "How does YanMata protect my intimate health data?",
+                "Privacy is foundational. YanMata is built offline-first: your menstrual logs, symptoms, and 5-pillar health profile remain encrypted on your device. We do not sell user data, harvest telemetry, or share personal health records with third parties.",
               ],
               [
-                "Can I speak to a specialist?",
-                "Verified specialist conversations are planned within YanMata. They are not available in this foundation preview. There are no facility directories or hospital booking services.",
+                "Are the clinical insights based on real science?",
+                "Yes. YanMata does not generate fabricated risk scores or fake percentage likelihoods. Every personalized insight is traceable to clinical guidelines from the World Health Organization (WHO) and Federal Ministry of Health (FMOH) Nigeria.",
+              ],
+              [
+                "How does specialist consultation work in YanMata?",
+                "In our Jos pilot hub, verified MDCN-registered doctors and NMCN-registered nurse specialists provide asynchronous, confidential in-app consultations. Invariants: YanMata does not offer hospital booking or facility directories — specialist support remains strictly within the platform.",
+              ],
+              [
+                "Can I ask Aisha AI in my local language?",
+                "Yes! Aisha AI is trained to understand and respond supportively in English, Hausa, Yoruba, Igbo, and Nigerian Pidgin. It is equipped with automatic emergency triage connecting to Nigeria's SURPIN helpline (0800 123 4567) and emergency services (112).",
               ],
               [
                 "When can I use the mobile app?",
-                "The Flutter app is under active development for Android and iOS. We are preparing a pilot in Jos, Plateau State. Public app-store downloads are not available yet.",
+                "The Flutter app is under active development for Android and iOS. We are preparing the pilot rollout starting in Jos, Plateau State. Public app-store releases will follow the pilot evaluation.",
               ],
             ].map(([q, a], i) => (
               <div className="faq-item" key={q}>
@@ -690,7 +1049,10 @@ function App() {
           <p>Every chapter of you.</p>
         </div>
         <div className="footer-links">
-          <a href="#chapters">Your chapters</a>
+          <a href="#stories">App Stories</a>
+          <a href="#journey">Account Flow</a>
+          <a href="#voices">Real Voices</a>
+          <a href="#chapters">Life Chapters</a>
           <a href="#learn">Learn & grow</a>
           <button onClick={() => setInfo("privacy")}>Privacy approach</button>
           <a href="https://zentreeca.org" target="_blank" rel="noreferrer">
