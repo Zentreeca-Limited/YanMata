@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-10-28 — Live Server Deployment at 52.0.227.75 (DEPLOY-01)
+
+- Deployed YanMata to target remote server `52.0.227.75` (Ubuntu 24.04 LTS `aarch64`) under domain `yanmata.zentreeca.org` and direct IP fallback `http://52.0.227.75`.
+- Configured Caddy v2 multi-site hosting without interrupting existing `agripulse.zentreeca.org` reverse proxy service.
+- Installed and configured PHP 8.3-FPM, SQLite database, Composer, and optimized Laravel bootstrap caching.
+- Integrated Zentreeca AWS SES mailer (`MAIL_MAILER=ses`, `MAIL_FROM_ADDRESS="yanmata@zentreeca.org"`, `MAIL_FROM_NAME="YanMata"`, `us-east-1`) and verified live delivery to `no-reply@zentreeca.org`.
+- Configured SPA routing for both Public Web (`/`) and Admin Studio (`/admin`), with subpath asset isolation (`base: '/admin/'`).
+- Configured Laravel Sanctum stateful authentication, CSRF cookie handling, and security headers (`X-Frame-Options: DENY`, `Permissions-Policy`).
+- Configured Laravel background scheduler via `/etc/cron.d/yanmata-scheduler`.
+- Verified live end-to-end functionality via remote curl: public web (200), admin studio (200), API health (200), seeded content/specialists/services (200), session login (200), and mobile bearer token auth (200).
+
+
 ## 2026-10-28 — Production-facing copy hardening (COPY-01)
 
 - Removed development-preview, demo, testing, coming-soon and pre-pilot language from customer-facing public web and Flutter screens across five languages.

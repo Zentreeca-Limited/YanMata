@@ -28,10 +28,32 @@ Statuses: TODO, IN_PROGRESS, BLOCKED, VERIFIED. VERIFIED requires evidence. Foun
 | ACCT-01 | P0 | Member logout, account deletion and public store-compliance pages | API-01, MOB-01, WEB-01 | Password-confirmed deletion test, local wipe behavior, legal URLs and mobile warning dialogs | VERIFIED |
 | WEB-02 | P0 | Opaque, accessible small-screen public navigation | WEB-01 | Light/dark open-menu inspection at 360px and 390px, no content bleed or horizontal overflow | VERIFIED |
 | COPY-01 | P0 | Production-facing web/mobile language and durable legal copy | WEB-01, ACCT-01 | Copy audit, builds/tests, compact/desktop visual evidence and documented human-review gates | VERIFIED |
+| DEPLOY-01 | P0 | Live server deployment at 52.0.227.75 under yanmata.zentreeca.org with SES email | TECH-02, OPS-01 | Remote Caddy multi-host, PHP 8.3 FPM, SQLite migrations/seeds, SES live email, SPA/API live curls | VERIFIED |
 
 ## Work item evidence template
 
 ID / owner / status / date / implementation paths / commit or build / commands and results / visual evidence / known defects / next step. Keep clinical approvals separate from engineering assertions.
+
+## DEPLOY-01 evidence
+
+28 October 2026: Remote deployment to AWS EC2 instance (`52.0.227.75`, Ubuntu 24.04 LTS `aarch64`).
+- Environment: Caddy v2.11.7 web server, PHP 8.3.6 FPM, SQLite database, Composer 2.7.1, Node-built SPAs.
+- Architecture: Zero-downtime coexistence with existing `agripulse.zentreeca.org` reverse proxy. Caddy serves `yanmata.zentreeca.org`, `http://yanmata.zentreeca.org`, and direct IP `http://52.0.227.75`.
+- Subpath Routing:
+  - Public Web SPA: `/` -> `/var/www/yanmata/web`
+  - Editorial Admin SPA: `/admin` -> `/var/www/yanmata/admin` (configured with `base: '/admin/'`)
+  - Laravel API: `/api/*`, `/sanctum/*`, `/storage/*` -> FastCGI to `/var/www/yanmata/backend/public/index.php`
+- Email Delivery: Integrated with Zentreeca AWS SES in `us-east-1` (`MAIL_MAILER=ses`, `MAIL_FROM_ADDRESS="yanmata@zentreeca.org"`, `MAIL_FROM_NAME="YanMata"`). Verified live email transmission to `no-reply@zentreeca.org` with 0 errors.
+- Verification:
+  - Public Web root: `200 OK`
+  - Admin Studio root: `200 OK`
+  - API Health: `200 OK`
+  - API Content: `200 OK` (5 evidence-based items)
+  - Sanctum CSRF Cookie: `204 No Content` with security headers (`X-Frame-Options: DENY`, `Permissions-Policy`)
+  - Session Login: `200 OK` (`publisher@demo.yanmata.test`)
+  - Mobile Bearer Auth: `200 OK` with token generation and authenticated access to `/care/specialists`, `/services`, `/products`, `/mental-health/resources`, and `/ai/companion/chat`.
+- Automation: Systemd services enabled on boot (`caddy`, `php8.3-fpm`), Laravel scheduler configured in `/etc/cron.d/yanmata-scheduler`.
+
 
 ## COPY-01 evidence
 

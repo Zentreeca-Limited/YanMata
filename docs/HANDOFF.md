@@ -2,7 +2,21 @@
 
 ## Confirmed user intent
 
-YanMata is supplied by Zentreeca Limited. Build a working product: Flutter Android/iOS with Riverpod, offline-first/realtime sync, WebSockets, FCM and local reminders; Laravel backend; React public website and React administration. Use clean architecture with MVC presentation/controller separation. Support life-stage female wellbeing, verifiable content, specialists and publishing from web/mobile. Demo uses synthetic seeded data with real workflows. Preserve polished UI and comprehensive continuity docs.
+YanMata is supplied by Zentreeca Limited. Build a working product: Flutter Android/iOS with Riverpod, offline-first/realtime sync, WebSockets, FCM and local reminders; Laravel backend; React public website and React administration. Use clean architecture with MVC presentation/controller separation. Support life-stage female wellbeing, verifiable content, specialists and publishing from web/mobile. Demo uses synthetic seeded data with real workflows. Preserve polished UI and comprehensive continuity docs. Deploy to remote server `52.0.227.75` under `yanmata.zentreeca.org` with AWS SES mail delivery customized for `yanmata@zentreeca.org`.
+
+## Live deployment status (28 October 2026)
+
+The YanMata platform is deployed and running live on AWS server `52.0.227.75` under Caddy and PHP 8.3 FPM:
+- **Public Web**: `http://52.0.227.75/` and `http://yanmata.zentreeca.org/` (and HTTPS once DNS propagates)
+- **Admin Studio**: `http://52.0.227.75/admin` and `http://yanmata.zentreeca.org/admin`
+- **Backend API**: `http://52.0.227.75/api/v1/content` and `/up`
+- **Email Delivery**: AWS SES in `us-east-1` from `yanmata@zentreeca.org` (verified active with test dispatch)
+- **Coexistence**: Running in harmony alongside existing `agripulse.zentreeca.org` reverse proxy without interruption.
+- **DNS Setup Required**: In Cloudflare DNS for `zentreeca.org`, add:
+  - Type: `A`
+  - Name: `yanmata`
+  - Content: `52.0.227.75`
+  - Proxy status: Proxied (or DNS only; Caddy handles automatic SSL certificates either way).
 
 Pilot location confirmed: Jos, Plateau State. User has access to doctors/nurses in public/private hospitals for review. Audience confirmed: ages 9 onward, from puberty through the end of life, with no upper age limit. On 28 October the user authorised the synthetic health-services directory from the supplied wireframe. Preserve in-platform specialist interaction; external booking and automated emergency referral remain out of scope. Named clinicians and age-appropriate consent/access protocols still need definition.
 
