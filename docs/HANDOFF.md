@@ -46,6 +46,7 @@ Public web and admin studio are fully verified via automated browser testing:
 - Desktop (1440×900) and mobile (390×844) public views (`web-01-home.png`, `web-02-mobile.png`)
 - Authenticated admin login, editorial table, and care triage (`admin-01-login.png`, `admin-02-editorial-studio.png`, `admin-03-care-triage.png`)
 - Public Privacy Policy, Terms of Use and Account Deletion routes plus configured Google Play/App Store cards (`PHASE-08.md`)
+- Small-screen public navigation uses an opaque elevated panel in light and dark themes; verified at 360×800 and 390×844 with no horizontal overflow (`WEB-MOBILE-MENU.md`).
 
 Production hardening & operations (QA-01, OPS-01):
 - `SecurityHeaders` middleware attached to all web/API responses.

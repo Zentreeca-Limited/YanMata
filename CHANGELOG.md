@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-28 — Opaque mobile navigation panel (WEB-02)
+
+- Fixed the public website’s small-screen navigation so page content can no longer show through the open menu.
+- Added explicit light/dark opaque surfaces, stronger elevation, full-width menu targets, viewport-bounded scrolling and overscroll containment.
+- Verified the open state at 360×800 and 390×844 with no horizontal overflow.
+
 ## 2026-10-28 — Account controls and store compliance (ACCT-01)
 
 - Added authenticated member account deletion with password re-authentication, exact `DELETE` confirmation, token revocation and related-record deletion.

@@ -26,6 +26,7 @@ Statuses: TODO, IN_PROGRESS, BLOCKED, VERIFIED. VERIFIED requires evidence. Foun
 | PILOT-01 | P0 | Limited Jos operational pilot | SAFE-01, QA-01, OPS-01 | Approved recruitment, staffed care, measured baseline | TODO |
 | LIFE-01 | P2 | Expand life-stage paths/languages and nationwide hubs | Pilot findings | Dynamic locations (Jos pilot + Nigeria) & 5-lang switcher | VERIFIED |
 | ACCT-01 | P0 | Member logout, account deletion and public store-compliance pages | API-01, MOB-01, WEB-01 | Password-confirmed deletion test, local wipe behavior, legal URLs and mobile warning dialogs | VERIFIED |
+| WEB-02 | P0 | Opaque, accessible small-screen public navigation | WEB-01 | Light/dark open-menu inspection at 360px and 390px, no content bleed or horizontal overflow | VERIFIED |
 
 ## Work item evidence template
 
