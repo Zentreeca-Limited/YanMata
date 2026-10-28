@@ -14,8 +14,9 @@ class ServicesFilterNotifier extends Notifier<String> {
   void setFilter(String val) => state = val;
 }
 
-final servicesFilterProvider =
-    NotifierProvider<ServicesFilterNotifier, String>(ServicesFilterNotifier.new);
+final servicesFilterProvider = NotifierProvider<ServicesFilterNotifier, String>(
+  ServicesFilterNotifier.new,
+);
 
 class ServicesSearchQueryNotifier extends Notifier<String> {
   @override
@@ -26,11 +27,12 @@ class ServicesSearchQueryNotifier extends Notifier<String> {
 
 final servicesSearchQueryProvider =
     NotifierProvider<ServicesSearchQueryNotifier, String>(
-  ServicesSearchQueryNotifier.new,
-);
+      ServicesSearchQueryNotifier.new,
+    );
 
-final healthServicesProvider =
-    FutureProvider.autoDispose<List<HealthService>>((ref) async {
+final healthServicesProvider = FutureProvider.autoDispose<List<HealthService>>((
+  ref,
+) async {
   final repo = ref.watch(servicesRepositoryProvider);
   final filter = ref.watch(servicesFilterProvider);
   final query = ref.watch(servicesSearchQueryProvider);
@@ -50,6 +52,8 @@ final healthServicesProvider =
   return repo.fetchServices(
     providerType: providerType,
     query: query.isEmpty ? null : query,
-    city: selectedLocation.city.toLowerCase().contains('all') ? null : selectedLocation.city,
+    city: selectedLocation.city.toLowerCase().contains('all')
+        ? null
+        : selectedLocation.city,
   );
 });

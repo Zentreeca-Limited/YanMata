@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -24,6 +25,7 @@ class MemoryStore implements PrivateStore {
 }
 
 void main() {
+  SharedPreferences.setMockInitialValues({'onboarding_done': true});
   testWidgets(
     'Private check-in saves locally and survives repository recreation',
     (tester) async {

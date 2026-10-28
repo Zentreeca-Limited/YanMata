@@ -39,7 +39,8 @@ class ThemeModeNotifier extends Notifier<ThemeMode> {
   }
 
   void toggleTheme([bool? isCurrentlyDark]) {
-    if (state == ThemeMode.dark || (state == ThemeMode.system && isCurrentlyDark == true)) {
+    if (state == ThemeMode.dark ||
+        (state == ThemeMode.system && isCurrentlyDark == true)) {
       setThemeMode(ThemeMode.light);
     } else {
       setThemeMode(ThemeMode.dark);
@@ -47,4 +48,6 @@ class ThemeModeNotifier extends Notifier<ThemeMode> {
   }
 }
 
-final themeModeProvider = NotifierProvider<ThemeModeNotifier, ThemeMode>(ThemeModeNotifier.new);
+final themeModeProvider = NotifierProvider<ThemeModeNotifier, ThemeMode>(
+  ThemeModeNotifier.new,
+);

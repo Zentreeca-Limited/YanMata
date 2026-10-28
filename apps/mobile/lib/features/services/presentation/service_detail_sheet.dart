@@ -47,7 +47,10 @@ class ServiceDetailSheet extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: const Color(0xFFE8F5E9),
                     borderRadius: BorderRadius.circular(20),
@@ -55,7 +58,11 @@ class ServiceDetailSheet extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.verified, size: 14, color: Color(0xFF2E7D32)),
+                      const Icon(
+                        Icons.verified,
+                        size: 14,
+                        color: Color(0xFF2E7D32),
+                      ),
                       const SizedBox(width: 4),
                       Text(
                         service.isVerified ? 'VERIFIED PROVIDER' : 'LISTED',
@@ -79,10 +86,8 @@ class ServiceDetailSheet extends StatelessWidget {
             const SizedBox(height: 10),
             Text(
               service.name,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    color: Palette.plum,
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(context).textTheme.headlineMedium
+                  ?.copyWith(color: Palette.plum, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 4),
             Text(
@@ -98,15 +103,25 @@ class ServiceDetailSheet extends StatelessWidget {
               spacing: 8,
               runSpacing: 8,
               children: [
-                _Badge(icon: Icons.location_on_outlined, text: '${service.distanceKm} km · ${service.city}'),
+                _Badge(
+                  icon: Icons.location_on_outlined,
+                  text: '${service.distanceKm} km · ${service.city}',
+                ),
                 _Badge(icon: Icons.payments_outlined, text: service.priceRange),
-                _Badge(icon: Icons.access_time_outlined, text: service.openingHours),
+                _Badge(
+                  icon: Icons.access_time_outlined,
+                  text: service.openingHours,
+                ),
               ],
             ),
             const SizedBox(height: 20),
             const Text(
               'About this service',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Palette.plum),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+                color: Palette.plum,
+              ),
             ),
             const SizedBox(height: 6),
             Text(
@@ -126,22 +141,30 @@ class ServiceDetailSheet extends StatelessWidget {
                 children: [
                   const Text(
                     'Facility address & verification',
-                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Palette.slate),
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Palette.slate,
+                    ),
                   ),
                   const SizedBox(height: 4),
-                  Text(
-                    service.address,
-                    style: const TextStyle(fontSize: 13),
-                  ),
+                  Text(service.address, style: const TextStyle(fontSize: 13)),
                   const SizedBox(height: 6),
                   Row(
                     children: [
-                      const Icon(Icons.shield_outlined, size: 14, color: Palette.plum),
+                      const Icon(
+                        Icons.shield_outlined,
+                        size: 14,
+                        color: Palette.plum,
+                      ),
                       const SizedBox(width: 4),
                       Expanded(
                         child: Text(
                           service.verificationSource,
-                          style: const TextStyle(fontSize: 11, color: Palette.slate),
+                          style: const TextStyle(
+                            fontSize: 11,
+                            color: Palette.slate,
+                          ),
                         ),
                       ),
                     ],
@@ -155,7 +178,9 @@ class ServiceDetailSheet extends StatelessWidget {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Inquiry sent to ${service.providerName}. YanMata care team notified.'),
+                    content: Text(
+                      'Inquiry sent to ${service.providerName}. YanMata care team notified.',
+                    ),
                     backgroundColor: Palette.plum,
                   ),
                 );
@@ -189,7 +214,10 @@ class _Badge extends StatelessWidget {
         children: [
           Icon(icon, size: 14, color: Palette.plum),
           const SizedBox(width: 6),
-          Text(text, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
+          Text(
+            text,
+            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+          ),
         ],
       ),
     );

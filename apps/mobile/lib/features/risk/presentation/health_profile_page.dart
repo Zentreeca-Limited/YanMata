@@ -40,7 +40,9 @@ class HealthProfilePage extends ConsumerWidget {
 
             ...data.completedSections.entries.map((entry) {
               final isCompleted = entry.value.toLowerCase() == 'completed';
-              final isInProgress = entry.value.toLowerCase().contains('progress');
+              final isInProgress = entry.value.toLowerCase().contains(
+                'progress',
+              );
 
               return Padding(
                 padding: const EdgeInsets.only(bottom: 12),
@@ -53,7 +55,9 @@ class HealthProfilePage extends ConsumerWidget {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(16),
                     onTap: () {
-                      final newStatus = isCompleted ? 'In progress' : 'Completed';
+                      final newStatus = isCompleted
+                          ? 'In progress'
+                          : 'Completed';
                       ref
                           .read(riskAssessmentProvider.notifier)
                           .updateSection(entry.key, newStatus);
@@ -96,8 +100,8 @@ class HealthProfilePage extends ConsumerWidget {
                                     color: isCompleted
                                         ? const Color(0xFF2E7D32)
                                         : (isInProgress
-                                            ? Colors.amber.shade800
-                                            : Palette.slate),
+                                              ? Colors.amber.shade800
+                                              : Palette.slate),
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -108,13 +112,13 @@ class HealthProfilePage extends ConsumerWidget {
                             isCompleted
                                 ? Icons.check_circle
                                 : (isInProgress
-                                    ? Icons.radio_button_checked
-                                    : Icons.radio_button_unchecked),
+                                      ? Icons.radio_button_checked
+                                      : Icons.radio_button_unchecked),
                             color: isCompleted
                                 ? const Color(0xFF2E7D32)
                                 : (isInProgress
-                                    ? Colors.amber.shade800
-                                    : Palette.slate),
+                                      ? Colors.amber.shade800
+                                      : Palette.slate),
                           ),
                         ],
                       ),
@@ -130,7 +134,9 @@ class HealthProfilePage extends ConsumerWidget {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text('Health profile updated. Risk prediction refreshed.'),
+                    content: Text(
+                      'Health profile updated. Risk prediction refreshed.',
+                    ),
                     backgroundColor: Palette.plum,
                   ),
                 );

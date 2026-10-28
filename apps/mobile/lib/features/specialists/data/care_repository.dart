@@ -12,8 +12,15 @@ abstract interface class CareRepository {
     required bool shareJournalConsent,
     String? specialistId,
   });
-  Future<CareConversationItem> getConversation(String token, String conversationId);
-  Future<CareMessageItem> sendMessage(String token, String conversationId, String body);
+  Future<CareConversationItem> getConversation(
+    String token,
+    String conversationId,
+  );
+  Future<CareMessageItem> sendMessage(
+    String token,
+    String conversationId,
+    String body,
+  );
 }
 
 class RemoteCareRepository implements CareRepository {
@@ -24,14 +31,21 @@ class RemoteCareRepository implements CareRepository {
   Future<List<Specialist>> getSpecialists() async {
     final response = await api.request('/specialists');
     final data = (response['data'] as List?) ?? [];
-    return data.map((json) => Specialist.fromJson(Map<String, dynamic>.from(json))).toList();
+    return data
+        .map((json) => Specialist.fromJson(Map<String, dynamic>.from(json)))
+        .toList();
   }
 
   @override
   Future<List<SupportRequestItem>> getMyRequests(String token) async {
     final response = await api.request('/care/requests', token: token);
     final data = (response['data'] as List?) ?? [];
-    return data.map((json) => SupportRequestItem.fromJson(Map<String, dynamic>.from(json))).toList();
+    return data
+        .map(
+          (json) =>
+              SupportRequestItem.fromJson(Map<String, dynamic>.from(json)),
+        )
+        .toList();
   }
 
   @override
@@ -55,23 +69,39 @@ class RemoteCareRepository implements CareRepository {
         'specialist_id': ?specialistId,
       },
     );
-    return SupportRequestItem.fromJson(Map<String, dynamic>.from(response['data']));
+    return SupportRequestItem.fromJson(
+      Map<String, dynamic>.from(response['data']),
+    );
   }
 
   @override
-  Future<CareConversationItem> getConversation(String token, String conversationId) async {
-    final response = await api.request('/care/conversations/$conversationId', token: token);
-    return CareConversationItem.fromJson(Map<String, dynamic>.from(response['data']));
+  Future<CareConversationItem> getConversation(
+    String token,
+    String conversationId,
+  ) async {
+    final response = await api.request(
+      '/care/conversations/$conversationId',
+      token: token,
+    );
+    return CareConversationItem.fromJson(
+      Map<String, dynamic>.from(response['data']),
+    );
   }
 
   @override
-  Future<CareMessageItem> sendMessage(String token, String conversationId, String body) async {
+  Future<CareMessageItem> sendMessage(
+    String token,
+    String conversationId,
+    String body,
+  ) async {
     final response = await api.request(
       '/care/conversations/$conversationId/messages',
       method: 'POST',
       token: token,
       body: {'body': body},
     );
-    return CareMessageItem.fromJson(Map<String, dynamic>.from(response['data']));
+    return CareMessageItem.fromJson(
+      Map<String, dynamic>.from(response['data']),
+    );
   }
 }

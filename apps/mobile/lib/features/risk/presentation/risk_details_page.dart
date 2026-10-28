@@ -57,7 +57,9 @@ class _RiskDetailsPageState extends ConsumerState<RiskDetailsPage> {
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  children: ['Cervical', 'Breast', 'Hormonal', 'General'].map((tab) {
+                  children: ['Cervical', 'Breast', 'Hormonal', 'General'].map((
+                    tab,
+                  ) {
                     final isSelected = _currentTab == tab;
                     return Padding(
                       padding: const EdgeInsets.only(right: 8),
@@ -123,7 +125,11 @@ class _RiskDetailsPageState extends ConsumerState<RiskDetailsPage> {
                     const SizedBox(height: 12),
                     Text(
                       'Based on your recorded age, screening intervals, symptoms, and lifestyle indicators.',
-                      style: const TextStyle(fontSize: 13, color: Palette.slate, height: 1.4),
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: Palette.slate,
+                        height: 1.4,
+                      ),
                     ),
                   ],
                 ),
@@ -141,34 +147,36 @@ class _RiskDetailsPageState extends ConsumerState<RiskDetailsPage> {
               ),
               const SizedBox(height: 10),
 
-              ...factors.map((factor) => Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: const Color(0xFFE9E2E9)),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Icon(
-                            Icons.info_outline,
-                            color: Color(0xFFC2410C),
-                            size: 18,
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: Text(
-                              factor,
-                              style: const TextStyle(fontSize: 13, height: 1.3),
-                            ),
-                          ),
-                        ],
-                      ),
+              ...factors.map(
+                (factor) => Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: const Color(0xFFE9E2E9)),
                     ),
-                  )),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Icons.info_outline,
+                          color: Color(0xFFC2410C),
+                          size: 18,
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            factor,
+                            style: const TextStyle(fontSize: 13, height: 1.3),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
 
               const SizedBox(height: 20),
 
@@ -183,38 +191,40 @@ class _RiskDetailsPageState extends ConsumerState<RiskDetailsPage> {
               ),
               const SizedBox(height: 10),
 
-              ...data.recommendations.map((rec) => Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF0FDF4),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: const Color(0xFFDCFCE7)),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Icon(
-                            Icons.check_circle_outline,
-                            color: Color(0xFF16A34A),
-                            size: 18,
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: Text(
-                              rec,
-                              style: const TextStyle(
-                                fontSize: 13,
-                                height: 1.3,
-                                color: Color(0xFF166534),
-                              ),
+              ...data.recommendations.map(
+                (rec) => Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF0FDF4),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: const Color(0xFFDCFCE7)),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Icons.check_circle_outline,
+                          color: Color(0xFF16A34A),
+                          size: 18,
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            rec,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              height: 1.3,
+                              color: Color(0xFF166534),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  )),
+                  ),
+                ),
+              ),
 
               const SizedBox(height: 24),
 
@@ -222,9 +232,7 @@ class _RiskDetailsPageState extends ConsumerState<RiskDetailsPage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute<void>(
-                      builder: (_) => const Care(),
-                    ),
+                    MaterialPageRoute<void>(builder: (_) => const Care()),
                   );
                 },
                 icon: const Icon(Icons.chat_bubble_outline),

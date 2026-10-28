@@ -40,5 +40,5 @@ class RiskAssessmentNotifier extends AsyncNotifier<RiskAssessmentData> {
 
 final riskAssessmentProvider =
     AsyncNotifierProvider<RiskAssessmentNotifier, RiskAssessmentData>(
-  RiskAssessmentNotifier.new,
-);
+      RiskAssessmentNotifier.new,
+    );

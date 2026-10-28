@@ -66,10 +66,15 @@ class MyCareRequestsNotifier extends AsyncNotifier<List<SupportRequestItem>> {
 }
 
 final careConversationProvider =
-    FutureProvider.family<CareConversationItem?, String>((ref, conversationId) async {
+    FutureProvider.family<CareConversationItem?, String>((
+      ref,
+      conversationId,
+    ) async {
       final token = ref.watch(journalProvider).value?.token;
       if (token == null) return null;
-      return ref.watch(careRepositoryProvider).getConversation(token, conversationId);
+      return ref
+          .watch(careRepositoryProvider)
+          .getConversation(token, conversationId);
     });
 
 extension CareActions on WidgetRef {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../core/localization/locale_provider.dart';
 import '../../../core/theme.dart';
 import '../application/ai_companion_provider.dart';
@@ -85,7 +86,10 @@ class _AiCompanionPageState extends ConsumerState<AiCompanionPage> {
                     ),
                     const SizedBox(width: 6),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 6,
+                        vertical: 2,
+                      ),
                       decoration: BoxDecoration(
                         color: const Color(0xFF10B981).withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(10),
@@ -122,7 +126,8 @@ class _AiCompanionPageState extends ConsumerState<AiCompanionPage> {
           IconButton(
             icon: const Icon(Icons.refresh_rounded),
             tooltip: 'Clear conversation',
-            onPressed: () => ref.read(aiChatProvider.notifier).clearConversation(),
+            onPressed: () =>
+                ref.read(aiChatProvider.notifier).clearConversation(),
           ),
         ],
       ),
@@ -137,14 +142,20 @@ class _AiCompanionPageState extends ConsumerState<AiCompanionPage> {
                 : Palette.blush.withValues(alpha: 0.4),
             child: Row(
               children: [
-                const Icon(Icons.shield_outlined, size: 16, color: Palette.plum),
+                const Icon(
+                  Icons.shield_outlined,
+                  size: 16,
+                  color: Palette.plum,
+                ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     ref.tr('ai_disclaimer'),
                     style: TextStyle(
                       fontSize: 11,
-                      color: isDark ? Palette.darkMuted : Palette.ink.withValues(alpha: 0.8),
+                      color: isDark
+                          ? Palette.darkMuted
+                          : Palette.ink.withValues(alpha: 0.8),
                     ),
                   ),
                 ),
@@ -157,9 +168,11 @@ class _AiCompanionPageState extends ConsumerState<AiCompanionPage> {
             child: ListView.builder(
               controller: _scrollController,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              itemCount: chatState.messages.length + (chatState.isThinking ? 1 : 0),
+              itemCount:
+                  chatState.messages.length + (chatState.isThinking ? 1 : 0),
               itemBuilder: (context, index) {
-                if (index == chatState.messages.length && chatState.isThinking) {
+                if (index == chatState.messages.length &&
+                    chatState.isThinking) {
                   return _buildThinkingBubble(isDark);
                 }
                 final msg = chatState.messages[index];
@@ -206,7 +219,11 @@ class _AiCompanionPageState extends ConsumerState<AiCompanionPage> {
           ),
           child: Text(
             msg.text,
-            style: const TextStyle(color: Colors.white, fontSize: 14.5, height: 1.4),
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 14.5,
+              height: 1.4,
+            ),
           ),
         ),
       );
@@ -270,7 +287,9 @@ class _AiCompanionPageState extends ConsumerState<AiCompanionPage> {
               children: msg.followUps.map((q) {
                 return ActionChip(
                   label: Text(q, style: const TextStyle(fontSize: 12)),
-                  backgroundColor: isDark ? Palette.darkSurface : Palette.lilac.withValues(alpha: 0.4),
+                  backgroundColor: isDark
+                      ? Palette.darkSurface
+                      : Palette.lilac.withValues(alpha: 0.4),
                   side: BorderSide(color: Palette.lilac.withValues(alpha: 0.5)),
                   onPressed: () => _sendMessage(q),
                 );
@@ -343,7 +362,10 @@ class _AiCompanionPageState extends ConsumerState<AiCompanionPage> {
             const SizedBox(
               width: 14,
               height: 14,
-              child: CircularProgressIndicator(strokeWidth: 2, color: Palette.plum),
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: Palette.plum,
+              ),
             ),
             const SizedBox(width: 10),
             Text(
@@ -435,7 +457,10 @@ class _AiCompanionPageState extends ConsumerState<AiCompanionPage> {
                   ),
                   filled: true,
                   fillColor: isDark ? Palette.darkCard : Palette.cream,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 18,
+                    vertical: 12,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(26),
                     borderSide: BorderSide.none,
@@ -448,7 +473,10 @@ class _AiCompanionPageState extends ConsumerState<AiCompanionPage> {
               color: Palette.plum,
               shape: const CircleBorder(),
               child: IconButton(
-                icon: const Icon(Icons.arrow_upward_rounded, color: Colors.white),
+                icon: const Icon(
+                  Icons.arrow_upward_rounded,
+                  color: Colors.white,
+                ),
                 onPressed: () => _sendMessage(),
               ),
             ),

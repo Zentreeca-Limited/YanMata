@@ -50,8 +50,7 @@ class RiskRepository {
       'Adopt healthy lifestyle and stress-reduction habits',
       'Track cycle symptoms consistently for 3 months',
     ],
-    traceableSource:
-        'WHO Cervical Cancer Elimination Initiative & Federal Ministry of Health Nigeria Guidelines',
+    traceableSource: 'WHO Cervical Cancer Elimination Initiative & Federal Ministry of Health Nigeria Guidelines',
   );
 
   Future<RiskAssessmentData> fetchAssessment({String? token}) async {

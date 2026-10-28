@@ -23,12 +23,15 @@ class _FakeJournalRepo implements JournalRepository {
   }
 
   @override
-  Future<void> add(String mood, String note,
-      {String? date,
-      String flow = 'none',
-      List<String> symptoms = const [],
-      String energy = 'moderate',
-      String? stage}) async {}
+  Future<void> add(
+    String mood,
+    String note, {
+    String? date,
+    String flow = 'none',
+    List<String> symptoms = const [],
+    String energy = 'moderate',
+    String? stage,
+  }) async {}
   @override
   Future<void> connect(String email, String password) async {}
   @override
@@ -38,7 +41,10 @@ class _FakeJournalRepo implements JournalRepository {
   @override
   Future<void> remove(String id) async {}
   @override
-  Future<void> resolveConflict(String entryId, {required bool keepLocal}) async {}
+  Future<void> resolveConflict(
+    String entryId, {
+    required bool keepLocal,
+  }) async {}
   @override
   Future<void> sync() async {}
 }
@@ -53,29 +59,55 @@ void main() {
       );
 
       // Late night
-      expect(prefs.isInQuietHours(const TimeOfDay(hour: 23, minute: 15)), isTrue);
+      expect(
+        prefs.isInQuietHours(const TimeOfDay(hour: 23, minute: 15)),
+        isTrue,
+      );
       // Early morning before end
-      expect(prefs.isInQuietHours(const TimeOfDay(hour: 5, minute: 30)), isTrue);
+      expect(
+        prefs.isInQuietHours(const TimeOfDay(hour: 5, minute: 30)),
+        isTrue,
+      );
       // Afternoon outside quiet hours
-      expect(prefs.isInQuietHours(const TimeOfDay(hour: 14, minute: 0)), isFalse);
+      expect(
+        prefs.isInQuietHours(const TimeOfDay(hour: 14, minute: 0)),
+        isFalse,
+      );
       // Evening before start
-      expect(prefs.isInQuietHours(const TimeOfDay(hour: 21, minute: 45)), isFalse);
+      expect(
+        prefs.isInQuietHours(const TimeOfDay(hour: 21, minute: 45)),
+        isFalse,
+      );
     });
 
     test('Discreet lock-screen notification privacy check', () {
       expect(NotificationPreferences.discreetLockScreenTitle, 'A quiet moment');
-      expect(NotificationPreferences.discreetLockScreenBody,
-          'How has your day felt so far?');
+      expect(
+        NotificationPreferences.discreetLockScreenBody,
+        'How has your day felt so far?',
+      );
 
       // Verify ZERO clinical/health terms in lockscreen copy
-      for (final forbidden in ['period', 'cycle', 'cramp', 'blood', 'flow', 'pregnant', 'doctor']) {
+      for (final forbidden in [
+        'period',
+        'cycle',
+        'cramp',
+        'blood',
+        'flow',
+        'pregnant',
+        'doctor',
+      ]) {
         expect(
-          NotificationPreferences.discreetLockScreenTitle.toLowerCase().contains(forbidden),
+          NotificationPreferences.discreetLockScreenTitle
+              .toLowerCase()
+              .contains(forbidden),
           isFalse,
           reason: 'Lock-screen title must be strictly discreet',
         );
         expect(
-          NotificationPreferences.discreetLockScreenBody.toLowerCase().contains(forbidden),
+          NotificationPreferences.discreetLockScreenBody.toLowerCase().contains(
+            forbidden,
+          ),
           isFalse,
           reason: 'Lock-screen body must be strictly discreet',
         );
@@ -84,8 +116,9 @@ void main() {
   });
 
   group('You page notification and staff widgets tests', () {
-    testWidgets('Displays discreet reminder notice and quiet hours toggles',
-        (tester) async {
+    testWidgets('Displays discreet reminder notice and quiet hours toggles', (
+      tester,
+    ) async {
       await tester.binding.setSurfaceSize(const Size(430, 1400));
       addTearDown(() => tester.binding.setSurfaceSize(null));
 
@@ -93,9 +126,7 @@ void main() {
 
       await tester.pumpWidget(
         ProviderScope(
-          overrides: [
-            journalRepositoryProvider.overrideWithValue(fakeRepo),
-          ],
+          overrides: [journalRepositoryProvider.overrideWithValue(fakeRepo)],
           child: MaterialApp(
             theme: Palette.theme,
             home: const Scaffold(body: You()),
@@ -122,46 +153,46 @@ void main() {
       expect(find.text('Care message notifications'), findsOneWidget);
     });
 
-    testWidgets('Staff user sees Staff Editorial Studio card and can open portal',
-        (tester) async {
-      await tester.binding.setSurfaceSize(const Size(430, 1400));
-      addTearDown(() => tester.binding.setSurfaceSize(null));
+    testWidgets(
+      'Staff user sees Staff Editorial Studio card and can open portal',
+      (tester) async {
+        await tester.binding.setSurfaceSize(const Size(430, 1400));
+        addTearDown(() => tester.binding.setSurfaceSize(null));
 
-      final fakeRepo = _FakeJournalRepo(isStaff: true);
+        final fakeRepo = _FakeJournalRepo(isStaff: true);
 
-      await tester.pumpWidget(
-        ProviderScope(
-          overrides: [
-            journalRepositoryProvider.overrideWithValue(fakeRepo),
-          ],
-          child: MaterialApp(
-            theme: Palette.theme,
-            home: const Scaffold(body: You()),
+        await tester.pumpWidget(
+          ProviderScope(
+            overrides: [journalRepositoryProvider.overrideWithValue(fakeRepo)],
+            child: MaterialApp(
+              theme: Palette.theme,
+              home: const Scaffold(body: You()),
+            ),
           ),
-        ),
-      );
+        );
 
-      await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
 
-      final staffFinder = find.text('Staff Editorial Studio');
-      await tester.scrollUntilVisible(
-        staffFinder,
-        200,
-        scrollable: find.byType(Scrollable).first,
-      );
-      await tester.pumpAndSettle();
+        final staffFinder = find.text('Staff Editorial Studio');
+        await tester.scrollUntilVisible(
+          staffFinder,
+          200,
+          scrollable: find.byType(Scrollable).first,
+        );
+        await tester.pumpAndSettle();
 
-      expect(staffFinder, findsOneWidget);
-      final openButtonFinder = find.text('Open mobile editorial studio');
-      expect(openButtonFinder, findsOneWidget);
+        expect(staffFinder, findsOneWidget);
+        final openButtonFinder = find.text('Open mobile editorial studio');
+        expect(openButtonFinder, findsOneWidget);
 
-      await tester.ensureVisible(openButtonFinder);
-      await tester.pumpAndSettle();
-      await tester.tap(openButtonFinder);
-      await tester.pumpAndSettle();
+        await tester.ensureVisible(openButtonFinder);
+        await tester.pumpAndSettle();
+        await tester.tap(openButtonFinder);
+        await tester.pumpAndSettle();
 
-      expect(find.text('Content Pipeline'), findsOneWidget);
-      expect(find.text('Care Inquiries'), findsOneWidget);
-    });
+        expect(find.text('Content Pipeline'), findsOneWidget);
+        expect(find.text('Care Inquiries'), findsOneWidget);
+      },
+    );
   });
 }

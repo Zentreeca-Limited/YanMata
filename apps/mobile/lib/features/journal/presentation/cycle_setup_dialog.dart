@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../core/localization/locale_provider.dart';
 import '../../../core/theme.dart';
 import '../../../core/ui_feedback.dart';
@@ -56,7 +57,9 @@ class _CycleSetupDialogState extends ConsumerState<CycleSetupDialog> {
   }
 
   void _save() {
-    ref.read(cycleSettingsProvider.notifier).updateSettings(
+    ref
+        .read(cycleSettingsProvider.notifier)
+        .updateSettings(
           lastPeriodDate: _selectedDate,
           cycleLength: _cycleLength,
           periodDuration: _periodDuration,
@@ -94,7 +97,9 @@ class _CycleSetupDialogState extends ConsumerState<CycleSetupDialog> {
                   width: 44,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: isDark ? Palette.darkBorder : const Color(0xFFE2D6E4),
+                    color: isDark
+                        ? Palette.darkBorder
+                        : const Color(0xFFE2D6E4),
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -140,17 +145,25 @@ class _CycleSetupDialogState extends ConsumerState<CycleSetupDialog> {
                 onTap: _pickDate,
                 borderRadius: BorderRadius.circular(16),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 14,
+                  ),
                   decoration: BoxDecoration(
                     color: isDark ? Palette.darkSurface : Palette.cream,
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: isDark ? Palette.darkBorder : const Color(0xFFE9E2E9),
+                      color: isDark
+                          ? Palette.darkBorder
+                          : const Color(0xFFE9E2E9),
                     ),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.calendar_month_rounded, color: Palette.plum),
+                      const Icon(
+                        Icons.calendar_month_rounded,
+                        color: Palette.plum,
+                      ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
@@ -198,13 +211,19 @@ class _CycleSetupDialogState extends ConsumerState<CycleSetupDialog> {
                       color: isSelected
                           ? Colors.white
                           : (isDark ? Palette.darkText : Palette.ink),
-                      fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                      fontWeight: isSelected
+                          ? FontWeight.w700
+                          : FontWeight.w500,
                     ),
-                    backgroundColor: isDark ? Palette.darkSurface : Colors.white,
+                    backgroundColor: isDark
+                        ? Palette.darkSurface
+                        : Colors.white,
                     side: BorderSide(
                       color: isSelected
                           ? Palette.plum
-                          : (isDark ? Palette.darkBorder : const Color(0xFFE2D6E4)),
+                          : (isDark
+                                ? Palette.darkBorder
+                                : const Color(0xFFE2D6E4)),
                     ),
                     onSelected: (_) => setState(() => _cycleLength = len),
                   );
@@ -234,13 +253,19 @@ class _CycleSetupDialogState extends ConsumerState<CycleSetupDialog> {
                       color: isSelected
                           ? Colors.white
                           : (isDark ? Palette.darkText : Palette.ink),
-                      fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                      fontWeight: isSelected
+                          ? FontWeight.w700
+                          : FontWeight.w500,
                     ),
-                    backgroundColor: isDark ? Palette.darkSurface : Colors.white,
+                    backgroundColor: isDark
+                        ? Palette.darkSurface
+                        : Colors.white,
                     side: BorderSide(
                       color: isSelected
                           ? Palette.plum
-                          : (isDark ? Palette.darkBorder : const Color(0xFFE2D6E4)),
+                          : (isDark
+                                ? Palette.darkBorder
+                                : const Color(0xFFE2D6E4)),
                     ),
                     onSelected: (_) => setState(() => _periodDuration = dur),
                   );

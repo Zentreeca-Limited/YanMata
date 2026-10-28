@@ -53,16 +53,11 @@ class HealthProduct {
 }
 
 class CartItem {
-  const CartItem({
-    required this.product,
-    required this.quantity,
-  });
+  const CartItem({required this.product, required this.quantity});
 
   final HealthProduct product;
   final int quantity;
 
-  CartItem copyWith({int? quantity}) => CartItem(
-    product: product,
-    quantity: quantity ?? this.quantity,
-  );
+  CartItem copyWith({int? quantity}) =>
+      CartItem(product: product, quantity: quantity ?? this.quantity);
 }

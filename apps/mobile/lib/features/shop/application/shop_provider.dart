@@ -15,8 +15,8 @@ class ShopCategoryFilterNotifier extends Notifier<String> {
 
 final shopCategoryFilterProvider =
     NotifierProvider<ShopCategoryFilterNotifier, String>(
-  ShopCategoryFilterNotifier.new,
-);
+      ShopCategoryFilterNotifier.new,
+    );
 
 class ShopSearchQueryNotifier extends Notifier<String> {
   @override
@@ -27,11 +27,12 @@ class ShopSearchQueryNotifier extends Notifier<String> {
 
 final shopSearchQueryProvider =
     NotifierProvider<ShopSearchQueryNotifier, String>(
-  ShopSearchQueryNotifier.new,
-);
+      ShopSearchQueryNotifier.new,
+    );
 
-final healthProductsProvider =
-    FutureProvider.autoDispose<List<HealthProduct>>((ref) async {
+final healthProductsProvider = FutureProvider.autoDispose<List<HealthProduct>>((
+  ref,
+) async {
   final repo = ref.watch(shopRepositoryProvider);
   final category = ref.watch(shopCategoryFilterProvider);
   final query = ref.watch(shopSearchQueryProvider);
@@ -50,8 +51,9 @@ class CartNotifier extends Notifier<List<CartItem>> {
     final index = state.indexWhere((it) => it.product.id == product.id);
     if (index >= 0) {
       final updated = [...state];
-      updated[index] =
-          updated[index].copyWith(quantity: updated[index].quantity + 1);
+      updated[index] = updated[index].copyWith(
+        quantity: updated[index].quantity + 1,
+      );
       state = updated;
     } else {
       state = [...state, CartItem(product: product, quantity: 1)];

@@ -85,9 +85,7 @@ class LocalJournalRepository implements JournalRepository {
     }
     final d = await _load();
     if ((d['entries'] as List).length >= 10000) {
-      throw StateError(
-        'Journal storage reached capacity (10,000 entries).',
-      );
+      throw StateError('Journal storage reached capacity (10,000 entries).');
     }
     final e = JournalEntry(
       id: _uuid.v4(),
@@ -111,50 +109,48 @@ class LocalJournalRepository implements JournalRepository {
   });
 
   @override
-  Future<void> resolveConflict(
-    String entryId, {
-    required bool keepLocal,
-  }) => _lock.synchronized(() async {
-    final d = await _load();
-    final conflicts = d['conflicts'] as List;
-    final index = conflicts.indexWhere(
-      (c) =>
-          c['local']['entry_id'] == entryId ||
-          (c['server'] != null && c['server']['id'] == entryId),
-    );
-    if (index == -1) return;
-    final conflict = conflicts[index];
+  Future<void> resolveConflict(String entryId, {required bool keepLocal}) =>
+      _lock.synchronized(() async {
+        final d = await _load();
+        final conflicts = d['conflicts'] as List;
+        final index = conflicts.indexWhere(
+          (c) =>
+              c['local']['entry_id'] == entryId ||
+              (c['server'] != null && c['server']['id'] == entryId),
+        );
+        if (index == -1) return;
+        final conflict = conflicts[index];
 
-    final entries = d['entries'] as List;
-    entries.removeWhere((e) => e['id'] == entryId);
+        final entries = d['entries'] as List;
+        entries.removeWhere((e) => e['id'] == entryId);
 
-    if (keepLocal) {
-      final localMutation = conflict['local'] as Map;
-      final serverVersion = (conflict['server']?['version'] as int?) ?? 1;
-      final localEntry = {
-        'id': entryId,
-        'payload': localMutation['payload'],
-        'version': serverVersion + 1,
-        'deleted': false,
-      };
-      entries.add(localEntry);
+        if (keepLocal) {
+          final localMutation = conflict['local'] as Map;
+          final serverVersion = (conflict['server']?['version'] as int?) ?? 1;
+          final localEntry = {
+            'id': entryId,
+            'payload': localMutation['payload'],
+            'version': serverVersion + 1,
+            'deleted': false,
+          };
+          entries.add(localEntry);
 
-      (d['outbox'] as List).add({
-        'mutation_id': _uuid.v4(),
-        'entry_id': entryId,
-        'expected_version': serverVersion,
-        'deleted': false,
-        'payload': localMutation['payload'],
+          (d['outbox'] as List).add({
+            'mutation_id': _uuid.v4(),
+            'entry_id': entryId,
+            'expected_version': serverVersion,
+            'deleted': false,
+            'payload': localMutation['payload'],
+          });
+        } else {
+          if (conflict['server'] != null) {
+            entries.add(conflict['server']);
+          }
+        }
+
+        conflicts.removeAt(index);
+        await _save(d);
       });
-    } else {
-      if (conflict['server'] != null) {
-        entries.add(conflict['server']);
-      }
-    }
-
-    conflicts.removeAt(index);
-    await _save(d);
-  });
   @override
   Future<void> remove(String id) => _lock.synchronized(() async {
     final d = await _load();

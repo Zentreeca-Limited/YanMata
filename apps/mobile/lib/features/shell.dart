@@ -52,7 +52,10 @@ class _ShellState extends ConsumerState<YanMataShell>
                 onProfile: () => setState(() => tab = 5),
                 onLearn: () => Navigator.push(
                   context,
-                  MaterialPageRoute<void>(builder: (_) => const Scaffold(body: SafeArea(child: Learn()))),
+                  MaterialPageRoute<void>(
+                    builder: (_) =>
+                        const Scaffold(body: SafeArea(child: Learn())),
+                  ),
                 ),
               ),
               const Track(),
@@ -70,8 +73,6 @@ class _ShellState extends ConsumerState<YanMataShell>
         bottomNavigationBar: NavigationBar(
           selectedIndex: tab,
           onDestinationSelected: (value) => setState(() => tab = value),
-          backgroundColor: Palette.cream,
-          indicatorColor: Palette.lilac,
           destinations: const [
             NavigationDestination(
               icon: Icon(Icons.home_outlined),

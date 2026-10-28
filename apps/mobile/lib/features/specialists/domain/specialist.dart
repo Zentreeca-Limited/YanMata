@@ -12,7 +12,14 @@ class Specialist {
     required this.isAvailable,
   });
 
-  final String id, name, title, credentials, specialty, bio, city, verificationSource;
+  final String id,
+      name,
+      title,
+      credentials,
+      specialty,
+      bio,
+      city,
+      verificationSource;
   final bool isVerified, isAvailable;
 
   factory Specialist.fromJson(Map<String, dynamic> json) => Specialist(
@@ -45,15 +52,16 @@ class CareMessageItem {
   final bool isRead;
   final String createdAt;
 
-  factory CareMessageItem.fromJson(Map<String, dynamic> json) => CareMessageItem(
-    id: json['id'] ?? '',
-    conversationId: json['conversation_id'] ?? '',
-    senderId: (json['sender_id'] as num?)?.toInt() ?? 0,
-    senderRole: json['sender_role'] ?? 'member',
-    body: json['body'] ?? '',
-    isRead: json['is_read'] ?? false,
-    createdAt: json['created_at'] ?? '',
-  );
+  factory CareMessageItem.fromJson(Map<String, dynamic> json) =>
+      CareMessageItem(
+        id: json['id'] ?? '',
+        conversationId: json['conversation_id'] ?? '',
+        senderId: (json['sender_id'] as num?)?.toInt() ?? 0,
+        senderRole: json['sender_role'] ?? 'member',
+        body: json['body'] ?? '',
+        isRead: json['is_read'] ?? false,
+        createdAt: json['created_at'] ?? '',
+      );
 }
 
 class CareConversationItem {
@@ -74,18 +82,21 @@ class CareConversationItem {
   final List<CareMessageItem> messages;
   final String? lastMessageAt;
 
-  factory CareConversationItem.fromJson(Map<String, dynamic> json) => CareConversationItem(
-    id: json['id'] ?? '',
-    supportRequestId: json['support_request_id'] ?? '',
-    userId: (json['user_id'] as num?)?.toInt() ?? 0,
-    specialistId: json['specialist_id'] ?? '',
-    status: json['status'] ?? 'open',
-    lastMessageAt: json['last_message_at'],
-    specialist: json['specialist'] != null ? Specialist.fromJson(Map<String, dynamic>.from(json['specialist'])) : null,
-    messages: ((json['messages'] as List?) ?? [])
-        .map((m) => CareMessageItem.fromJson(Map<String, dynamic>.from(m)))
-        .toList(),
-  );
+  factory CareConversationItem.fromJson(Map<String, dynamic> json) =>
+      CareConversationItem(
+        id: json['id'] ?? '',
+        supportRequestId: json['support_request_id'] ?? '',
+        userId: (json['user_id'] as num?)?.toInt() ?? 0,
+        specialistId: json['specialist_id'] ?? '',
+        status: json['status'] ?? 'open',
+        lastMessageAt: json['last_message_at'],
+        specialist: json['specialist'] != null
+            ? Specialist.fromJson(Map<String, dynamic>.from(json['specialist']))
+            : null,
+        messages: ((json['messages'] as List?) ?? [])
+            .map((m) => CareMessageItem.fromJson(Map<String, dynamic>.from(m)))
+            .toList(),
+      );
 }
 
 class SupportRequestItem {
@@ -107,16 +118,19 @@ class SupportRequestItem {
   final bool shareJournalConsent;
   final Specialist? specialist;
 
-  factory SupportRequestItem.fromJson(Map<String, dynamic> json) => SupportRequestItem(
-    id: json['id'] ?? '',
-    topic: json['topic'] ?? '',
-    stage: json['stage'] ?? '',
-    summary: json['summary'] ?? '',
-    status: json['status'] ?? 'pending',
-    specialistId: json['specialist_id'],
-    conversationId: json['conversation_id'],
-    shareJournalConsent: json['share_journal_consent'] ?? false,
-    createdAt: json['created_at'],
-    specialist: json['specialist'] != null ? Specialist.fromJson(Map<String, dynamic>.from(json['specialist'])) : null,
-  );
+  factory SupportRequestItem.fromJson(Map<String, dynamic> json) =>
+      SupportRequestItem(
+        id: json['id'] ?? '',
+        topic: json['topic'] ?? '',
+        stage: json['stage'] ?? '',
+        summary: json['summary'] ?? '',
+        status: json['status'] ?? 'pending',
+        specialistId: json['specialist_id'],
+        conversationId: json['conversation_id'],
+        shareJournalConsent: json['share_journal_consent'] ?? false,
+        createdAt: json['created_at'],
+        specialist: json['specialist'] != null
+            ? Specialist.fromJson(Map<String, dynamic>.from(json['specialist']))
+            : null,
+      );
 }

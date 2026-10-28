@@ -61,8 +61,7 @@ class RiskAssessmentData {
       completedSections: parseSections(json['completed_sections']),
       keyFactors: parseFactors(json['key_factors']),
       recommendations: parseList(json['recommendations']),
-      traceableSource: json['traceable_source'] as String? ??
-          'WHO Cervical Cancer Elimination Initiative & Federal Ministry of Health Nigeria Guidelines',
+      traceableSource: json['traceable_source'] as String? ?? 'WHO Cervical Cancer Elimination Initiative & Federal Ministry of Health Nigeria Guidelines',
     );
   }
 

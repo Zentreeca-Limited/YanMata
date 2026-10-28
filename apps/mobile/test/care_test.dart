@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:yanmata/core/api.dart';
@@ -33,7 +34,8 @@ class FakeCareRepository implements CareRepository {
   Future<List<Specialist>> getSpecialists() async => specialists;
 
   @override
-  Future<List<SupportRequestItem>> getMyRequests(String token) async => requests;
+  Future<List<SupportRequestItem>> getMyRequests(String token) async =>
+      requests;
 
   @override
   Future<SupportRequestItem> createRequest(
@@ -104,6 +106,7 @@ class FakeCareRepository implements CareRepository {
 }
 
 void main() {
+  SharedPreferences.setMockInitialValues({'onboarding_done': true});
   testWidgets('Care tab displays verified specialists and allows interaction', (
     tester,
   ) async {

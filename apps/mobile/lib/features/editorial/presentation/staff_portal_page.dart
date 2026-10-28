@@ -96,17 +96,21 @@ class _StaffPortalPageState extends ConsumerState<StaffPortalPage>
                         decoration: const InputDecoration(labelText: 'Topic'),
                         items: const [
                           DropdownMenuItem(
-                              value: 'Body literacy',
-                              child: Text('Body literacy')),
+                            value: 'Body literacy',
+                            child: Text('Body literacy'),
+                          ),
                           DropdownMenuItem(
-                              value: 'Menstrual wellbeing',
-                              child: Text('Menstrual wellbeing')),
+                            value: 'Menstrual wellbeing',
+                            child: Text('Menstrual wellbeing'),
+                          ),
                           DropdownMenuItem(
-                              value: 'Emotional wellbeing',
-                              child: Text('Emotional wellbeing')),
+                            value: 'Emotional wellbeing',
+                            child: Text('Emotional wellbeing'),
+                          ),
                           DropdownMenuItem(
-                              value: 'Healthy ageing',
-                              child: Text('Healthy ageing')),
+                            value: 'Healthy ageing',
+                            child: Text('Healthy ageing'),
+                          ),
                         ],
                         onChanged: (v) =>
                             setModalState(() => selectedTopic = v!),
@@ -116,23 +120,30 @@ class _StaffPortalPageState extends ConsumerState<StaffPortalPage>
                     Expanded(
                       child: DropdownButtonFormField<String>(
                         initialValue: selectedStage,
-                        decoration:
-                            const InputDecoration(labelText: 'Life stage'),
+                        decoration: const InputDecoration(
+                          labelText: 'Life stage',
+                        ),
                         items: const [
                           DropdownMenuItem(
-                              value: 'Puberty', child: Text('Puberty (9–14)')),
+                            value: 'Puberty',
+                            child: Text('Puberty (9–14)'),
+                          ),
                           DropdownMenuItem(
-                              value: 'Adolescence',
-                              child: Text('Adolescence (15–19)')),
+                            value: 'Adolescence',
+                            child: Text('Adolescence (15–19)'),
+                          ),
                           DropdownMenuItem(
-                              value: 'Adulthood',
-                              child: Text('Adulthood (20–44)')),
+                            value: 'Adulthood',
+                            child: Text('Adulthood (20–44)'),
+                          ),
                           DropdownMenuItem(
-                              value: 'Menopause',
-                              child: Text('Menopause (45–54)')),
+                            value: 'Menopause',
+                            child: Text('Menopause (45–54)'),
+                          ),
                           DropdownMenuItem(
-                              value: 'Later life',
-                              child: Text('Later life (55+)')),
+                            value: 'Later life',
+                            child: Text('Later life (55+)'),
+                          ),
                         ],
                         onChanged: (v) =>
                             setModalState(() => selectedStage = v!),
@@ -243,9 +254,8 @@ class _StaffPortalPageState extends ConsumerState<StaffPortalPage>
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Action error: $e')),
-        );
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Action error: $e')));
       }
     } finally {
       if (mounted) setState(() => _busy = false);
@@ -268,7 +278,10 @@ class _StaffPortalPageState extends ConsumerState<StaffPortalPage>
             children: [
               Text(
                 'Member inquiry: "${req.summary}"',
-                style: const TextStyle(fontSize: 13, fontStyle: FontStyle.italic),
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontStyle: FontStyle.italic,
+                ),
               ),
               const SizedBox(height: 12),
               const Text(
@@ -282,10 +295,14 @@ class _StaffPortalPageState extends ConsumerState<StaffPortalPage>
                 ...specialists.map(
                   (spec) => ListTile(
                     contentPadding: EdgeInsets.zero,
-                    title: Text(spec.name,
-                        style: const TextStyle(fontWeight: FontWeight.w600)),
-                    subtitle: Text('${spec.title} · ${spec.verificationSource}',
-                        style: const TextStyle(fontSize: 11)),
+                    title: Text(
+                      spec.name,
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    subtitle: Text(
+                      '${spec.title} · ${spec.verificationSource}',
+                      style: const TextStyle(fontSize: 11),
+                    ),
                     trailing: const Icon(Icons.arrow_forward_ios, size: 14),
                     onTap: () async {
                       Navigator.pop(dlgContext);
@@ -302,8 +319,7 @@ class _StaffPortalPageState extends ConsumerState<StaffPortalPage>
                         ref.invalidate(staffCareRequestsProvider);
                         if (mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                                content: Text('Assigned to ${spec.name}')),
+                            SnackBar(content: Text('Assigned to ${spec.name}')),
                           );
                         }
                       } catch (e) {
@@ -349,7 +365,10 @@ class _StaffPortalPageState extends ConsumerState<StaffPortalPage>
           indicatorColor: Palette.plum,
           tabs: const [
             Tab(icon: Icon(Icons.menu_book_outlined), text: 'Content Pipeline'),
-            Tab(icon: Icon(Icons.medical_services_outlined), text: 'Care Inquiries'),
+            Tab(
+              icon: Icon(Icons.medical_services_outlined),
+              text: 'Care Inquiries',
+            ),
           ],
         ),
       ),
@@ -380,12 +399,17 @@ class _StaffPortalPageState extends ConsumerState<StaffPortalPage>
                         ),
                         Text(
                           'Role: ${journal?.userRole ?? 'staff'} · Verified Jos publishing pipeline',
-                          style: const TextStyle(fontSize: 12, color: Palette.slate),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Palette.slate,
+                          ),
                         ),
                       ],
                     ),
                     FilledButton.icon(
-                      onPressed: _busy ? null : () => _showNewArticleSheet(context),
+                      onPressed: _busy
+                          ? null
+                          : () => _showNewArticleSheet(context),
                       icon: const Icon(Icons.add, size: 18),
                       label: const Text('New draft'),
                     ),
@@ -421,7 +445,9 @@ class _StaffPortalPageState extends ConsumerState<StaffPortalPage>
                                 Text(
                                   art.topic,
                                   style: const TextStyle(
-                                      fontSize: 11, color: Palette.slate),
+                                    fontSize: 11,
+                                    color: Palette.slate,
+                                  ),
                                 ),
                               ],
                             ),
@@ -448,7 +474,9 @@ class _StaffPortalPageState extends ConsumerState<StaffPortalPage>
                                 Text(
                                   'By ${art.authorName ?? 'Staff Author'}',
                                   style: const TextStyle(
-                                      fontSize: 11, color: Palette.slate),
+                                    fontSize: 11,
+                                    color: Palette.slate,
+                                  ),
                                 ),
                                 _buildActionButtons(art),
                               ],
@@ -513,13 +541,19 @@ class _StaffPortalPageState extends ConsumerState<StaffPortalPage>
                                 if (req.shareJournalConsent)
                                   const Row(
                                     children: [
-                                      Icon(Icons.lock_open,
-                                          size: 13, color: Palette.plum),
+                                      Icon(
+                                        Icons.lock_open,
+                                        size: 13,
+                                        color: Palette.plum,
+                                      ),
                                       SizedBox(width: 4),
-                                      Text('Journal shared',
-                                          style: TextStyle(
-                                              fontSize: 11,
-                                              color: Palette.plum)),
+                                      Text(
+                                        'Journal shared',
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          color: Palette.plum,
+                                        ),
+                                      ),
                                     ],
                                   ),
                               ],
@@ -528,7 +562,9 @@ class _StaffPortalPageState extends ConsumerState<StaffPortalPage>
                             Text(
                               req.summary,
                               style: const TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.w600),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                             const SizedBox(height: 12),
                             Row(
@@ -550,7 +586,8 @@ class _StaffPortalPageState extends ConsumerState<StaffPortalPage>
                                   FilledButton.tonal(
                                     onPressed: _busy
                                         ? null
-                                        : () => _showAssignSpecialistDialog(req),
+                                        : () =>
+                                              _showAssignSpecialistDialog(req),
                                     child: const Text('Assign specialist'),
                                   ),
                               ],
@@ -590,7 +627,10 @@ class _StaffPortalPageState extends ConsumerState<StaffPortalPage>
       return const Text(
         'Published live',
         style: TextStyle(
-            fontSize: 12, color: Colors.green, fontWeight: FontWeight.bold),
+          fontSize: 12,
+          color: Colors.green,
+          fontWeight: FontWeight.bold,
+        ),
       );
     }
   }
@@ -646,11 +686,7 @@ class _StatusBadge extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: TextStyle(
-          fontSize: 10,
-          fontWeight: FontWeight.bold,
-          color: fg,
-        ),
+        style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: fg),
       ),
     );
   }

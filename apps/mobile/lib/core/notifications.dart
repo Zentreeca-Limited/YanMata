@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
@@ -29,8 +30,7 @@ class NotificationPreferences {
   final String checkInReminderTime;
 
   static const String discreetLockScreenTitle = 'A quiet moment';
-  static const String discreetLockScreenBody =
-      'How has your day felt so far?';
+  static const String discreetLockScreenBody = 'How has your day felt so far?';
 
   bool isInQuietHours(TimeOfDay time) {
     if (!quietHoursEnabled) return false;
@@ -70,14 +70,14 @@ class NotificationPreferences {
   }
 
   Map<String, dynamic> toJson() => {
-        'care_messages': careMessages,
-        'editorial_updates': editorialUpdates,
-        'quiet_hours_enabled': quietHoursEnabled,
-        'quiet_hours_start': quietHoursStart,
-        'quiet_hours_end': quietHoursEnd,
-        'check_in_reminder_enabled': checkInReminderEnabled,
-        'check_in_reminder_time': checkInReminderTime,
-      };
+    'care_messages': careMessages,
+    'editorial_updates': editorialUpdates,
+    'quiet_hours_enabled': quietHoursEnabled,
+    'quiet_hours_start': quietHoursStart,
+    'quiet_hours_end': quietHoursEnd,
+    'check_in_reminder_enabled': checkInReminderEnabled,
+    'check_in_reminder_time': checkInReminderTime,
+  };
 
   factory NotificationPreferences.fromJson(Map<String, dynamic> json) {
     return NotificationPreferences(
@@ -88,8 +88,7 @@ class NotificationPreferences {
       quietHoursEnd: json['quiet_hours_end'] as String? ?? '07:00',
       checkInReminderEnabled:
           json['check_in_reminder_enabled'] as bool? ?? true,
-      checkInReminderTime:
-          json['check_in_reminder_time'] as String? ?? '20:00',
+      checkInReminderTime: json['check_in_reminder_time'] as String? ?? '20:00',
     );
   }
 }
@@ -213,16 +212,14 @@ class DeviceService {
 }
 
 final deviceServiceProvider = Provider<DeviceService>((ref) {
-  return DeviceService(
-    const DevicePrivateStore(),
-    ref.watch(apiProvider),
-  );
+  return DeviceService(const DevicePrivateStore(), ref.watch(apiProvider));
 });
 
 final notificationPreferencesProvider =
-    AsyncNotifierProvider<NotificationPreferencesNotifier, NotificationPreferences>(
-  NotificationPreferencesNotifier.new,
-);
+    AsyncNotifierProvider<
+      NotificationPreferencesNotifier,
+      NotificationPreferences
+    >(NotificationPreferencesNotifier.new);
 
 class NotificationPreferencesNotifier
     extends AsyncNotifier<NotificationPreferences> {
@@ -252,10 +249,9 @@ class NotificationPreferencesNotifier
 
   Future<void> setQuietHours(String start, String end) async {
     final current = state.value ?? const NotificationPreferences();
-    await savePreferences(current.copyWith(
-      quietHoursStart: start,
-      quietHoursEnd: end,
-    ));
+    await savePreferences(
+      current.copyWith(quietHoursStart: start, quietHoursEnd: end),
+    );
   }
 
   Future<void> toggleCheckInReminder(bool enabled) async {

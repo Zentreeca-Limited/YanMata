@@ -1,7 +1,9 @@
 import 'dart:convert';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../core/providers.dart';
 
 class LocationHub {
@@ -33,7 +35,9 @@ class LocationHub {
   }
 }
 
-final availableLocationsProvider = FutureProvider<List<LocationHub>>((ref) async {
+final availableLocationsProvider = FutureProvider<List<LocationHub>>((
+  ref,
+) async {
   final baseUrl = ref.watch(apiBaseUrlProvider);
   try {
     final response = await http.get(
@@ -43,7 +47,9 @@ final availableLocationsProvider = FutureProvider<List<LocationHub>>((ref) async
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body) as Map<String, dynamic>;
       final list = json['data'] as List<dynamic>? ?? [];
-      return list.map((e) => LocationHub.fromJson(e as Map<String, dynamic>)).toList();
+      return list
+          .map((e) => LocationHub.fromJson(e as Map<String, dynamic>))
+          .toList();
     }
   } catch (_) {}
 
@@ -130,6 +136,7 @@ class SelectedLocationNotifier extends Notifier<LocationHub> {
   }
 }
 
-final selectedLocationProvider = NotifierProvider<SelectedLocationNotifier, LocationHub>(
-  SelectedLocationNotifier.new,
-);
+final selectedLocationProvider =
+    NotifierProvider<SelectedLocationNotifier, LocationHub>(
+      SelectedLocationNotifier.new,
+    );

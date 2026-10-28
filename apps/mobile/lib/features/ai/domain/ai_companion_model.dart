@@ -56,7 +56,11 @@ class CycleInsightsModel {
         'start_day': fw['start_day'] as int? ?? 10,
         'end_day': fw['end_day'] as int? ?? 16,
       },
-      tailoredTips: (json['tailored_tips'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
+      tailoredTips:
+          (json['tailored_tips'] as List<dynamic>?)
+              ?.map((e) => e.toString())
+              .toList() ??
+          [],
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'tokens.dart';
 
 abstract final class Palette {
@@ -13,13 +14,13 @@ abstract final class Palette {
   static const slate = DesignColors.muted;
 
   // Semantic Dark Mode Colors
-  static const darkBackground = Color(0xFF120817);
-  static const darkSurface = Color(0xFF1E0E26);
-  static const darkCard = Color(0xFF2A1535);
-  static const darkBorder = Color(0xFF422353);
-  static const darkText = Color(0xFFFAF2FC);
-  static const darkMuted = Color(0xFFC8B2CF);
-  static const darkAccent = Color(0xFFD8B4E2);
+  static const darkBackground = Color(0xFF1A0B14);
+  static const darkSurface = Color(0xFF26121D);
+  static const darkCard = Color(0xFF34192A);
+  static const darkBorder = Color(0xFF55304A);
+  static const darkText = Color(0xFFFFF1F6);
+  static const darkMuted = Color(0xFFD9B8C8);
+  static const darkAccent = Color(0xFFF4A6C4);
 
   static ThemeData get lightTheme => ThemeData(
     useMaterial3: true,
@@ -41,6 +42,27 @@ abstract final class Palette {
       iconTheme: IconThemeData(color: ink),
     ),
     cardColor: Colors.white,
+    navigationBarTheme: NavigationBarThemeData(
+      backgroundColor: Colors.white,
+      surfaceTintColor: Colors.transparent,
+      indicatorColor: blush,
+      elevation: 8,
+      shadowColor: plum.withValues(alpha: .25),
+      labelTextStyle: WidgetStateProperty.resolveWith(
+        (s) => TextStyle(
+          fontSize: 11,
+          fontWeight: s.contains(WidgetState.selected)
+              ? FontWeight.w700
+              : FontWeight.w500,
+          color: s.contains(WidgetState.selected) ? plum : muted,
+        ),
+      ),
+      iconTheme: WidgetStateProperty.resolveWith(
+        (s) => IconThemeData(
+          color: s.contains(WidgetState.selected) ? plum : muted,
+        ),
+      ),
+    ),
     dividerColor: line,
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
@@ -62,16 +84,18 @@ abstract final class Palette {
     ),
     textTheme: const TextTheme(
       headlineLarge: TextStyle(
+        fontFamily: 'Fraunces',
         fontSize: 34,
         height: 1.15,
         fontWeight: FontWeight.w600,
-        letterSpacing: -1.3,
+        letterSpacing: -.6,
         color: ink,
       ),
       headlineSmall: TextStyle(
+        fontFamily: 'Fraunces',
         fontSize: 25,
         fontWeight: FontWeight.w600,
-        letterSpacing: -.7,
+        letterSpacing: -.3,
         color: ink,
       ),
       bodyMedium: TextStyle(fontSize: 15, height: 1.6, color: muted),
@@ -88,7 +112,7 @@ abstract final class Palette {
       brightness: Brightness.dark,
       surface: darkSurface,
       primary: darkAccent,
-      secondary: const Color(0xFFF472B6),
+      secondary: const Color(0xFFFFC2A8),
       tertiary: darkCard,
     ),
     fontFamily: 'Manrope',
@@ -99,6 +123,27 @@ abstract final class Palette {
       iconTheme: IconThemeData(color: darkText),
     ),
     cardColor: darkCard,
+    navigationBarTheme: NavigationBarThemeData(
+      backgroundColor: darkSurface,
+      surfaceTintColor: Colors.transparent,
+      indicatorColor: darkCard,
+      elevation: 8,
+      shadowColor: Colors.black,
+      labelTextStyle: WidgetStateProperty.resolveWith(
+        (s) => TextStyle(
+          fontSize: 11,
+          fontWeight: s.contains(WidgetState.selected)
+              ? FontWeight.w700
+              : FontWeight.w500,
+          color: s.contains(WidgetState.selected) ? darkAccent : darkMuted,
+        ),
+      ),
+      iconTheme: WidgetStateProperty.resolveWith(
+        (s) => IconThemeData(
+          color: s.contains(WidgetState.selected) ? darkAccent : darkMuted,
+        ),
+      ),
+    ),
     dividerColor: darkBorder,
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
@@ -120,16 +165,18 @@ abstract final class Palette {
     ),
     textTheme: const TextTheme(
       headlineLarge: TextStyle(
+        fontFamily: 'Fraunces',
         fontSize: 34,
         height: 1.15,
         fontWeight: FontWeight.w600,
-        letterSpacing: -1.3,
+        letterSpacing: -.6,
         color: darkText,
       ),
       headlineSmall: TextStyle(
+        fontFamily: 'Fraunces',
         fontSize: 25,
         fontWeight: FontWeight.w600,
-        letterSpacing: -.7,
+        letterSpacing: -.3,
         color: darkText,
       ),
       bodyMedium: TextStyle(fontSize: 15, height: 1.6, color: darkMuted),

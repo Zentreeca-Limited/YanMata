@@ -75,7 +75,9 @@ class RiskOverviewPage extends ConsumerWidget {
                           value: data.overallRiskScore / 100,
                           strokeWidth: 12,
                           backgroundColor: const Color(0xFFF3E8FF),
-                          valueColor: const AlwaysStoppedAnimation<Color>(Palette.plum),
+                          valueColor: const AlwaysStoppedAnimation<Color>(
+                            Palette.plum,
+                          ),
                         ),
                       ),
                       Column(
@@ -260,7 +262,10 @@ class _RiskAreaCard extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       '$riskLabel ($riskScore%)',
-                      style: const TextStyle(fontSize: 12, color: Palette.slate),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Palette.slate,
+                      ),
                     ),
                   ],
                 ),

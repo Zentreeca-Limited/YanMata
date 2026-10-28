@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'app_strings.dart';
 
 class LocaleNotifier extends Notifier<AppLanguage> {
@@ -34,7 +35,9 @@ class LocaleNotifier extends Notifier<AppLanguage> {
   }
 }
 
-final localeProvider = NotifierProvider<LocaleNotifier, AppLanguage>(LocaleNotifier.new);
+final localeProvider = NotifierProvider<LocaleNotifier, AppLanguage>(
+  LocaleNotifier.new,
+);
 
 // Extension on WidgetRef for fast, idiomatic access in presentation
 extension LocalizationRefX on WidgetRef {

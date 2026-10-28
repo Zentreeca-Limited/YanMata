@@ -43,32 +43,40 @@ class _MentalHealthPageState extends State<MentalHealthPage> {
               Text(
                 title,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Palette.plum,
-                    ),
+                  fontWeight: FontWeight.bold,
+                  color: Palette.plum,
+                ),
               ),
               const SizedBox(height: 10),
-              Text(
-                summary,
-                style: const TextStyle(fontSize: 14, height: 1.5),
-              ),
+              Text(summary, style: const TextStyle(fontSize: 14, height: 1.5)),
               const SizedBox(height: 18),
               const Text(
                 'Coping Strategies',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Palette.plum),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                  color: Palette.plum,
+                ),
               ),
               const SizedBox(height: 8),
-              ...tips.map((t) => Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Icon(Icons.spa, size: 16, color: Palette.plum),
-                        const SizedBox(width: 8),
-                        Expanded(child: Text(t, style: const TextStyle(fontSize: 13, height: 1.4))),
-                      ],
-                    ),
-                  )),
+              ...tips.map(
+                (t) => Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(Icons.spa, size: 16, color: Palette.plum),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          t,
+                          style: const TextStyle(fontSize: 13, height: 1.4),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               const SizedBox(height: 20),
               FilledButton(
                 onPressed: () => Navigator.pop(context),
@@ -105,56 +113,61 @@ class _MentalHealthPageState extends State<MentalHealthPage> {
           // Mood Emojis Row
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ('Great', '😄'),
-              ('Good', '🙂'),
-              ('Okay', '😐'),
-              ('Low', '😔'),
-              ('Very low', '😢'),
-            ].map((m) {
-              final isSelected = _selectedMood == m.$1;
-              return GestureDetector(
-                onTap: () {
-                  setState(() => _selectedMood = m.$1);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Noticed: Feeling ${m.$1} today.'),
-                      duration: const Duration(seconds: 1),
+            children:
+                [
+                  ('Great', '😄'),
+                  ('Good', '🙂'),
+                  ('Okay', '😐'),
+                  ('Low', '😔'),
+                  ('Very low', '😢'),
+                ].map((m) {
+                  final isSelected = _selectedMood == m.$1;
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() => _selectedMood = m.$1);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Noticed: Feeling ${m.$1} today.'),
+                          duration: const Duration(seconds: 1),
+                        ),
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 54,
+                          height: 54,
+                          decoration: BoxDecoration(
+                            color: isSelected ? Palette.plum : Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: isSelected
+                                  ? Palette.plum
+                                  : const Color(0xFFE9E2E9),
+                              width: 2,
+                            ),
+                          ),
+                          alignment: Alignment.center,
+                          child: Text(
+                            m.$2,
+                            style: const TextStyle(fontSize: 24),
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          m.$1,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: isSelected
+                                ? FontWeight.bold
+                                : FontWeight.w500,
+                            color: isSelected ? Palette.plum : Palette.slate,
+                          ),
+                        ),
+                      ],
                     ),
                   );
-                },
-                child: Column(
-                  children: [
-                    Container(
-                      width: 54,
-                      height: 54,
-                      decoration: BoxDecoration(
-                        color: isSelected ? Palette.plum : Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          color: isSelected ? Palette.plum : const Color(0xFFE9E2E9),
-                          width: 2,
-                        ),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        m.$2,
-                        style: const TextStyle(fontSize: 24),
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      m.$1,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                        color: isSelected ? Palette.plum : Palette.slate,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }).toList(),
+                }).toList(),
           ),
           const SizedBox(height: 28),
 
@@ -281,7 +294,11 @@ class _MentalHealthPageState extends State<MentalHealthPage> {
                 SizedBox(height: 6),
                 Text(
                   '• SURPIN Toll-Free: 0800 123 4567 / 0908 021 7555\n• Emergency Ambulance / Police: 112\n• Asido Foundation Helpline: 0902 808 0416',
-                  style: TextStyle(fontSize: 12, height: 1.5, color: Palette.slate),
+                  style: TextStyle(
+                    fontSize: 12,
+                    height: 1.5,
+                    color: Palette.slate,
+                  ),
                 ),
               ],
             ),
@@ -345,7 +362,10 @@ class _ConcernCard extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       subtitle,
-                      style: const TextStyle(fontSize: 12, color: Palette.slate),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Palette.slate,
+                      ),
                     ),
                   ],
                 ),

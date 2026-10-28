@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../core/localization/locale_provider.dart';
 import '../../../core/theme.dart';
 import '../../../core/ui_feedback.dart';
@@ -48,13 +49,15 @@ class _TrackState extends ConsumerState<Track> {
       error = null;
     });
     try {
-      await ref.read(journalProvider.notifier).add(
-        mood,
-        note.text.trim(),
-        flow: flow,
-        symptoms: selectedSymptoms,
-        energy: energy,
-      );
+      await ref
+          .read(journalProvider.notifier)
+          .add(
+            mood,
+            note.text.trim(),
+            flow: flow,
+            symptoms: selectedSymptoms,
+            energy: energy,
+          );
       note.clear();
       setState(() {
         selectedSymptoms.clear();
@@ -62,10 +65,7 @@ class _TrackState extends ConsumerState<Track> {
         energy = 'moderate';
       });
       if (mounted) {
-        YanMataFeedback.showSuccessSnackbar(
-          context,
-          ref.tr('checkin_saved'),
-        );
+        YanMataFeedback.showSuccessSnackbar(context, ref.tr('checkin_saved'));
       }
     } catch (e) {
       setState(() => error = e.toString());
@@ -83,7 +83,10 @@ class _TrackState extends ConsumerState<Track> {
     final cycle = ref.watch(cycleSettingsProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final progress = (cycle.currentDayOfCycle / cycle.cycleLength).clamp(0.0, 1.0);
+    final progress = (cycle.currentDayOfCycle / cycle.cycleLength).clamp(
+      0.0,
+      1.0,
+    );
 
     return PageFrame(
       children: [
@@ -99,9 +102,9 @@ class _TrackState extends ConsumerState<Track> {
                   Text(
                     ref.tr('track_title'),
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: isDark ? Palette.darkText : Palette.plum,
-                        ),
+                      fontWeight: FontWeight.bold,
+                      color: isDark ? Palette.darkText : Palette.plum,
+                    ),
                   ),
                 ],
               ),
@@ -128,35 +131,40 @@ class _TrackState extends ConsumerState<Track> {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: [
-              ('Cycle', ref.tr('tab_cycle')),
-              ('Mood', ref.tr('tab_mood')),
-              ('Symptoms', ref.tr('tab_symptoms')),
-              ('Insights', ref.tr('tab_insights')),
-            ].map((tab) {
-              final isSelected = _activeTab == tab.$1;
-              return Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: ChoiceChip(
-                  label: Text(tab.$2),
-                  selected: isSelected,
-                  selectedColor: Palette.plum,
-                  labelStyle: TextStyle(
-                    color: isSelected
-                        ? Colors.white
-                        : (isDark ? Palette.darkText : Palette.ink),
-                    fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                  ),
-                  backgroundColor: isDark ? Palette.darkCard : Colors.white,
-                  side: BorderSide(
-                    color: isSelected
-                        ? Palette.plum
-                        : (isDark ? Palette.darkBorder : const Color(0xFFE2D6E4)),
-                  ),
-                  onSelected: (_) => setState(() => _activeTab = tab.$1),
-                ),
-              );
-            }).toList(),
+            children:
+                [
+                  ('Cycle', ref.tr('tab_cycle')),
+                  ('Mood', ref.tr('tab_mood')),
+                  ('Symptoms', ref.tr('tab_symptoms')),
+                  ('Insights', ref.tr('tab_insights')),
+                ].map((tab) {
+                  final isSelected = _activeTab == tab.$1;
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: ChoiceChip(
+                      label: Text(tab.$2),
+                      selected: isSelected,
+                      selectedColor: Palette.plum,
+                      labelStyle: TextStyle(
+                        color: isSelected
+                            ? Colors.white
+                            : (isDark ? Palette.darkText : Palette.ink),
+                        fontWeight: isSelected
+                            ? FontWeight.w700
+                            : FontWeight.w500,
+                      ),
+                      backgroundColor: isDark ? Palette.darkCard : Colors.white,
+                      side: BorderSide(
+                        color: isSelected
+                            ? Palette.plum
+                            : (isDark
+                                  ? Palette.darkBorder
+                                  : const Color(0xFFE2D6E4)),
+                      ),
+                      onSelected: (_) => setState(() => _activeTab = tab.$1),
+                    ),
+                  );
+                }).toList(),
           ),
         ),
         const SizedBox(height: 20),
@@ -186,7 +194,11 @@ class _TrackState extends ConsumerState<Track> {
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.water_drop, color: Color(0xFFE11D48), size: 24),
+                      const Icon(
+                        Icons.water_drop,
+                        color: Color(0xFFE11D48),
+                        size: 24,
+                      ),
                       const SizedBox(height: 4),
                       Text(
                         'Day ${cycle.currentDayOfCycle}',
@@ -214,12 +226,18 @@ class _TrackState extends ConsumerState<Track> {
                   color: isDark ? Palette.darkSurface : Palette.cream,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: isDark ? Palette.darkBorder : const Color(0xFFE9E2E9),
+                    color: isDark
+                        ? Palette.darkBorder
+                        : const Color(0xFFE9E2E9),
                   ),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.calendar_today_outlined, color: Palette.plum, size: 20),
+                    const Icon(
+                      Icons.calendar_today_outlined,
+                      color: Palette.plum,
+                      size: 20,
+                    ),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Column(
@@ -273,7 +291,11 @@ class _TrackState extends ConsumerState<Track> {
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.auto_awesome, color: Palette.plum, size: 20),
+                    const Icon(
+                      Icons.auto_awesome,
+                      color: Palette.plum,
+                      size: 20,
+                    ),
                     const SizedBox(width: 8),
                     Text(
                       'AI Cycle Rhythm Intelligence',
@@ -289,12 +311,18 @@ class _TrackState extends ConsumerState<Track> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: isDark ? Palette.darkSurface : Palette.lilac.withValues(alpha: 0.3),
+                    color: isDark
+                        ? Palette.darkSurface
+                        : Palette.lilac.withValues(alpha: 0.3),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.check_circle_rounded, color: Color(0xFF10B981), size: 18),
+                      const Icon(
+                        Icons.check_circle_rounded,
+                        color: Color(0xFF10B981),
+                        size: 18,
+                      ),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
@@ -324,11 +352,16 @@ class _TrackState extends ConsumerState<Track> {
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedButton.icon(
-                    icon: const Icon(Icons.chat_bubble_outline_rounded, size: 16),
+                    icon: const Icon(
+                      Icons.chat_bubble_outline_rounded,
+                      size: 16,
+                    ),
                     label: const Text('Ask Aisha AI about this phase'),
                     onPressed: () => Navigator.push(
                       context,
-                      MaterialPageRoute<void>(builder: (_) => const AiCompanionPage()),
+                      MaterialPageRoute<void>(
+                        builder: (_) => const AiCompanionPage(),
+                      ),
                     ),
                   ),
                 ),
@@ -468,24 +501,28 @@ class _TrackState extends ConsumerState<Track> {
               Wrap(
                 spacing: 8,
                 runSpacing: 6,
-                children: ['Great', 'Good', 'Okay', 'Low', 'Difficult'].map(
-                  (m) {
-                    final isSelected = mood == m;
-                    return ChoiceChip(
-                      label: Text(m),
-                      selected: isSelected,
-                      selectedColor: Palette.plum,
-                      labelStyle: TextStyle(
-                        color: isSelected
-                            ? Colors.white
-                            : (isDark ? Palette.darkText : Palette.ink),
-                        fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                      ),
-                      backgroundColor: isDark ? Palette.darkSurface : Colors.white,
-                      onSelected: (_) => setState(() => mood = m),
-                    );
-                  },
-                ).toList(),
+                children: ['Great', 'Good', 'Okay', 'Low', 'Difficult'].map((
+                  m,
+                ) {
+                  final isSelected = mood == m;
+                  return ChoiceChip(
+                    label: Text(m),
+                    selected: isSelected,
+                    selectedColor: Palette.plum,
+                    labelStyle: TextStyle(
+                      color: isSelected
+                          ? Colors.white
+                          : (isDark ? Palette.darkText : Palette.ink),
+                      fontWeight: isSelected
+                          ? FontWeight.w700
+                          : FontWeight.w500,
+                    ),
+                    backgroundColor: isDark
+                        ? Palette.darkSurface
+                        : Colors.white,
+                    onSelected: (_) => setState(() => mood = m),
+                  );
+                }).toList(),
               ),
               const SizedBox(height: 20),
 
@@ -502,24 +539,28 @@ class _TrackState extends ConsumerState<Track> {
               Wrap(
                 spacing: 8,
                 runSpacing: 6,
-                children: ['< 6h', '6h – 7h', '7h 20m', '8h – 9h', '> 9h'].map(
-                  (sl) {
-                    final isSelected = sleepDuration == sl;
-                    return ChoiceChip(
-                      label: Text(sl),
-                      selected: isSelected,
-                      selectedColor: Palette.plum,
-                      labelStyle: TextStyle(
-                        color: isSelected
-                            ? Colors.white
-                            : (isDark ? Palette.darkText : Palette.ink),
-                        fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                      ),
-                      backgroundColor: isDark ? Palette.darkSurface : Colors.white,
-                      onSelected: (_) => setState(() => sleepDuration = sl),
-                    );
-                  },
-                ).toList(),
+                children: ['< 6h', '6h – 7h', '7h 20m', '8h – 9h', '> 9h'].map((
+                  sl,
+                ) {
+                  final isSelected = sleepDuration == sl;
+                  return ChoiceChip(
+                    label: Text(sl),
+                    selected: isSelected,
+                    selectedColor: Palette.plum,
+                    labelStyle: TextStyle(
+                      color: isSelected
+                          ? Colors.white
+                          : (isDark ? Palette.darkText : Palette.ink),
+                      fontWeight: isSelected
+                          ? FontWeight.w700
+                          : FontWeight.w500,
+                    ),
+                    backgroundColor: isDark
+                        ? Palette.darkSurface
+                        : Colors.white,
+                    onSelected: (_) => setState(() => sleepDuration = sl),
+                  );
+                }).toList(),
               ),
               const SizedBox(height: 20),
 
@@ -544,30 +585,33 @@ class _TrackState extends ConsumerState<Track> {
               Wrap(
                 spacing: 8,
                 runSpacing: 6,
-                children: [
-                  ('none', ref.tr('flow_none')),
-                  ('spotting', ref.tr('flow_spotting')),
-                  ('light', ref.tr('flow_light')),
-                  ('medium', ref.tr('flow_medium')),
-                  ('heavy', ref.tr('flow_heavy')),
-                ].map(
-                  (f) {
-                    final isSelected = flow == f.$1;
-                    return ChoiceChip(
-                      label: Text(f.$2),
-                      selected: isSelected,
-                      selectedColor: Palette.plum,
-                      labelStyle: TextStyle(
-                        color: isSelected
-                            ? Colors.white
-                            : (isDark ? Palette.darkText : Palette.ink),
-                        fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                      ),
-                      backgroundColor: isDark ? Palette.darkSurface : Colors.white,
-                      onSelected: (_) => setState(() => flow = f.$1),
-                    );
-                  },
-                ).toList(),
+                children:
+                    [
+                      ('none', ref.tr('flow_none')),
+                      ('spotting', ref.tr('flow_spotting')),
+                      ('light', ref.tr('flow_light')),
+                      ('medium', ref.tr('flow_medium')),
+                      ('heavy', ref.tr('flow_heavy')),
+                    ].map((f) {
+                      final isSelected = flow == f.$1;
+                      return ChoiceChip(
+                        label: Text(f.$2),
+                        selected: isSelected,
+                        selectedColor: Palette.plum,
+                        labelStyle: TextStyle(
+                          color: isSelected
+                              ? Colors.white
+                              : (isDark ? Palette.darkText : Palette.ink),
+                          fontWeight: isSelected
+                              ? FontWeight.w700
+                              : FontWeight.w500,
+                        ),
+                        backgroundColor: isDark
+                            ? Palette.darkSurface
+                            : Colors.white,
+                        onSelected: (_) => setState(() => flow = f.$1),
+                      );
+                    }).toList(),
               ),
               const SizedBox(height: 20),
 
@@ -584,29 +628,32 @@ class _TrackState extends ConsumerState<Track> {
               Wrap(
                 spacing: 8,
                 runSpacing: 6,
-                children: [
-                  ('high', 'High'),
-                  ('moderate', 'Moderate'),
-                  ('low', 'Low'),
-                  ('exhausted', 'Exhausted'),
-                ].map(
-                  (e) {
-                    final isSelected = energy == e.$1;
-                    return ChoiceChip(
-                      label: Text(e.$2),
-                      selected: isSelected,
-                      selectedColor: Palette.plum,
-                      labelStyle: TextStyle(
-                        color: isSelected
-                            ? Colors.white
-                            : (isDark ? Palette.darkText : Palette.ink),
-                        fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                      ),
-                      backgroundColor: isDark ? Palette.darkSurface : Colors.white,
-                      onSelected: (_) => setState(() => energy = e.$1),
-                    );
-                  },
-                ).toList(),
+                children:
+                    [
+                      ('high', 'High'),
+                      ('moderate', 'Moderate'),
+                      ('low', 'Low'),
+                      ('exhausted', 'Exhausted'),
+                    ].map((e) {
+                      final isSelected = energy == e.$1;
+                      return ChoiceChip(
+                        label: Text(e.$2),
+                        selected: isSelected,
+                        selectedColor: Palette.plum,
+                        labelStyle: TextStyle(
+                          color: isSelected
+                              ? Colors.white
+                              : (isDark ? Palette.darkText : Palette.ink),
+                          fontWeight: isSelected
+                              ? FontWeight.w700
+                              : FontWeight.w500,
+                        ),
+                        backgroundColor: isDark
+                            ? Palette.darkSurface
+                            : Colors.white,
+                        onSelected: (_) => setState(() => energy = e.$1),
+                      );
+                    }).toList(),
               ),
               const SizedBox(height: 20),
 
@@ -623,32 +670,35 @@ class _TrackState extends ConsumerState<Track> {
               Wrap(
                 spacing: 8,
                 runSpacing: 6,
-                children: [
-                  ('Cramps', ref.tr('symptom_cramps')),
-                  ('Headache', ref.tr('symptom_headache')),
-                  ('Tender breasts', ref.tr('symptom_tender_breasts')),
-                  ('Bloating', ref.tr('symptom_bloating')),
-                  ('Fatigue', ref.tr('symptom_fatigue')),
-                  ('Acne', ref.tr('symptom_acne')),
-                  ('Backache', ref.tr('symptom_backache')),
-                ].map(
-                  (s) {
-                    final isSelected = selectedSymptoms.contains(s.$1);
-                    return FilterChip(
-                      label: Text(s.$2),
-                      selected: isSelected,
-                      selectedColor: Palette.blush,
-                      labelStyle: TextStyle(
-                        color: isSelected
-                            ? Palette.plum
-                            : (isDark ? Palette.darkText : Palette.ink),
-                        fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                      ),
-                      backgroundColor: isDark ? Palette.darkSurface : Colors.white,
-                      onSelected: (_) => _toggleSymptom(s.$1),
-                    );
-                  },
-                ).toList(),
+                children:
+                    [
+                      ('Cramps', ref.tr('symptom_cramps')),
+                      ('Headache', ref.tr('symptom_headache')),
+                      ('Tender breasts', ref.tr('symptom_tender_breasts')),
+                      ('Bloating', ref.tr('symptom_bloating')),
+                      ('Fatigue', ref.tr('symptom_fatigue')),
+                      ('Acne', ref.tr('symptom_acne')),
+                      ('Backache', ref.tr('symptom_backache')),
+                    ].map((s) {
+                      final isSelected = selectedSymptoms.contains(s.$1);
+                      return FilterChip(
+                        label: Text(s.$2),
+                        selected: isSelected,
+                        selectedColor: Palette.blush,
+                        labelStyle: TextStyle(
+                          color: isSelected
+                              ? Palette.plum
+                              : (isDark ? Palette.darkText : Palette.ink),
+                          fontWeight: isSelected
+                              ? FontWeight.w700
+                              : FontWeight.w500,
+                        ),
+                        backgroundColor: isDark
+                            ? Palette.darkSurface
+                            : Colors.white,
+                        onSelected: (_) => _toggleSymptom(s.$1),
+                      );
+                    }).toList(),
               ),
               const SizedBox(height: 20),
 
@@ -670,7 +720,10 @@ class _TrackState extends ConsumerState<Track> {
               if (error != null)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8),
-                  child: Text(error!, style: const TextStyle(color: Colors.red)),
+                  child: Text(
+                    error!,
+                    style: const TextStyle(color: Colors.red),
+                  ),
                 ),
               SizedBox(
                 width: double.infinity,
@@ -682,7 +735,11 @@ class _TrackState extends ConsumerState<Track> {
               const SizedBox(height: 14),
               Row(
                 children: [
-                  const Icon(Icons.lock_outline, size: 13, color: Palette.muted),
+                  const Icon(
+                    Icons.lock_outline,
+                    size: 13,
+                    color: Palette.muted,
+                  ),
                   const SizedBox(width: 6),
                   Expanded(
                     child: Text(
@@ -702,9 +759,8 @@ class _TrackState extends ConsumerState<Track> {
 
         Text(
           'Your recent moments',
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: isDark ? Palette.darkText : Palette.ink,
-              ),
+          style: Theme.of(context).textTheme.headlineSmall
+              ?.copyWith(color: isDark ? Palette.darkText : Palette.ink),
         ),
         const SizedBox(height: 15),
         state.when(
@@ -758,7 +814,9 @@ class _TrackState extends ConsumerState<Track> {
                               e.date,
                               style: TextStyle(
                                 fontSize: 12,
-                                color: isDark ? Palette.darkMuted : Palette.muted,
+                                color: isDark
+                                    ? Palette.darkMuted
+                                    : Palette.muted,
                               ),
                             ),
                           ],

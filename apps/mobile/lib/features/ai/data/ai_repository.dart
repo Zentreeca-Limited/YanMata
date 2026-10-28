@@ -1,5 +1,7 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+
 import '../domain/ai_companion_model.dart';
 
 class AiRepository {
@@ -7,7 +9,7 @@ class AiRepository {
   final http.Client _client;
 
   AiRepository({required this.baseUrl, http.Client? client})
-      : _client = client ?? http.Client();
+    : _client = client ?? http.Client();
 
   Future<AiMessage> sendMessage({
     required String prompt,
@@ -16,10 +18,7 @@ class AiRepository {
     String? phase,
   }) async {
     final uri = Uri.parse('$baseUrl/ai/companion/chat');
-    final payload = <String, dynamic>{
-      'prompt': prompt,
-      'language': language,
-    };
+    final payload = <String, dynamic>{'prompt': prompt, 'language': language};
     if (cycleDay != null) payload['cycle_day'] = cycleDay;
     if (phase != null) payload['phase'] = phase;
 
@@ -37,7 +36,9 @@ class AiRepository {
       final data = json['data'] as Map<String, dynamic>;
 
       final helplinesRaw = data['helplines'] as List<dynamic>? ?? [];
-      final helplines = helplinesRaw.map((e) => Map<String, String>.from(e as Map)).toList();
+      final helplines = helplinesRaw
+          .map((e) => Map<String, String>.from(e as Map))
+          .toList();
 
       return AiMessage(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -45,10 +46,22 @@ class AiRepository {
         isUser: false,
         timestamp: DateTime.now(),
         isEmergency: data['is_emergency'] as bool? ?? false,
-        citations: (data['citations'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
+        citations:
+            (data['citations'] as List<dynamic>?)
+                ?.map((e) => e.toString())
+                .toList() ??
+            [],
         helplines: helplines,
-        suggestedActions: (data['suggested_actions'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
-        followUps: (data['follow_up_questions'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
+        suggestedActions:
+            (data['suggested_actions'] as List<dynamic>?)
+                ?.map((e) => e.toString())
+                .toList() ??
+            [],
+        followUps:
+            (data['follow_up_questions'] as List<dynamic>?)
+                ?.map((e) => e.toString())
+                .toList() ??
+            [],
       );
     } else {
       throw Exception('Failed to send message: HTTP ${response.statusCode}');
@@ -80,7 +93,9 @@ class AiRepository {
       final json = jsonDecode(response.body) as Map<String, dynamic>;
       return CycleInsightsModel.fromJson(json['data'] as Map<String, dynamic>);
     } else {
-      throw Exception('Failed to fetch cycle insights: HTTP ${response.statusCode}');
+      throw Exception(
+        'Failed to fetch cycle insights: HTTP ${response.statusCode}',
+      );
     }
   }
 }

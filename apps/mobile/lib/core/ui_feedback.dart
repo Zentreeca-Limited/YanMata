@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'theme.dart';
 
 class YanMataFeedback {
@@ -16,7 +17,9 @@ class YanMataFeedback {
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         elevation: 6,
-        backgroundColor: isDark ? const Color(0xFF1E293B) : const Color(0xFF0F172A),
+        backgroundColor: isDark
+            ? const Color(0xFF1E293B)
+            : const Color(0xFF0F172A),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
           side: BorderSide(
@@ -77,7 +80,9 @@ class YanMataFeedback {
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         elevation: 6,
-        backgroundColor: isDark ? const Color(0xFF2B0A12) : const Color(0xFF330B13),
+        backgroundColor: isDark
+            ? const Color(0xFF2B0A12)
+            : const Color(0xFF330B13),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
           side: BorderSide(

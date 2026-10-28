@@ -51,7 +51,11 @@ class Today extends ConsumerWidget {
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.spa_outlined, color: Palette.plum, size: 28),
+                Icon(
+                  Icons.spa_outlined,
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 28,
+                ),
                 const SizedBox(width: 8),
                 Text(
                   ref.tr('app_name'),
@@ -72,7 +76,10 @@ class Today extends ConsumerWidget {
                   onTap: () => LocationPickerSheet.show(context),
                   borderRadius: BorderRadius.circular(16),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: isDark ? Palette.darkSurface : Palette.lilac,
                       borderRadius: BorderRadius.circular(16),
@@ -80,10 +87,16 @@ class Today extends ConsumerWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.location_on, size: 14, color: Palette.plum),
+                        Icon(
+                          Icons.location_on,
+                          size: 14,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                         const SizedBox(width: 4),
                         Text(
-                          location.city == 'All Locations' ? 'All' : location.city,
+                          location.city == 'All Locations'
+                              ? 'All'
+                              : location.city,
                           style: TextStyle(
                             fontSize: 11.5,
                             fontWeight: FontWeight.w700,
@@ -100,7 +113,10 @@ class Today extends ConsumerWidget {
                   onTap: () => LanguagePickerSheet.show(context),
                   borderRadius: BorderRadius.circular(16),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: isDark ? Palette.darkSurface : Palette.blush,
                       borderRadius: BorderRadius.circular(16),
@@ -108,7 +124,11 @@ class Today extends ConsumerWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.translate, size: 13, color: Palette.plum),
+                        Icon(
+                          Icons.translate,
+                          size: 13,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                         const SizedBox(width: 4),
                         Text(
                           lang.code.toUpperCase(),
@@ -127,12 +147,16 @@ class Today extends ConsumerWidget {
                 IconButton(
                   iconSize: 20,
                   padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                  constraints: const BoxConstraints(
+                    minWidth: 32,
+                    minHeight: 32,
+                  ),
                   icon: Icon(
                     isDark ? Icons.light_mode : Icons.dark_mode_outlined,
                     color: isDark ? Palette.darkAccent : Palette.plum,
                   ),
-                  onPressed: () => ref.read(themeModeProvider.notifier).toggleTheme(isDark),
+                  onPressed: () =>
+                      ref.read(themeModeProvider.notifier).toggleTheme(isDark),
                 ),
               ],
             ),
@@ -260,13 +284,11 @@ class Today extends ConsumerWidget {
           icon: Icons.auto_awesome,
           title: ref.tr('shortcut_ai'),
           subtitle: ref.tr('shortcut_ai_sub'),
-          accentColor: Palette.plum,
+          accentColor: Theme.of(context).colorScheme.primary,
           badgeText: 'AI 24/7',
           onTap: () => Navigator.push(
             context,
-            MaterialPageRoute<void>(
-              builder: (_) => const AiCompanionPage(),
-            ),
+            MaterialPageRoute<void>(builder: (_) => const AiCompanionPage()),
           ),
         ),
         const SizedBox(height: 12),
@@ -278,9 +300,7 @@ class Today extends ConsumerWidget {
           subtitle: ref.tr('shortcut_risk_sub'),
           onTap: () => Navigator.push(
             context,
-            MaterialPageRoute<void>(
-              builder: (_) => const RiskOverviewPage(),
-            ),
+            MaterialPageRoute<void>(builder: (_) => const RiskOverviewPage()),
           ),
         ),
         const SizedBox(height: 12),
@@ -292,9 +312,7 @@ class Today extends ConsumerWidget {
           subtitle: ref.tr('shortcut_mental_sub'),
           onTap: () => Navigator.push(
             context,
-            MaterialPageRoute<void>(
-              builder: (_) => const MentalHealthPage(),
-            ),
+            MaterialPageRoute<void>(builder: (_) => const MentalHealthPage()),
           ),
         ),
         const SizedBox(height: 12),
@@ -324,9 +342,7 @@ class Today extends ConsumerWidget {
           subtitle: ref.tr('shortcut_early_sub'),
           onTap: () => Navigator.push(
             context,
-            MaterialPageRoute<void>(
-              builder: (_) => const EarlyDetectionPage(),
-            ),
+            MaterialPageRoute<void>(builder: (_) => const EarlyDetectionPage()),
           ),
         ),
         const SizedBox(height: 24),
@@ -339,7 +355,10 @@ class Today extends ConsumerWidget {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.wb_sunny_outlined, color: Palette.plum),
+                  Icon(
+                    Icons.wb_sunny_outlined,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
@@ -396,7 +415,7 @@ class _FeatureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final baseColor = accentColor ?? Palette.plum;
+    final baseColor = accentColor ?? Theme.of(context).colorScheme.primary;
 
     return Material(
       color: isDark ? Palette.darkCard : Colors.white,
@@ -442,17 +461,24 @@ class _FeatureCard extends StatelessWidget {
                         ),
                         if (badgeText != null)
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 6,
+                              vertical: 2,
+                            ),
                             decoration: BoxDecoration(
-                              color: Palette.blush,
+                              color: isDark
+                                  ? Palette.darkAccent
+                                  : Palette.blush,
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
                               badgeText!,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 9.5,
                                 fontWeight: FontWeight.w800,
-                                color: Palette.plum,
+                                color: isDark
+                                    ? Palette.darkBackground
+                                    : Palette.plum,
                               ),
                             ),
                           ),

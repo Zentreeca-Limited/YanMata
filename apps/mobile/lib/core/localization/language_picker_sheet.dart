@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../theme.dart';
 import '../ui_feedback.dart';
 import 'app_strings.dart';
@@ -81,14 +82,19 @@ class LanguagePickerSheet extends ConsumerWidget {
               final isSelected = lang == active;
 
               return ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                  vertical: 4,
+                ),
                 leading: Container(
                   width: 38,
                   height: 38,
                   decoration: BoxDecoration(
                     color: isSelected
                         ? Palette.plum
-                        : (isDark ? Palette.darkSurface : Palette.lilac.withValues(alpha: 0.3)),
+                        : (isDark
+                              ? Palette.darkSurface
+                              : Palette.lilac.withValues(alpha: 0.3)),
                     shape: BoxShape.circle,
                   ),
                   child: Center(
@@ -118,7 +124,10 @@ class LanguagePickerSheet extends ConsumerWidget {
                   ),
                 ),
                 trailing: isSelected
-                    ? const Icon(Icons.check_circle_rounded, color: Palette.plum)
+                    ? const Icon(
+                        Icons.check_circle_rounded,
+                        color: Palette.plum,
+                      )
                     : null,
                 onTap: () {
                   ref.read(localeProvider.notifier).setLanguage(lang);

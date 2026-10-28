@@ -42,9 +42,9 @@ class _ShopPageState extends ConsumerState<ShopPage> {
                   Text(
                     'Shop Health Products',
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Palette.plum,
-                        ),
+                      fontWeight: FontWeight.bold,
+                      color: Palette.plum,
+                    ),
                   ),
                 ],
               ),
@@ -54,7 +54,10 @@ class _ShopPageState extends ConsumerState<ShopPage> {
               icon: Badge(
                 isLabelVisible: cartCount > 0,
                 label: Text('$cartCount'),
-                child: const Icon(Icons.shopping_bag_outlined, color: Palette.plum),
+                child: const Icon(
+                  Icons.shopping_bag_outlined,
+                  color: Palette.plum,
+                ),
               ),
             ),
           ],
@@ -96,24 +99,27 @@ class _ShopPageState extends ConsumerState<ShopPage> {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: [
-              'All',
-              "Women's Health",
-              'Vitamins & Supplements',
-              'Personal Care',
-            ].map((cat) {
-              final isSelected = activeFilter == cat;
-              return Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: ChoiceChip(
-                  label: Text(cat),
-                  selected: isSelected,
-                  onSelected: (_) {
-                    ref.read(shopCategoryFilterProvider.notifier).setCategory(cat);
-                  },
-                ),
-              );
-            }).toList(),
+            children:
+                [
+                  'All',
+                  "Women's Health",
+                  'Vitamins & Supplements',
+                  'Personal Care',
+                ].map((cat) {
+                  final isSelected = activeFilter == cat;
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: ChoiceChip(
+                      label: Text(cat),
+                      selected: isSelected,
+                      onSelected: (_) {
+                        ref
+                            .read(shopCategoryFilterProvider.notifier)
+                            .setCategory(cat);
+                      },
+                    ),
+                  );
+                }).toList(),
           ),
         ),
         const SizedBox(height: 20),
@@ -145,7 +151,11 @@ class _ShopPageState extends ConsumerState<ShopPage> {
                 color: Colors.white,
                 child: Column(
                   children: [
-                    const Icon(Icons.storefront_outlined, size: 40, color: Palette.slate),
+                    const Icon(
+                      Icons.storefront_outlined,
+                      size: 40,
+                      color: Palette.slate,
+                    ),
                     const SizedBox(height: 8),
                     const Text('No products match your search.'),
                     const SizedBox(height: 8),
@@ -153,7 +163,9 @@ class _ShopPageState extends ConsumerState<ShopPage> {
                       onPressed: () {
                         _searchController.clear();
                         ref.read(shopSearchQueryProvider.notifier).setQuery('');
-                        ref.read(shopCategoryFilterProvider.notifier).setCategory('All');
+                        ref
+                            .read(shopCategoryFilterProvider.notifier)
+                            .setCategory('All');
                       },
                       child: const Text('Reset filters'),
                     ),
@@ -164,23 +176,25 @@ class _ShopPageState extends ConsumerState<ShopPage> {
 
             return Column(
               children: products
-                  .map((p) => _ProductCard(
-                        product: p,
-                        onAddToCart: () {
-                          ref.read(cartProvider.notifier).addToCart(p);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Added ${p.name} to cart'),
-                              action: SnackBarAction(
-                                label: 'View Cart',
-                                textColor: Palette.lilac,
-                                onPressed: () => CartSheet.show(context),
-                              ),
-                              duration: const Duration(seconds: 2),
+                  .map(
+                    (p) => _ProductCard(
+                      product: p,
+                      onAddToCart: () {
+                        ref.read(cartProvider.notifier).addToCart(p);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Added ${p.name} to cart'),
+                            action: SnackBarAction(
+                              label: 'View Cart',
+                              textColor: Palette.lilac,
+                              onPressed: () => CartSheet.show(context),
                             ),
-                          );
-                        },
-                      ))
+                            duration: const Duration(seconds: 2),
+                          ),
+                        );
+                      },
+                    ),
+                  )
                   .toList(),
             );
           },
@@ -250,7 +264,10 @@ class _ProductCard extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       '${product.packSize} · ${product.sellerName}',
-                      style: const TextStyle(fontSize: 12, color: Palette.slate),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Palette.slate,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Text(
@@ -268,10 +285,16 @@ class _ProductCard extends StatelessWidget {
               FilledButton(
                 onPressed: onAddToCart,
                 style: FilledButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 8,
+                  ),
                   minimumSize: const Size(0, 36),
                 ),
-                child: const Text('Add to Cart', style: TextStyle(fontSize: 12)),
+                child: const Text(
+                  'Add to Cart',
+                  style: TextStyle(fontSize: 12),
+                ),
               ),
             ],
           ),

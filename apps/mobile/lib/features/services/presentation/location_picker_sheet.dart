@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../core/theme.dart';
 import '../application/location_provider.dart';
 
@@ -87,16 +88,22 @@ class LocationPickerSheet extends ConsumerWidget {
                 ),
                 itemBuilder: (context, index) {
                   final hub = hubs[index];
-                  final isSelected = hub.city.toLowerCase() == selected.city.toLowerCase();
+                  final isSelected =
+                      hub.city.toLowerCase() == selected.city.toLowerCase();
 
                   return ListTile(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
                     leading: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         color: isSelected
                             ? Palette.plum
-                            : (isDark ? Palette.darkSurface : Palette.lilac.withValues(alpha: 0.3)),
+                            : (isDark
+                                  ? Palette.darkSurface
+                                  : Palette.lilac.withValues(alpha: 0.3)),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
@@ -113,14 +120,19 @@ class LocationPickerSheet extends ConsumerWidget {
                           hub.city,
                           style: TextStyle(
                             fontSize: 15,
-                            fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                            fontWeight: isSelected
+                                ? FontWeight.w700
+                                : FontWeight.w500,
                             color: isDark ? Palette.darkText : Palette.ink,
                           ),
                         ),
                         if (hub.isPilotHub) ...[
                           const SizedBox(width: 8),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 6,
+                              vertical: 2,
+                            ),
                             decoration: BoxDecoration(
                               color: Palette.blush,
                               borderRadius: BorderRadius.circular(6),
@@ -138,17 +150,24 @@ class LocationPickerSheet extends ConsumerWidget {
                       ],
                     ),
                     subtitle: Text(
-                      hub.state.isNotEmpty ? '${hub.state}, ${hub.country}' : hub.country,
+                      hub.state.isNotEmpty
+                          ? '${hub.state}, ${hub.country}'
+                          : hub.country,
                       style: TextStyle(
                         fontSize: 12,
                         color: isDark ? Palette.darkMuted : Palette.muted,
                       ),
                     ),
                     trailing: isSelected
-                        ? const Icon(Icons.check_circle_rounded, color: Palette.plum)
+                        ? const Icon(
+                            Icons.check_circle_rounded,
+                            color: Palette.plum,
+                          )
                         : null,
                     onTap: () {
-                      ref.read(selectedLocationProvider.notifier).setLocation(hub);
+                      ref
+                          .read(selectedLocationProvider.notifier)
+                          .setLocation(hub);
                       Navigator.of(context).pop();
                     },
                   );

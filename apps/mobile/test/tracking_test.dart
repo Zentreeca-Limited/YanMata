@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -10,6 +11,7 @@ import 'package:yanmata/main.dart';
 import 'widget_test.dart' show MemoryStore;
 
 void main() {
+  SharedPreferences.setMockInitialValues({'onboarding_done': true});
   testWidgets(
     'Tracking with flow and symptoms saves and displays correctly in history',
     (tester) async {

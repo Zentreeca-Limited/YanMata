@@ -100,7 +100,9 @@ class StaffRepository {
     final res = await _api.request('/studio/content', token: token);
     final list = res['data'] as List? ?? [];
     return list
-        .map((e) => StaffContentItem.fromJson(Map<String, dynamic>.from(e as Map)))
+        .map(
+          (e) => StaffContentItem.fromJson(Map<String, dynamic>.from(e as Map)),
+        )
         .toList();
   }
 
@@ -145,8 +147,9 @@ class StaffRepository {
         'action': action,
         'notes': ?notes,
         if (action == 'approve')
-          'review_due_at':
-              DateTime.now().add(const Duration(days: 90)).toIso8601String(),
+          'review_due_at': DateTime.now()
+              .add(const Duration(days: 90))
+              .toIso8601String(),
       },
     );
     return StaffContentItem.fromJson(
@@ -154,12 +157,17 @@ class StaffRepository {
     );
   }
 
-  Future<List<StaffCareRequestItem>> fetchStudioCareRequests(String token) async {
+  Future<List<StaffCareRequestItem>> fetchStudioCareRequests(
+    String token,
+  ) async {
     final res = await _api.request('/studio/care/requests', token: token);
     final list = res['data'] as List? ?? [];
     return list
-        .map((e) =>
-            StaffCareRequestItem.fromJson(Map<String, dynamic>.from(e as Map)))
+        .map(
+          (e) => StaffCareRequestItem.fromJson(
+            Map<String, dynamic>.from(e as Map),
+          ),
+        )
         .toList();
   }
 

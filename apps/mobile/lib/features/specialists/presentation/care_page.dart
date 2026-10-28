@@ -11,7 +11,11 @@ import 'care_chat_page.dart';
 class Care extends ConsumerWidget {
   const Care({super.key});
 
-  void _openInquirySheet(BuildContext context, WidgetRef ref, {Specialist? specialist}) {
+  void _openInquirySheet(
+    BuildContext context,
+    WidgetRef ref, {
+    Specialist? specialist,
+  }) {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -201,9 +205,8 @@ class Care extends ConsumerWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => CareChatPage(
-                                      conversationId: convId,
-                                    ),
+                                    builder: (_) =>
+                                        CareChatPage(conversationId: convId),
                                   ),
                                 );
                               },
@@ -347,11 +350,8 @@ class Care extends ConsumerWidget {
                         if (isSignedIn) ...[
                           const SizedBox(height: 14),
                           OutlinedButton.icon(
-                            onPressed: () => _openInquirySheet(
-                              context,
-                              ref,
-                              specialist: s,
-                            ),
+                            onPressed: () =>
+                                _openInquirySheet(context, ref, specialist: s),
                             icon: const Icon(Icons.send, size: 16),
                             label: Text('Ask ${s.name.split(' ').first}'),
                           ),
@@ -433,9 +433,7 @@ class _InquirySheetState extends ConsumerState<_InquirySheet> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => CareChatPage(
-                conversationId: req.conversationId!,
-              ),
+              builder: (_) => CareChatPage(conversationId: req.conversationId!),
             ),
           );
         }
@@ -486,16 +484,21 @@ class _InquirySheetState extends ConsumerState<_InquirySheet> {
             Wrap(
               spacing: 8,
               runSpacing: 6,
-              children: [
-                'Menstrual wellbeing',
-                'Body literacy',
-                'Emotional wellbeing',
-                'Transitions',
-              ].map((t) => ChoiceChip(
-                label: Text(t),
-                selected: _topic == t,
-                onSelected: (_) => setState(() => _topic = t),
-              )).toList(),
+              children:
+                  [
+                        'Menstrual wellbeing',
+                        'Body literacy',
+                        'Emotional wellbeing',
+                        'Transitions',
+                      ]
+                      .map(
+                        (t) => ChoiceChip(
+                          label: Text(t),
+                          selected: _topic == t,
+                          onSelected: (_) => setState(() => _topic = t),
+                        ),
+                      )
+                      .toList(),
             ),
             const SizedBox(height: 16),
             const Text(
@@ -506,17 +509,22 @@ class _InquirySheetState extends ConsumerState<_InquirySheet> {
             Wrap(
               spacing: 8,
               runSpacing: 6,
-              children: [
-                'Puberty',
-                'Adolescence',
-                'Adulthood',
-                'Menopause',
-                'Later life',
-              ].map((s) => ChoiceChip(
-                label: Text(s),
-                selected: _stage == s,
-                onSelected: (_) => setState(() => _stage = s),
-              )).toList(),
+              children:
+                  [
+                        'Puberty',
+                        'Adolescence',
+                        'Adulthood',
+                        'Menopause',
+                        'Later life',
+                      ]
+                      .map(
+                        (s) => ChoiceChip(
+                          label: Text(s),
+                          selected: _stage == s,
+                          onSelected: (_) => setState(() => _stage = s),
+                        ),
+                      )
+                      .toList(),
             ),
             const SizedBox(height: 16),
             TextField(

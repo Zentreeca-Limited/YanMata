@@ -18,8 +18,7 @@ class ServicesRepository {
       priceRange: '₦8,000 – ₦9,000',
       isVerified: true,
       isAvailable: true,
-      description:
-          'Comprehensive cervical screening (Pap smear, HPV DNA testing, and visual inspection) with clinical follow-up by consultant gynaecologists.',
+      description: 'Comprehensive cervical screening (Pap smear, HPV DNA testing, and visual inspection) with clinical follow-up by consultant gynaecologists.',
       openingHours: 'Mon - Fri, 8:00 AM - 4:00 PM',
       verificationSource:
           'Plateau State Ministry of Health Facility Registry #PL-HOSP-014',
@@ -37,8 +36,7 @@ class ServicesRepository {
       priceRange: '₦6,000 – ₦12,000',
       isVerified: true,
       isAvailable: true,
-      description:
-          'Comprehensive antenatal, obstetric assessment and maternal health services staffed by licensed midwives and specialists.',
+      description: 'Comprehensive antenatal, obstetric assessment and maternal health services staffed by licensed midwives and specialists.',
       openingHours:
           '24/7 Maternity Emergency; Clinics: Mon - Thu 9:00 AM - 3:00 PM',
       verificationSource:
@@ -57,8 +55,7 @@ class ServicesRepository {
       priceRange: '₦3,000 – ₦10,000',
       isVerified: true,
       isAvailable: true,
-      description:
-          'Compassionate psychological counseling, anxiety & stress management, and postpartum emotional support in a peaceful setting.',
+      description: 'Compassionate psychological counseling, anxiety & stress management, and postpartum emotional support in a peaceful setting.',
       openingHours: 'Mon - Sat, 9:00 AM - 6:00 PM',
       verificationSource:
           'Plateau State Allied Health Accreditation #PL-WNC-088',
@@ -76,8 +73,7 @@ class ServicesRepository {
       priceRange: '₦1,000 – ₦5,000',
       isVerified: true,
       isAvailable: true,
-      description:
-          'Confidential reproductive health education, family planning consultations, and maternal wellness guidance.',
+      description: 'Confidential reproductive health education, family planning consultations, and maternal wellness guidance.',
       openingHours: 'Mon - Fri, 8:30 AM - 3:30 PM',
       verificationSource:
           'Plateau State Primary Health Care Development Board #PL-PHC-112',
@@ -95,11 +91,9 @@ class ServicesRepository {
       priceRange: '₦4,000 – ₦8,000',
       isVerified: true,
       isAvailable: true,
-      description:
-          'Direct, confidential inquiry and structured follow-up with accredited Nigerian gynaecologists and adolescent health nurses inside YanMata.',
+      description: 'Direct, confidential inquiry and structured follow-up with accredited Nigerian gynaecologists and adolescent health nurses inside YanMata.',
       openingHours: 'Mon - Sat, 8:00 AM - 8:00 PM',
-      verificationSource:
-          'Medical and Dental Council of Nigeria (MDCN) synthetic verification #94821',
+      verificationSource: 'Medical and Dental Council of Nigeria (MDCN) synthetic verification #94821',
       phone: '+234 800 YANMATA',
     ),
   ];
@@ -113,7 +107,9 @@ class ServicesRepository {
     try {
       final queryParams = <String>[];
       if (category != null && category.isNotEmpty && category != 'All') {
-        queryParams.add('category=${Uri.encodeComponent(category.toLowerCase())}');
+        queryParams.add(
+          'category=${Uri.encodeComponent(category.toLowerCase())}',
+        );
       }
       if (providerType != null &&
           providerType.isNotEmpty &&
@@ -125,7 +121,9 @@ class ServicesRepository {
       if (query != null && query.isNotEmpty) {
         queryParams.add('query=${Uri.encodeComponent(query)}');
       }
-      if (city != null && city.isNotEmpty && !city.toLowerCase().contains('all')) {
+      if (city != null &&
+          city.isNotEmpty &&
+          !city.toLowerCase().contains('all')) {
         queryParams.add('city=${Uri.encodeComponent(city)}');
       }
 
@@ -133,13 +131,25 @@ class ServicesRepository {
       final res = await _api.request('/services$qs');
       final list = (res['data'] as List<dynamic>?) ?? [];
       if (list.isEmpty) {
-        return _filterLocal(fallbackServices, category, providerType, query, city);
+        return _filterLocal(
+          fallbackServices,
+          category,
+          providerType,
+          query,
+          city,
+        );
       }
       return list
           .map((e) => HealthService.fromJson(e as Map<String, dynamic>))
           .toList();
     } catch (_) {
-      return _filterLocal(fallbackServices, category, providerType, query, city);
+      return _filterLocal(
+        fallbackServices,
+        category,
+        providerType,
+        query,
+        city,
+      );
     }
   }
 

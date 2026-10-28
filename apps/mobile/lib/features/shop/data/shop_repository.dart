@@ -12,13 +12,11 @@ class ShopRepository {
       category: 'womens_health',
       packSize: '1 pack',
       priceNgn: 3500,
-      description:
-          'Over 99% accurate early pregnancy detection test. Rapid results within 3-5 minutes with clear line indicators.',
+      description: 'Over 99% accurate early pregnancy detection test. Rapid results within 3-5 minutes with clear line indicators.',
       sellerName: 'Zentreeca Community Pharmacy Jos',
       isVerifiedSeller: true,
       stockStatus: 'in_stock',
-      safetyInfo:
-          'For in vitro diagnostic use. Read instruction leaflet before use. If you have questions about your result, contact YanMata care specialists.',
+      safetyInfo: 'For in vitro diagnostic use. Read instruction leaflet before use. If you have questions about your result, contact YanMata care specialists.',
     ),
     HealthProduct(
       id: 'prod-02',
@@ -26,13 +24,11 @@ class ShopRepository {
       category: 'vitamins',
       packSize: '30 tablets',
       priceNgn: 2800,
-      description:
-          'Essential daily vitamin B9 supplement supporting cell division, reproductive wellness, and maternal development.',
+      description: 'Essential daily vitamin B9 supplement supporting cell division, reproductive wellness, and maternal development.',
       sellerName: 'Zentreeca Community Pharmacy Jos',
       isVerifiedSeller: true,
       stockStatus: 'in_stock',
-      safetyInfo:
-          'Dietary supplement. Not a replacement for a balanced diet. Consult a healthcare provider before taking with prescription medications.',
+      safetyInfo: 'Dietary supplement. Not a replacement for a balanced diet. Consult a healthcare provider before taking with prescription medications.',
     ),
     HealthProduct(
       id: 'prod-03',
@@ -40,13 +36,11 @@ class ShopRepository {
       category: 'vitamins',
       packSize: '30 tablets',
       priceNgn: 3000,
-      description:
-          'Gentle iron bisglycinate with Vitamin C for optimal absorption to support healthy energy levels and red blood cells during heavy flow.',
+      description: 'Gentle iron bisglycinate with Vitamin C for optimal absorption to support healthy energy levels and red blood cells during heavy flow.',
       sellerName: 'Plateau Health Mart Jos',
       isVerifiedSeller: true,
       stockStatus: 'in_stock',
-      safetyInfo:
-          'Keep out of reach of children. Take with food or water to minimise stomach sensitivity.',
+      safetyInfo: 'Keep out of reach of children. Take with food or water to minimise stomach sensitivity.',
     ),
     HealthProduct(
       id: 'prod-04',
@@ -54,13 +48,11 @@ class ShopRepository {
       category: 'womens_health',
       packSize: '20 tablets',
       priceNgn: 2500,
-      description:
-          'Targeted relief for menstrual cramps, lower back ache, and period discomfort.',
+      description: 'Targeted relief for menstrual cramps, lower back ache, and period discomfort.',
       sellerName: 'Zentreeca Community Pharmacy Jos',
       isVerifiedSeller: true,
       stockStatus: 'in_stock',
-      safetyInfo:
-          'Use strictly as directed on the packaging. Do not exceed stated dose. Avoid use if sensitive to NSAIDs.',
+      safetyInfo: 'Use strictly as directed on the packaging. Do not exceed stated dose. Avoid use if sensitive to NSAIDs.',
     ),
     HealthProduct(
       id: 'prod-05',
@@ -68,8 +60,7 @@ class ShopRepository {
       category: 'personal_care',
       packSize: '10 pads',
       priceNgn: 1800,
-      description:
-          'Breathable 100% organic cotton top sheet, chlorine-free and fragrance-free pads designed for sensitive skin.',
+      description: 'Breathable 100% organic cotton top sheet, chlorine-free and fragrance-free pads designed for sensitive skin.',
       sellerName: 'Plateau Health Mart Jos',
       isVerifiedSeller: true,
       stockStatus: 'in_stock',

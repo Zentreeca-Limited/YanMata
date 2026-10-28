@@ -33,9 +33,9 @@ class EarlyDetectionPage extends StatelessWidget {
                 Text(
                   'Detect early.\nProtect your future.',
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Palette.plum,
-                      ),
+                    fontWeight: FontWeight.bold,
+                    color: Palette.plum,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 const Text(
@@ -96,9 +96,7 @@ class EarlyDetectionPage extends StatelessWidget {
           FilledButton(
             onPressed: () => Navigator.push(
               context,
-              MaterialPageRoute<void>(
-                builder: (_) => const RiskOverviewPage(),
-              ),
+              MaterialPageRoute<void>(builder: (_) => const RiskOverviewPage()),
             ),
             child: const Text('Start Risk Assessment'),
           ),
@@ -183,7 +181,10 @@ class _ScreeningCard extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       subtitle,
-                      style: const TextStyle(fontSize: 12, color: Palette.slate),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Palette.slate,
+                      ),
                     ),
                     const SizedBox(height: 4),
                     Text(

@@ -99,7 +99,10 @@ class _YouState extends ConsumerState<You> {
                   ),
                   child: SelectableText(
                     jsonStr,
-                    style: const TextStyle(fontFamily: 'monospace', fontSize: 11),
+                    style: const TextStyle(
+                      fontFamily: 'monospace',
+                      fontSize: 11,
+                    ),
                   ),
                 ),
               ],
@@ -112,7 +115,9 @@ class _YouState extends ConsumerState<You> {
               Clipboard.setData(ClipboardData(text: jsonStr));
               Navigator.pop(c);
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Copied export data to clipboard.')),
+                const SnackBar(
+                  content: Text('Copied export data to clipboard.'),
+                ),
               );
             },
             child: const Text('Copy to Clipboard'),
@@ -130,7 +135,8 @@ class _YouState extends ConsumerState<You> {
   Widget build(BuildContext context) {
     final s = ref.watch(journalProvider).value ?? const JournalState();
     final controller = ref.read(journalProvider.notifier);
-    final prefs = ref.watch(notificationPreferencesProvider).value ??
+    final prefs =
+        ref.watch(notificationPreferencesProvider).value ??
         const NotificationPreferences();
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -169,7 +175,10 @@ class _YouState extends ConsumerState<You> {
                       s.signedIn
                           ? 'Connected (${s.userRole}) · Sync active'
                           : 'Member since 2025 · Private on device',
-                      style: const TextStyle(fontSize: 12, color: Palette.slate),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Palette.slate,
+                      ),
                     ),
                   ],
                 ),
@@ -229,12 +238,17 @@ class _YouState extends ConsumerState<You> {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.settings_suggest_outlined, color: Palette.plum, size: 24),
+                  const Icon(
+                    Icons.settings_suggest_outlined,
+                    color: Palette.plum,
+                    size: 24,
+                  ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       'Preferences & Region',
-                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      style: Theme.of(context).textTheme.headlineSmall
+                          ?.copyWith(
                             color: isDark ? Palette.darkText : Palette.ink,
                           ),
                     ),
@@ -260,7 +274,11 @@ class _YouState extends ConsumerState<You> {
                     color: isDark ? Palette.darkSurface : Palette.lilac,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.translate, size: 20, color: Palette.plum),
+                  child: const Icon(
+                    Icons.translate,
+                    size: 20,
+                    color: Palette.plum,
+                  ),
                 ),
                 title: Text(
                   ref.tr('language_setting'),
@@ -280,7 +298,10 @@ class _YouState extends ConsumerState<You> {
                 trailing: const Icon(Icons.chevron_right, size: 20),
                 onTap: () => LanguagePickerSheet.show(context),
               ),
-              Divider(height: 1, color: isDark ? Palette.darkBorder : const Color(0xFFF0E6F2)),
+              Divider(
+                height: 1,
+                color: isDark ? Palette.darkBorder : const Color(0xFFF0E6F2),
+              ),
 
               // Location Selector Row
               ListTile(
@@ -291,7 +312,11 @@ class _YouState extends ConsumerState<You> {
                     color: isDark ? Palette.darkSurface : Palette.lilac,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.location_on_outlined, size: 20, color: Palette.plum),
+                  child: const Icon(
+                    Icons.location_on_outlined,
+                    size: 20,
+                    color: Palette.plum,
+                  ),
                 ),
                 title: Text(
                   ref.tr('location_setting'),
@@ -311,7 +336,10 @@ class _YouState extends ConsumerState<You> {
                 trailing: const Icon(Icons.chevron_right, size: 20),
                 onTap: () => LocationPickerSheet.show(context),
               ),
-              Divider(height: 1, color: isDark ? Palette.darkBorder : const Color(0xFFF0E6F2)),
+              Divider(
+                height: 1,
+                color: isDark ? Palette.darkBorder : const Color(0xFFF0E6F2),
+              ),
 
               // Theme Appearance Row
               ListTile(
@@ -346,10 +374,14 @@ class _YouState extends ConsumerState<You> {
                 trailing: Switch(
                   value: isDark,
                   activeThumbColor: Palette.plum,
-                  onChanged: (_) => ref.read(themeModeProvider.notifier).toggleTheme(isDark),
+                  onChanged: (_) =>
+                      ref.read(themeModeProvider.notifier).toggleTheme(isDark),
                 ),
               ),
-              Divider(height: 1, color: isDark ? Palette.darkBorder : const Color(0xFFF0E6F2)),
+              Divider(
+                height: 1,
+                color: isDark ? Palette.darkBorder : const Color(0xFFF0E6F2),
+              ),
 
               // Aisha AI Companion Quick Access Row
               ListTile(
@@ -360,7 +392,11 @@ class _YouState extends ConsumerState<You> {
                     color: isDark ? Palette.darkSurface : Palette.lilac,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.auto_awesome, size: 20, color: Palette.plum),
+                  child: const Icon(
+                    Icons.auto_awesome,
+                    size: 20,
+                    color: Palette.plum,
+                  ),
                 ),
                 title: Text(
                   ref.tr('ai_companion_title'),
@@ -377,7 +413,9 @@ class _YouState extends ConsumerState<You> {
                 trailing: const Icon(Icons.chevron_right, size: 20),
                 onTap: () => Navigator.push(
                   context,
-                  MaterialPageRoute<void>(builder: (_) => const AiCompanionPage()),
+                  MaterialPageRoute<void>(
+                    builder: (_) => const AiCompanionPage(),
+                  ),
                 ),
               ),
             ],
@@ -393,7 +431,11 @@ class _YouState extends ConsumerState<You> {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.auto_stories_outlined, color: Palette.plum, size: 24),
+                  const Icon(
+                    Icons.auto_stories_outlined,
+                    color: Palette.plum,
+                    size: 24,
+                  ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
@@ -412,19 +454,23 @@ class _YouState extends ConsumerState<You> {
               Wrap(
                 spacing: 8,
                 runSpacing: 8,
-                children: [
-                  ('Puberty', 'Puberty (9–14)'),
-                  ('Adolescence', 'Adolescence (15–19)'),
-                  ('Adulthood', 'Adulthood (20–44)'),
-                  ('Menopause', 'Menopause (45–54)'),
-                  ('Later life', 'Later life (55+)'),
-                ].map(
-                  (stage) => ChoiceChip(
-                    label: Text(stage.$2),
-                    selected: _selectedStage == stage.$1,
-                    onSelected: (_) => setState(() => _selectedStage = stage.$1),
-                  ),
-                ).toList(),
+                children:
+                    [
+                          ('Puberty', 'Puberty (9–14)'),
+                          ('Adolescence', 'Adolescence (15–19)'),
+                          ('Adulthood', 'Adulthood (20–44)'),
+                          ('Menopause', 'Menopause (45–54)'),
+                          ('Later life', 'Later life (55+)'),
+                        ]
+                        .map(
+                          (stage) => ChoiceChip(
+                            label: Text(stage.$2),
+                            selected: _selectedStage == stage.$1,
+                            onSelected: (_) =>
+                                setState(() => _selectedStage = stage.$1),
+                          ),
+                        )
+                        .toList(),
               ),
               const SizedBox(height: 20),
               const Text(
@@ -435,27 +481,30 @@ class _YouState extends ConsumerState<You> {
               Wrap(
                 spacing: 6,
                 runSpacing: 6,
-                children: [
-                  'Body literacy',
-                  'Menstrual wellbeing',
-                  'Emotional wellbeing',
-                  'Healthy ageing',
-                  'Transitions',
-                ].map(
-                  (top) => FilterChip(
-                    label: Text(top),
-                    selected: _selectedTopics.contains(top),
-                    onSelected: (val) {
-                      setState(() {
-                        if (val) {
-                          _selectedTopics.add(top);
-                        } else {
-                          _selectedTopics.remove(top);
-                        }
-                      });
-                    },
-                  ),
-                ).toList(),
+                children:
+                    [
+                          'Body literacy',
+                          'Menstrual wellbeing',
+                          'Emotional wellbeing',
+                          'Healthy ageing',
+                          'Transitions',
+                        ]
+                        .map(
+                          (top) => FilterChip(
+                            label: Text(top),
+                            selected: _selectedTopics.contains(top),
+                            onSelected: (val) {
+                              setState(() {
+                                if (val) {
+                                  _selectedTopics.add(top);
+                                } else {
+                                  _selectedTopics.remove(top);
+                                }
+                              });
+                            },
+                          ),
+                        )
+                        .toList(),
               ),
             ],
           ),
@@ -471,8 +520,11 @@ class _YouState extends ConsumerState<You> {
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.verified_user_outlined,
-                        color: Palette.plum, size: 24),
+                    const Icon(
+                      Icons.verified_user_outlined,
+                      color: Palette.plum,
+                      size: 24,
+                    ),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
@@ -512,8 +564,11 @@ class _YouState extends ConsumerState<You> {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.notifications_active_outlined,
-                      color: Palette.plum, size: 24),
+                  const Icon(
+                    Icons.notifications_active_outlined,
+                    color: Palette.plum,
+                    size: 24,
+                  ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
@@ -542,7 +597,11 @@ class _YouState extends ConsumerState<You> {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.lock_outline, size: 14, color: Palette.slate),
+                        Icon(
+                          Icons.lock_outline,
+                          size: 14,
+                          color: Palette.slate,
+                        ),
                         SizedBox(width: 6),
                         Expanded(
                           child: Text(
@@ -580,10 +639,14 @@ class _YouState extends ConsumerState<You> {
               const SizedBox(height: 14),
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Daily reflection reminder',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-                subtitle: Text('Scheduled for ${prefs.checkInReminderTime} daily',
-                    style: const TextStyle(fontSize: 12)),
+                title: const Text(
+                  'Daily reflection reminder',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                ),
+                subtitle: Text(
+                  'Scheduled for ${prefs.checkInReminderTime} daily',
+                  style: const TextStyle(fontSize: 12),
+                ),
                 value: prefs.checkInReminderEnabled,
                 onChanged: (val) => ref
                     .read(notificationPreferencesProvider.notifier)
@@ -591,11 +654,14 @@ class _YouState extends ConsumerState<You> {
               ),
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Quiet hours',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+                title: const Text(
+                  'Quiet hours',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                ),
                 subtitle: Text(
-                    '${prefs.quietHoursStart} – ${prefs.quietHoursEnd} (no alerts sent)',
-                    style: const TextStyle(fontSize: 12)),
+                  '${prefs.quietHoursStart} – ${prefs.quietHoursEnd} (no alerts sent)',
+                  style: const TextStyle(fontSize: 12),
+                ),
                 value: prefs.quietHoursEnabled,
                 onChanged: (val) => ref
                     .read(notificationPreferencesProvider.notifier)
@@ -603,11 +669,14 @@ class _YouState extends ConsumerState<You> {
               ),
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Care message notifications',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+                title: const Text(
+                  'Care message notifications',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                ),
                 subtitle: const Text(
-                    'Opaque alert when your assigned specialist replies',
-                    style: TextStyle(fontSize: 12)),
+                  'Opaque alert when your assigned specialist replies',
+                  style: TextStyle(fontSize: 12),
+                ),
                 value: prefs.careMessages,
                 onChanged: (val) => ref
                     .read(notificationPreferencesProvider.notifier)

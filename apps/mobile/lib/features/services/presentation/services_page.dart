@@ -32,8 +32,8 @@ class _ServicesPageState extends ConsumerState<ServicesPage> {
     final locationLabel = location.city == 'All Locations'
         ? 'Nationwide & Global'
         : (location.city == 'Jos'
-            ? 'Jos (Pilot Hub)'
-            : '${location.city}${location.state.isNotEmpty ? ', ${location.state}' : ''}');
+              ? 'Jos (Pilot Hub)'
+              : '${location.city}${location.state.isNotEmpty ? ', ${location.state}' : ''}');
 
     return PageFrame(
       children: [
@@ -42,9 +42,9 @@ class _ServicesPageState extends ConsumerState<ServicesPage> {
         Text(
           'Find Health Services',
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: isDark ? Palette.darkText : Palette.plum,
-              ),
+            fontWeight: FontWeight.bold,
+            color: isDark ? Palette.darkText : Palette.plum,
+          ),
         ),
         const SizedBox(height: 6),
         Text(
@@ -69,7 +69,9 @@ class _ServicesPageState extends ConsumerState<ServicesPage> {
                     icon: const Icon(Icons.clear, size: 18),
                     onPressed: () {
                       _searchController.clear();
-                      ref.read(servicesSearchQueryProvider.notifier).setQuery('');
+                      ref
+                          .read(servicesSearchQueryProvider.notifier)
+                          .setQuery('');
                     },
                   )
                 : null,
@@ -91,7 +93,9 @@ class _ServicesPageState extends ConsumerState<ServicesPage> {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: ['All', 'Hospitals', 'Clinics', 'Specialists'].map((filter) {
+            children: ['All', 'Hospitals', 'Clinics', 'Specialists'].map((
+              filter,
+            ) {
               final isSelected = activeFilter == filter;
               return Padding(
                 padding: const EdgeInsets.only(right: 8),
@@ -147,15 +151,23 @@ class _ServicesPageState extends ConsumerState<ServicesPage> {
                 color: Colors.white,
                 child: Column(
                   children: [
-                    const Icon(Icons.search_off, size: 40, color: Palette.slate),
+                    const Icon(
+                      Icons.search_off,
+                      size: 40,
+                      color: Palette.slate,
+                    ),
                     const SizedBox(height: 8),
                     Text('No matching services found in ${location.city}.'),
                     const SizedBox(height: 8),
                     TextButton(
                       onPressed: () {
                         _searchController.clear();
-                        ref.read(servicesSearchQueryProvider.notifier).setQuery('');
-                        ref.read(servicesFilterProvider.notifier).setFilter('All');
+                        ref
+                            .read(servicesSearchQueryProvider.notifier)
+                            .setQuery('');
+                        ref
+                            .read(servicesFilterProvider.notifier)
+                            .setFilter('All');
                       },
                       child: const Text('Reset filters'),
                     ),
@@ -241,7 +253,10 @@ class _ServiceCard extends StatelessWidget {
                       const SizedBox(height: 3),
                       Text(
                         '${service.providerName} · ${service.distanceKm} km',
-                        style: const TextStyle(fontSize: 12, color: Palette.slate),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Palette.slate,
+                        ),
                       ),
                       const SizedBox(height: 6),
                       Text(
@@ -260,7 +275,10 @@ class _ServiceCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
                       decoration: BoxDecoration(
                         color: const Color(0xFFE8F5E9),
                         borderRadius: BorderRadius.circular(12),
@@ -275,7 +293,11 @@ class _ServiceCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    const Icon(Icons.chevron_right, size: 20, color: Palette.slate),
+                    const Icon(
+                      Icons.chevron_right,
+                      size: 20,
+                      color: Palette.slate,
+                    ),
                   ],
                 ),
               ],

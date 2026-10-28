@@ -1,3 +1,5 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'dart:io';
 
 import 'package:flutter/services.dart';
@@ -12,6 +14,7 @@ import 'package:yanmata/features/learning/application/learning_provider.dart';
 import 'widget_test.dart' show MemoryStore;
 
 void main() {
+  SharedPreferences.setMockInitialValues({'onboarding_done': true});
   TestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(() async {
     final loader = FontLoader('Manrope')

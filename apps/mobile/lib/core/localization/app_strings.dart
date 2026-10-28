@@ -22,6 +22,10 @@ class AppStrings {
       'nav_care': 'Care',
       'nav_products': 'Products',
       'nav_more': 'More',
+      'ob_tagline': 'Healthy Women. Brighter Futures.',
+      'ob_body': 'Cycle care, women’s wellness and trusted guidance — private, and made for every stage of life.',
+      'ob_start': 'Get started',
+      'ob_footer': 'Ages 9 through later life · Your health data is never sold',
       'greeting_prefix': 'Good day,',
       'greeting_subtitle': 'Your health matters. You’re not alone.',
       'care_quote_eyebrow': 'A LITTLE CARE, EVERY DAY',
@@ -35,22 +39,30 @@ class AppStrings {
       'phase_ovulation': 'Ovulation Window',
       'phase_luteal': 'Luteal Phase',
       'follicular_desc': 'Estrogen is rising, energy and mood are returning.',
-      'luteal_desc': 'Progesterone rises; focus on rest, gentle nutrition, and hydration.',
-      'menstrual_desc': 'Your body is resting and renewing. Be gentle with yourself.',
-      'ovulation_desc': 'Peak energy and confidence. Your body is at its fertility peak.',
+      'luteal_desc':
+          'Progesterone rises; focus on rest, gentle nutrition, and hydration.',
+      'menstrual_desc':
+          'Your body is resting and renewing. Be gentle with yourself.',
+      'ovulation_desc':
+          'Peak energy and confidence. Your body is at its fertility peak.',
       'shortcuts_title': 'EXPLORE CARE & WELLBEING',
       'shortcut_risk': 'Health Risk Prediction',
-      'shortcut_risk_sub': 'See your personalised risk summary and recommendations →',
+      'shortcut_risk_sub':
+          'See your personalised risk summary and recommendations →',
       'shortcut_mental': 'Mental Health Support',
-      'shortcut_mental_sub': 'Talk to a professional or access supportive resources →',
+      'shortcut_mental_sub':
+          'Talk to a professional or access supportive resources →',
       'shortcut_services': 'Find Health Services',
-      'shortcut_services_sub': 'Verified hospitals, clinics & specialists near you →',
+      'shortcut_services_sub':
+          'Verified hospitals, clinics & specialists near you →',
       'shortcut_products': 'Shop Health Products',
-      'shortcut_products_sub': 'Verified pharmacies & wellness essentials delivered →',
+      'shortcut_products_sub':
+          'Verified pharmacies & wellness essentials delivered →',
       'shortcut_early': 'Early Detection & Screening',
       'shortcut_early_sub': 'Detect early. Protect your health and future →',
       'shortcut_ai': 'Aisha AI Health Companion',
-      'shortcut_ai_sub': 'Ask sensitive health questions with 24/7 private guidance →',
+      'shortcut_ai_sub':
+          'Ask sensitive health questions with 24/7 private guidance →',
       'track_title': 'Cycle & Wellbeing',
       'track_subtitle': 'Private on-device tracking for your body rhythm',
       'tab_cycle': 'Cycle',
@@ -149,7 +161,8 @@ class AppStrings {
       'all_locations': 'All Locations / Nationwide',
       'ai_companion_title': 'Aisha AI Health Companion',
       'ai_companion_subtitle': '24/7 private, compassionate guidance for your reproductive and emotional wellbeing.',
-      'ai_input_placeholder': 'Ask Aisha anything about your body, cycle, or symptoms...',
+      'ai_input_placeholder':
+          'Ask Aisha anything about your body, cycle, or symptoms...',
       'ai_quick_prompt_1': 'Is my cycle normal?',
       'ai_quick_prompt_2': 'How can I soothe cramps?',
       'ai_quick_prompt_3': 'What is the follicular phase?',
@@ -170,6 +183,10 @@ class AppStrings {
       'nav_care': 'Kula',
       'nav_products': 'Magunguna',
       'nav_more': 'Sauran',
+      'ob_tagline': 'Mata Lafiya. Gaba Mai Haske.',
+      'ob_body': 'Kula da al’ada, lafiyar mata da amintaccen jagora — a sirri, ga kowane mataki na rayuwa.',
+      'ob_start': 'Fara yanzu',
+      'ob_footer': 'Daga shekara 9 zuwa tsufa · Ba za a taba sayar da bayanan lafiyarki ba',
       'greeting_prefix': 'Barka da rana,',
       'greeting_subtitle': 'Lafiyarki tana da muhimmanci. Ba ke kadai bace.',
       'care_quote_eyebrow': 'KULA KULLUM, DA SAUKI',
@@ -184,21 +201,25 @@ class AppStrings {
       'phase_luteal': 'Lokacin Shirya Haila (Luteal)',
       'follicular_desc': 'Karfin jiki da karsashi na dawowa yayin da sinadarin estrogen ke karuwa.',
       'luteal_desc': 'Lokaci ne na samun hutu da shan ruwa mai yawa yayin da jiki ke shiri.',
-      'menstrual_desc': 'Jikinki na samun hutu da sabuntawa. Ki kula da kanki da kyau.',
+      'menstrual_desc':
+          'Jikinki na samun hutu da sabuntawa. Ki kula da kanki da kyau.',
       'ovulation_desc': 'Lokaci mafi dacewa da karfin haihuwa a jikin mace.',
       'shortcuts_title': 'DUBA HANYOYIN SAMUN LAFIYA',
       'shortcut_risk': 'Hasashen Hadarin Lafiya',
       'shortcut_risk_sub': 'Duba takaitaccen bayanin lafiyarki da shawarwari →',
       'shortcut_mental': 'Taimakon Lafiyar Hankali',
-      'shortcut_mental_sub': 'Yi magana da kwararru ko samun shawarwari masu amfani →',
+      'shortcut_mental_sub':
+          'Yi magana da kwararru ko samun shawarwari masu amfani →',
       'shortcut_services': 'Nemo Cibiyoyin Lafiya',
       'shortcut_services_sub': 'Kwararrun asibitoci da likitoci kusa da ke →',
       'shortcut_products': 'Sayi Kayan Lafiya',
-      'shortcut_products_sub': 'Magunguna da kayan lafiya na gaskiya har gida →',
+      'shortcut_products_sub':
+          'Magunguna da kayan lafiya na gaskiya har gida →',
       'shortcut_early': 'Gano Cututtuka Da Wuri',
       'shortcut_early_sub': 'Bincike da wuri. Kare lafiyarki da gobenki →',
       'shortcut_ai': 'Mataimakiyar Aisha AI',
-      'shortcut_ai_sub': 'Yi tambayoyi a asirce tare da samun amsoshi a kowane lokaci →',
+      'shortcut_ai_sub':
+          'Yi tambayoyi a asirce tare da samun amsoshi a kowane lokaci →',
       'track_title': 'Bibiyar Lafiyar Jiki Da Haila',
       'track_subtitle': 'Rubuta abubuwan da kike ji a asirce a wayarki',
       'tab_cycle': 'Haila',
@@ -259,7 +280,8 @@ class AppStrings {
       'verified_provider': 'CIBIYAR DA AKA TABBATAR',
       'about_service': 'Game da wannan kula',
       'products_title': 'Sayi Kayan Lafiya',
-      'products_subtitle': 'Kayan aikin lafiya da magunguna masu inganci har gida cikin sauki.',
+      'products_subtitle':
+          'Kayan aikin lafiya da magunguna masu inganci har gida cikin sauki.',
       'add_to_cart': 'Saka a Kwando',
       'view_cart': 'Duba Kwando',
       'your_cart': 'Kwandan Kayan Lafiyarki',
@@ -268,7 +290,8 @@ class AppStrings {
       'order_confirmed_title': 'An Karbi Odarki',
       'order_confirmed_msg': 'An tura odarki zuwa shagon magani da aka amince da shi. Za su aiko miki da sako nan ba da jimawa ba.',
       'risk_title': 'Hasashen Hadarin Lafiya',
-      'risk_subtitle': 'Binciken lafiyarki an gina shi ne akan bayanan da kika bayar.',
+      'risk_subtitle':
+          'Binciken lafiyarki an gina shi ne akan bayanan da kika bayar.',
       'overall_risk': 'Matsayin Hadarinki Gaba Daya',
       'view_full_report': 'Duba Cikakken Rahoto',
       'edit_factors': 'Gyara Bayanan Lafiyarki',
@@ -296,8 +319,10 @@ class AppStrings {
       'select_location': 'Zabi Wuri',
       'all_locations': 'Duk Wurare a Kasa',
       'ai_companion_title': 'Mataimakiyar Aisha AI',
-      'ai_companion_subtitle': 'Taimako a kowane lokaci cikin sirri game da jikinki da lafiyarki.',
-      'ai_input_placeholder': 'Tambayi Aisha komai game da jikinki ko alamar da kike ji...',
+      'ai_companion_subtitle':
+          'Taimako a kowane lokaci cikin sirri game da jikinki da lafiyarki.',
+      'ai_input_placeholder':
+          'Tambayi Aisha komai game da jikinki ko alamar da kike ji...',
       'ai_quick_prompt_1': 'Shin hailata tana tafiya dai-dai?',
       'ai_quick_prompt_2': 'Yaya zan rage ciwon marar haila?',
       'ai_quick_prompt_3': 'Menene lokacin follicular?',
@@ -318,6 +343,10 @@ class AppStrings {
       'nav_care': 'Ìtọ́jú',
       'nav_products': 'Àwọn Oògùn',
       'nav_more': 'Síwájú',
+      'ob_tagline': 'Obìnrin Alààfíà. Ọjọ́ Iwájú Ìmọ́lẹ̀.',
+      'ob_body': 'Ìtọ́jú ọjọ́ ìkọ́sẹ̀, ìlera obìnrin àti ìtọ́sọ́nà tó yẹ — ní àṣírí, fún gbogbo ipele ayé.',
+      'ob_start': 'Bẹ̀rẹ̀',
+      'ob_footer': 'Ọmọ ọdún 9 títí dé ọjọ́ ogbó · A kì í ta dátà ìlera rẹ',
       'greeting_prefix': 'Ẹ kú ojúmọ́,',
       'greeting_subtitle': 'Àlàáfíà rẹ ṣe pàtàkì. O kò dá wà rárá.',
       'care_quote_eyebrow': 'ÌTỌ́JÚ KÉKERÉ, LÓJOOJÚMỌ́',
@@ -330,23 +359,30 @@ class AppStrings {
       'phase_follicular': 'Àkókò Ìdàgbàsókè Ẹyin (Follicular)',
       'phase_ovulation': 'Àkókò Ẹyin Tó Gbó (Ovulation)',
       'phase_luteal': 'Àkókò Ìmúrasílẹ̀ (Luteal)',
-      'follicular_desc': 'Agbara ati inu didun n pada bo bi estrogen se n po si.',
-      'luteal_desc': 'Akoko lati sinmi ati mu omi pupo ki ara le wa ni ipo to dara.',
-      'menstrual_desc': 'Ara re n sinmi ti o si n tun ara re se. Toju ara re daadaa.',
-      'ovulation_desc': 'Akoko to dara julo fun bibi omo ati agbara to ga ninu ara.',
+      'follicular_desc':
+          'Agbara ati inu didun n pada bo bi estrogen se n po si.',
+      'luteal_desc':
+          'Akoko lati sinmi ati mu omi pupo ki ara le wa ni ipo to dara.',
+      'menstrual_desc':
+          'Ara re n sinmi ti o si n tun ara re se. Toju ara re daadaa.',
+      'ovulation_desc':
+          'Akoko to dara julo fun bibi omo ati agbara to ga ninu ara.',
       'shortcuts_title': 'ṢÀWÁRÍ ÌTỌ́JÚ ÀTI ÀLÀÁFÍÀ',
       'shortcut_risk': 'Àbájáde Ewu Àìsàn',
       'shortcut_risk_sub': 'Wo akopọ ati imọran fun ilera re →',
       'shortcut_mental': 'Ìtìlẹ́yìn Ilera Ọkàn',
       'shortcut_mental_sub': 'Bá onímọ̀ sọ̀rọ̀ tàbí ka àwọn ìmọ̀ràn tó wúlò →',
       'shortcut_services': 'Wá Àwọn Ilé Ìwòsàn',
-      'shortcut_services_sub': 'Àwọn ilé ìwòsàn àti dọ́kítà tó dájú nítòsí rẹ →',
+      'shortcut_services_sub':
+          'Àwọn ilé ìwòsàn àti dọ́kítà tó dájú nítòsí rẹ →',
       'shortcut_products': 'Ra Àwọn Ohun Èlò Ìlera',
-      'shortcut_products_sub': 'Àwọn oògùn àti ohun èlò tí a fọwọ́sí dé ọ̀dọ̀ rẹ →',
+      'shortcut_products_sub':
+          'Àwọn oògùn àti ohun èlò tí a fọwọ́sí dé ọ̀dọ̀ rẹ →',
       'shortcut_early': 'Àyẹ̀wò Kíákíá Láti Tètè Mọ̀',
       'shortcut_early_sub': 'Ṣe àyẹ̀wò kíákíá kí o lè dáàbò bo ọjọ́ ọ̀la rẹ →',
       'shortcut_ai': 'Aisha AI Olùrànlọ́wọ́',
-      'shortcut_ai_sub': 'Béèrè àwọn ìbéèrè pàtàkì pẹ̀lú àṣírí ní gbogbo ìgbà →',
+      'shortcut_ai_sub':
+          'Béèrè àwọn ìbéèrè pàtàkì pẹ̀lú àṣírí ní gbogbo ìgbà →',
       'track_title': 'Àkíyèsí Nǹkan Oṣù àti Àlàáfíà',
       'track_subtitle': 'Ṣe àkọsílẹ̀ nínú àṣírí lórí ẹ̀rọ ayélujára rẹ',
       'tab_cycle': 'Nǹkan Oṣù',
@@ -389,7 +425,8 @@ class AppStrings {
       'save_checkin': 'Fi àkọsílẹ̀ lónìí pamọ́',
       'checkin_saved': 'A ti fi àkọsílẹ̀ rẹ pamọ́ pẹ̀lú ààbò.',
       'set_cycle_details': 'Ṣètò Nǹkan Oṣù Rẹ',
-      'cycle_dialog_intro': 'Sọ bí nǹkan oṣù rẹ ṣe ń lọ kí YanMata lè ṣírò fún ọ dáadáa.',
+      'cycle_dialog_intro':
+          'Sọ bí nǹkan oṣù rẹ ṣe ń lọ kí YanMata lè ṣírò fún ọ dáadáa.',
       'last_period_date': 'Ọjọ́ àkọ́kọ́ ti nǹkan oṣù tó kọjá',
       'cycle_length_days': 'Iye ọjọ́ láàárín nǹkan oṣù (ọjọ́)',
       'period_length_days': 'Iye ọjọ́ tí ẹ̀jẹ̀ nǹkan oṣù fi ń rọ̀ (ọjọ́)',
@@ -397,7 +434,8 @@ class AppStrings {
       'select_date': 'Yan ọjọ́',
       'days_unit': 'ọjọ́',
       'services_title': 'Wá Àwọn Ilé Ìwòsàn',
-      'services_subtitle': 'Àwọn ilé ìwòsàn, ilé ìtọ́jú àti àwọn dọ́kítà tó ní ẹ̀rí tó dunjú.',
+      'services_subtitle':
+          'Àwọn ilé ìwòsàn, ilé ìtọ́jú àti àwọn dọ́kítà tó ní ẹ̀rí tó dunjú.',
       'filter_all': 'Gbogbo Rẹ̀',
       'filter_hospitals': 'Ilé Ìwòsàn Ńlá',
       'filter_clinics': 'Ilé Ìtọ́jú Kékeré',
@@ -407,7 +445,8 @@ class AppStrings {
       'verified_provider': 'ILÉ ÌWÒSÀN TÍ A FỌWỌ́SÍ',
       'about_service': 'Nípa ìtọ́jú yìí',
       'products_title': 'Ra Àwọn Ohun Èlò Ìlera',
-      'products_subtitle': 'Àwọn oògùn àti ohun èlò ìlera tó dára jùlọ tí a lè mú wá fún ọ.',
+      'products_subtitle':
+          'Àwọn oògùn àti ohun èlò ìlera tó dára jùlọ tí a lè mú wá fún ọ.',
       'add_to_cart': 'Fi sí Àpò',
       'view_cart': 'Wo Àpò Rẹ',
       'your_cart': 'Àpò Ohun Ìlera Rẹ',
@@ -444,8 +483,10 @@ class AppStrings {
       'select_location': 'Yan Agbègbè',
       'all_locations': 'Gbogbo Nàìjíríà',
       'ai_companion_title': 'Aisha AI Olùrànlọ́wọ́',
-      'ai_companion_subtitle': 'Ìrànlọ́wọ́ àṣírí lórí ara rẹ àti àlàáfíà ọkàn rẹ ní gbogbo ìgbà.',
-      'ai_input_placeholder': 'Béèrè ohunkóhun lọ́wọ́ Aisha nípa ara rẹ tàbí nǹkan oṣù...',
+      'ai_companion_subtitle':
+          'Ìrànlọ́wọ́ àṣírí lórí ara rẹ àti àlàáfíà ọkàn rẹ ní gbogbo ìgbà.',
+      'ai_input_placeholder':
+          'Béèrè ohunkóhun lọ́wọ́ Aisha nípa ara rẹ tàbí nǹkan oṣù...',
       'ai_quick_prompt_1': 'Ṣé nǹkan oṣù mi ń lọ déédé?',
       'ai_quick_prompt_2': 'Báwo ni mo ṣe lè dín inú rírun kù?',
       'ai_quick_prompt_3': 'Kí ni àkókò follicular túmọ̀ sí?',
@@ -466,6 +507,10 @@ class AppStrings {
       'nav_care': 'Nlekọta',
       'nav_products': 'Ngwa Ọgwụ',
       'nav_more': 'Ọzọ',
+      'ob_tagline': 'Ndị Nwanyị Nwere Ahụike. Ọdịnihu Dị Mma.',
+      'ob_body': 'Nlekọta oge nsọ, ahụike ndị inyom na nduzi a pụrụ ịtụkwasị obi — na nzuzo, maka ọkwa ndụ niile.',
+      'ob_start': 'Malite',
+      'ob_footer': 'Afọ 9 ruo ọgbọ ochie · A naghị ere data ahụike gị',
       'greeting_prefix': 'Ndewo,',
       'greeting_subtitle': 'Ahụike gị dị oke mkpa. Ị nọghị naanị gị.',
       'care_quote_eyebrow': 'NLEKỌTA NTA, KWA ỤBỌCHỊ',
@@ -478,19 +523,24 @@ class AppStrings {
       'phase_follicular': 'Oge Nkwadebe Akwa (Follicular)',
       'phase_ovulation': 'Oge Akwa Na-agbawa (Ovulation)',
       'phase_luteal': 'Oge Nkwụsị (Luteal)',
-      'follicular_desc': 'Ike na obi ụtọ na-alọghachi ka estrogen na-amụba n’ahụ.',
+      'follicular_desc':
+          'Ike na obi ụtọ na-alọghachi ka estrogen na-amụba n’ahụ.',
       'luteal_desc': 'Oge iji zuru ike ma ṅụọ mmiri nke ọma maka ahụike.',
-      'menstrual_desc': 'Ahụ gị na-ezu ike ma na-emegharị onwe ya. Lekọta onwe gị anya.',
+      'menstrual_desc':
+          'Ahụ gị na-ezu ike ma na-emegharị onwe ya. Lekọta onwe gị anya.',
       'ovulation_desc': 'Oge kachasị mma maka ịtụ ime na ike zuru oke n’ahụ.',
       'shortcuts_title': 'CHỌPỤTA NLEKỌTA NA AHỤIKE',
       'shortcut_risk': 'Nkọwa Nsogbu Ahụike',
       'shortcut_risk_sub': 'Lee nchịkọta ahụike gị na ndụmọdụ dị mkpa →',
       'shortcut_mental': 'Nkwado Ahụike Uche',
-      'shortcut_mental_sub': 'Gwa ndị ọkachamara okwu ma ọ bụ nweta ndụmọdụ bara uru →',
+      'shortcut_mental_sub':
+          'Gwa ndị ọkachamara okwu ma ọ bụ nweta ndụmọdụ bara uru →',
       'shortcut_services': 'Chọta Ụlọ Ọgwụ',
-      'shortcut_services_sub': 'Ụlọ ọgwụ na ndị dọkịta a tụkwasịrị obi nso gị →',
+      'shortcut_services_sub':
+          'Ụlọ ọgwụ na ndị dọkịta a tụkwasịrị obi nso gị →',
       'shortcut_products': 'Zụta Ngwa Ahụike',
-      'shortcut_products_sub': 'Ọgwụ na ngwa nlekọta ahụike a kwadoro ebuga gị n’ụlọ →',
+      'shortcut_products_sub':
+          'Ọgwụ na ngwa nlekọta ahụike a kwadoro ebuga gị n’ụlọ →',
       'shortcut_early': 'Nnyocha Maka Nchọpụta Mbụ',
       'shortcut_early_sub': 'Chọpụta n’oge iji chebe ahụike na ọdịnihu gị →',
       'shortcut_ai': 'Onye Enyemaka Aisha AI',
@@ -537,7 +587,8 @@ class AppStrings {
       'save_checkin': 'Chekwaa ihe ndekọ taa',
       'checkin_saved': 'E chekwara ihe ndekọ gị na nchekwa.',
       'set_cycle_details': 'Hazie Oge Nsọ Gị',
-      'cycle_dialog_intro': 'Gwa anyị banyere oge nsọ gị ka YanMata wee gbakọọrọ gị nke ọma.',
+      'cycle_dialog_intro':
+          'Gwa anyị banyere oge nsọ gị ka YanMata wee gbakọọrọ gị nke ọma.',
       'last_period_date': 'Ụbọchị mbụ nke nsọ ikpeazụ gị',
       'cycle_length_days': 'Ogologo oge n’etiti nsọ ọ bụla (ụbọchị)',
       'period_length_days': 'Ụbọchị ole ọbara nsọ na-agba (ụbọchị)',
@@ -545,7 +596,8 @@ class AppStrings {
       'select_date': 'Họrọ ụbọchị',
       'days_unit': 'ụbọchị',
       'services_title': 'Chọta Ụlọ Ọgwụ',
-      'services_subtitle': 'Ụlọ ọgwụ, ụlọ nlekọta ahụike na ndị dọkịta nwere ikikere zuru oke.',
+      'services_subtitle':
+          'Ụlọ ọgwụ, ụlọ nlekọta ahụike na ndị dọkịta nwere ikikere zuru oke.',
       'filter_all': 'Ha Niile',
       'filter_hospitals': 'Nnukwu Ụlọ Ọgwụ',
       'filter_clinics': 'Ụlọ Ọgwụ Nta',
@@ -555,7 +607,8 @@ class AppStrings {
       'verified_provider': 'ỤLỌ ỌGWỤ A KWADORO',
       'about_service': 'Maka ọrụ nlekọta a',
       'products_title': 'Zụta Ngwa Ahụike',
-      'products_subtitle': 'Ngwa ahụike na ọgwụ dị mma ebuga gị n’ụlọ n’enweghị nsogbu.',
+      'products_subtitle':
+          'Ngwa ahụike na ọgwụ dị mma ebuga gị n’ụlọ n’enweghị nsogbu.',
       'add_to_cart': 'Tinye n’Akpa',
       'view_cart': 'Lee Akpa Gị',
       'your_cart': 'Akpa Ngwa Ahụike Gị',
@@ -592,8 +645,10 @@ class AppStrings {
       'select_location': 'Họrọ Ebe',
       'all_locations': 'Nigeria Niile',
       'ai_companion_title': 'Onye Enyemaka Aisha AI',
-      'ai_companion_subtitle': 'Enyemaka nzuzo n’oge ọ bụla banyere ahụ gị na ahụike uche gị.',
-      'ai_input_placeholder': 'Jụọ Aisha ihe ọ bụla banyere ahụ gị ma ọ bụ oge nsọ...',
+      'ai_companion_subtitle':
+          'Enyemaka nzuzo n’oge ọ bụla banyere ahụ gị na ahụike uche gị.',
+      'ai_input_placeholder':
+          'Jụọ Aisha ihe ọ bụla banyere ahụ gị ma ọ bụ oge nsọ...',
       'ai_quick_prompt_1': 'Oge nsọ m ọ na-aga nke ọma?',
       'ai_quick_prompt_2': 'Kedu ka m ga-esi belata mgbu afọ nsọ?',
       'ai_quick_prompt_3': 'Kedu ihe oge follicular pụtara?',
@@ -614,8 +669,14 @@ class AppStrings {
       'nav_care': 'Care',
       'nav_products': 'Meds',
       'nav_more': 'More',
+      'ob_tagline': 'Healthy Women. Better Future.',
+      'ob_body': 'Take care of your period, women’s health and correct guidance — private, for every stage of life.',
+      'ob_start': 'Start now',
+      'ob_footer':
+          'From 9 years go reach old age · We no dey sell your health data',
       'greeting_prefix': 'How body,',
-      'greeting_subtitle': 'Your bodi and health matter well well. You no dey alone.',
+      'greeting_subtitle':
+          'Your bodi and health matter well well. You no dey alone.',
       'care_quote_eyebrow': 'SMALL CARE, EVERY DAY',
       'care_quote_title': 'Small time,\njust for you.',
       'care_quote_body': 'You dey grow. You dey change. Na still you.\nSpace dey for every kind day for here.',
@@ -626,23 +687,31 @@ class AppStrings {
       'phase_follicular': 'Follicular Time (Body dey freshen)',
       'phase_ovulation': 'Ovulation Time (Fertile window)',
       'phase_luteal': 'Luteal Time (Pre-period)',
-      'follicular_desc': 'Your energy and sharp spirit dey return as estrogen dey rise.',
-      'luteal_desc': 'Time to rest small, drink plenty water and chop beta food.',
-      'menstrual_desc': 'Your body dey clean up and rest. Soft am for yourself.',
-      'ovulation_desc': 'Peak energy time! This na the main time for belle to enter.',
+      'follicular_desc':
+          'Your energy and sharp spirit dey return as estrogen dey rise.',
+      'luteal_desc':
+          'Time to rest small, drink plenty water and chop beta food.',
+      'menstrual_desc':
+          'Your body dey clean up and rest. Soft am for yourself.',
+      'ovulation_desc':
+          'Peak energy time! This na the main time for belle to enter.',
       'shortcuts_title': 'EXPLORE CARE & WELLBEING',
       'shortcut_risk': 'Health Risk Prediction',
       'shortcut_risk_sub': 'See wetin your health summary and advice talk →',
       'shortcut_mental': 'Mental Health Support',
-      'shortcut_mental_sub': 'Gbege dey? Follow specialist chat or read beta tips →',
+      'shortcut_mental_sub':
+          'Gbege dey? Follow specialist chat or read beta tips →',
       'shortcut_services': 'Find Health Services',
-      'shortcut_services_sub': 'Correct hospitals, clinic and doctors near you →',
+      'shortcut_services_sub':
+          'Correct hospitals, clinic and doctors near you →',
       'shortcut_products': 'Buy Health Products',
-      'shortcut_products_sub': 'Original meds, test kit and pads wey go reach your door →',
+      'shortcut_products_sub':
+          'Original meds, test kit and pads wey go reach your door →',
       'shortcut_early': 'Early Check & Screening',
       'shortcut_early_sub': 'Check am sharp-sharp to protect your future →',
       'shortcut_ai': 'Aisha AI Health Buddy',
-      'shortcut_ai_sub': 'Ask secret question about your body 24/7 without fear →',
+      'shortcut_ai_sub':
+          'Ask secret question about your body 24/7 without fear →',
       'track_title': 'Cycle & Wellbeing Tracker',
       'track_subtitle': 'Secret log inside your phone wey nobody fit see',
       'tab_cycle': 'Period',
@@ -693,7 +762,8 @@ class AppStrings {
       'select_date': 'Pick date',
       'days_unit': 'days',
       'services_title': 'Find Health Services',
-      'services_subtitle': 'Approved hospital, clinic and specialists wey get correct licence.',
+      'services_subtitle':
+          'Approved hospital, clinic and specialists wey get correct licence.',
       'filter_all': 'All',
       'filter_hospitals': 'Hospitals',
       'filter_clinics': 'Clinics',
@@ -703,7 +773,8 @@ class AppStrings {
       'verified_provider': 'VERIFIED HEALTHCARE',
       'about_service': 'About this service',
       'products_title': 'Shop Health Products',
-      'products_subtitle': 'Original pharmacy drugs, tests, and pads delivered to your hand.',
+      'products_subtitle':
+          'Original pharmacy drugs, tests, and pads delivered to your hand.',
       'add_to_cart': 'Put for Bag',
       'view_cart': 'See Bag',
       'your_cart': 'Your Health Shopping Bag',
@@ -712,7 +783,8 @@ class AppStrings {
       'order_confirmed_title': 'Order Don Enter',
       'order_confirmed_msg': 'We don send your order give verified pharmacy. Dem go contact you sharp-sharp.',
       'risk_title': 'Health Risk Prediction',
-      'risk_subtitle': 'This summary na from wetin you tell us about your body.',
+      'risk_subtitle':
+          'This summary na from wetin you tell us about your body.',
       'overall_risk': 'Your Total Risk Level',
       'view_full_report': 'Open Full Report',
       'edit_factors': 'Change Your Health Info',
@@ -741,7 +813,8 @@ class AppStrings {
       'all_locations': 'All Nigeria / Everywhere',
       'ai_companion_title': 'Aisha AI Health Buddy',
       'ai_companion_subtitle': '24/7 private guide wey go explain your cycle, cramps and feelings gently.',
-      'ai_input_placeholder': 'Ask Aisha any question about your body or period...',
+      'ai_input_placeholder':
+          'Ask Aisha any question about your body or period...',
       'ai_quick_prompt_1': 'My cycle dey normal so?',
       'ai_quick_prompt_2': 'How I fit stop period cramps?',
       'ai_quick_prompt_3': 'Wetin be follicular phase?',
@@ -755,7 +828,11 @@ class AppStrings {
     },
   };
 
-  static String get(String key, AppLanguage lang, {Map<String, String>? params}) {
+  static String get(
+    String key,
+    AppLanguage lang, {
+    Map<String, String>? params,
+  }) {
     final langMap = _localizedValues[lang.code] ?? _localizedValues['en']!;
     var str = langMap[key] ?? _localizedValues['en']![key] ?? key;
     if (params != null) {

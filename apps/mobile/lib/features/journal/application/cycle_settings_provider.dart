@@ -115,4 +115,6 @@ class CycleSettingsNotifier extends Notifier<CycleSettings> {
 }
 
 final cycleSettingsProvider =
-    NotifierProvider<CycleSettingsNotifier, CycleSettings>(CycleSettingsNotifier.new);
+    NotifierProvider<CycleSettingsNotifier, CycleSettings>(
+      CycleSettingsNotifier.new,
+    );
