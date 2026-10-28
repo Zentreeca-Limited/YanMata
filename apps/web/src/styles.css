@@ -537,6 +537,60 @@ html {
   margin-bottom: 10px;
   max-width: 430px;
 }
+.editorial-gallery {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(280px, 0.85fr);
+  gap: 22px;
+  margin-top: 26px;
+}
+.editorial-feature {
+  position: relative;
+  min-height: 390px;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 26px;
+  background: var(--lilac);
+  box-shadow: 0 18px 45px rgba(55, 28, 70, 0.12);
+}
+.editorial-feature img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.editorial-feature:hover img {
+  transform: scale(1.025);
+}
+.editorial-portrait img {
+  object-position: 48% center;
+}
+.editorial-feature::after {
+  content: "";
+  position: absolute;
+  inset: 45% 0 0;
+  background: linear-gradient(transparent, rgba(30, 13, 38, 0.82));
+}
+.editorial-feature figcaption {
+  position: absolute;
+  z-index: 1;
+  left: 26px;
+  right: 26px;
+  bottom: 24px;
+  max-width: 520px;
+  color: white;
+  font-size: 17px;
+  line-height: 1.45;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
+}
+.editorial-feature figcaption span {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
 .support-section {
   background: #f8f5f1;
   padding: 75px 0 82px;
@@ -1421,6 +1475,43 @@ footer p {
   gap: 24px;
   margin-bottom: 24px;
 }
+.specialist-editorial-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 32px;
+  align-items: stretch;
+}
+.specialist-editorial-image {
+  position: relative;
+  min-height: 430px;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 26px;
+  background: var(--lilac);
+}
+.specialist-editorial-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.specialist-editorial-image figcaption {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 14px;
+  background: rgba(29, 13, 36, 0.78);
+  color: white;
+  font-size: 11px;
+  line-height: 1.45;
+  backdrop-filter: blur(10px);
+}
+.specialist-editorial-layout .specialists-grid {
+  grid-template-columns: 1fr;
+}
 .specialist-card {
   background: white;
   border-radius: 20px;
@@ -1789,9 +1880,26 @@ footer p {
   background: linear-gradient(135deg, #351b4f, #56327a 60%, #78539b);
   color: white;
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+  grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.15fr) minmax(
+      270px,
+      0.7fr
+    );
   align-items: center;
   gap: 56px;
+}
+.download-visual {
+  height: 310px;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 24px;
+  box-shadow: 0 20px 45px rgba(20, 8, 29, 0.35);
+}
+.download-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 42% center;
 }
 .download-section .eyebrow,
 .download-section p {
@@ -2061,12 +2169,31 @@ dialog::backdrop {
     grid-template-columns: 1fr;
   }
   .download-section {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(220px, 0.75fr) minmax(0, 1fr);
     gap: 28px;
+  }
+  .download-actions {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .specialist-editorial-layout {
+    grid-template-columns: 1fr;
+  }
+  .specialist-editorial-image {
+    min-height: 390px;
   }
 }
 
 @media (max-width: 640px) {
+  .editorial-gallery {
+    grid-template-columns: 1fr;
+  }
+  .editorial-feature {
+    min-height: 330px;
+  }
+  .editorial-portrait {
+    min-height: 390px;
+  }
   .legal-page .wrap {
     width: 100%;
     padding-left: 22px;
@@ -2097,9 +2224,17 @@ dialog::backdrop {
     gap: 12px;
   }
   .download-section {
+    grid-template-columns: 1fr;
     margin-top: 48px;
     padding: 38px 24px;
     border-radius: 24px;
+  }
+  .download-visual {
+    height: 300px;
+  }
+  .download-actions {
+    grid-column: auto;
+    grid-template-columns: 1fr;
   }
   .journey-steps {
     grid-template-columns: 1fr;

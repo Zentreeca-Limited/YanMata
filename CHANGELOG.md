@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-10-28 — Age-inclusive public website imagery (WEB-03)
+
+- Added four original HD editorial images representing adolescence through later life, mature wellbeing, private mobile use and illustrative specialist support.
+- Preserved the illustrated hero while introducing photography in the life-stage, specialist and mobile-download sections.
+- Added descriptive alt text, responsive crops, readable overlays and an explicit illustrative-image disclosure for the professional-support scene.
+- Optimized the final image set to approximately 632 KB of WebP assets from approximately 8.5 MB of generated PNG sources.
+- Verified the web production build, formatting and desktop/compact layouts.
+
 ## 2026-10-28 — Automated Deployment Pipeline (PIPE-01)
 
 - Added automated GitHub Actions deployment pipeline (`.github/workflows/deploy.yml`) with automated testing, multi-app production builds, deterministic rsync deployment, remote cache optimization, and live health-check verification.

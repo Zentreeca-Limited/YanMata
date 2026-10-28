@@ -4,7 +4,7 @@ A private, accessible wellbeing companion for girls and women, provided by **Zen
 
 ## Project status — 28 October 2026
 
-Eight phased working slices are implemented across the React public site and editorial studio, Laravel API, and Flutter app. This is a synthetic-data development preview, **not a production or clinically approved release**. See the [latest phase evidence](docs/evidence/PHASE-08.md) and [foundation decisions](docs/adr/0002-foundation-implementation.md).
+Ten phased working slices are implemented across the React public site and editorial studio, Laravel API, and Flutter app. This is a synthetic-data development preview, **not a production or clinically approved release**. See the [latest phase evidence](docs/evidence/PHASE-10.md) and [foundation decisions](docs/adr/0002-foundation-implementation.md).
 
 ## Product
 

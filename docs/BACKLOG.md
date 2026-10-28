@@ -28,6 +28,7 @@ Statuses: TODO, IN_PROGRESS, BLOCKED, VERIFIED. VERIFIED requires evidence. Foun
 | ACCT-01 | P0 | Member logout, account deletion and public store-compliance pages | API-01, MOB-01, WEB-01 | Password-confirmed deletion test, local wipe behavior, legal URLs and mobile warning dialogs | VERIFIED |
 | WEB-02 | P0 | Opaque, accessible small-screen public navigation | WEB-01 | Light/dark open-menu inspection at 360px and 390px, no content bleed or horizontal overflow | VERIFIED |
 | COPY-01 | P0 | Production-facing web/mobile language and durable legal copy | WEB-01, ACCT-01 | Copy audit, builds/tests, compact/desktop visual evidence and documented human-review gates | VERIFIED |
+| WEB-03 | P1 | Age-inclusive HD editorial imagery across the public website | DESIGN-01, WEB-01 | Optimized original assets, truthful disclosure, accessible responsive layouts and visual evidence | VERIFIED |
 | DEPLOY-01 | P0 | Live server deployment at 52.0.227.75 under yanmata.zentreeca.org with SES email | TECH-02, OPS-01 | Remote Caddy multi-host, PHP 8.3 FPM, SQLite migrations/seeds, SES live email, SPA/API live curls | VERIFIED |
 | PIPE-01 | P0 | Automated GitHub Actions CI/CD deployment pipeline and local deploy CLI | DEPLOY-01 | `.github/workflows/deploy.yml`, `scripts/deploy.sh`, zero-downtime rsync, automated smoke testing | VERIFIED |
 

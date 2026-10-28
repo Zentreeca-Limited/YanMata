@@ -860,6 +860,30 @@ function App() {
               </a>
             </div>
           </div>
+          <div className="editorial-gallery">
+            <figure className="editorial-feature">
+              <img
+                src="/images/editorial/lifelong-wellbeing.webp"
+                alt="Four Nigerian women from adolescence through later life sharing a relaxed moment together"
+                decoding="async"
+              />
+              <figcaption>
+                <span>EVERY GENERATION</span>
+                Wellbeing support should grow with every chapter of life.
+              </figcaption>
+            </figure>
+            <figure className="editorial-feature editorial-portrait">
+              <img
+                src="/images/editorial/later-life-wellbeing.webp"
+                alt="A mature Nigerian woman reflecting and writing in a journal at home"
+                decoding="async"
+              />
+              <figcaption>
+                <span>NO UPPER AGE LIMIT</span>
+                Later life deserves thoughtful, dignified representation.
+              </figcaption>
+            </figure>
+          </div>
         </section>
 
         <section className="testimonials-section" id="voices">
@@ -1053,33 +1077,48 @@ function App() {
             professionals will be shown publicly only after their identity,
             credentials, scope and availability have been verified.
           </p>
-          <div className="specialists-grid readiness-grid">
-            <div className="specialist-card">
-              <ShieldCheck className="readiness-icon" />
-              <div>
-                <h3>Credentials checked</h3>
-                <p>
-                  Registration, scope of practice and expiry are reviewed before
-                  activation.
-                </p>
+          <div className="specialist-editorial-layout">
+            <figure className="specialist-editorial-image">
+              <img
+                src="/images/editorial/specialist-support.webp"
+                alt="Illustrative scene of a Nigerian healthcare professional providing private digital support"
+                decoding="async"
+              />
+              <figcaption>
+                Illustrative editorial image. Professionals shown in YanMata are
+                listed only after the required checks.
+              </figcaption>
+            </figure>
+            <div>
+              <div className="specialists-grid readiness-grid">
+                <div className="specialist-card">
+                  <ShieldCheck className="readiness-icon" />
+                  <div>
+                    <h3>Credentials checked</h3>
+                    <p>
+                      Registration, scope of practice and expiry are reviewed
+                      before activation.
+                    </p>
+                  </div>
+                </div>
+                <div className="specialist-card">
+                  <Lock className="readiness-icon" />
+                  <div>
+                    <h3>Access stays scoped</h3>
+                    <p>
+                      Specialist access is assigned, consented and limited to
+                      the support request.
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="specialist-card">
-              <Lock className="readiness-icon" />
-              <div>
-                <h3>Access stays scoped</h3>
-                <p>
-                  Specialist access is assigned, consented and limited to the
-                  support request.
-                </p>
-              </div>
+              <p className="specialist-note">
+                Specialist support is confidential and provided within YanMata.
+                It is not an emergency service and does not replace urgent or
+                in-person care.
+              </p>
             </div>
           </div>
-          <p className="specialist-note">
-            Specialist support is confidential and provided within YanMata. It
-            is not an emergency service and does not replace urgent or in-person
-            care.
-          </p>
         </section>
         <section className="wrap faq">
           <div>
@@ -1103,6 +1142,13 @@ function App() {
           </div>
         </section>
         <section className="download-section wrap" id="download">
+          <figure className="download-visual">
+            <img
+              src="/images/editorial/mobile-wellbeing.webp"
+              alt="An adult Nigerian woman using a smartphone privately in a comfortable home"
+              decoding="async"
+            />
+          </figure>
           <div className="download-copy">
             <div className="eyebrow">YANMATA MOBILE</div>
             <h2>Your private wellbeing companion, wherever you are.</h2>
