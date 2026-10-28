@@ -13,8 +13,8 @@ Statuses: TODO, IN_PROGRESS, BLOCKED, VERIFIED. VERIFIED requires evidence. Foun
 | MOB-01 | P0 | Riverpod shell, routing, encrypted local DB and secure keys | DESIGN-01, TECH-02 | Android/iOS builds; restart/lock/logout tests | IN_PROGRESS |
 | SYNC-01 | P0 | Journal plus outbox/idempotency/cursor protocol | API-01, MOB-01 | Airplane-mode/replay/conflict/delete scenarios | IN_PROGRESS |
 | CMS-01 | P0 | React content authoring/review/publication and media pipeline | API-01, DESIGN-01 | Publication state/permission tests; mobile refresh | IN_PROGRESS |
-| WEB-01 | P0 | Responsive React public site, stories showcase and learning pages | DESIGN-01, CMS-01 | Mobile/desktop QA, 6 core stories, wireframe journey, 5 languages | VERIFIED |
-| CARE-01 | P0 | Specialist verification, in-platform support request and consented chat | API-01, MOB-01 | Scoped access/revocation tests and seeded demo conversation | IN_PROGRESS |
+| WEB-01 | P0 | Responsive React public site, stories showcase and learning pages | DESIGN-01, CMS-01 | Mobile/desktop QA, 6 core stories, wireframe journey, 100% multilingual across 5 languages, de-localized scope | VERIFIED |
+| CARE-01 | P0 | Specialist verification, in-platform support request and consented chat | API-01, MOB-01 | Scoped access/revocation tests, nationwide/pilot clinical network, seeded demo conversation | IN_PROGRESS |
 | PUSH-01 | P0 | Private Reverb, FCM/APNs and local reminders | SYNC-01, CARE-01 | Physical-device state matrix, token cleanup, deduplication | IN_PROGRESS |
 | MOB-02 | P1 | Mobile staff draft/upload/review/publish capability | CMS-01, MOB-01 | Same policies enforced from mobile and web | IN_PROGRESS |
 | AI-01 | P1 | Bounded multilingual AI companion & cycle rhythm intelligence | CMS-01, clinical corpus | Evaluated endpoints, safety boundaries, no health body in logs | VERIFIED |

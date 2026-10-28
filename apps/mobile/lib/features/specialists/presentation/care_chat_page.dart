@@ -85,7 +85,7 @@ class _CareChatPageState extends ConsumerState<CareChatPage> {
                   SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'Asynchronous guidance · Jos pilot · Not an emergency service',
+                      'Asynchronous guidance · Verified clinicians · Not an emergency service',
                       style: TextStyle(
                         fontSize: 11,
                         color: Palette.ink,

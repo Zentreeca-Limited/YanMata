@@ -843,7 +843,7 @@ class _YouState extends ConsumerState<You> {
         ),
         const SizedBox(height: 12),
         const Text(
-          'YanMata by Zentreeca · Ages 9 through later life\nJos, Plateau State · Development preview',
+          'YanMata by Zentreeca · Ages 9 through later life\nNigeria · Development preview',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 12),
         ),

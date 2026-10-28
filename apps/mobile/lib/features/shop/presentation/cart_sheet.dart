@@ -65,7 +65,7 @@ class _CartSheetState extends ConsumerState<CartSheet> {
             ],
           ),
           content: const Text(
-            'Your order has been placed with the verified pharmacy in Jos. You will receive an SMS confirmation once dispatched.',
+            'Your order has been placed with the verified partner pharmacy. You will receive an SMS confirmation once dispatched.',
           ),
           actions: [
             TextButton(
@@ -242,7 +242,7 @@ class _CartSheetState extends ConsumerState<CartSheet> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    'Total (incl. delivery in Jos)',
+                    'Total (incl. standard delivery)',
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
                   Text(
@@ -282,7 +282,7 @@ class _CartSheetState extends ConsumerState<CartSheet> {
               TextField(
                 controller: _addressController,
                 decoration: const InputDecoration(
-                  labelText: 'Delivery Address in Jos',
+                  labelText: 'Delivery Address',
                 ),
               ),
               const SizedBox(height: 20),

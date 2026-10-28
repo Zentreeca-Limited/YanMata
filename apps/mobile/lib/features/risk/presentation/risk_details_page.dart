@@ -236,7 +236,7 @@ class _RiskDetailsPageState extends ConsumerState<RiskDetailsPage> {
                   );
                 },
                 icon: const Icon(Icons.chat_bubble_outline),
-                label: const Text('Consult YanMata Specialist in Jos'),
+                label: const Text('Consult YanMata Specialist'),
               ),
               const SizedBox(height: 12),
 

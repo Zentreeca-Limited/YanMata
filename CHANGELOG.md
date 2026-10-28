@@ -157,3 +157,18 @@
   - Maintained strict product invariants: zero external hospital referrals and zero facility booking.
 - Verification:
   - Production build (`npm run --workspace=@yanmata/web build`) completed in 840ms; Prettier code formatting passes cleanly; TypeScript checks pass with zero errors. Live website running and launched at `http://127.0.0.1:5173/`.
+
+## 2026-10-28 — Multilingual Public Web Completeness & Generalized Platform Scope (WEB-01, CARE-01)
+
+- Location De-localization across Mobile and Web:
+  - Truthfully framed Jos as the initial clinical review pilot launch hub while generalizing copy across web and mobile to represent Nigeria, Africa, and beyond ("Made with care in Nigeria, for Africa and the world").
+  - Mobile: Updated `staff_portal_page.dart` (Assign Verified Specialist, verified publishing pipeline), `shop_repository.dart` (generalized pharmacy seller labels), `cart_sheet.dart` (standard delivery and delivery address), `mental_health_page.dart` (accredited midwives, counsellors, and therapists), `care_chat_page.dart` (verified clinicians notice), `you_page.dart` (Nigeria development preview), and `risk_repository.dart` / `risk_details_page.dart` (standardized Pap smear / HPV screening guidance).
+  - Web: Removed pigeonholed "Jos" strings from hero tags, stories, support cards, and specialists section in favor of an expansive national and global voice.
+- 100% Multilingual Public Web (English, Hausa, Yoruba, Igbo, Nigerian Pidgin):
+  - Added 209 synchronized translation keys across all 5 languages (`en`, `ha`, `yo`, `ig`, `pcm`) in `apps/web/src/i18n.ts`.
+  - Refactored `apps/web/src/main.tsx` so that 100% of the public web responds immediately to language switching.
+  - Covers every section: chapters, 6 core wireframe stories (badges, titles, leads, and 4 highlights each), 5 journey steps (titles, subs, tags), 3 real testimonials (quotes, names, titles), support cards (track, mood options, learn stacks, care conversation), learning room notices and states, privacy bullets, specialists network copy, all 6 FAQs, closing copy, footer tagline/disclaimer, and interactive dialogs.
+- Verification & Test Closeout:
+  - Backend: 34 PHPUnit tests / 207 assertions pass (`npm run test:api`).
+  - Mobile: `flutter analyze` passes with 0 issues; all 13 Flutter test suites pass (`npm run test:mobile`).
+  - Web & Admin: TypeScript typecheck passes (`npm run typecheck`); Prettier formatting passes cleanly (`npm run format:check`); web production build succeeds in 800ms (`npm run --workspace=@yanmata/web build`).

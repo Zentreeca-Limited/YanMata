@@ -45,7 +45,7 @@ class RiskRepository {
       ],
     },
     recommendations: [
-      'Get screened regularly (Pap smear / HPV test in Jos)',
+      'Get screened regularly (Pap smear / HPV test)',
       'Consider HPV vaccination (if eligible under FMOH guidelines)',
       'Adopt healthy lifestyle and stress-reduction habits',
       'Track cycle symptoms consistently for 3 months',

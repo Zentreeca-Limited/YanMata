@@ -269,7 +269,7 @@ class _StaffPortalPageState extends ConsumerState<StaffPortalPage>
     showDialog<void>(
       context: context,
       builder: (dlgContext) => AlertDialog(
-        title: const Text('Assign Jos Specialist'),
+        title: const Text('Assign Verified Specialist'),
         content: SizedBox(
           width: double.maxFinite,
           child: Column(
@@ -398,7 +398,7 @@ class _StaffPortalPageState extends ConsumerState<StaffPortalPage>
                           style: Theme.of(context).textTheme.headlineSmall,
                         ),
                         Text(
-                          'Role: ${journal?.userRole ?? 'staff'} · Verified Jos publishing pipeline',
+                          'Role: ${journal?.userRole ?? 'staff'} · Verified publishing pipeline',
                           style: const TextStyle(
                             fontSize: 12,
                             color: Palette.slate,
@@ -508,7 +508,7 @@ class _StaffPortalPageState extends ConsumerState<StaffPortalPage>
                 ),
                 const SizedBox(height: 4),
                 const Text(
-                  'Triage and assign inquiries to Jos verified medical doctors and nurse specialists.',
+                  'Triage and assign inquiries to verified medical doctors and nurse specialists.',
                   style: TextStyle(fontSize: 12, color: Palette.slate),
                 ),
                 const SizedBox(height: 16),

@@ -33,208 +33,179 @@ import { LANGUAGES, translations, type Language } from "./i18n";
 import "@yanmata/ui/styles.css";
 import "./styles.css";
 
-const stories = [
+const getStories = (t: Record<string, string>) => [
   {
     id: "cycle",
-    tabKey: "tab_cycle",
+    tabTitle: t.tab_cycle || "Cycle Rhythm",
     icon: Calendar,
-    title: "Intuitive Cycle Rhythm & Period Tracking",
-    badge: "CORE WIREFRAME FEATURE",
-    lead: "A dynamic visual dial that adapts to your phase, flow, symptoms, and rhythm. Designed without judgment, predicting your next cycle while respecting natural irregularity.",
-    highlights: [
-      "Dynamic cycle phase visualization (Follicular, Ovulatory, Luteal, Menstrual)",
-      "One-tap symptom, mood, and flow logging",
-      "Age-appropriate tracking: safe for young adolescents (ages 9+) without adult fertility prompts",
-      "100% offline-ready encrypted storage with zero cloud tracking",
-    ],
+    title: t.cycle_title,
+    badge: t.cycle_badge,
+    lead: t.cycle_lead,
+    highlights: [t.cycle_h1, t.cycle_h2, t.cycle_h3, t.cycle_h4],
     image: "/screens/today.png",
-    alt: "YanMata mobile app cycle rhythm dial and daily care overview",
+    alt: t.cycle_title,
   },
   {
     id: "ai",
-    tabKey: "tab_ai",
+    tabTitle: t.tab_ai || "Aisha AI",
     icon: Sparkles,
-    title: "Aisha: Your Culturally Grounded AI Wellbeing Companion",
-    badge: "MULTILINGUAL & 24/7",
-    lead: "Empathetic, judgment-free answers to your intimate health questions in English, Hausa, Yoruba, Igbo, and Nigerian Pidgin. Rooted in clinical guidelines with built-in emergency safeguarding.",
-    highlights: [
-      "Conversational empathy in 5 Nigerian languages",
-      "Strict clinical boundaries: educational guidance, not automated prescribing",
-      "Automatic mental health crisis triage (SURPIN Nigeria 0800 123 4567 & 112)",
-      "Zero telemetry: your questions and conversations stay completely private",
-    ],
+    title: t.ai_title,
+    badge: t.ai_badge,
+    lead: t.ai_lead,
+    highlights: [t.ai_h1, t.ai_h2, t.ai_h3, t.ai_h4],
     image: "/screens/ai.png",
-    alt: "Aisha AI companion interactive conversation in Nigerian context",
+    alt: t.ai_title,
   },
   {
     id: "insights",
-    tabKey: "tab_insights",
+    tabTitle: t.tab_insights || "Clinical Insights",
     icon: Activity,
-    title: "Evidence-Based Clinical Insights (WHO & FMOH Nigeria)",
-    badge: "NO FAKE RISK SCORES",
-    lead: "Personalized preventive health advice generated from your 5-pillar health profile. Every insight includes traceable medical evidence from WHO and Federal Ministry of Health Nigeria guidelines.",
-    highlights: [
-      "Traceable citations and evidence level (High, Moderate)",
-      "Life-stage specific: cervical screening for adults, HPV education for teens",
-      "Strict minor safeguarding: excludes adult reproductive warnings for ages 9–17",
-      "Proactive lifestyle and nutrition recommendations tailored to local Nigerian diets",
-    ],
+    title: t.insights_title,
+    badge: t.insights_badge,
+    lead: t.insights_lead,
+    highlights: [t.insights_h1, t.insights_h2, t.insights_h3, t.insights_h4],
     image: "/screens/insights.png",
-    alt: "Evidence-based preventive health insights with WHO and FMOH citations",
+    alt: t.insights_title,
   },
   {
     id: "profile",
-    tabKey: "tab_profile",
+    tabTitle: t.tab_profile || "5-Pillar Profile",
     icon: UserCheck,
-    title: "Comprehensive 5-Pillar Encrypted Health Profile",
-    badge: "LOCAL ENCRYPTED STORAGE",
-    lead: "A complete clinical baseline built around five pillars: Menstrual Rhythm, Reproductive History, Medical Conditions, Lifestyle, and Family History. Encrypted locally and synchronized securely.",
-    highlights: [
-      "Structured 5-pillar assessment from the wireframe onboarding flow",
-      "Age-adapted forms: skips unnecessary adult questions for adolescents",
-      "Local SQLite outbox encryption with zero unauthorized cloud sharing",
-      "Exportable summary for your in-platform specialist consultations",
-    ],
+    title: t.profile_title,
+    badge: t.profile_badge,
+    lead: t.profile_lead,
+    highlights: [t.profile_h1, t.profile_h2, t.profile_h3, t.profile_h4],
     image: "/screens/profile.png",
-    alt: "YanMata 5-pillar encrypted health profile overview",
+    alt: t.profile_title,
   },
   {
     id: "mental",
-    tabKey: "tab_mental",
+    tabTitle: t.tab_mental || "Mental Care",
     icon: Smile,
-    title: "Integrated Mental Health, Mood & Crisis Support",
-    badge: "EMOTIONAL CARE",
-    lead: "Hormones, life stress, and reproductive milestones profoundly impact emotional wellbeing. YanMata provides daily mood check-ins, mindful breathing exercises, and instant crisis hotlines.",
-    highlights: [
-      "Daily mood and emotional rhythm logging with somatic check-ins",
-      "Evidence-based somatic calming and guided breathing exercises",
-      "Immediate emergency support with SURPIN Nigeria helpline integration",
-      "Safe, stigma-free space designed for young girls and mature women alike",
-    ],
+    title: t.mental_title,
+    badge: t.mental_badge,
+    lead: t.mental_lead,
+    highlights: [t.mental_h1, t.mental_h2, t.mental_h3, t.mental_h4],
     image: "/screens/mental.png",
-    alt: "YanMata mental health mood tracking and breathing exercises",
+    alt: t.mental_title,
   },
   {
     id: "care",
-    tabKey: "tab_care",
+    tabTitle: t.tab_care || "Specialist Care",
     icon: MessageCircle,
-    title: "Verified In-Platform Specialist Consultations (Jos Pilot)",
-    badge: "MDCN & NMCN VERIFIED",
-    lead: "Direct, asynchronous, confidential access to licensed gynecologists, reproductive health nurses, and maternal health experts in our Jos pilot hub. Never an algorithm alone.",
-    highlights: [
-      "100% credential-checked specialists verified with MDCN and NMCN",
-      "Confidential in-app messaging with end-to-end audit trail",
-      "Strict clinical boundaries: no fake hospital referrals or external booking",
-      "Integrated with YanMata maternal & reproductive health services",
-    ],
+    title: t.care_title,
+    badge: t.care_badge,
+    lead: t.care_lead,
+    highlights: [t.care_h1, t.care_h2, t.care_h3, t.care_h4],
     image: "/screens/services.png",
-    alt: "In-platform verified specialist consultations and health services",
+    alt: t.care_title,
   },
 ];
 
-const journeySteps = [
+const getJourneySteps = (t: Record<string, string>) => [
   {
     step: 1,
-    titleKey: "journey_step_1",
-    subKey: "journey_step_1_sub",
-    tag: "Ages 9+ Safe",
+    title: t.journey_step_1,
+    sub: t.journey_step_1_sub,
+    tag: t.journey_tag_1,
     icon: Compass,
   },
   {
     step: 2,
-    titleKey: "journey_step_2",
-    subKey: "journey_step_2_sub",
-    tag: "Encrypted & Offline",
+    title: t.journey_step_2,
+    sub: t.journey_step_2_sub,
+    tag: t.journey_tag_2,
     icon: Lock,
   },
   {
     step: 3,
-    titleKey: "journey_step_3",
-    subKey: "journey_step_3_sub",
-    tag: "5 Health Pillars",
+    title: t.journey_step_3,
+    sub: t.journey_step_3_sub,
+    tag: t.journey_tag_3,
     icon: Activity,
   },
   {
     step: 4,
-    titleKey: "journey_step_4",
-    subKey: "journey_step_4_sub",
-    tag: "WHO / FMOH Guidelines",
+    title: t.journey_step_4,
+    sub: t.journey_step_4_sub,
+    tag: t.journey_tag_4,
     icon: ShieldCheck,
   },
   {
     step: 5,
-    titleKey: "journey_step_5",
-    subKey: "journey_step_5_sub",
-    tag: "Daily Companion",
+    title: t.journey_step_5,
+    sub: t.journey_step_5_sub,
+    tag: t.journey_tag_5,
     icon: Heart,
   },
 ];
 
-const testimonials = [
+const getTestimonials = (t: Record<string, string>) => [
   {
-    quote:
-      "When I first started my period, I was too shy to ask anyone at school. YanMata explained everything to me in Hausa without making me feel ashamed. Aisha AI answered my questions kindly, and knowing my details are private made me feel safe.",
-    name: "Amina B.",
-    title: "Student (Age 14) · Jos, Plateau State",
+    quote: t.test_quote_1,
+    name: t.test_name_1,
+    title: t.test_title_1,
     avatar: "A",
   },
   {
-    quote:
-      "Tracking my irregular cycles used to be stressful because every app assumed a standard 28-day cycle. YanMata's 5-pillar health profile captured my medical history, and the clinical insights actually cited WHO guidelines instead of showing random panic numbers.",
-    name: "Zainab O.",
-    title: "Architect (Age 28) · Abuja (Jos Pilot Participant)",
+    quote: t.test_quote_2,
+    name: t.test_name_2,
+    title: t.test_title_2,
     avatar: "Z",
   },
   {
-    quote:
-      "As a physician practicing in Plateau State, seeing a health platform that adheres strictly to FMOH Nigeria guidelines and MDCN verification standards is refreshing. YanMata respects patient privacy, maintains minor safeguarding, and connects patients to verified clinicians responsibly.",
-    name: "Dr. Fatima Aliyu",
-    title: "Consultant Gynecologist (MDCN Verified) · Jos",
+    quote: t.test_quote_3,
+    name: t.test_name_3,
+    title: t.test_title_3,
     avatar: "F",
   },
 ];
 
-const chapters = [
+const getChapters = (t: Record<string, string>) => [
   {
-    label: "Puberty",
-    years: "A beginning, at your pace",
-    title: "A changing body. A space for every question.",
-    description:
-      "Start with body literacy, self-understanding and simple ways to express how you feel. Designed for girls from age 9.",
+    label: t.ch_label_0,
+    years: t.ch_years_0,
+    title: t.ch_title_0,
+    description: t.ch_desc_0,
     icon: "✳",
   },
   {
-    label: "Adolescence",
-    years: "Growing into yourself",
-    title: "Finding your rhythm. Finding your voice.",
-    description:
-      "Explore periods, emotions and everyday wellbeing in a space that respects your privacy and your questions.",
+    label: t.ch_label_1,
+    years: t.ch_years_1,
+    title: t.ch_title_1,
+    description: t.ch_desc_1,
     icon: "◌",
   },
   {
-    label: "Adulthood",
-    years: "Care that fits your life",
-    title: "Make room for yourself, too.",
-    description:
-      "Your wellbeing belongs alongside everything else you do. Build a personal journal and explore the topics that matter to you.",
+    label: t.ch_label_2,
+    years: t.ch_years_2,
+    title: t.ch_title_2,
+    description: t.ch_desc_2,
     icon: "❋",
   },
   {
-    label: "Menopause",
-    years: "Your next chapter",
-    title: "Change deserves understanding.",
-    description:
-      "A thoughtful place for learning about transitions, reflecting on your wellbeing and connecting with specialists.",
+    label: t.ch_label_3,
+    years: t.ch_years_3,
+    title: t.ch_title_3,
+    description: t.ch_desc_3,
     icon: "☼",
   },
   {
-    label: "Later life",
-    years: "No age limit on care",
-    title: "Every year. Every part of you.",
-    description:
-      "Stay connected to learning, comfort and support through later life and end-of-life wellbeing. Always with dignity.",
+    label: t.ch_label_4,
+    years: t.ch_years_4,
+    title: t.ch_title_4,
+    description: t.ch_desc_4,
     icon: "❀",
   },
+];
+
+const getFaqs = (t: Record<string, string>) => [
+  [t.faq_q1, t.faq_a1],
+  [t.faq_q2, t.faq_a2],
+  [t.faq_q3, t.faq_a3],
+  [t.faq_q4, t.faq_a4],
+  [t.faq_q5, t.faq_a5],
+  [t.faq_q6, t.faq_a6],
 ];
 
 function App() {
@@ -258,6 +229,11 @@ function App() {
   const aiDialog = useRef<HTMLDialogElement>(null);
 
   const t = translations[lang] || translations.en;
+  const stories = getStories(t);
+  const journeySteps = getJourneySteps(t);
+  const testimonials = getTestimonials(t);
+  const chapters = getChapters(t);
+  const faqs = getFaqs(t);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -274,7 +250,8 @@ function App() {
       .then((r) => setArticles(r.data))
       .catch(() =>
         setError(
-          "The learning library is temporarily unavailable. Please try again.",
+          t.learn_error ||
+            "The learning library is temporarily unavailable. Please try again.",
         ),
       );
     api<{ data: Specialist[] }>("/specialists")
@@ -415,7 +392,7 @@ function App() {
             {/* Theme Toggle */}
             <button
               className="theme-toggle"
-              aria-label="Toggle theme"
+              aria-label={theme === "light" ? t.theme_dark : t.theme_light}
               onClick={() => setTheme(theme === "light" ? "dark" : "light")}
             >
               {theme === "light" ? <Moon size={15} /> : <Sun size={15} />}
@@ -440,7 +417,7 @@ function App() {
             <Tag>
               <span className="tiny-flower">✳</span>{" "}
               {t.hero_tag ||
-                "AGES 9 THROUGH LIFELONG CARE · JOS PILOT TO NATIONWIDE"}
+                "AGES 9 THROUGH LIFELONG CARE · NIGERIA, AFRICA & BEYOND"}
             </Tag>
             <h1>
               {t.hero_title_1 || "Growing. Changing."}
@@ -495,7 +472,8 @@ function App() {
                 <Leaf size={18} />
               </span>
               <div>
-                A little care, every day.<small>At your own pace.</small>
+                {t.hero_note_1}
+                <small>{t.hero_note_1_sub}</small>
               </div>
             </div>
             <div className="floating-note note-bottom">
@@ -503,10 +481,11 @@ function App() {
                 <Heart size={20} />
               </span>
               <div>
-                Every version of you.<small>Always welcome here.</small>
+                {t.hero_note_2}
+                <small>{t.hero_note_2_sub}</small>
               </div>
             </div>
-            <span className="art-caption">YOUR JOURNEY. YOUR SPACE.</span>
+            <span className="art-caption">{t.hero_art_caption}</span>
           </div>
         </section>
         <div className="values-strip">
@@ -557,7 +536,7 @@ function App() {
                   onClick={() => setActiveStory(idx)}
                 >
                   <Icon size={16} />
-                  <span>{t[s.tabKey] || s.title}</span>
+                  <span>{s.tabTitle}</span>
                 </button>
               );
             })}
@@ -596,7 +575,8 @@ function App() {
               </ul>
               <div className="story-action-row">
                 <a className="button" href="#journey">
-                  See Account Journey <ArrowRight size={16} />
+                  {t.stories_cta_journey || "See Account Journey"}{" "}
+                  <ArrowRight size={16} />
                 </a>
                 <button
                   className="text-link"
@@ -610,7 +590,7 @@ function App() {
                   }}
                   onClick={() => setAiOpen(true)}
                 >
-                  Ask Aisha AI <Sparkles size={14} />
+                  {t.stories_cta_ai || "Ask Aisha AI"} <Sparkles size={14} />
                 </button>
               </div>
             </div>
@@ -644,9 +624,9 @@ function App() {
                     style={{ display: "flex", alignItems: "center", gap: 8 }}
                   >
                     <Icon size={18} color="var(--plum)" />
-                    <h4>{t[j.titleKey]}</h4>
+                    <h4>{j.title}</h4>
                   </div>
-                  <p>{t[j.subKey]}</p>
+                  <p>{j.sub}</p>
                   <span className="journey-tag">✓ {j.tag}</span>
                 </div>
               );
@@ -657,18 +637,16 @@ function App() {
           <div className="section-heading">
             <div>
               <div className="eyebrow">
-                LIFE DOESN’T STAND STILL. NEITHER DOES CARE.
+                {t.chapters_eyebrow ||
+                  "LIFE DOESN’T STAND STILL. NEITHER DOES CARE."}
               </div>
               <h2>
-                Every chapter.
-                <br />
-                <span className="serif">A little more understood.</span>
+                {t.chapters_title || "Every chapter. A little more understood."}
               </h2>
             </div>
             <p>
-              There’s no single way to be a woman.
-              <br />
-              Find the support that feels right for where you are.
+              {t.chapters_desc ||
+                "There’s no single way to be a woman. Find the support that feels right for where you are."}
             </p>
           </div>
           <div
@@ -678,7 +656,7 @@ function App() {
           >
             {chapters.map((c, i) => (
               <button
-                key={c.label}
+                key={i}
                 role="tab"
                 id={`tab-${i}`}
                 aria-selected={chapter === i}
@@ -708,7 +686,8 @@ function App() {
               <h3>{chapters[chapter].title}</h3>
               <p>{chapters[chapter].description}</p>
               <a className="text-link" href="#learn">
-                Discover your learning space <ArrowUpRight size={18} />
+                {t.chapters_cta || "Discover your learning space"}{" "}
+                <ArrowUpRight size={18} />
               </a>
             </div>
           </div>
@@ -720,7 +699,7 @@ function App() {
             <div className="section-heading">
               <div>
                 <div className="eyebrow">
-                  {t.voices_eyebrow || "REAL VOICES · JOS PILOT & NATIONWIDE"}
+                  {t.voices_eyebrow || "REAL VOICES · STORIES OF CARE & TRUST"}
                 </div>
                 <h2>
                   {t.voices_title ||
@@ -756,9 +735,7 @@ function App() {
                 <div className="eyebrow">
                   {t.support_eyebrow || "SMALL MOMENTS. MEANINGFUL CARE."}
                 </div>
-                <h2>
-                  A space that’s <span className="serif">yours.</span>
-                </h2>
+                <h2>{t.support_title || "A space that’s yours."}</h2>
               </div>
               <p>
                 {t.support_desc ||
@@ -770,29 +747,26 @@ function App() {
                 <div className="feature-icon">
                   <Heart />
                 </div>
-                <h3>Check in with you.</h3>
-                <p>
-                  A personal journal for your mood and daily experience. No
-                  perfect answers needed.
-                </p>
+                <h3>{t.support_track_title}</h3>
+                <p>{t.support_track_desc}</p>
                 <div className="mini-journal">
-                  <small>HOW ARE YOU FEELING TODAY?</small>
+                  <small>{t.support_mood_question}</small>
                   <div className="mood-row">
                     <span>
-                      ☀<small>Great</small>
+                      ☀<small>{t.mood_great}</small>
                     </span>
                     <span>
-                      ☺<small>Good</small>
+                      ☺<small>{t.mood_good}</small>
                     </span>
                     <span className="chosen">
-                      ◡<small>Okay</small>
+                      ◡<small>{t.mood_okay}</small>
                     </span>
                     <span>
-                      ☁<small>Low</small>
+                      ☁<small>{t.mood_low}</small>
                     </span>
                   </div>
                   <span className="journal-caption">
-                    <Lock size={11} /> A moment, just for you.
+                    <Lock size={11} /> {t.support_mood_caption}
                   </span>
                 </div>
               </article>
@@ -800,23 +774,22 @@ function App() {
                 <div className="feature-icon">
                   <BookOpen />
                 </div>
-                <h3>Understand a little more.</h3>
-                <p>
-                  Explore learning organised around your life, with sources and
-                  a clear review process.
-                </p>
+                <h3>{t.support_learn_title}</h3>
+                <p>{t.support_learn_desc}</p>
                 <div className="mini-stack">
                   <div>
                     <span className="stack-flower">✳</span>
                     <span>
-                      Your body, your questions<small>BODY LITERACY</small>
+                      {t.support_stack_1_title}
+                      <small>{t.support_stack_1_tag}</small>
                     </span>
                     <ChevronRight size={16} />
                   </div>
                   <div>
                     <span className="stack-flower pink">❋</span>
                     <span>
-                      Space for your feelings<small>EMOTIONAL WELLBEING</small>
+                      {t.support_stack_2_title}
+                      <small>{t.support_stack_2_tag}</small>
                     </span>
                     <ChevronRight size={16} />
                   </div>
@@ -826,20 +799,16 @@ function App() {
                 <div className="feature-icon">
                   <MessageCircle />
                 </div>
-                <h3>Verified In-Platform Support.</h3>
-                <p>
-                  Connect directly with licensed gynecologists and reproductive
-                  nurse specialists in our Jos pilot hub. Confidential and
-                  respectful.
-                </p>
+                <h3>{t.support_care_title}</h3>
+                <p>{t.support_care_desc}</p>
                 <div className="mini-conversation">
                   <span className="conversation-bubble">
-                    Some questions need a listening ear.
+                    {t.support_convo_q}
                   </span>
                   <span className="conversation-answer">
-                    And a licensed doctor to answer. <Heart size={12} />
+                    {t.support_convo_a} <Heart size={12} />
                   </span>
-                  <small>MDCN & NMCN Verified · Jos Pilot Hub</small>
+                  <small>{t.support_care_badge}</small>
                 </div>
               </article>
             </div>
@@ -848,22 +817,18 @@ function App() {
         <section className="wrap learning" id="learn">
           <div className="section-heading">
             <div>
-              <div className="eyebrow">THE LEARNING ROOM</div>
-              <h2>
-                A little knowledge.
-                <br />
-                <span className="serif">A little more confidence.</span>
-              </h2>
+              <div className="eyebrow">{t.learn_eyebrow}</div>
+              <h2>{t.learn_title}</h2>
             </div>
             <p>
-              Take a breath. Find something for you.
+              {t.learn_desc}
               <br />
-              <small>Preview articles use synthetic, unreviewed content.</small>
+              <small>{t.learn_notice}</small>
             </p>
           </div>
           {error ? (
             <div className="error" role="alert">
-              {error} <button onClick={load}>Retry</button>
+              {error} <button onClick={load}>{t.learn_retry}</button>
             </div>
           ) : (
             <div className="article-grid">
@@ -883,15 +848,13 @@ function App() {
                     <h3>{a.title}</h3>
                     <p>{a.summary}</p>
                     <div className="article-meta">
-                      <span>DEMO • NOT CLINICALLY REVIEWED</span>
+                      <span>{t.learn_card_meta}</span>
                       <ArrowUpRight size={20} />
                     </div>
                   </div>
                 </button>
               ))}
-              {!articles.length && (
-                <p role="status">The learning room is being prepared.</p>
-              )}
+              {!articles.length && <p role="status">{t.learn_loading}</p>}
             </div>
           )}
         </section>
@@ -902,55 +865,40 @@ function App() {
             </div>
             <span className="privacy-star">✧</span>
             <div className="privacy-pill">
-              <Lock size={14} /> Your story belongs to you.
+              <Lock size={14} /> {t.privacy_pill}
             </div>
           </div>
           <div className="privacy-copy">
-            <div className="eyebrow">PERSONAL MEANS PERSONAL.</div>
-            <h2>
-              Your wellbeing.
-              <br />
-              <span className="serif">Your boundaries.</span>
-            </h2>
-            <p>
-              We’re building YanMata around trust. That means thoughtful
-              permissions, discreet experiences and control over what you share.
-            </p>
+            <div className="eyebrow">{t.privacy_eyebrow}</div>
+            <h2>{t.privacy_title}</h2>
+            <p>{t.privacy_desc}</p>
             <ul>
               <li>
-                <Lock /> No account needed to explore learning
+                <Lock /> {t.privacy_b1}
               </li>
               <li>
-                <WifiOff /> Private journaling designed for offline use
+                <WifiOff /> {t.privacy_b2}
               </li>
               <li>
-                <ShieldCheck /> Age-appropriate care, from 9 through later life
+                <ShieldCheck /> {t.privacy_b3}
               </li>
             </ul>
             <button className="text-link" onClick={() => setInfo("privacy")}>
-              Read our privacy approach <ArrowUpRight size={18} />
+              {t.privacy_cta} <ArrowUpRight size={18} />
             </button>
           </div>
         </section>
         <section className="wrap specialists" id="specialists">
-          <div className="eyebrow">VERIFIED CARE CONTRIBUTORS · JOS PILOT</div>
-          <h2>
-            Qualified guidance.
-            <br />
-            <span className="serif">Never an algorithm alone.</span>
-          </h2>
-          <p className="specialists-lead">
-            In our Jos, Plateau State pilot, YanMata connects women and girls
-            directly with licensed medical practitioners and nurse specialists
-            registered with MDCN and NMCN.
-          </p>
+          <div className="eyebrow">{t.specialists_eyebrow}</div>
+          <h2>{t.specialists_title}</h2>
+          <p className="specialists-lead">{t.specialists_lead}</p>
           <div className="specialists-grid">
             {specialists.map((s) => (
               <div className="specialist-card" key={s.id}>
                 <div className="specialist-avatar">{s.name[0]}</div>
                 <div>
                   <div className="specialist-verified">
-                    <ShieldCheck size={14} /> MDCN / NMCN Verified
+                    <ShieldCheck size={14} /> {t.specialists_badge}
                   </div>
                   <h3>{s.name}</h3>
                   <div className="specialist-title">
@@ -963,48 +911,15 @@ function App() {
               </div>
             ))}
           </div>
-          <p className="specialist-note">
-            Specialist support is asynchronous and confidential within YanMata.
-            YanMata does not provide hospital referrals, directory search or
-            emergency admissions.
-          </p>
+          <p className="specialist-note">{t.specialists_note}</p>
         </section>
         <section className="wrap faq">
           <div>
-            <div className="eyebrow">A FEW THINGS YOU MAY BE WONDERING</div>
-            <h2>
-              Let’s make
-              <br />
-              <span className="serif">room for questions.</span>
-            </h2>
+            <div className="eyebrow">{t.faq_eyebrow}</div>
+            <h2>{t.faq_title}</h2>
           </div>
           <div className="faq-list">
-            {[
-              [
-                "Who is YanMata for?",
-                "Girls and women from age 9 through the end of life. The experience adapts to your stage with strict minor safeguarding: adolescents (ages 9–17) receive body literacy and cycle education without adult fertility prompts or adult screening reminders.",
-              ],
-              [
-                "How does YanMata protect my intimate health data?",
-                "Privacy is foundational. YanMata is built offline-first: your menstrual logs, symptoms, and 5-pillar health profile remain encrypted on your device. We do not sell user data, harvest telemetry, or share personal health records with third parties.",
-              ],
-              [
-                "Are the clinical insights based on real science?",
-                "Yes. YanMata does not generate fabricated risk scores or fake percentage likelihoods. Every personalized insight is traceable to clinical guidelines from the World Health Organization (WHO) and Federal Ministry of Health (FMOH) Nigeria.",
-              ],
-              [
-                "How does specialist consultation work in YanMata?",
-                "In our Jos pilot hub, verified MDCN-registered doctors and NMCN-registered nurse specialists provide asynchronous, confidential in-app consultations. Invariants: YanMata does not offer hospital booking or facility directories — specialist support remains strictly within the platform.",
-              ],
-              [
-                "Can I ask Aisha AI in my local language?",
-                "Yes! Aisha AI is trained to understand and respond supportively in English, Hausa, Yoruba, Igbo, and Nigerian Pidgin. It is equipped with automatic emergency triage connecting to Nigeria's SURPIN helpline (0800 123 4567) and emergency services (112).",
-              ],
-              [
-                "When can I use the mobile app?",
-                "The Flutter app is under active development for Android and iOS. We are preparing the pilot rollout starting in Jos, Plateau State. Public app-store releases will follow the pilot evaluation.",
-              ],
-            ].map(([q, a], i) => (
+            {faqs.map(([q, a], i) => (
               <div className="faq-item" key={q}>
                 <button
                   aria-expanded={faq === i}
@@ -1021,30 +936,28 @@ function App() {
         </section>
         <section className="wrap closing">
           <span>✳</span>
-          <div className="eyebrow">YOU DESERVE TO FEEL UNDERSTOOD.</div>
-          <h2>
-            Here for the woman you are.
-            <br />
-            <span className="serif">And the one you’re becoming.</span>
-          </h2>
-          <p>Thoughtfully built by Zentreeca. Beginning in Jos, Nigeria.</p>
+          <div className="eyebrow">{t.closing_eyebrow}</div>
+          <h2>{t.closing_title}</h2>
+          <p>{t.closing_desc}</p>
           <button className="button" onClick={() => setInfo("pilot")}>
-            About the Jos pilot <ArrowUpRight />
+            {t.closing_cta} <ArrowUpRight />
           </button>
         </section>
       </main>
       <footer className="wrap">
         <div>
           <Brand />
-          <p>Every chapter of you.</p>
+          <p>{t.footer_tagline}</p>
         </div>
         <div className="footer-links">
-          <a href="#stories">App Stories</a>
-          <a href="#journey">Account Flow</a>
-          <a href="#voices">Real Voices</a>
-          <a href="#chapters">Life Chapters</a>
-          <a href="#learn">Learn & grow</a>
-          <button onClick={() => setInfo("privacy")}>Privacy approach</button>
+          <a href="#stories">{t.nav_stories || "App Stories"}</a>
+          <a href="#journey">{t.nav_journey || "Account Journey"}</a>
+          <a href="#voices">{t.voices_eyebrow || "Real Voices"}</a>
+          <a href="#chapters">{t.nav_chapters || "Life Chapters"}</a>
+          <a href="#learn">{t.nav_learn || "Learning"}</a>
+          <button onClick={() => setInfo("privacy")}>
+            {t.privacy_cta || "Privacy approach"}
+          </button>
           <a href="https://zentreeca.org" target="_blank" rel="noreferrer">
             Zentreeca <ArrowUpRight size={12} />
           </a>
@@ -1053,7 +966,7 @@ function App() {
           <span>
             © {new Date().getFullYear()} Zentreeca Limited. Made with care.
           </span>
-          <span>Development preview · Not a medical service</span>
+          <span>{t.footer_disclaimer}</span>
         </div>
       </footer>
       <dialog ref={dialog} onCancel={close} onClose={close}>
@@ -1064,10 +977,7 @@ function App() {
           <>
             <Tag>{selected.stage}</Tag>
             <h2 className="dialog-title">{selected.title}</h2>
-            <p className="notice">
-              Demonstration content. Not clinically reviewed or medical advice.
-              Workflow review timestamps are synthetic.
-            </p>
+            <p className="notice">{t.modal_article_demo_notice}</p>
             <p className="article-body">{selected.body}</p>
             <a
               className="source-link"
@@ -1075,21 +985,17 @@ function App() {
               target="_blank"
               rel="noreferrer"
             >
-              Background source: World Health Organization ↗
+              {t.modal_article_source}
             </a>
           </>
         ) : (
           <>
             <div className="eyebrow">YANMATA, BY ZENTREECA</div>
             <h2 className="dialog-title">
-              {info === "privacy"
-                ? "Your trust is part of the design."
-                : "Starting with care. Starting in Jos."}
+              {info === "privacy" ? t.modal_privacy_title : t.modal_pilot_title}
             </h2>
             <p>
-              {info === "privacy"
-                ? "This development preview offers anonymous learning. The mobile foundation stores journal entries using device secure storage, with cloud synchronisation only after explicit consent. Clinical governance, account deletion/export, staff MFA and independent security validation remain release requirements. Please use synthetic data while testing."
-                : "YanMata is being developed for girls and women from age 9 through later life. The first pilot is planned for Jos, Plateau State, with clinical review support from doctors and nurses. Recruitment and public app downloads have not opened. This is a working product preview, not an invitation to submit personal health information."}
+              {info === "privacy" ? t.modal_privacy_body : t.modal_pilot_body}
             </p>
           </>
         )}
@@ -1226,6 +1132,7 @@ function App() {
     </>
   );
 }
+
 function WomenIllustration() {
   return (
     <svg
@@ -1361,6 +1268,7 @@ function WomenIllustration() {
     </svg>
   );
 }
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <App />

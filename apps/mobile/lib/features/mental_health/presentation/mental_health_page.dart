@@ -222,7 +222,7 @@ class _MentalHealthPageState extends State<MentalHealthPage> {
               'The transition to motherhood carries enormous emotional and hormonal changes. Postpartum depression is treatable and seeking support is a sign of strength.',
               [
                 'Accept practical community help with resting and infant care.',
-                'Speak openly with a midwife or clinical counsellor in Jos.',
+                'Speak openly with an accredited midwife or clinical counsellor.',
                 'Remember that feelings of fatigue do not define your love or capability.',
               ],
             ),
@@ -232,7 +232,7 @@ class _MentalHealthPageState extends State<MentalHealthPage> {
           _ConcernCard(
             icon: Icons.support_agent_outlined,
             title: 'Talk to a Professional',
-            subtitle: 'Find an accredited therapist or clinical nurse in Jos',
+            subtitle: 'Find an accredited therapist or clinical nurse',
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute<void>(builder: (_) => const Care()),
