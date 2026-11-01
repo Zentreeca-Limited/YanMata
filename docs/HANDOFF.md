@@ -71,7 +71,7 @@
     - Essential product orders (`POST /api/v1/orders`)
     - Permanent account deletion (`DELETE /api/v1/account`)
   - Enforced the strict safeguarding invariant: zero clinical answers, cycle logs, product names, or chat message bodies appear in email notifications.
-  - Verified live AWS SES (`us-east-1`, `yanmata@zentreeca.org`) delivery to verified addresses (`donald@zentreeca.org`, `zentreeca@gmail.com`). Note: the AWS SES account in `us-east-1` currently has verified identities (`zentreeca.org`, `donald@zentreeca.org`, `zentreeca@gmail.com`); if AWS SES is still in sandbox mode for unverified external recipient domains, request SES Production Access in the AWS Console before public open enrollment. All mail sends are wrapped in `try/catch` so unverified recipients never block API responses.
+  - Verified live AWS SES (`us-east-1`, `yanmata@zentreeca.org`) production email delivery directly to live external member inboxes (including `okoloebuga@gmail.com`, `donald@zentreeca.org`, and `zentreeca@gmail.com`).
 - **Push Notifications & Realtime Event Polling (`PUSH-01`)**:
   - Created `App\Services\PushNotificationService` in `apps/yanmata-api` to record `BroadcastEvent` outbox items and dispatch discreet FCM push notifications (`A quiet moment` / `You have a new update waiting in your private YanMata space.`) while enforcing user notification preferences and quiet hours (`22:00–07:00`).
   - Declared `android.permission.POST_NOTIFICATIONS` in `AndroidManifest.xml`, `UIBackgroundModes` (`remote-notification`) in `ios/Runner/Info.plist`, and `aps-environment` in `ios/Runner/Runner.entitlements`.
