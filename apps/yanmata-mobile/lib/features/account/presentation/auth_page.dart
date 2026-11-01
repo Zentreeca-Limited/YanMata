@@ -1,5 +1,8 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yanmata/core/legal_webview_sheet.dart';
 import 'package:yanmata/core/localization/language_picker_sheet.dart';
 import 'package:yanmata/core/localization/locale_provider.dart';
 import 'package:yanmata/core/theme.dart';
@@ -32,14 +35,35 @@ class _AuthPageState extends ConsumerState<AuthPage> {
   bool _obscurePassword = true;
   bool _isSubmitting = false;
 
+  late final TapGestureRecognizer _termsRecognizer;
+  late final TapGestureRecognizer _privacyRecognizer;
+
   @override
   void initState() {
     super.initState();
     _isSignUp = widget.isSignUp;
+    _termsRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        if (!mounted) return;
+        LegalWebViewSheet.showTerms(
+          context,
+          title: ref.tr('auth_terms_link'),
+        );
+      };
+    _privacyRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        if (!mounted) return;
+        LegalWebViewSheet.showPrivacy(
+          context,
+          title: ref.tr('auth_privacy_link'),
+        );
+      };
   }
 
   @override
   void dispose() {
+    _termsRecognizer.dispose();
+    _privacyRecognizer.dispose();
     _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
@@ -130,13 +154,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
           ),
         );
       } else {
-        if (widget.onComplete != null) {
-          widget.onComplete!();
-        } else {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute<void>(builder: (_) => const YanMataShell()),
-          );
-        }
+        await _finishToHome();
       }
     } catch (e) {
       if (mounted) {
@@ -148,6 +166,77 @@ class _AuthPageState extends ConsumerState<AuthPage> {
     } finally {
       if (mounted) setState(() => _isSubmitting = false);
     }
+  }
+
+  Future<void> _finishToHome() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('onboarding_done', true);
+    } catch (_) {}
+    if (!mounted) return;
+    widget.onComplete?.call();
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute<void>(builder: (_) => const YanMataShell()),
+      (route) => false,
+    );
+  }
+
+  void _showForgotPasswordSheet() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final text = isDark ? Palette.darkText : Palette.ink;
+    final muted = isDark ? Palette.darkMuted : Palette.slate;
+    final accent = Theme.of(context).colorScheme.primary;
+
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: isDark ? Palette.darkSurface : Palette.cream,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (ctx) => Padding(
+        padding: const EdgeInsets.fromLTRB(24, 20, 24, 28),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.lock_reset_outlined, color: accent, size: 22),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    ref.tr('auth_forgot_password'),
+                    style: TextStyle(
+                      fontFamily: 'Fraunces',
+                      fontSize: 19,
+                      fontWeight: FontWeight.w600,
+                      color: text,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.close, size: 20, color: muted),
+                  onPressed: () => Navigator.pop(ctx),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Because YanMata keeps your health journal private on your device by default, you can continue using YanMata offline or contact yanmata@zentreeca.org from your registered email address for account recovery assistance.',
+              style: TextStyle(fontSize: 13.5, height: 1.55, color: muted),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton(
+                onPressed: () => Navigator.pop(ctx),
+                child: Text(ref.tr('understood')),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
@@ -374,6 +463,35 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                         return null;
                       },
                     ),
+                    if (!_isSignUp) ...[
+                      const SizedBox(height: 6),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                            minimumSize: Size.zero,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            textStyle: const TextStyle(
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          onPressed: _showForgotPasswordSheet,
+                          child: Text(
+                            ref.tr('auth_forgot_password'),
+                            style: TextStyle(
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.w400,
+                              color: muted,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                     const SizedBox(height: 16),
 
                     // Date of Birth (Only on Sign Up)
@@ -426,13 +544,41 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                           ),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.only(top: 8),
-                              child: Text(
-                                ref.tr('auth_terms_agree'),
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: text,
-                                  height: 1.4,
+                              padding: const EdgeInsets.only(top: 10),
+                              child: RichText(
+                                text: TextSpan(
+                                  style: TextStyle(
+                                    fontFamily: 'Manrope',
+                                    fontSize: 12.5,
+                                    color: text,
+                                    height: 1.45,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: ref.tr('auth_terms_prefix'),
+                                    ),
+                                    TextSpan(
+                                      text: ref.tr('auth_terms_link'),
+                                      recognizer: _termsRecognizer,
+                                      style: TextStyle(
+                                        color: accent,
+                                        fontWeight: FontWeight.w600,
+                                        decoration: TextDecoration.underline,
+                                        decorationColor: accent,
+                                      ),
+                                    ),
+                                    TextSpan(text: ref.tr('auth_terms_and')),
+                                    TextSpan(
+                                      text: ref.tr('auth_privacy_link'),
+                                      recognizer: _privacyRecognizer,
+                                      style: TextStyle(
+                                        color: accent,
+                                        fontWeight: FontWeight.w600,
+                                        decoration: TextDecoration.underline,
+                                        decorationColor: accent,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -498,20 +644,14 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                     // Skip as Guest
                     Center(
                       child: TextButton(
-                        onPressed: () {
-                          if (widget.onComplete != null) {
-                            widget.onComplete!();
-                          } else {
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute<void>(
-                                builder: (_) => const YanMataShell(),
-                              ),
-                            );
-                          }
-                        },
+                        onPressed: _finishToHome,
                         child: Text(
                           ref.tr('auth_skip_guest'),
-                          style: TextStyle(color: muted, fontSize: 13),
+                          style: TextStyle(
+                            color: muted,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ),

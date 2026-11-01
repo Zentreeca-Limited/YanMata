@@ -36,6 +36,7 @@ Statuses: TODO, IN_PROGRESS, BLOCKED, VERIFIED. VERIFIED requires evidence. Foun
 | PIPE-01 | P0 | Automated GitHub Actions CI/CD deployment pipeline and local deploy CLI | DEPLOY-01 | `.github/workflows/deploy.yml`, `scripts/deploy.sh`, zero-downtime rsync, automated smoke testing | VERIFIED |
 | CONFIG-01 | P0 | Update app ID to com.yanmata.app, register Firebase push, and initialize Shorebird | MOB-01 | `com.yanmata.app` on Android/iOS, Firebase project `yanmata-app`, `google-services.json`, `GoogleService-Info.plist`, Shorebird app `c0ff34cc-7485-4640-92dc-8179b7d36089` | VERIFIED |
 | PILOT-READY-01 | P0 | Branded transactional emails, push notification wiring, workspace path reconciliation, and iOS/Android simulator end-to-end verification | DEPLOY-01, CONFIG-01, PUSH-01 | 43 PHPUnit tests, 23 Flutter tests, live SES welcome email, 24-endpoint production smoke test, iPhone 16 Pro & Pixel 10 Pro simulator/emulator verification | VERIFIED |
+| AUTH-UX-01 | P0 | Non-bold Forgot password typography, 75% height WebView for Terms & Privacy Policy on Create Account, and Continue as Guest stack clearing to Home | MOB-01, ACCT-01 | `LegalWebViewSheet` (`heightFactor: 0.75`), `FontWeight.w400` Forgot password, `pushAndRemoveUntil` to `YanMataShell`, 24 Flutter tests passing, iOS Simulator & Android Emulator builds | VERIFIED |
 
 ## Work item evidence template
 

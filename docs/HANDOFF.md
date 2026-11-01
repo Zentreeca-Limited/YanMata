@@ -1,5 +1,18 @@
 # Agent handoff — 1 November 2026
 
+## Auth UX polish: subtle Forgot password typography, 75% height legal WebView sheets, and Continue as Guest stack clearing (AUTH-UX-01, 1 November 2026)
+
+- **Login Screen — "Forgot password?" Typography (`apps/yanmata-mobile/lib/features/account/presentation/auth_page.dart`)**:
+  - Updated the "Forgot password?" action on the Sign In tab to use explicit non-bold typography (`FontWeight.w400`, `12.5px`, muted ink/slate colour) with a helpful password recovery modal bottom sheet, avoiding the inherited `FontWeight.w700` button style.
+- **Create Account Screen — 75% Height Legal WebView (`apps/yanmata-mobile/lib/core/legal_webview_sheet.dart`)**:
+  - Added `webview_flutter: ^4.14.1` and created `LegalWebViewSheet`, which opens a modal bottom sheet wrapped in `FractionallySizedBox(heightFactor: 0.75)` rendering the live public web legal pages (`https://yanmata.zentreeca.org/terms-of-use` and `https://yanmata.zentreeca.org/privacy-policy`) inside an interactive `WebViewWidget` with a loading indicator, external browser button, and graceful fallback.
+  - Updated the Create Account terms disclosure in `auth_page.dart` and `account_strings.dart` across all 5 languages (`en`, `ha`, `yo`, `ig`, `pcm`) with tappable `TextSpan` links for **Terms of Service** and **Privacy Policy**.
+- **"Continue as Guest" & Auth Stack Clearing (`auth_page.dart`, `personalized_insights_page.dart`)**:
+  - Updated `_finishToHome()` in `AuthPage` and `_finishFlow()` in `PersonalizedInsightsPage` to persist `onboarding_done = true` in `SharedPreferences`, invoke `onComplete?.call()`, and execute `Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute<void>(builder: (_) => const YanMataShell()), (route) => false)` so tapping **Continue as Guest** immediately lands on the Home screen (`YanMataShell`) and clears all previous onboarding/auth routes from the navigation stack.
+- **Verification**:
+  - `flutter analyze` passed (`0 issues`).
+  - `flutter test` passed (`24 passed, 1 opt-in live test skipped`), including the new regression test in `test/layout_test.dart` verifying `FontWeight.w400` on "Forgot password?", `FractionallySizedBox(heightFactor: 0.75)` on `LegalWebViewSheet`, and `Navigator.canPop() == false` after tapping "Continue as Guest".
+
 ## Pilot readiness: Transactional emails, push notifications, workspace reconciliation & iOS/Android simulator QA (PILOT-READY-01, 1 November 2026)
 
 - **Workspace & Deployment Reconciliation (`apps/yanmata-*`)**:

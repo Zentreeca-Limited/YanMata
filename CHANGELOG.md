@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-11-01 — Auth UX polish: subtle Forgot password typography, 75% height legal WebView sheets, and Continue as Guest stack clearing (AUTH-UX-01)
+
+- Updated "Forgot password?" on the Sign In tab (`apps/yanmata-mobile/lib/features/account/presentation/auth_page.dart`) to use non-bold `FontWeight.w400` (`12.5px`, muted ink/slate) instead of bold button typography, and added a helpful recovery modal sheet.
+- Added `webview_flutter: ^4.14.1` and created `LegalWebViewSheet` (`apps/yanmata-mobile/lib/core/legal_webview_sheet.dart`) to display `/terms-of-use` and `/privacy-policy` from `https://yanmata.zentreeca.org` inside a 75% screen-height modal bottom sheet (`FractionallySizedBox(heightFactor: 0.75)`) when tapped from the Create Account screen across all 5 languages (`en`, `ha`, `yo`, `ig`, `pcm`).
+- Fixed "Continue as Guest" (and completed-profile sign-in / personalized insights completion) to persist `onboarding_done = true` and call `Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute<void>(builder: (_) => const YanMataShell()), (route) => false)` so it navigates directly to the Home screen and clears the previous navigation stack.
+- Added regression coverage in `apps/yanmata-mobile/test/layout_test.dart` (`24 tests passing`, `0 analyzer issues`) and verified builds on iOS Simulator (`iPhone 16 Pro`) and Android Emulator (`Pixel 10 Pro`).
+
 ## 2026-11-01 — Transactional HTML emails, push notification dispatch, and iOS/Android simulator pilot readiness (PILOT-READY-01)
 
 - Reconciled workspace scripts (`package.json`, `scripts/dev.mjs`, `scripts/generate-tokens.mjs`, `scripts/deploy.sh`) and GitHub Actions workflows (`.github/workflows/verify.yml`, `.github/workflows/deploy.yml`) with the `apps/yanmata-{api,mobile,web,admin}` directory layout.

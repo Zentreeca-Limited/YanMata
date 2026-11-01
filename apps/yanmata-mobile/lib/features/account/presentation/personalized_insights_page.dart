@@ -54,14 +54,11 @@ class _PersonalizedInsightsPageState
     } catch (_) {}
 
     if (!mounted) return;
-    if (widget.onComplete != null) {
-      widget.onComplete!();
-    } else {
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute<void>(builder: (_) => const YanMataShell()),
-        (route) => false,
-      );
-    }
+    widget.onComplete?.call();
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute<void>(builder: (_) => const YanMataShell()),
+      (route) => false,
+    );
   }
 
   @override
