@@ -2,13 +2,13 @@
 
 A private, accessible wellbeing companion for girls and women, provided by **Zentreeca Limited** (https://zentreeca.org). Initial pilot: **Jos, Plateau State, Nigeria**. Audience: **ages 9 onward, from puberty through the end of life**, with no upper age limit.
 
-## Project status — 28 October 2026
+## Project status — 29 October 2026
 
-Eleven phased working slices are implemented across the React public site and editorial studio, Laravel API, and Flutter app. This is a synthetic-data development preview, **not a production or clinically approved release**. See the [latest phase evidence](docs/evidence/PHASE-11.md) and [foundation decisions](docs/adr/0002-foundation-implementation.md).
+Twelve phased working slices are implemented across the React public site and editorial studio, Laravel API, and Flutter app. This is a synthetic-data development environment, **not a clinically approved release**. See the [latest phase evidence](docs/evidence/PHASE-12.md) and [foundation decisions](docs/adr/0002-foundation-implementation.md).
 
 ## Product
 
-YanMata supports body literacy, puberty, menstrual wellbeing, symptom and mood journaling, trusted health education, and in-platform professional support. Its life-stage scope spans puberty from age 9, adolescence, adulthood, pregnancy/postpartum where relevant, perimenopause, menopause and later life, including end-of-life wellbeing. The current demo includes synthetic health-service listings based on the supplied wireframe; external appointment booking and emergency referral automation are not implemented. Experiences adapt to a person's chosen needs without assuming pregnancy, sexual activity or a regular menstrual cycle.
+YanMata supports body literacy, puberty, menstrual wellbeing, symptom and mood journaling, trusted health education, and in-platform professional support. Its life-stage scope spans puberty from age 9, adolescence, adulthood, pregnancy/postpartum where relevant, perimenopause, menopause and later life, including end-of-life wellbeing. The mobile product-purchase entry points have been replaced with an opt-in Google Maps directory for nearby hospitals, clinics and pharmacies. YanMata does not verify or refer to those places, persist the location search, book appointments or automate emergency referrals. Experiences adapt to a person's chosen needs without assuming pregnancy, sexual activity or a regular menstrual cycle.
 
 ## Read first
 
@@ -128,9 +128,10 @@ YANMATA_API_BASE_URL=https://yanmata.zentreeca.org/api/v1 python3 scripts/test-l
 3. Sign out; sign in as publisher and publish. Refresh public/mobile learning to see the item.
 4. In mobile Track, save a check-in without an account. It persists locally.
 5. In You, explicitly consent and connect the demo member account. Tap Sync now. The live integration test verifies a second independent mobile store receives the same record and its deletion.
+6. In Nearby, select a category and explicitly choose **Use my current location**. With a configured server-side Google Places key, review distance-ranked listings and open directions in Google Maps.
 
 ## Current limits and next phase
 
-Public web remains client-rendered. Production hosting, signed store builds and live store URLs, native encrypted database migration, physical-device notification delivery, staff MFA, account recovery, approved retention schedules, named clinical and safeguarding sign-off, practitioner credential verification, and pilot operating procedures remain release gates. Member account deletion is implemented and tested; its legal copy and backup-retention language still require privacy/legal approval. Some workflows exist as tested demo slices; their presence does not establish clinical effectiveness or operational readiness. Do not use real patient information or claim production/clinical readiness.
+Public web remains client-rendered. Production hosting, signed store builds and live store URLs, native encrypted database migration, physical-device notification delivery, staff MFA, account recovery, approved retention schedules, named clinical and safeguarding sign-off, practitioner credential verification, and pilot operating procedures remain release gates. Nearby care also requires a restricted server-side Google Places key, store privacy disclosures, and physical-device location/directions verification. Member account deletion is implemented and tested; its legal copy and backup-retention language still require privacy/legal approval. Some workflows exist as tested demo slices; their presence does not establish clinical effectiveness or operational readiness. Do not use real patient information or claim production/clinical readiness.
 
 The [backlog](docs/BACKLOG.md), [handoff](docs/HANDOFF.md) and [changelog](CHANGELOG.md) distinguish verified foundation slices from remaining work. Brand symbol masters are in `packages/design/assets` (SVG plus 4096px PNG); the full identity suite is still in progress.

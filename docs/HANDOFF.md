@@ -1,4 +1,46 @@
-# Agent handoff — 28 October 2026
+# Agent handoff — 1 November 2026
+
+## Pilot readiness: Transactional emails, push notifications, workspace reconciliation & iOS/Android simulator QA (PILOT-READY-01, 1 November 2026)
+
+- **Workspace & Deployment Reconciliation (`apps/yanmata-*`)**:
+  - Updated `package.json`, `scripts/dev.mjs`, `scripts/generate-tokens.mjs`, `scripts/deploy.sh`, `.github/workflows/verify.yml`, and `.github/workflows/deploy.yml` to target `apps/yanmata-api`, `apps/yanmata-mobile`, `apps/yanmata-web`, and `apps/yanmata-admin`.
+  - Removed the leftover untracked `apps/mobile` build directory and verified `google-services.json`, `GoogleService-Info.plist`, `firebase_app.json`, and `shorebird.yaml` in `apps/yanmata-mobile`.
+- **Branded HTML Transactional Emails (`apps/yanmata-api`)**:
+  - Created `App\Mail\TransactionalNotificationMail`, `App\Services\MemberMailService`, and `resources/views/emails/transactional.blade.php` featuring a warm blush/plum design, circular halo header with the YanMata floral portrait emblem (`https://yanmata.zentreeca.org/logo.png`), pill badges, structured summary cards, a warm sign-off signature (`With warmth, care & dignity — The YanMata Care & Wellbeing Team`), a discreet privacy banner, and the horizontal brand lockup (`logo_horizontal.png`) in the footer.
+  - Wired automatic, fault-tolerant transactional email dispatch on:
+    - Member registration (`POST /api/v1/mobile/register`)
+    - Initial health profile completion (`PUT /api/v1/profile`)
+    - Care support request creation (`POST /api/v1/care/requests`), specialist assignment (`POST /api/v1/studio/care/requests/{id}/assign`), and specialist/member replies (`POST /api/v1/care/conversations/{id}/messages`)
+    - Essential product orders (`POST /api/v1/orders`)
+    - Permanent account deletion (`DELETE /api/v1/account`)
+  - Enforced the strict safeguarding invariant: zero clinical answers, cycle logs, product names, or chat message bodies appear in email notifications.
+  - Verified live AWS SES (`us-east-1`, `yanmata@zentreeca.org`) delivery to verified addresses (`donald@zentreeca.org`, `zentreeca@gmail.com`). Note: the AWS SES account in `us-east-1` currently has verified identities (`zentreeca.org`, `donald@zentreeca.org`, `zentreeca@gmail.com`); if AWS SES is still in sandbox mode for unverified external recipient domains, request SES Production Access in the AWS Console before public open enrollment. All mail sends are wrapped in `try/catch` so unverified recipients never block API responses.
+- **Push Notifications & Realtime Event Polling (`PUSH-01`)**:
+  - Created `App\Services\PushNotificationService` in `apps/yanmata-api` to record `BroadcastEvent` outbox items and dispatch discreet FCM push notifications (`A quiet moment` / `You have a new update waiting in your private YanMata space.`) while enforcing user notification preferences and quiet hours (`22:00–07:00`).
+  - Declared `android.permission.POST_NOTIFICATIONS` in `AndroidManifest.xml`, `UIBackgroundModes` (`remote-notification`) in `ios/Runner/Info.plist`, and `aps-environment` in `ios/Runner/Runner.entitlements`.
+  - Wired `JournalController` and `YanMataShell` in `apps/yanmata-mobile` to automatically register the device (`POST /api/v1/devices`), revoke the device token on logout (`POST /api/v1/logout`), and poll `/api/v1/events/poll` on launch and foreground resume to surface discreet in-app notifications.
+- **Verification**:
+  - Backend: `./vendor/bin/pint` passed; `php artisan test` passed (`43 tests, 272 assertions`, including `TransactionalEmailAndPushTest`).
+  - Mobile: `flutter analyze` (0 issues) and `flutter test` (`23 passed, 1 opt-in live test skipped`).
+  - Live Deployment: `./scripts/deploy.sh /Users/user/Downloads/yanmata.pem` deployed backend, web, and admin SPAs to `https://yanmata.zentreeca.org` (`HTTP 200` across `/up`, `/api/v1/content`, `/`, `/admin`).
+  - Live End-to-End API Smoke Test: Verified all 24 endpoints against `https://yanmata.zentreeca.org/api/v1` (health, content, locations, services, products, specialists, mental-health, AI companion, AI cycle insights, registration, `/me`, iOS & Android device registration, notification preferences, profile completion, insights, sync consent, cycle settings, care request creation, conversation messages, event polling, and account deletion).
+  - Simulator & Emulator Verification: Built, installed, launched, and tested `com.yanmata.app` on **iOS Simulator** (`iPhone 16 Pro`, `xcrun simctl push`) and **Android Emulator** (`Pixel 10 Pro`, `emulator-5554`, `adb shell cmd notification post`).
+
+## Nearby care directory (NEARBY-01, 29 October 2026)
+
+- Member mobile navigation now uses `NearbyPlacesPage` instead of Shop. The clean Riverpod flow is under `apps/yanmata-mobile/lib/features/nearby`; it requests foreground location only after the explicit action, never from initial render or category selection, and does not persist coordinates/results.
+- Laravel `POST /api/v1/nearby-places/search` validates coordinates/category/radius, delegates through `FindNearbyPlaces` to `GooglePlacesClient`, requests only bounded Google Places fields and emits `Cache-Control: no-store, private`. See `packages/contracts/openapi.json`.
+- Google Maps listings are third-party directory information, not YanMata verification, referral, inventory, appointment booking or emergency monitoring. Privacy and terms copy names Google processing and links to its applicable policies.
+- Verification: Pint passed; 40 PHPUnit tests/253 assertions passed; Composer audit is clean after `symfony/mime` 7.4.22; Flutter analysis passed; 23 Flutter tests passed with one expected opt-in live test skipped; Android debug APK and iOS simulator app built; public web typecheck/build/format passed; OpenAPI JSON validated.
+- Blockers: `GOOGLE_PLACES_API_KEY` is missing locally and on the deployed server, so live place responses are not verified. Enable Places API (New), billing and server key restrictions, then configure the secret without committing it. Run physical-device checks for grant/deny/permanent deny, search, Google attribution and directions. Update Apple App Privacy and Google Play Data safety declarations before store submission.
+- Working tree: a broad user-owned `apps/*` to `apps/yanmata-*` directory migration remains uncommitted. This slice was not committed or deployed to avoid capturing that migration incompletely. The existing deployment script still targets old directory names and must be reconciled before deployment.
+
+## Public header simplification (WEB-04, 29 October 2026)
+
+- Removed the announcement banner above the public navigation from the active `apps/yanmata-web` source, including its obsolete localized strings and responsive CSS.
+- Verification: `npm run typecheck` and `npm run build` passed in `apps/yanmata-web`; desktop browser inspection at `http://127.0.0.1:5173/` confirmed the header begins at the top without a residual gap.
+- Scope: no API, clinical content or Flutter behavior changed. A broader user-owned `apps/*` to `apps/yanmata-*` directory migration is present in the working tree; keep it intact and do not collapse it into this small UI change unintentionally.
+- Next: include WEB-04 when the directory migration is coherently committed and deploy the resulting public build through the established pipeline.
 
 ## Mobile App ID, Firebase & Shorebird (28 October 2026)
 
@@ -21,6 +63,7 @@ YanMata is supplied by Zentreeca Limited. Build a working product: Flutter Andro
 ## Live deployment status (28 October 2026)
 
 The YanMata platform is deployed and running live on AWS server `52.0.227.75` under Caddy and PHP 8.3 FPM:
+
 - **Public Web**: `http://52.0.227.75/` and `http://yanmata.zentreeca.org/` (and HTTPS once DNS propagates)
 - **Admin Studio**: `http://52.0.227.75/admin` and `http://yanmata.zentreeca.org/admin`
 - **Backend API**: `http://52.0.227.75/api/v1/content` and `/up`
@@ -35,6 +78,7 @@ The YanMata platform is deployed and running live on AWS server `52.0.227.75` un
 ## Deployment pipeline & CI/CD (PIPE-01)
 
 Two deployment mechanisms are established:
+
 1. **GitHub Actions Workflow** (`.github/workflows/deploy.yml`):
    - Automatically tests, builds, and deploys on push to `main` branch, or via manual `workflow_dispatch` button.
    - Required GitHub Repository Secrets (`Settings > Secrets and variables > Actions`):
@@ -52,6 +96,7 @@ Pilot location confirmed: Jos, Plateau State. User has access to doctors/nurses 
 
 Phase 01 through Phase 11 vertical slices are implemented across Laravel, React public/admin, and Flutter Android/iOS.
 All screens from the Zentreeca designer handoff and wireframe are fully implemented and verified on the Android emulator runtime, including the full wireframe Account Flow:
+
 1. Native Branded Launch & Welcome (`WelcomePage`, `android-39-onboarding.png`)
 2. Screen 3: Authentication (Sign Up & Sign In with DOB picker, age gate >= 9, terms, guest bypass) (`AuthPage`, `android-40-auth-signup.png`)
 3. Screen 4: Complete Health Profile questionnaire (Menstrual, Reproductive, Medical, Lifestyle, Family with minor safeguarding) (`CompleteProfilePage`, `android-41-complete-profile.png`)
@@ -67,11 +112,13 @@ All screens from the Zentreeca designer handoff and wireframe are fully implemen
 13. Member account controls with device-clearing logout, password-confirmed permanent deletion and explicit warning dialogs (`You`, `LocalJournalRepository`, `DELETE /api/v1/account`)
 
 Brand Identity & Multi-Variant Asset Suite (DESIGN-01):
+
 - Refined Brand Emblem: Extracted and anti-aliased the official YanMata portrait mark (African woman profile with vibrant rose-magenta Gele, white hoop earring, cradling petals, and radiant halo) into high-resolution transparent master assets.
 - Complete Asset Variants: Generated stacked full logos (light/dark), horizontal/landscape logos (light/dark), mobile launcher icons across all 5 Android mipmaps and all 15 iOS `AppIcon.appiconset` resolutions, Android launch/splash screens, and web multi-resolution favicons (`favicon.svg`, `favicon.ico`, `apple-touch-icon.png`).
 - Cross-Platform Integration: Updated `<Brand />` in `@yanmata/ui` to render the refined emblem across public web and admin studio headers; updated Flutter `WelcomePage` with prominent badge framing; registered assets in `pubspec.yaml`; created `scripts/build_brand_assets.py` for automated regeneration.
 
 Public Website Story Integration, Navigation Polish & Multilingual Localisation (`apps/web`):
+
 - Generalized National & Global Scope: Truthfully framed Jos as the initial clinical review pilot launch hub while expanding copy across web and mobile to represent Nigeria, Africa, and beyond ("Made with care in Nigeria, for Africa and the world").
 - Multilingual Public Web: The public website has English, Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), and Nigerian Pidgin (`pcm`) copy. Non-English clinical and safeguarding copy still requires human linguistic and clinical review before release.
 - Streamlined & De-noised Top Menu: Clean, breathable desktop navigation focused on 4 core anchors (`Stories`, `Chapters`, `Specialists`, `Learning`) plus a glowing `Aisha AI` pill; secondary anchors (`Account Journey`, `Real Stories`, `Our Approach`) cleanly housed in the mobile drawer.
@@ -88,12 +135,14 @@ Public Website Story Integration, Navigation Polish & Multilingual Localisation 
 Multilingual system covers English, Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), and Nigerian Pidgin (`pcm`) on mobile and web. System-wide light/dark mode transitions verified on mobile, public web, and admin with warm rose-aubergine feminine aesthetics and Fraunces typography. Dynamic location engine spans Nigeria (Jos Pilot Hub, Abuja, Lagos, Kano, Ibadan, Port Harcourt, Enugu, Kaduna, Nationwide). Dynamic cycle settings sync with Laravel backend (`GET/PUT /api/v1/cycle-settings`).
 
 Public web and admin studio are fully verified via automated browser testing:
+
 - Desktop (1440×900) and mobile (390×844) public views (`web-01-home.png`, `web-02-mobile.png`)
 - Authenticated admin login, editorial table, and care triage (`admin-01-login.png`, `admin-02-editorial-studio.png`, `admin-03-care-triage.png`)
 - Public Privacy Policy, Terms of Use and Account Deletion routes plus configured Google Play/App Store cards (`PHASE-08.md`)
 - Small-screen public navigation uses an opaque elevated panel in light and dark themes; verified at 360×800 and 390×844 with no horizontal overflow (`WEB-MOBILE-MENU.md`).
 
 Production hardening & operations (QA-01, OPS-01):
+
 - `SecurityHeaders` middleware attached to all web/API responses.
 - `scripts/backup-db.sh` creates atomic SQLite VACUUM snapshots with SHA-256 checksums and PRAGMA integrity check.
 - `scripts/restore-db.sh` validates SHA-256 checksums and SQLite integrity with automatic pre-restore backup.
@@ -107,6 +156,7 @@ Important current boundaries: local backend SQLite; manual HTTP sync; client-ren
 Local demo credentials are in ignored `.env.demo.local`; do not print or commit them. Development ports are API 8091, web 5173, admin 5174. Use `npm run dev`; existing preview processes may not survive a tool/session transition. The source is in the shared workspace, not a separate worktree.
 
 Reference paths:
+
 - `/Users/user/Desktop/APPS/Zentreeca/Yanmata/YanMata Women’s Health App Wireframe.png`
 - `/Users/user/Desktop/APPS/Zentreeca/Yanmata/YanMata_Wireframe_and_Designer_Handoff.pdf`
 - `/Users/user/StudioProjects/dater`
@@ -130,6 +180,7 @@ Minor-access protocol for the confirmed age-9-plus audience; named clinical/safe
 
 See `docs/evidence/PHASE-01.md` through `docs/evidence/PHASE-11.md` for commands, screenshots, defects, and limitations.
 Phase 05 checks:
+
 - API: 29 tests / 172 assertions pass with strict lazy loading prevention active.
 - Laravel Pint: passed with zero style violations.
 - Mobile: 10 tests pass (persistence, golden baselines, 200% text scale, care specialists, tracking symptoms/flow, quiet hours calculations, discreet lock-screen copy, mobile staff studio, layout stability) + live integration test passes.

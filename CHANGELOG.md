@@ -1,5 +1,30 @@
 # Changelog
 
+## 2026-11-01 — Transactional HTML emails, push notification dispatch, and iOS/Android simulator pilot readiness (PILOT-READY-01)
+
+- Reconciled workspace scripts (`package.json`, `scripts/dev.mjs`, `scripts/generate-tokens.mjs`, `scripts/deploy.sh`) and GitHub Actions workflows (`.github/workflows/verify.yml`, `.github/workflows/deploy.yml`) with the `apps/yanmata-{api,mobile,web,admin}` directory layout.
+- Designed a warm, brand-aligned HTML transactional email template (`resources/views/emails/transactional.blade.php`) featuring the YanMata floral emblem (`logo.png`), gradient accents, pill badges, structured summary highlights, a warm team signature block, privacy safeguarding notice, and horizontal brand lockup (`logo_horizontal.png`).
+- Added `MemberMailService` and `TransactionalNotificationMail` to send discreet, privacy-preserving emails on member registration, health profile completion, specialist care request creation, specialist assignment, care conversation replies, product orders, and account deletion.
+- Added `PushNotificationService` to record `BroadcastEvent` outbox payloads and dispatch discreet FCM push notifications (`A quiet moment`) while respecting quiet hours and notification preferences.
+- Added iOS (`UIBackgroundModes: remote-notification`, `aps-environment`) and Android (`POST_NOTIFICATIONS`) push configurations, automatic device registration on sign-in/sign-up, device token cleanup on logout, and foreground event polling in `YanMataShell`.
+- Added `TransactionalEmailAndPushTest` (43 backend tests / 272 assertions passing) and verified 23 Flutter tests and 0 analyzer warnings.
+- Deployed to `https://yanmata.zentreeca.org` and verified all 24 live API endpoints, live AWS SES email delivery (`yanmata@zentreeca.org`), and native builds/push notifications on both iOS Simulator (`iPhone 16 Pro`) and Android Emulator (`Pixel 10 Pro`).
+
+## 2026-10-29 — Opt-in nearby care directory (NEARBY-01)
+
+- Replaced member-facing mobile Shop navigation and shortcuts with Nearby hospitals, clinics and pharmacies while retaining dormant order endpoints for compatibility.
+- Added a Riverpod clean-architecture location/search flow with explicit foreground consent, category filters, loading/empty/denied/disabled/timeout/upstream states, Google Maps attribution and externally launched directions.
+- Added a thin Laravel endpoint and action-backed Google Places client with strict validation, a server-only key, bounded types/radius/field mask, no-store responses and no location or listing persistence.
+- Added OpenAPI, Android/iOS foreground permission declarations, privacy/terms disclosures, architecture and safety controls, plus focused API/controller/widget tests.
+- Updated `symfony/mime` from 7.4.19 to 7.4.22 to resolve CVE-2026-45070; Composer audit is clean.
+- Verified 40 Laravel tests (253 assertions), 23 Flutter tests with one expected opt-in live-test skip, Flutter analysis, React typecheck/build/formatting, Android debug and iOS simulator builds. Live Google results and physical-device permission/directions remain blocked on a configured Google Places key and device QA.
+
+## 2026-10-29 — Public header simplification (WEB-04)
+
+- Removed the announcement banner above the public website navigation in every supported language.
+- Removed the banner's unused responsive styling so the sticky navigation now starts at the top of the page without reserved space.
+- Verified the active `apps/yanmata-web` application with TypeScript checking, a production build and desktop browser inspection.
+
 ## 2026-10-28 — App ID com.yanmata.app, Firebase push registration, and Shorebird setup (CONFIG-01)
 
 - Changed Android package name and applicationId to `com.yanmata.app` (`build.gradle.kts` and moved `MainActivity.kt` to `com/yanmata/app`).
@@ -9,7 +34,6 @@
 - Applied Google Services Gradle plugin `4.4.2` in Android build configuration.
 - Initialized Shorebird code push with App ID `c0ff34cc-7485-4640-92dc-8179b7d36089` and registered `shorebird.yaml` in `pubspec.yaml` assets.
 - Verified Android APK compilation, iOS pod resolution, and Flutter static analysis/tests.
-
 
 ## 2026-10-28 — Live API mobile integration (MOB-03)
 
@@ -35,7 +59,6 @@
 - Fixed directory ownership and permissions (`ubuntu:www-data`, `775`, `g+s`) on `/var/www/yanmata` to ensure clean, error-free automated rsync and runtime cache generation.
 - Updated `.github/workflows/verify.yml` to test with PHP 8.3 matching production environment.
 
-
 ## 2026-10-28 — Live Server Deployment at 52.0.227.75 (DEPLOY-01)
 
 - Deployed YanMata to target remote server `52.0.227.75` (Ubuntu 24.04 LTS `aarch64`) under domain `yanmata.zentreeca.org` and direct IP fallback `http://52.0.227.75`.
@@ -46,7 +69,6 @@
 - Configured Laravel Sanctum stateful authentication, CSRF cookie handling, and security headers (`X-Frame-Options: DENY`, `Permissions-Policy`).
 - Configured Laravel background scheduler via `/etc/cron.d/yanmata-scheduler`.
 - Verified live end-to-end functionality via remote curl: public web (200), admin studio (200), API health (200), seeded content/specialists/services (200), session login (200), and mobile bearer token auth (200).
-
 
 ## 2026-10-28 — Production-facing copy hardening (COPY-01)
 

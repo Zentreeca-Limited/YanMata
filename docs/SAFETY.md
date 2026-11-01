@@ -1,6 +1,6 @@
 # Safety, privacy and clinical governance
 
-This is an engineering/product control plan, not a legal compliance opinion or clinical protocol. Obtain Nigeria-specific privacy, professional-practice and child-consent review before real-user enrolment. The audience is confirmed as ages 9 through the end of life. Age-appropriate operating and minor-access protocols remain to be defined. The demo health-services directory is synthetic; live listings require source ownership, verification dates and a correction process. External booking and automated emergency referral remain outside the current scope.
+This is an engineering/product control plan, not a legal compliance opinion or clinical protocol. Obtain Nigeria-specific privacy, professional-practice and child-consent review before real-user enrolment. The audience is confirmed as ages 9 through the end of life. Age-appropriate operating and minor-access protocols remain to be defined. Existing demo health-service fixtures remain synthetic and labelled. The opt-in nearby-care directory displays live Google Maps place listings without treating them as verified YanMata providers. External booking and automated emergency referral remain outside the current scope.
 
 ## Clinical information
 
@@ -17,6 +17,12 @@ Within the confirmed age-9-plus audience, define age-appropriate experiences, ag
 Allow anonymous educational browsing and optional profile fields. Underage accounts, professional messaging and collection of sensitive child records remain gated until the protocol and trained safeguarding owner exist. No public child profiles, unsolicited messages, adult peer matching or precise location sharing. Professional access is verified, assigned, time-limited and reportable. Define abuse reporting, escalation, response windows, retention and specialist supervision before launch.
 
 Default notification copy is generic. App lock and app-switcher privacy cover protect casual exposure; disclose limits on compromised/shared devices. No false promise that a quick-exit button erases OS/browser history. Users can turn off reminders and use manual location search without losing education access.
+
+## Location and third-party listings
+
+Nearby care uses foreground location only after a clear member action. Denying permission must not block education, tracking or in-platform specialist support. Do not request background location. Coordinates are transmitted in the encrypted request body, processed transiently by YanMata and Google Maps Platform, and are not stored in the profile, journal, cache, logs or analytics. The privacy notice and store disclosures must name this processing and link to Google's applicable privacy policy and Maps terms.
+
+Google Maps place details can be incomplete, stale or wrong. Display attribution, preserve provider attributions, and tell members to confirm details directly before travelling. Do not describe a listing as vetted, partnered, clinically recommended or available unless a separate governed verification record supports that claim. The directory does not prescribe products, automate referral, book appointments or monitor emergencies. Keep the Nigeria emergency direction visible, with the number and wording included in clinical/operational verification before release.
 
 ## Data controls
 

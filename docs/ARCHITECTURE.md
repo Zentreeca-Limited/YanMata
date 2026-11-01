@@ -56,6 +56,14 @@ Document request/response schemas, pagination, UTC/local date semantics, scoped 
 
 Use Laravel Reverb over WSS on authenticated private channels. Events carry event ID, entity ID, version and change type, not clinical text. Publish after commit through a transactional outbox. Clients reconcile through REST and deduplicate events; reconnect gaps are expected. Choose a maintained Flutter Pusher-protocol client only after compatibility/auth/reconnect testing against Reverb. Poll while active as a fallback, with appropriate rate limits.
 
+### Nearby care directory
+
+Nearby hospitals, clinics and pharmacies are an opt-in directory flow, not YanMata inventory, commerce, referral or appointment booking. Flutter requests foreground location only after a member presses the location action. Category selection alone must not trigger a permission prompt. The app sends latitude and longitude in an HTTPS `POST` body to Laravel; coordinates must not appear in URL query strings, analytics, application logs or persisted models.
+
+Laravel holds the restricted Google Places API key and calls Nearby Search (New) with a bounded radius, type allowlist, distance ranking and explicit field mask. Coordinates and returned Places content are transient: do not persist or cache them, and return `Cache-Control: no-store, private`. Display required Google Maps attribution and any supplied third-party provider attributions. Directions use Google's returned directions URI and are launched only after the member taps the action. WebSockets, push and offline storage do not apply to this live search. If offline, denied, disabled, timed out, unconfigured or upstream-unavailable, show a safe retry/settings state without synthetic facility results.
+
+This integration does not verify ownership, credentials, availability, accessibility or suitability of a listed place and must not imply a partnership. Keep the older synthetic service fixtures clearly labelled where still used for demo support flows. Product/order endpoints remain a compatibility surface but are not exposed in member mobile navigation while the nearby-care directory is active.
+
 ## Notifications
 
 Laravel queues remote delivery using FCM HTTP v1; iOS delivery uses APNs configured through Firebase. Device registration handles consent, token rotation, multi-device ownership, invalid-token cleanup and logout revocation. Never use public topics for private health or specialist messaging. Push contains a generic notice and opaque event reference; authenticated fetch resolves details.

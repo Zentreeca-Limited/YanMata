@@ -29,18 +29,30 @@ Statuses: TODO, IN_PROGRESS, BLOCKED, VERIFIED. VERIFIED requires evidence. Foun
 | WEB-02 | P0 | Opaque, accessible small-screen public navigation | WEB-01 | Light/dark open-menu inspection at 360px and 390px, no content bleed or horizontal overflow | VERIFIED |
 | COPY-01 | P0 | Production-facing web/mobile language and durable legal copy | WEB-01, ACCT-01 | Copy audit, builds/tests, compact/desktop visual evidence and documented human-review gates | VERIFIED |
 | WEB-03 | P1 | Age-inclusive HD editorial imagery across the public website | DESIGN-01, WEB-01 | Optimized original assets, truthful disclosure, accessible responsive layouts and visual evidence | VERIFIED |
+| WEB-04 | P2 | Remove the public announcement banner above navigation | WEB-01 | Banner markup/localizations/styles removed; typecheck, production build and desktop browser inspection | VERIFIED |
 | MOB-03 | P0 | Connect Flutter Android/iOS builds to the deployed HTTPS API | DEPLOY-01, MOB-01, SYNC-01 | Public endpoint probes, isolated authenticated two-store sync/delete test and native builds | VERIFIED |
+| NEARBY-01 | P0 | Replace mobile purchasing with opt-in nearby hospitals, clinics and pharmacies | MOB-01, API-01, SAFE-01 | Google Places proxy, foreground consent states, attribution, no-store tests, native builds and physical-device live search | IN_PROGRESS |
 | DEPLOY-01 | P0 | Live server deployment at 52.0.227.75 under yanmata.zentreeca.org with SES email | TECH-02, OPS-01 | Remote Caddy multi-host, PHP 8.3 FPM, SQLite migrations/seeds, SES live email, SPA/API live curls | VERIFIED |
 | PIPE-01 | P0 | Automated GitHub Actions CI/CD deployment pipeline and local deploy CLI | DEPLOY-01 | `.github/workflows/deploy.yml`, `scripts/deploy.sh`, zero-downtime rsync, automated smoke testing | VERIFIED |
 | CONFIG-01 | P0 | Update app ID to com.yanmata.app, register Firebase push, and initialize Shorebird | MOB-01 | `com.yanmata.app` on Android/iOS, Firebase project `yanmata-app`, `google-services.json`, `GoogleService-Info.plist`, Shorebird app `c0ff34cc-7485-4640-92dc-8179b7d36089` | VERIFIED |
+| PILOT-READY-01 | P0 | Branded transactional emails, push notification wiring, workspace path reconciliation, and iOS/Android simulator end-to-end verification | DEPLOY-01, CONFIG-01, PUSH-01 | 43 PHPUnit tests, 23 Flutter tests, live SES welcome email, 24-endpoint production smoke test, iPhone 16 Pro & Pixel 10 Pro simulator/emulator verification | VERIFIED |
 
 ## Work item evidence template
 
 ID / owner / status / date / implementation paths / commit or build / commands and results / visual evidence / known defects / next step. Keep clinical approvals separate from engineering assertions.
 
+## NEARBY-01 evidence
+
+29 October 2026: implemented and locally verified the privacy-bounded mobile nearby-care directory documented in [PHASE-12](evidence/PHASE-12.md). Flutter now exposes Nearby instead of Shop, requests foreground location only from the explicit action, handles permission/offline/empty/failure states, displays Google Maps attribution, and opens provider-supplied directions. Laravel validates a body-only location request, calls Google Places with a server-held key and field mask, returns no-store responses, and persists nothing. Backend tests, mobile tests/analyse, web checks, Android debug and iOS simulator builds pass. Status remains IN_PROGRESS because both local and deployed environments lack `GOOGLE_PLACES_API_KEY`; a real Google response and physical-device permission/directions flow are therefore not yet verified.
+
+## WEB-04 evidence
+
+29 October 2026: removed the announcement element from `apps/yanmata-web/src/main.tsx`, its five unused translations from `i18n.ts`, and its desktop/mobile rules from `styles.css`. `npm run typecheck` and `npm run build` passed from `apps/yanmata-web`; browser inspection confirmed the sticky navigation is the first visible site surface with no residual banner gap. No API, clinical copy or mobile behavior changed. The active directory migration remains separate, uncommitted work and was not modified beyond these three public-web source files.
+
 ## CONFIG-01 evidence
 
 28 October 2026: Changed mobile application ID, registered Firebase push services, and configured Shorebird.
+
 - Application ID / Bundle ID:
   - Updated Android `namespace` and `applicationId` to `com.yanmata.app` in `apps/mobile/android/app/build.gradle.kts`.
   - Moved Kotlin entry point to `apps/mobile/android/app/src/main/kotlin/com/yanmata/app/MainActivity.kt` with package `com.yanmata.app`.
@@ -67,6 +79,7 @@ ID / owner / status / date / implementation paths / commit or build / commands a
 ## PIPE-01 evidence
 
 28 October 2026: Implemented full automated deployment pipeline.
+
 - GitHub Actions CI/CD (`.github/workflows/deploy.yml`):
   - Triggers on `push` to `main` branch or manual on-demand execution (`workflow_dispatch`).
   - Concurrency group `production-deployment` ensures single-stream deterministic deployments.
@@ -80,6 +93,7 @@ ID / owner / status / date / implementation paths / commit or build / commands a
 ## DEPLOY-01 evidence
 
 28 October 2026: Remote deployment to AWS EC2 instance (`52.0.227.75`, Ubuntu 24.04 LTS `aarch64`).
+
 - Environment: Caddy v2.11.7 web server, PHP 8.3.6 FPM, SQLite database, Composer 2.7.1, Node-built SPAs.
 - Architecture: Zero-downtime coexistence with existing `agripulse.zentreeca.org` reverse proxy. Caddy serves `yanmata.zentreeca.org`, `http://yanmata.zentreeca.org`, and direct IP `http://52.0.227.75`.
 - Subpath Routing:
@@ -97,7 +111,6 @@ ID / owner / status / date / implementation paths / commit or build / commands a
   - Mobile Bearer Auth: `200 OK` with token generation and authenticated access to `/care/specialists`, `/services`, `/products`, `/mental-health/resources`, and `/ai/companion/chat`.
 - Automation: Systemd services enabled on boot (`caddy`, `php8.3-fpm`), Laravel scheduler configured in `/etc/cron.d/yanmata-scheduler`.
 
-
 ## COPY-01 evidence
 
 See [PHASE-09](evidence/PHASE-09.md). Public web and Flutter customer-facing copy no longer describes YanMata as a development preview, demo, test, beta, coming-soon product or incomplete pilot. Durable legal/service language replaces release-status notices; fictional mobile service fallbacks were removed; and service-load failures now show a safe retry state. Human legal, linguistic and clinical sign-off remains an explicit release gate.
@@ -113,6 +126,7 @@ See [PHASE-01](evidence/PHASE-01.md). Implemented slices: runnable four-app work
 ## Phase 02 implementation evidence
 
 See [PHASE-02](evidence/PHASE-02.md). Implemented slices:
+
 - CARE-01: In-platform specialist workflow (Jos pilot), explicitly synthetic demo personas, member support inquiries with journal sharing consent, secure asynchronous messaging, mobile CareChatPage, admin Care inquiries table, and public readiness copy. Live credentials and staffing remain unverified.
 - TRACK-02 / SYNC-01: Expanded life-stage tracking with cycle flow intensity, multi-symptom body signals, energy levels, backward-compatible API sync payload, and explicit mobile conflict resolution.
 - ID-02: Life chapter selection across 5 life stages (ages 9 through 55+), topic interests, and private journal JSON data export.
@@ -122,6 +136,7 @@ See [PHASE-02](evidence/PHASE-02.md). Implemented slices:
 ## Phase 03 implementation evidence
 
 See [PHASE-03](evidence/PHASE-03.md). Implemented slices:
+
 - PUSH-01: Privacy-preserving realtime events and device token lifecycle (`POST /api/v1/devices`, `DELETE /api/v1/devices/{id}`, `POST /api/v1/logout` token revocation). Strict invariant enforced: broadcast payloads and notification hints contain zero clinical body, zero journal entries, only opaque UUID identifiers (`CareMessageReceived`).
 - PUSH-01 (Mobile): Local quiet-hours calculation, discreet lock-screen notice ("A quiet moment · How has your day felt so far?"), notification preference settings in "You" profile.
 - MOB-02: Mobile Staff Editorial Studio (`StaffPortalPage`) allowing verified staff accounts (`author`, `reviewer`, `publisher`, `specialist`) to draft educational articles, advance transition states (`submit_for_review`, `approve`, `publish`), and triage/assign member care requests to Jos clinicians directly from mobile.
@@ -131,6 +146,7 @@ See [PHASE-03](evidence/PHASE-03.md). Implemented slices:
 ## Phase 04 implementation evidence
 
 See [PHASE-04](evidence/PHASE-04.md). Implemented slices:
+
 - Full Wireframe Feature Parity: All 11 wireframe and designer handoff screens implemented and verified on the Android emulator (`android-14` through `android-26`):
   - Cycle tracker dial with progress ring and follicular phase banner.
   - Home dashboard with 5 shortcut feature cards and Aisha greeting.
@@ -153,6 +169,7 @@ See [PHASE-04](evidence/PHASE-04.md). Implemented slices:
 ## Phase 05 implementation evidence
 
 See [PHASE-05](evidence/PHASE-05.md). Implemented slices:
+
 - Pilot Generalization & Dynamic Locations: Replaced hardcoded Jos data with dynamic `/api/v1/locations` and `/api/v1/health-services?city=...` queries across Nigeria (Jos Pilot Hub, Abuja, Lagos, Kano, Ibadan, Port Harcourt, Enugu, Kaduna, Nationwide). Dynamic mobile & web location pickers.
 - Multilingual Architecture: Complete translations and instant language switching across English, Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), and Nigerian Pidgin (`pcm`) on mobile and public web (`android-27`, `android-28`, `android-29`, `web-03`).
 - Light & Dark Mode Transitions: System-wide theme engine with deep dark palette (`#120817`), accessible text contrast, and instant header toggle across mobile, web, and admin (`android-30`, `web-04`, `admin-04`).
@@ -163,6 +180,7 @@ See [PHASE-05](evidence/PHASE-05.md). Implemented slices:
 ## Phase 06 implementation evidence
 
 See [PHASE-06](evidence/PHASE-06.md). Implemented slices:
+
 - Wireframe Account Flow: End-to-end user journey matching Zentreeca wireframe (`YanMata Women’s Health App Wireframe.png` right side): `SPLASH` -> `GETTING STARTED` -> `AUTHENTICATION` (Sign Up / Sign In) -> `COMPLETE HEALTH PROFILE` (Screen 4) -> `PERSONALIZED HEALTH INSIGHTS` (Screen 5) -> `TAKE ACTION / DASHBOARD`.
 - Dynamic Personalized Greeting: Eliminated hardcoded "Aisha" name; derives authenticated user's first name ("Good day, Zainab ☀️") with localized neutral fallback.
 - Feminine Visual Aesthetic & Branded Launch: Warm rose-aubergine palette (`#1A0B14`, `#26121D`, `#34192A`, `#F4A6C4`), Fraunces serif headlines, YanMata heart logo on native splash screen and launcher icons.
@@ -186,6 +204,7 @@ See [PHASE-07](evidence/PHASE-07.md). Public launch hardening adds a production-
 ## Phase 08 implementation evidence
 
 See [PHASE-08](evidence/PHASE-08.md). ACCT-01 adds member self-service deletion with password re-authentication and exact confirmation, device-clearing logout, warning dialogs, public Privacy Policy, Terms of Use and Account Deletion URLs, plus configured Android/iOS store destinations.
+
 - Multilingual Completeness: All new web story sections, navigation tabs, account journey steps, and testimonial headings translated across English, Hausa (`ha`), Yoruba (`yo`), Igbo (`ig`), and Nigerian Pidgin (`pcm`).
 - Truthful Clinical Invariants: Replaced prototype placeholders with verified Jos pilot in-platform specialist consultation; preserved strict invariants (no external hospital booking or facility directories).
 - Verification: Web production build (`npm run --workspace=@yanmata/web build`) completed in 840ms with zero errors; TypeScript typecheck passed; Prettier formatting clean; launched live at `http://127.0.0.1:5173/`.

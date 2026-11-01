@@ -3,8 +3,8 @@
   "private": true,
   "version": "0.1.0",
   "workspaces": [
-    "apps/web",
-    "apps/admin",
+    "apps/yanmata-web",
+    "apps/yanmata-admin",
     "packages/ui"
   ],
   "scripts": {
@@ -12,12 +12,12 @@
     "dev:admin": "npm run dev -w @yanmata/admin",
     "build": "npm run build -w @yanmata/web && npm run build -w @yanmata/admin",
     "typecheck": "npm run typecheck -w @yanmata/web && npm run typecheck -w @yanmata/admin",
-    "test:api": "cd apps/api && php artisan test",
-    "test:mobile": "cd apps/mobile && flutter test",
+    "test:api": "cd apps/yanmata-api && php artisan test",
+    "test:mobile": "cd apps/yanmata-mobile && flutter test",
     "dev": "node scripts/dev.mjs",
     "tokens": "node scripts/generate-tokens.mjs",
-    "format": "prettier --write \"apps/{web,admin}/src/**/*.{ts,tsx,css}\" \"packages/ui/src/**/*.{ts,tsx,css}\"",
-    "format:check": "prettier --check \"apps/{web,admin}/src/**/*.{ts,tsx,css}\" \"packages/ui/src/**/*.{ts,tsx,css}\""
+    "format": "prettier --write \"apps/{yanmata-web,yanmata-admin}/src/**/*.{ts,tsx,css}\" \"packages/ui/src/**/*.{ts,tsx,css}\"",
+    "format:check": "prettier --check \"apps/{yanmata-web,yanmata-admin}/src/**/*.{ts,tsx,css}\" \"packages/ui/src/**/*.{ts,tsx,css}\""
   },
   "engines": {
     "node": ">=22.12"

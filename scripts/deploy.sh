@@ -30,7 +30,7 @@ echo "📦 Step 1: Building production web and admin applications..."
 npm run build
 
 echo "🧪 Step 2: Running backend test suite..."
-(cd apps/api && php artisan test)
+(cd apps/yanmata-api && php artisan test)
 
 # 2. Rsync Backend
 echo "📤 Step 3: Deploying backend code..."
@@ -44,19 +44,19 @@ rsync -avz --delete \
   --exclude 'bootstrap/cache/*.php' \
   --exclude 'database/database.sqlite' \
   -e "ssh -i ${KEY_PATH} -o StrictHostKeyChecking=no" \
-  apps/api/ "${SERVER_USER}@${SERVER_HOST}:${DEPLOY_DIR}/backend/"
+  apps/yanmata-api/ "${SERVER_USER}@${SERVER_HOST}:${DEPLOY_DIR}/backend/"
 
 # 3. Rsync Web SPA
 echo "📤 Step 4: Deploying public web SPA..."
 rsync -avz --delete \
   -e "ssh -i ${KEY_PATH} -o StrictHostKeyChecking=no" \
-  apps/web/dist/ "${SERVER_USER}@${SERVER_HOST}:${DEPLOY_DIR}/web/"
+  apps/yanmata-web/dist/ "${SERVER_USER}@${SERVER_HOST}:${DEPLOY_DIR}/web/"
 
 # 4. Rsync Admin SPA
 echo "📤 Step 5: Deploying editorial admin SPA..."
 rsync -avz --delete \
   -e "ssh -i ${KEY_PATH} -o StrictHostKeyChecking=no" \
-  apps/admin/dist/ "${SERVER_USER}@${SERVER_HOST}:${DEPLOY_DIR}/admin/"
+  apps/yanmata-admin/dist/ "${SERVER_USER}@${SERVER_HOST}:${DEPLOY_DIR}/admin/"
 
 # 5. Remote Post-Deploy Provisioning
 echo "⚙️  Step 6: Executing post-deploy tasks on remote server..."

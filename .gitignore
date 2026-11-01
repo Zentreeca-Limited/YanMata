@@ -21,6 +21,7 @@
 **/*.p8
 **/GoogleService-Info.plist
 **/google-services.json
+**/firebase_app.json
 **/.phpunit.result.cache
 **/.phpunit.cache/
 **/.idea/

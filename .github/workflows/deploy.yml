@@ -41,7 +41,7 @@ jobs:
           coverage: none
 
       - name: Run Backend Tests
-        working-directory: apps/api
+        working-directory: apps/yanmata-api
         run: |
           composer install --no-interaction --prefer-dist
           cp .env.example .env
@@ -94,7 +94,7 @@ jobs:
             --exclude 'bootstrap/cache/*.php' \
             --exclude 'database/database.sqlite' \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
-            apps/api/ "${USER}@${HOST}:/var/www/yanmata/backend/"
+            apps/yanmata-api/ "${USER}@${HOST}:/var/www/yanmata/backend/"
 
       - name: Deploy Public Web SPA
         env:
@@ -103,7 +103,7 @@ jobs:
         run: |
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
-            apps/web/dist/ "${USER}@${HOST}:/var/www/yanmata/web/"
+            apps/yanmata-web/dist/ "${USER}@${HOST}:/var/www/yanmata/web/"
 
       - name: Deploy Editorial Admin SPA
         env:
@@ -112,7 +112,7 @@ jobs:
         run: |
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
-            apps/admin/dist/ "${USER}@${HOST}:/var/www/yanmata/admin/"
+            apps/yanmata-admin/dist/ "${USER}@${HOST}:/var/www/yanmata/admin/"
 
       - name: Remote Post-Deploy Provisioning
         env:

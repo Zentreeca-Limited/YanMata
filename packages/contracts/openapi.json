@@ -2139,6 +2139,78 @@
         }
       }
     },
+    "/nearby-places/search": {
+      "post": {
+        "summary": "Find nearby hospitals, clinics and pharmacies",
+        "description": "Uses the supplied foreground location transiently to request Google Maps Platform results. YanMata does not persist the coordinates or returned place listings.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NearbyPlaceSearch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Distance-ranked Google Maps place listings",
+            "headers": {
+              "Cache-Control": {
+                "description": "Prevents storage of location-derived responses",
+                "schema": {
+                  "type": "string",
+                  "example": "no-store, private"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/NearbyPlace"
+                      }
+                    },
+                    "meta": {
+                      "$ref": "#/components/schemas/NearbyPlaceMeta"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid coordinates, category or radius",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Nearby place search is temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/products": {
       "get": {
         "summary": "List health products",
@@ -2431,6 +2503,150 @@
       }
     },
     "schemas": {
+      "NearbyPlaceSearch": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "latitude",
+          "longitude",
+          "category"
+        ],
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "format": "double",
+            "minimum": -90,
+            "maximum": 90
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double",
+            "minimum": -180,
+            "maximum": 180
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "all",
+              "hospital",
+              "clinic",
+              "pharmacy"
+            ]
+          },
+          "radius_meters": {
+            "type": "integer",
+            "minimum": 500,
+            "maximum": 20000,
+            "default": 10000
+          }
+        }
+      },
+      "NearbyPlace": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "category",
+          "category_label",
+          "address",
+          "distance_km",
+          "directions_uri",
+          "place_uri",
+          "provider_attributions"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "category_label": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "distance_km": {
+            "type": "number",
+            "format": "double",
+            "minimum": 0
+          },
+          "business_status": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "directions_uri": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https://"
+          },
+          "place_uri": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https://"
+          },
+          "provider_attributions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NearbyPlaceAttribution"
+            }
+          }
+        }
+      },
+      "NearbyPlaceAttribution": {
+        "type": "object",
+        "required": [
+          "provider"
+        ],
+        "properties": {
+          "provider": {
+            "type": "string"
+          },
+          "provider_uri": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri"
+          }
+        }
+      },
+      "NearbyPlaceMeta": {
+        "type": "object",
+        "required": [
+          "category",
+          "radius_meters",
+          "ranked_by",
+          "provider",
+          "stored"
+        ],
+        "properties": {
+          "category": {
+            "type": "string"
+          },
+          "radius_meters": {
+            "type": "integer"
+          },
+          "ranked_by": {
+            "type": "string",
+            "const": "distance"
+          },
+          "provider": {
+            "type": "string",
+            "const": "Google Maps"
+          },
+          "stored": {
+            "type": "boolean",
+            "const": false
+          }
+        }
+      },
       "Error": {
         "type": "object",
         "properties": {
