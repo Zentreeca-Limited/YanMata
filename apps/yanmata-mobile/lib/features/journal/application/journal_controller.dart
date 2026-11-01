@@ -57,10 +57,16 @@ class JournalController extends AsyncNotifier<JournalState> {
     return initial;
   }
 
-  Future<void> _registerCurrentDevice(String? token) async {
+  Future<void> _registerCurrentDevice(
+    String? token, {
+    bool requestPermission = false,
+  }) async {
     if (token == null) return;
     final platform = DeviceService.currentPlatformName();
     final deviceService = ref.read(deviceServiceProvider);
+    if (requestPermission) {
+      await deviceService.requestNotificationPermission();
+    }
     final deviceId = await deviceService.getOrCreateDeviceId();
     await deviceService.registerDevice(
       platform: platform,
@@ -70,12 +76,18 @@ class JournalController extends AsyncNotifier<JournalState> {
     );
   }
 
-  Future<void> _run(Future<void> Function() action) async {
+  Future<void> _run(
+    Future<void> Function() action, {
+    bool requestPushPermission = false,
+  }) async {
     await action();
     final updated = await _repo.read();
     state = AsyncData(updated);
     if (updated.token != null) {
-      await _registerCurrentDevice(updated.token);
+      await _registerCurrentDevice(
+        updated.token,
+        requestPermission: requestPushPermission,
+      );
     }
   }
 
@@ -102,8 +114,10 @@ class JournalController extends AsyncNotifier<JournalState> {
   Future<void> resolveConflict(String entryId, {required bool keepLocal}) =>
       _run(() => _repo.resolveConflict(entryId, keepLocal: keepLocal));
   Future<void> remove(String id) => _run(() => _repo.remove(id));
-  Future<void> connect(String email, String password) =>
-      _run(() => _repo.connect(email, password));
+  Future<void> connect(String email, String password) => _run(
+    () => _repo.connect(email, password),
+    requestPushPermission: true,
+  );
   Future<void> register({
     required String name,
     required String email,
@@ -116,6 +130,7 @@ class JournalController extends AsyncNotifier<JournalState> {
       password: password,
       dateOfBirth: dateOfBirth,
     ),
+    requestPushPermission: true,
   );
   Future<void> requestPasswordReset(String email) =>
       _repo.requestPasswordReset(email);

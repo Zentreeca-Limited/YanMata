@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-01 — App Store Connect ITMS-90683 fix, complete iOS purpose strings, runtime notification permissions & version 1.0.0+2 alignment (IOS-PERMS-01)
+
+- Resolved App Store Connect `ITMS-90683` by adding `NSLocationAlwaysAndWhenInUseUsageDescription`, `NSLocationAlwaysUsageDescription`, `NSLocationTemporaryUsageDescriptionDictionary` (`NearbyCare`), `NSFaceIDUsageDescription`, `NSCameraUsageDescription`, `NSPhotoLibraryUsageDescription`, `NSPhotoLibraryAddUsageDescription`, and `NSMicrophoneUsageDescription` alongside `NSLocationWhenInUseUsageDescription` in `apps/yanmata-mobile/ios/Runner/Info.plist`.
+- Configured `BYPASS_PERMISSION_LOCATION_ALWAYS=1` on the `geolocator_apple` target in `apps/yanmata-mobile/ios/Podfile` so `requestAlwaysAuthorization` is also compiled out of `geolocator_apple.framework`.
+- Added `apps/yanmata-mobile/ios/Runner/PrivacyInfo.xcprivacy` (Apple Privacy Manifest) and linked it into the `Runner` target in `Runner.xcodeproj/project.pbxproj`.
+- Added native runtime notification permission requests (`UNUserNotificationCenter` on iOS in `AppDelegate.swift` and `POST_NOTIFICATIONS` on Android 13+ in `MainActivity.kt`) connected via `com.yanmata.app/permissions` in `lib/core/notifications.dart` and `lib/features/journal/application/journal_controller.dart`.
+- Bumped `pubspec.yaml` to `version: 1.0.0+2` (Build 2 for the next App Store Connect upload) and linked `MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)"` and `CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)"` in `Runner.xcodeproj/project.pbxproj`.
+
 ## 2026-11-01 — Live account onboarding, email confirmation, password reset, per-member demo seeding & Geoapify Nearby Care integration (PILOT-LIVE-ACCOUNT-01 / NEARBY-01)
 
 - Integrated Geoapify Places API v2 (`https://api.geoapify.com/v2/places`) in `App\Services\GooglePlacesClient`, `App\Actions\FindNearbyPlaces`, and `App\Http\Controllers\NearbyPlaceController` (`apps/yanmata-api`) so `POST /api/v1/nearby-places/search` serves live OpenStreetMap hospitals, clinics, and pharmacies when `GEOAPIFY_API_KEY` is configured on the server.

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
@@ -102,6 +103,37 @@ class DeviceService {
   static const _deviceIdKey = 'yanmata_device_uuid_v1';
   static const _prefsKey = 'yanmata_notification_prefs_v1';
   static const _uuid = Uuid();
+  static const _permissionsChannel = MethodChannel(
+    'com.yanmata.app/permissions',
+  );
+
+  Future<bool> requestNotificationPermission() async {
+    if (kIsWeb) return false;
+    try {
+      final granted = await _permissionsChannel.invokeMethod<bool>(
+        'requestNotificationPermission',
+      );
+      return granted ?? false;
+    } on MissingPluginException {
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  Future<String> checkNotificationPermission() async {
+    if (kIsWeb) return 'not_determined';
+    try {
+      final status = await _permissionsChannel.invokeMethod<String>(
+        'checkNotificationPermission',
+      );
+      return status ?? 'not_determined';
+    } on MissingPluginException {
+      return 'granted';
+    } catch (_) {
+      return 'not_determined';
+    }
+  }
 
   Future<String> getOrCreateDeviceId() async {
     final raw = await _store.read();
@@ -273,6 +305,9 @@ class NotificationPreferencesNotifier
   }
 
   Future<void> toggleCareMessages(bool enabled) async {
+    if (enabled) {
+      await _service.requestNotificationPermission();
+    }
     final current = state.value ?? const NotificationPreferences();
     await savePreferences(current.copyWith(careMessages: enabled));
   }
@@ -290,6 +325,9 @@ class NotificationPreferencesNotifier
   }
 
   Future<void> toggleCheckInReminder(bool enabled) async {
+    if (enabled) {
+      await _service.requestNotificationPermission();
+    }
     final current = state.value ?? const NotificationPreferences();
     await savePreferences(current.copyWith(checkInReminderEnabled: enabled));
   }

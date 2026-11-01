@@ -1,5 +1,27 @@
 # Agent handoff — 1 November 2026
 
+## App Store Connect ITMS-90683 fix, iOS/Android runtime permissions & version 1.0.0+2 alignment (IOS-PERMS-01, 1 November 2026)
+
+- **Resolved ITMS-90683 & Added Complete iOS `Info.plist` Purpose Strings (`apps/yanmata-mobile/ios/Runner/Info.plist`)**:
+  - Added clear, user-facing purpose strings for every protected resource referenced by the app or its native plugins (`geolocator_apple`, `flutter_secure_storage_darwin`, `webview_flutter_wkwebview`):
+    - `NSLocationWhenInUseUsageDescription`
+    - `NSLocationAlwaysAndWhenInUseUsageDescription` (specifically flagged by `ITMS-90683`)
+    - `NSLocationAlwaysUsageDescription`
+    - `NSLocationTemporaryUsageDescriptionDictionary` (`NearbyCare`)
+    - `NSFaceIDUsageDescription` (`LAContext` in `flutter_secure_storage_darwin`)
+    - `NSCameraUsageDescription`, `NSPhotoLibraryUsageDescription`, `NSPhotoLibraryAddUsageDescription`, `NSMicrophoneUsageDescription` (`WKWebView` / media picker APIs)
+  - Configured `GCC_PREPROCESSOR_DEFINITIONS = ['$(inherited)', 'BYPASS_PERMISSION_LOCATION_ALWAYS=1']` for the `geolocator_apple` target in `apps/yanmata-mobile/ios/Podfile` so `requestAlwaysAuthorization` is also stripped from the compiled `geolocator_apple.framework` binary.
+  - Added `apps/yanmata-mobile/ios/Runner/PrivacyInfo.xcprivacy` (Apple Privacy Manifest declaring `NSPrivacyAccessedAPICategoryUserDefaults` reason `CA92.1` and `NSPrivacyTracking = false`) and linked it into the `Runner` Resources build phase in `Runner.xcodeproj/project.pbxproj`.
+- **Runtime Permission Requests (`AppDelegate.swift`, `MainActivity.kt`, `notifications.dart`, `journal_controller.dart`)**:
+  - Added a `com.yanmata.app/permissions` `MethodChannel` in `ios/Runner/AppDelegate.swift` (`UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound])` + `registerForRemoteNotifications()`) and `android/app/src/main/kotlin/com/yanmata/app/MainActivity.kt` (`Manifest.permission.POST_NOTIFICATIONS` on Android 13+).
+  - Wired `DeviceService.requestNotificationPermission()` when a member signs in, registers, or toggles Care / Daily Check-In reminders in the `More` tab, alongside the explicit foreground location permission prompt (`Geolocator.checkPermission()` -> `Geolocator.requestPermission()`) in `DeviceLocationGateway`.
+- **Version & Build Number Alignment (`1.0.0+2`)**:
+  - Updated `apps/yanmata-mobile/pubspec.yaml` to `version: 1.0.0+2` (for the next App Store Connect upload following `1.0.0 Build 1`) and linked `MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)"` and `CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)"` across all `Debug`, `Release`, and `Profile` configurations in `ios/Runner.xcodeproj/project.pbxproj`.
+- **Verification**:
+  - `flutter analyze` (`0 issues`) and `flutter test` (`24 passed, 1 opt-in live test skipped`).
+  - `pod install`, `BYPASS_PERMISSION_LOCATION_ALWAYS=1 flutter build ios --simulator`, and `flutter build apk --debug` succeeded.
+  - Verified with `plutil -p` and `nm -g` on `build/ios/iphonesimulator/Runner.app` that `CFBundleShortVersionString = "1.0.0"`, `CFBundleVersion = "2"`, all `NS*UsageDescription` keys are present in the compiled `Info.plist`, and `requestAlwaysAuthorization` is stripped from `geolocator_apple.framework`.
+
 ## Live account onboarding, email confirmation, password reset, per-member demo seeding & Geoapify Nearby Care integration (PILOT-LIVE-ACCOUNT-01 / NEARBY-GEOAPIFY-01, 1 November 2026)
 
 - **Geoapify Places API v2 Integration (`apps/yanmata-api`)**:

@@ -28,6 +28,25 @@
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>YanMata uses your location only when you ask to find nearby hospitals, clinics and pharmacies. Your location is not saved by YanMata.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>YanMata uses your location only while you are actively searching for nearby hospitals, clinics and pharmacies. Your location is never tracked in the background or saved by YanMata.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>YanMata uses your location only while you are actively searching for nearby hospitals, clinics and pharmacies. Your location is never tracked in the background or saved by YanMata.</string>
+	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+	<dict>
+		<key>NearbyCare</key>
+		<string>YanMata uses your precise location once to calculate accurate distances to nearby hospitals, clinics and pharmacies when you tap Find nearby care.</string>
+	</dict>
+	<key>NSFaceIDUsageDescription</key>
+	<string>YanMata uses Face ID to protect access to your encrypted on-device health journal and credentials.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>YanMata only accesses the camera if you choose to capture an editorial cover image in the Staff Studio.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>YanMata only accesses your photo library if you choose to attach an editorial cover image in the Staff Studio.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>YanMata only saves to your photo library if you choose to export or save a resource image to your device.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>YanMata does not record audio; this permission is only referenced if an embedded media player or web view requests audio input.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
