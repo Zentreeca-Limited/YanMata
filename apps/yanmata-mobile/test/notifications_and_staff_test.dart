@@ -47,6 +47,18 @@ class _FakeJournalRepo implements JournalRepository {
     required String dateOfBirth,
   }) async {}
   @override
+  Future<void> requestPasswordReset(String email) async {}
+  @override
+  Future<void> resetPassword({
+    required String email,
+    required String code,
+    required String newPassword,
+  }) async {}
+  @override
+  Future<void> sendEmailVerification() async {}
+  @override
+  Future<void> verifyEmail(String code) async {}
+  @override
   Future<void> disconnect() async {}
   @override
   Future<void> logout() async {}

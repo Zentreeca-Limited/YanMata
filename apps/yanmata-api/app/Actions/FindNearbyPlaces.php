@@ -16,6 +16,11 @@ class FindNearbyPlaces
 
     public function __construct(private GooglePlacesClient $googlePlaces) {}
 
+    public function providerName(): string
+    {
+        return $this->googlePlaces->providerName();
+    }
+
     /**
      * @return array<int, array<string, mixed>>
      */

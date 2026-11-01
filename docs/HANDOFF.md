@@ -1,5 +1,27 @@
 # Agent handoff — 1 November 2026
 
+## Live account onboarding, email confirmation, password reset, per-member demo seeding & Geoapify Nearby Care integration (PILOT-LIVE-ACCOUNT-01 / NEARBY-GEOAPIFY-01, 1 November 2026)
+
+- **Geoapify Places API v2 Integration (`apps/yanmata-api`)**:
+  - Added `services.geoapify` (`key`, `base_url`) in `apps/yanmata-api/config/services.php` and documented `GEOAPIFY_API_KEY=` in `apps/yanmata-api/.env.example` (without committing the secret key).
+  - Updated `App\Services\GooglePlacesClient`, `App\Actions\FindNearbyPlaces`, and `App\Http\Controllers\NearbyPlaceController` so `POST /api/v1/nearby-places/search` queries Geoapify Places API v2 (`https://api.geoapify.com/v2/places`) when `GEOAPIFY_API_KEY` is configured, mapping OpenStreetMap categories (`healthcare.hospital`, `healthcare.clinic_or_praxis`, `healthcare.pharmacy`) into the mobile response schema (`id`, `name`, `category`, `category_label`, `address`, `distance_km`, `business_status`, `directions_uri`, `place_uri`, `attributions`) with `meta.provider = "Geoapify · OpenStreetMap"`.
+  - Configured `GEOAPIFY_API_KEY` on the production server (`52.0.227.75`, `/var/www/yanmata/backend/.env`) and verified live searches return real Jos hospitals, clinics, and pharmacies (`Old Jos university teaching hospital`, `Tinna pharmacy`, `Dumjos pharmacy`, etc.).
+- **6-Digit Email Confirmation & Password Reset (`apps/yanmata-api` & `apps/yanmata-mobile`)**:
+  - Added `POST /api/v1/email/verification-notification`, `POST /api/v1/email/verify`, `POST /api/v1/mobile/password/forgot`, and `POST /api/v1/mobile/password/reset` in `SessionController.php` and `routes/api.php`, with branded HTML emails in `MemberMailService` (`sendEmailVerificationCode`, `sendEmailVerifiedConfirmation`, `sendPasswordResetCode`, `sendPasswordResetSuccess`).
+  - Updated `AuthPage` (`_showForgotPasswordSheet`) and `YouPage` (`_showVerifyEmailSheet` + `Verified` / `Unverified · Confirm email` status badge) in `apps/yanmata-mobile` for interactive 6-digit code verification and password reset.
+- **Automatic Demo Data Seeding for Signed-In Accounts (`SessionController::seedMemberDemoExperience`)**:
+  - When `YANMATA_DEMO=true` on the backend, new member accounts are automatically seeded with:
+    - **Cycle Settings** (`last_period_date`: 11 days ago, `cycle_length`: 28, `period_duration`: 5 -> `Day 12 of 28 · Follicular Phase`)
+    - **Care Conversation & Support Request** assigned to `Demo Specialist One` with an active specialist reply thread
+    - **2 Cloud-Synced Encrypted Journal Check-Ins** (`Great` and `Good` logs in `journal_entries` + `journal_changes`)
+    - **Notification Preferences** (`20:00` daily check-in reminder, `22:00–07:00` quiet hours)
+- **Live Account `okoloebuga@gmail.com` Tested & Linked to Emulators**:
+  - Created live account `okoloebuga@gmail.com` (`Okolo Ebuga`, user ID `18`) on `https://yanmata.zentreeca.org`, verified email confirmation (`email_verified: true`), tested password reset (`YanMata2026`), completed health profile + personalised insights, and linked both the running **iOS Simulator** (`iPhone 16 Pro`) and **Android Emulator** (`Pixel 10 Pro`) to `okoloebuga@gmail.com`.
+- **Verification**:
+  - Backend: `./vendor/bin/pint` and `php artisan test` passed (`45 tests, 295 assertions`).
+  - Mobile: `flutter analyze` (`0 issues`) and `flutter test` (`24 passed, 1 opt-in live test skipped`).
+  - Deployed to `https://yanmata.zentreeca.org` via `./scripts/deploy.sh /Users/user/Downloads/yanmata.pem` and verified visually on iOS Simulator (`okolo_ios_home.png`) and Android Emulator (`okolo_android_home.png`).
+
 ## Auth UX polish: subtle Forgot password typography, 75% height legal WebView sheets, and Continue as Guest stack clearing (AUTH-UX-01, 1 November 2026)
 
 - **Login Screen — "Forgot password?" Typography (`apps/yanmata-mobile/lib/features/account/presentation/auth_page.dart`)**:

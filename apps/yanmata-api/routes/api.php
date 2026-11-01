@@ -21,6 +21,8 @@ Route::prefix('v1')->group(function () {
     Route::get('/specialists', [CareController::class, 'specialists'])->middleware('throttle:60,1');
     Route::post('/mobile/register', [SessionController::class, 'register'])->middleware('throttle:login');
     Route::post('/mobile/login', [SessionController::class, 'login'])->middleware('throttle:login');
+    Route::post('/mobile/password/forgot', [SessionController::class, 'forgotPassword'])->middleware('throttle:login');
+    Route::post('/mobile/password/reset', [SessionController::class, 'resetPassword'])->middleware('throttle:login');
 
     // Dynamic Locations & Coverage Hubs
     Route::get('/locations', [LocationController::class, 'index'])->middleware('throttle:60,1');
@@ -47,6 +49,8 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/me', [SessionController::class, 'me']);
+        Route::post('/email/verification-notification', [SessionController::class, 'sendEmailVerification'])->middleware('throttle:10,1');
+        Route::post('/email/verify', [SessionController::class, 'verifyEmail'])->middleware('throttle:20,1');
         Route::post('/logout', [SessionController::class, 'logout']);
         Route::delete('/account', [SessionController::class, 'destroy'])->middleware('throttle:account-deletion');
         Route::put('/consent/sync', [SessionController::class, 'consent']);

@@ -77,6 +77,8 @@ class JournalState {
     this.ownerId,
     this.token,
     this.userName,
+    this.userEmail,
+    this.emailVerified = false,
     this.userRole,
   });
 
@@ -87,6 +89,8 @@ class JournalState {
   final int? ownerId;
   final String? token;
   final String? userName;
+  final String? userEmail;
+  final bool emailVerified;
   final String? userRole;
 
   bool get isStaff =>
@@ -117,6 +121,14 @@ abstract interface class JournalRepository {
     required String password,
     required String dateOfBirth,
   });
+  Future<void> requestPasswordReset(String email);
+  Future<void> resetPassword({
+    required String email,
+    required String code,
+    required String newPassword,
+  });
+  Future<void> sendEmailVerification();
+  Future<void> verifyEmail(String code);
   Future<void> sync();
   Future<void> disconnect();
   Future<void> logout();

@@ -164,6 +164,166 @@ class _YouState extends ConsumerState<You> {
     }
   }
 
+  void _showVerifyEmailSheet(JournalController controller, JournalState state) {
+    final codeController = TextEditingController();
+    var sheetBusy = false;
+    String? sheetError;
+    String? sheetInfo =
+        'Enter the 6-digit code sent to ${state.userEmail ?? 'your email'}, or tap Resend Code.';
+
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Palette.cream,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setSheetState) => Padding(
+          padding: EdgeInsets.fromLTRB(
+            24,
+            20,
+            24,
+            MediaQuery.of(ctx).viewInsets.bottom + 28,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const Icon(
+                    Icons.mark_email_read_outlined,
+                    color: Palette.plum,
+                    size: 22,
+                  ),
+                  const SizedBox(width: 8),
+                  const Expanded(
+                    child: Text(
+                      'Confirm Email Address',
+                      style: TextStyle(
+                        fontFamily: 'Fraunces',
+                        fontSize: 19,
+                        fontWeight: FontWeight.w600,
+                        color: Palette.ink,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close, size: 20),
+                    onPressed: () => Navigator.pop(ctx),
+                  ),
+                ],
+              ),
+              if (sheetInfo != null) ...[
+                const SizedBox(height: 6),
+                Text(
+                  sheetInfo!,
+                  style: const TextStyle(fontSize: 13, color: Palette.slate),
+                ),
+              ],
+              const SizedBox(height: 16),
+              TextField(
+                controller: codeController,
+                keyboardType: TextInputType.number,
+                maxLength: 6,
+                decoration: const InputDecoration(
+                  labelText: '6-digit confirmation code',
+                  prefixIcon: Icon(Icons.pin_outlined, size: 20),
+                  counterText: '',
+                ),
+              ),
+              if (sheetError != null) ...[
+                const SizedBox(height: 10),
+                Text(
+                  sheetError!,
+                  style: const TextStyle(color: Palette.error, fontSize: 12.5),
+                ),
+              ],
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  onPressed: sheetBusy
+                      ? null
+                      : () async {
+                          final code = codeController.text.trim();
+                          if (code.length != 6) {
+                            setSheetState(
+                              () => sheetError =
+                                  'Please enter the 6-digit confirmation code.',
+                            );
+                            return;
+                          }
+                          setSheetState(() {
+                            sheetBusy = true;
+                            sheetError = null;
+                          });
+                          try {
+                            await controller.verifyEmail(code);
+                            if (!ctx.mounted) return;
+                            Navigator.pop(ctx);
+                            if (mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    'Email address confirmed!',
+                                  ),
+                                ),
+                              );
+                            }
+                          } catch (e) {
+                            setSheetState(
+                              () => sheetError = e
+                                  .toString()
+                                  .replaceAll('Exception: ', ''),
+                            );
+                          } finally {
+                            if (ctx.mounted) {
+                              setSheetState(() => sheetBusy = false);
+                            }
+                          }
+                        },
+                  child: Text(sheetBusy ? 'Verifying…' : 'Confirm Email'),
+                ),
+              ),
+              Center(
+                child: TextButton(
+                  onPressed: sheetBusy
+                      ? null
+                      : () async {
+                          setSheetState(() {
+                            sheetBusy = true;
+                            sheetError = null;
+                          });
+                          try {
+                            await controller.sendEmailVerification();
+                            setSheetState(() {
+                              sheetInfo =
+                                  'A new 6-digit confirmation code was sent to ${state.userEmail ?? 'your email'}.';
+                            });
+                          } catch (e) {
+                            setSheetState(
+                              () => sheetError = e
+                                  .toString()
+                                  .replaceAll('Exception: ', ''),
+                            );
+                          } finally {
+                            if (ctx.mounted) {
+                              setSheetState(() => sheetBusy = false);
+                            }
+                          }
+                        },
+                  child: const Text('Resend confirmation code'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Future<void> _confirmDeleteAccount(JournalController controller) async {
     final passwordController = TextEditingController();
     final confirmationController = TextEditingController();
@@ -298,6 +458,53 @@ class _YouState extends ConsumerState<You> {
                         color: Palette.slate,
                       ),
                     ),
+                    if (s.signedIn && s.userEmail != null) ...[
+                      const SizedBox(height: 6),
+                      Row(
+                        children: [
+                          Icon(
+                            s.emailVerified
+                                ? Icons.verified_rounded
+                                : Icons.mark_email_unread_outlined,
+                            size: 14,
+                            color: s.emailVerified
+                                ? Palette.teal
+                                : Palette.plum,
+                          ),
+                          const SizedBox(width: 4),
+                          Flexible(
+                            child: Text(
+                              s.emailVerified
+                                  ? '${s.userEmail} · Verified'
+                                  : '${s.userEmail} · Unverified',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 11.5,
+                                fontWeight: FontWeight.w600,
+                                color: s.emailVerified
+                                    ? Palette.teal
+                                    : Palette.plum,
+                              ),
+                            ),
+                          ),
+                          if (!s.emailVerified) ...[
+                            const SizedBox(width: 8),
+                            InkWell(
+                              onTap: () => _showVerifyEmailSheet(controller, s),
+                              child: const Text(
+                                'Confirm email',
+                                style: TextStyle(
+                                  fontSize: 11.5,
+                                  fontWeight: FontWeight.w700,
+                                  color: Palette.plum,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ],
                   ],
                 ),
               ),

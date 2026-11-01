@@ -83,12 +83,13 @@ class CycleSettingsNotifier extends Notifier<CycleSettings> {
   CycleSettings build() {
     _loadFromPrefs();
     // Re-converge with the backend whenever an account is connected.
-    ref.listen<String?>(journalProvider.select((j) => j.value?.token), (
-      _,
-      token,
-    ) {
-      if (token != null) sync();
-    });
+    ref.listen<String?>(
+      journalProvider.select((j) => j.value?.token),
+      (_, token) {
+        if (token != null) sync();
+      },
+      fireImmediately: true,
+    );
     return _unset;
   }
 

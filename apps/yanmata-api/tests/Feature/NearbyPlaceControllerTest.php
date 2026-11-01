@@ -10,6 +10,7 @@ class NearbyPlaceControllerTest extends TestCase
 {
     public function test_returns_distance_ranked_google_places_without_caching_or_storing_location(): void
     {
+        config()->set('services.geoapify.api_key', null);
         config()->set('services.google_places.api_key', 'test-server-key');
         Http::preventStrayRequests();
         Http::fake([
@@ -109,6 +110,7 @@ class NearbyPlaceControllerTest extends TestCase
 
     public function test_returns_503_when_google_places_is_not_configured(): void
     {
+        config()->set('services.geoapify.api_key', null);
         config()->set('services.google_places.api_key', null);
         Http::preventStrayRequests();
 
@@ -127,6 +129,7 @@ class NearbyPlaceControllerTest extends TestCase
 
     public function test_returns_503_without_exposing_google_error_details(): void
     {
+        config()->set('services.geoapify.api_key', null);
         config()->set('services.google_places.api_key', 'test-server-key');
         Http::preventStrayRequests();
         Http::fake([
@@ -146,5 +149,54 @@ class NearbyPlaceControllerTest extends TestCase
             ->assertJsonPath('message', 'Nearby care search is temporarily unavailable. Please try again.');
 
         Http::assertSentCount(1);
+    }
+
+    public function test_returns_distance_ranked_geoapify_places_when_configured(): void
+    {
+        config()->set('services.geoapify.api_key', 'test-geoapify-key');
+        config()->set('services.google_places.api_key', null);
+        Http::preventStrayRequests();
+        Http::fake([
+            'https://api.geoapify.com/v2/places*' => Http::response([
+                'type' => 'FeatureCollection',
+                'features' => [
+                    [
+                        'type' => 'Feature',
+                        'properties' => [
+                            'place_id' => 'geoapify-hospital-1',
+                            'name' => 'Plateau Specialist Hospital',
+                            'formatted' => 'Old Bukuru Road, Jos, Plateau State, Nigeria',
+                            'lat' => 9.905,
+                            'lon' => 8.895,
+                            'categories' => ['healthcare.hospital'],
+                            'datasource' => [
+                                'attribution' => '© OpenStreetMap contributors',
+                                'url' => 'https://www.openstreetmap.org/copyright',
+                            ],
+                        ],
+                        'geometry' => [
+                            'type' => 'Point',
+                            'coordinates' => [8.895, 9.905],
+                        ],
+                    ],
+                ],
+            ]),
+        ]);
+
+        $response = $this->postJson('/api/v1/nearby-places/search', [
+            'latitude' => 9.9,
+            'longitude' => 8.9,
+            'category' => 'hospital',
+            'radius_meters' => 10000,
+        ]);
+
+        $response->assertOk()
+            ->assertHeader('Cache-Control', 'no-store, private')
+            ->assertJsonCount(1, 'data')
+            ->assertJsonPath('data.0.id', 'geoapify-hospital-1')
+            ->assertJsonPath('data.0.name', 'Plateau Specialist Hospital')
+            ->assertJsonPath('data.0.category_label', 'Hospital')
+            ->assertJsonPath('meta.provider', 'Geoapify · OpenStreetMap')
+            ->assertJsonPath('meta.stored', false);
     }
 }

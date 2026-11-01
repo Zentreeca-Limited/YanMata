@@ -18,10 +18,39 @@ final journalProvider = AsyncNotifierProvider<JournalController, JournalState>(
 );
 
 class JournalController extends AsyncNotifier<JournalState> {
+  static const _autoConnectEmail = String.fromEnvironment('AUTO_CONNECT_EMAIL');
+  static const _autoConnectPassword = String.fromEnvironment(
+    'AUTO_CONNECT_PASSWORD',
+  );
+
   JournalRepository get _repo => ref.read(journalRepositoryProvider);
   @override
   Future<JournalState> build() async {
-    final initial = await _repo.read();
+    var initial = await _repo.read();
+    if (_autoConnectEmail.isNotEmpty &&
+        _autoConnectPassword.isNotEmpty &&
+        (!initial.signedIn ||
+            initial.userEmail?.toLowerCase() !=
+                _autoConnectEmail.toLowerCase())) {
+      try {
+        if (initial.signedIn) {
+          try {
+            await _repo.disconnect();
+          } catch (_) {}
+          try {
+            await _repo.erase();
+          } catch (_) {}
+        }
+        await _repo.connect(_autoConnectEmail, _autoConnectPassword);
+        initial = await _repo.read();
+      } on StateError {
+        try {
+          await _repo.erase();
+          await _repo.connect(_autoConnectEmail, _autoConnectPassword);
+          initial = await _repo.read();
+        } catch (_) {}
+      } catch (_) {}
+    }
     if (initial.token != null) {
       Future.microtask(() => _registerCurrentDevice(initial.token));
     }
@@ -88,6 +117,19 @@ class JournalController extends AsyncNotifier<JournalState> {
       dateOfBirth: dateOfBirth,
     ),
   );
+  Future<void> requestPasswordReset(String email) =>
+      _repo.requestPasswordReset(email);
+  Future<void> resetPassword({
+    required String email,
+    required String code,
+    required String newPassword,
+  }) => _repo.resetPassword(
+    email: email,
+    code: code,
+    newPassword: newPassword,
+  );
+  Future<void> sendEmailVerification() => _run(_repo.sendEmailVerification);
+  Future<void> verifyEmail(String code) => _run(() => _repo.verifyEmail(code));
   Future<void> sync() => _run(_repo.sync);
   Future<void> disconnect() => _run(_repo.disconnect);
   Future<void> logout() => _run(_repo.logout);

@@ -40,6 +40,7 @@ class _Gate extends StatefulWidget {
 
 class _GateState extends State<_Gate> {
   static const _key = 'onboarding_done';
+  static const _autoConnectEmail = String.fromEnvironment('AUTO_CONNECT_EMAIL');
   bool? _done;
 
   @override
@@ -47,7 +48,11 @@ class _GateState extends State<_Gate> {
     super.initState();
     SharedPreferences.getInstance()
         .then((p) {
-          if (mounted) setState(() => _done = p.getBool(_key) ?? false);
+          final isDone = (p.getBool(_key) ?? false) || _autoConnectEmail.isNotEmpty;
+          if (_autoConnectEmail.isNotEmpty) {
+            p.setBool(_key, true);
+          }
+          if (mounted) setState(() => _done = isDone);
         })
         .catchError((_) {
           if (mounted) setState(() => _done = true);

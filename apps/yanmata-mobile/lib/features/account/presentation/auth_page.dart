@@ -187,53 +187,232 @@ class _AuthPageState extends ConsumerState<AuthPage> {
     final muted = isDark ? Palette.darkMuted : Palette.slate;
     final accent = Theme.of(context).colorScheme.primary;
 
+    final resetEmailController = TextEditingController(
+      text: _emailController.text.trim(),
+    );
+    final codeController = TextEditingController();
+    final newPasswordController = TextEditingController();
+    var codeSent = false;
+    var sheetBusy = false;
+    String? sheetError;
+    String? sheetInfo;
+
     showModalBottomSheet<void>(
       context: context,
+      isScrollControlled: true,
       backgroundColor: isDark ? Palette.darkSurface : Palette.cream,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      builder: (ctx) => Padding(
-        padding: const EdgeInsets.fromLTRB(24, 20, 24, 28),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setSheetState) => Padding(
+          padding: EdgeInsets.fromLTRB(
+            24,
+            20,
+            24,
+            MediaQuery.of(ctx).viewInsets.bottom + 28,
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.lock_reset_outlined, color: accent, size: 22),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    ref.tr('auth_forgot_password'),
+                Row(
+                  children: [
+                    Icon(Icons.lock_reset_outlined, color: accent, size: 22),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        ref.tr('auth_forgot_password'),
+                        style: TextStyle(
+                          fontFamily: 'Fraunces',
+                          fontSize: 19,
+                          fontWeight: FontWeight.w600,
+                          color: text,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.close, size: 20, color: muted),
+                      onPressed: () => Navigator.pop(ctx),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  codeSent
+                      ? 'Enter the 6-digit recovery code sent to your email address along with your new password.'
+                      : 'Enter your registered email address and we will send you a 6-digit recovery code.',
+                  style: TextStyle(fontSize: 13, height: 1.5, color: muted),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: resetEmailController,
+                  keyboardType: TextInputType.emailAddress,
+                  autocorrect: false,
+                  decoration: const InputDecoration(
+                    labelText: 'Email Address',
+                    prefixIcon: Icon(Icons.email_outlined, size: 20),
+                  ),
+                ),
+                if (codeSent) ...[
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: codeController,
+                    keyboardType: TextInputType.number,
+                    maxLength: 6,
+                    decoration: const InputDecoration(
+                      labelText: '6-digit recovery code',
+                      prefixIcon: Icon(Icons.pin_outlined, size: 20),
+                      counterText: '',
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: newPasswordController,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      labelText: 'New password (10+ chars, letters & numbers)',
+                      prefixIcon: Icon(Icons.lock_outline, size: 20),
+                    ),
+                  ),
+                ],
+                if (sheetError != null) ...[
+                  const SizedBox(height: 10),
+                  Text(
+                    sheetError!,
+                    style: const TextStyle(color: Palette.error, fontSize: 12.5),
+                  ),
+                ],
+                if (sheetInfo != null) ...[
+                  const SizedBox(height: 10),
+                  Text(
+                    sheetInfo!,
                     style: TextStyle(
-                      fontFamily: 'Fraunces',
-                      fontSize: 19,
+                      color: accent,
+                      fontSize: 12.5,
                       fontWeight: FontWeight.w600,
-                      color: text,
+                    ),
+                  ),
+                ],
+                const SizedBox(height: 18),
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                    onPressed: sheetBusy
+                        ? null
+                        : () async {
+                            final emailVal = resetEmailController.text.trim();
+                            if (!emailVal.contains('@')) {
+                              setSheetState(
+                                () => sheetError = 'Please enter a valid email.',
+                              );
+                              return;
+                            }
+                            setSheetState(() {
+                              sheetBusy = true;
+                              sheetError = null;
+                            });
+                            try {
+                              if (!codeSent) {
+                                await ref
+                                    .read(journalProvider.notifier)
+                                    .requestPasswordReset(emailVal);
+                                setSheetState(() {
+                                  codeSent = true;
+                                  sheetInfo =
+                                      'Recovery code sent to $emailVal.';
+                                });
+                              } else {
+                                final codeVal = codeController.text.trim();
+                                final passVal = newPasswordController.text;
+                                if (codeVal.length != 6) {
+                                  setSheetState(
+                                    () => sheetError =
+                                        'Enter the 6-digit recovery code.',
+                                  );
+                                  return;
+                                }
+                                if (passVal.length < 10) {
+                                  setSheetState(
+                                    () => sheetError =
+                                        'Password must be at least 10 characters with letters and numbers.',
+                                  );
+                                  return;
+                                }
+                                await ref
+                                    .read(journalProvider.notifier)
+                                    .resetPassword(
+                                      email: emailVal,
+                                      code: codeVal,
+                                      newPassword: passVal,
+                                    );
+                                if (!ctx.mounted) return;
+                                Navigator.pop(ctx);
+                                _emailController.text = emailVal;
+                                _passwordController.text = passVal;
+                                if (mounted) {
+                                  YanMataFeedback.showSuccessSnackbar(
+                                    context,
+                                    'Password updated! You can now sign in.',
+                                  );
+                                }
+                              }
+                            } catch (e) {
+                              setSheetState(
+                                () => sheetError = e
+                                    .toString()
+                                    .replaceAll('Exception: ', ''),
+                              );
+                            } finally {
+                              if (ctx.mounted) {
+                                setSheetState(() => sheetBusy = false);
+                              }
+                            }
+                          },
+                    child: Text(
+                      sheetBusy
+                          ? 'Please wait…'
+                          : (codeSent ? 'Update Password' : 'Send Recovery Code'),
                     ),
                   ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.close, size: 20, color: muted),
-                  onPressed: () => Navigator.pop(ctx),
-                ),
+                if (codeSent)
+                  Center(
+                    child: TextButton(
+                      onPressed: sheetBusy
+                          ? null
+                          : () async {
+                              final emailVal = resetEmailController.text.trim();
+                              setSheetState(() {
+                                sheetBusy = true;
+                                sheetError = null;
+                              });
+                              try {
+                                await ref
+                                    .read(journalProvider.notifier)
+                                    .requestPasswordReset(emailVal);
+                                setSheetState(() {
+                                  sheetInfo = 'Sent a new code to $emailVal.';
+                                });
+                              } catch (e) {
+                                setSheetState(
+                                  () => sheetError = e
+                                      .toString()
+                                      .replaceAll('Exception: ', ''),
+                                );
+                              } finally {
+                                if (ctx.mounted) {
+                                  setSheetState(() => sheetBusy = false);
+                                }
+                              }
+                            },
+                      child: const Text('Resend recovery code'),
+                    ),
+                  ),
               ],
             ),
-            const SizedBox(height: 8),
-            Text(
-              'Because YanMata keeps your health journal private on your device by default, you can continue using YanMata offline or contact yanmata@zentreeca.org from your registered email address for account recovery assistance.',
-              style: TextStyle(fontSize: 13.5, height: 1.55, color: muted),
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: () => Navigator.pop(ctx),
-                child: Text(ref.tr('understood')),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

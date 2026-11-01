@@ -36,6 +36,14 @@ return [
         ),
     ],
 
+    'geoapify' => [
+        'api_key' => env('GEOAPIFY_API_KEY'),
+        'places_url' => env(
+            'GEOAPIFY_PLACES_URL',
+            'https://api.geoapify.com/v2/places',
+        ),
+    ],
+
     'fcm' => [
         'project_id' => env('FIREBASE_PROJECT_ID', 'yanmata-app'),
         'server_key' => env('FCM_SERVER_KEY'),

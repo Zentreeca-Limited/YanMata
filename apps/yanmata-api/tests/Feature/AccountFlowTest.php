@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Mail\TransactionalNotificationMail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class AccountFlowTest extends TestCase
@@ -118,5 +120,70 @@ class AccountFlowTest extends TestCase
             'password' => 'Sturdy-pass-2026',
             'confirmation' => 'DELETE',
         ], $headers)->assertNoContent();
+    }
+
+    public function test_email_verification_and_password_reset_code_workflows(): void
+    {
+        Mail::fake();
+
+        $registered = $this->postJson('/api/v1/mobile/register', $this->payload())->assertCreated();
+        $token = $registered->json('token');
+        $headers = ['Authorization' => "Bearer $token"];
+        $this->assertFalse($registered->json('user.email_verified'));
+
+        // Request a new email verification code
+        $this->postJson('/api/v1/email/verification-notification', [], $headers)
+            ->assertOk()
+            ->assertJsonPath('email_verified', false);
+
+        $capturedVerifyCode = null;
+        Mail::assertSent(TransactionalNotificationMail::class, function ($mail) use (&$capturedVerifyCode) {
+            if (isset($mail->highlights['Verification Code'])) {
+                $capturedVerifyCode = $mail->highlights['Verification Code'];
+
+                return true;
+            }
+
+            return false;
+        });
+        $this->assertNotNull($capturedVerifyCode);
+
+        // Verify with wrong code fails
+        $this->postJson('/api/v1/email/verify', ['code' => '000000'], $headers)
+            ->assertUnprocessable();
+
+        // Verify with correct code succeeds
+        $this->postJson('/api/v1/email/verify', ['code' => $capturedVerifyCode], $headers)
+            ->assertOk()
+            ->assertJsonPath('user.email_verified', true);
+
+        // Request password reset code
+        $this->postJson('/api/v1/mobile/password/forgot', ['email' => 'amina@example.test'])
+            ->assertOk();
+
+        $capturedResetCode = null;
+        Mail::assertSent(TransactionalNotificationMail::class, function ($mail) use (&$capturedResetCode) {
+            if (isset($mail->highlights['Recovery Code'])) {
+                $capturedResetCode = $mail->highlights['Recovery Code'];
+
+                return true;
+            }
+
+            return false;
+        });
+        $this->assertNotNull($capturedResetCode);
+
+        // Reset password with code
+        $this->postJson('/api/v1/mobile/password/reset', [
+            'email' => 'amina@example.test',
+            'code' => $capturedResetCode,
+            'password' => 'NewSturdy-pass-2026',
+        ])->assertOk();
+
+        // Login with new password succeeds
+        $this->postJson('/api/v1/mobile/login', [
+            'email' => 'amina@example.test',
+            'password' => 'NewSturdy-pass-2026',
+        ])->assertOk();
     }
 }

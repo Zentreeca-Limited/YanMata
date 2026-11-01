@@ -24,6 +24,8 @@ class LocalJournalRepository implements JournalRepository {
         'token': null,
         'owner_id': null,
         'user_name': null,
+        'user_email': null,
+        'email_verified': false,
         'user_role': null,
       };
     }
@@ -65,6 +67,8 @@ class LocalJournalRepository implements JournalRepository {
       ownerId: d['owner_id'],
       token: d['token'] as String?,
       userName: d['user_name'] as String?,
+      userEmail: d['user_email'] as String?,
+      emailVerified: d['email_verified'] == true,
       userRole: d['user_role'] as String?,
     );
   });
@@ -240,12 +244,80 @@ class LocalJournalRepository implements JournalRepository {
     d['token'] = token;
     d['owner_id'] = user['id'];
     d['user_name'] = user['name'];
+    d['user_email'] = user['email'];
+    d['email_verified'] = user['email_verified'] == true;
     d['user_role'] = user['role'];
     await _save(d);
+    if (ensureConsent || user['sync_consent'] == true) {
+      try {
+        await _syncUnlocked();
+      } catch (_) {}
+    }
   }
 
   @override
-  Future<void> sync() => _lock.synchronized(() async {
+  Future<void> requestPasswordReset(String email) =>
+      _lock.synchronized(() async {
+        await api.request(
+          '/mobile/password/forgot',
+          method: 'POST',
+          body: {'email': email},
+        );
+      });
+
+  @override
+  Future<void> resetPassword({
+    required String email,
+    required String code,
+    required String newPassword,
+  }) => _lock.synchronized(() async {
+    await api.request(
+      '/mobile/password/reset',
+      method: 'POST',
+      body: {'email': email, 'code': code, 'password': newPassword},
+    );
+  });
+
+  @override
+  Future<void> sendEmailVerification() => _lock.synchronized(() async {
+    final d = await _load();
+    final token = d['token'] as String?;
+    if (token == null) {
+      throw StateError('No account is signed in.');
+    }
+    final res = await api.request(
+      '/email/verification-notification',
+      method: 'POST',
+      token: token,
+    );
+    if (res['email_verified'] == true) {
+      d['email_verified'] = true;
+      await _save(d);
+    }
+  });
+
+  @override
+  Future<void> verifyEmail(String code) => _lock.synchronized(() async {
+    final d = await _load();
+    final token = d['token'] as String?;
+    if (token == null) {
+      throw StateError('No account is signed in.');
+    }
+    final res = await api.request(
+      '/email/verify',
+      method: 'POST',
+      token: token,
+      body: {'code': code},
+    );
+    final user = res['user'] as Map?;
+    d['email_verified'] = user?['email_verified'] == true || true;
+    await _save(d);
+  });
+
+  @override
+  Future<void> sync() => _lock.synchronized(_syncUnlocked);
+
+  Future<void> _syncUnlocked() async {
     final d = await _load();
     final token = d['token'] as String?;
     if (token == null) {
@@ -299,7 +371,7 @@ class LocalJournalRepository implements JournalRepository {
       more = result['has_more'] == true;
       await _save(d);
     }
-  });
+  }
   @override
   Future<void> disconnect() => _lock.synchronized(() async {
     final d = await _load();
@@ -316,6 +388,8 @@ class LocalJournalRepository implements JournalRepository {
     }
     d['token'] = null;
     d['user_name'] = null;
+    d['user_email'] = null;
+    d['email_verified'] = false;
     d['user_role'] = null;
     await _save(d);
   });

@@ -25,7 +25,7 @@ class NearbyPlaceController extends Controller
                 'category' => $data['category'],
                 'radius_meters' => $data['radius_meters'] ?? 10000,
                 'ranked_by' => 'distance',
-                'provider' => 'Google Maps',
+                'provider' => $findNearbyPlaces->providerName(),
                 'stored' => false,
             ],
         ])->withHeaders([

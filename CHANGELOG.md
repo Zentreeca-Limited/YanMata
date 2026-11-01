@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-01 — Live account onboarding, email confirmation, password reset, per-member demo seeding & Geoapify Nearby Care integration (PILOT-LIVE-ACCOUNT-01 / NEARBY-01)
+
+- Integrated Geoapify Places API v2 (`https://api.geoapify.com/v2/places`) in `App\Services\GooglePlacesClient`, `App\Actions\FindNearbyPlaces`, and `App\Http\Controllers\NearbyPlaceController` (`apps/yanmata-api`) so `POST /api/v1/nearby-places/search` serves live OpenStreetMap hospitals, clinics, and pharmacies when `GEOAPIFY_API_KEY` is configured on the server.
+- Added 6-digit email verification (`POST /api/v1/email/verification-notification`, `POST /api/v1/email/verify`) and password reset (`POST /api/v1/mobile/password/forgot`, `POST /api/v1/mobile/password/reset`) endpoints in `SessionController.php` with branded HTML emails in `MemberMailService.php` and interactive sheets in `auth_page.dart` and `you_page.dart`.
+- Added automatic demo experience seeding (`SessionController::seedMemberDemoExperience`) when `YANMATA_DEMO=true` so newly registered accounts immediately receive configured cycle settings (`Day 12 of 28 · Follicular Phase`), an active Care conversation with `Demo Specialist One`, 2 cloud-synced encrypted journal entries, and notification preferences.
+- Created and verified the live account `okoloebuga@gmail.com` (`Okolo Ebuga`) on `https://yanmata.zentreeca.org` through registration, email confirmation, password reset (`YanMata2026`), login, health profile completion, journal sync, Care chat, and Geoapify Nearby search, and linked both the running iOS Simulator (`iPhone 16 Pro`) and Android Emulator (`Pixel 10 Pro`) to the account.
+- Verified 45 Laravel tests (`295 assertions`) and 24 Flutter tests (`0 analyzer issues`).
+
 ## 2026-11-01 — Auth UX polish: subtle Forgot password typography, 75% height legal WebView sheets, and Continue as Guest stack clearing (AUTH-UX-01)
 
 - Updated "Forgot password?" on the Sign In tab (`apps/yanmata-mobile/lib/features/account/presentation/auth_page.dart`) to use non-bold `FontWeight.w400` (`12.5px`, muted ink/slate) instead of bold button typography, and added a helpful recovery modal sheet.
